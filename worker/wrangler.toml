@@ -1,0 +1,9 @@
+name = "isocrateez-worker"
+main = "src/index.ts"
+compatibility_date = "2026-03-28"
+
+[vars]
+PLANNER_PROVIDER = "openai"
+PLANNER_MODEL = "gpt-4o-mini"
+ADVISOR_PROVIDER = "openai"
+ADVISOR_MODEL = "gpt-4o"

@@ -1,0 +1,8 @@
+APP_SHARED_PASSWORD=choose-a-strong-passphrase
+JWT_SECRET=replace-with-a-long-random-secret
+PLANNER_PROVIDER=openai
+PLANNER_MODEL=gpt-4o-mini
+PLANNER_API_KEY=
+ADVISOR_PROVIDER=openai
+ADVISOR_MODEL=gpt-4o
+ADVISOR_API_KEY=
