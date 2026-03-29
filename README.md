@@ -65,9 +65,16 @@ Set the required secrets:
 ```bash
 npx wrangler secret put APP_SHARED_PASSWORD
 npx wrangler secret put JWT_SECRET
-npx wrangler secret put PLANNER_API_KEY
-npx wrangler secret put ADVISOR_API_KEY
+npx wrangler secret put OPENAI_API_KEY
+npx wrangler secret put ANTHROPIC_API_KEY
 ```
+
+Use provider-scoped secrets, not separate planner/advisor keys:
+
+- `OPENAI_API_KEY` is used whenever the selected model provider is `openai`
+- `ANTHROPIC_API_KEY` is used whenever the selected model provider is `anthropic`
+- the planner and advisor can use the same provider or different providers
+- you only need to set the provider secrets you actually plan to use
 
 Deploy the worker:
 

@@ -8,10 +8,9 @@ const env: WorkerEnv = {
   JWT_SECRET: "jwt-secret",
   PLANNER_PROVIDER: "openai",
   PLANNER_MODEL: "planner-model",
-  PLANNER_API_KEY: "planner-key",
   ADVISOR_PROVIDER: "openai",
   ADVISOR_MODEL: "advisor-model",
-  ADVISOR_API_KEY: "advisor-key"
+  OPENAI_API_KEY: "openai-key"
 };
 
 describe("worker routes", () => {

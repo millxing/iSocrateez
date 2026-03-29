@@ -14,11 +14,9 @@ export interface WorkerEnv {
   JWT_SECRET: string;
   PLANNER_PROVIDER: string;
   PLANNER_MODEL: string;
-  PLANNER_API_KEY?: string;
   PLANNER_BASE_URL?: string;
   ADVISOR_PROVIDER: string;
   ADVISOR_MODEL: string;
-  ADVISOR_API_KEY?: string;
   ADVISOR_BASE_URL?: string;
   ANTHROPIC_API_KEY?: string;
   OPENAI_API_KEY?: string;
@@ -49,15 +47,7 @@ function resolveModelConfig(
 
   const provider = override.slice(0, colonIndex);
   const model = override.slice(colonIndex + 1);
-
-  let apiKey: string | undefined;
-  if (provider === "anthropic") {
-    apiKey = env.ANTHROPIC_API_KEY || defaultConfig.apiKey;
-  } else if (provider === "openai") {
-    apiKey = env.OPENAI_API_KEY || defaultConfig.apiKey;
-  } else {
-    apiKey = defaultConfig.apiKey;
-  }
+  const apiKey = getProviderApiKey(provider, env);
 
   return { provider, model, apiKey };
 }
@@ -89,13 +79,13 @@ export async function generateAdvice(
   const defaultPlannerConfig: ModelConfig = {
     provider: env.PLANNER_PROVIDER,
     model: env.PLANNER_MODEL,
-    apiKey: env.PLANNER_API_KEY,
+    apiKey: getProviderApiKey(env.PLANNER_PROVIDER, env),
     baseUrl: env.PLANNER_BASE_URL
   };
   const defaultAdvisorConfig: ModelConfig = {
     provider: env.ADVISOR_PROVIDER,
     model: env.ADVISOR_MODEL,
-    apiKey: env.ADVISOR_API_KEY,
+    apiKey: getProviderApiKey(env.ADVISOR_PROVIDER, env),
     baseUrl: env.ADVISOR_BASE_URL
   };
 
@@ -185,6 +175,17 @@ export function validatePlannerOutput(raw: string): PlannerOutput {
     advisorBrief: parsed.advisorBrief,
     cautionPoints: parsed.cautionPoints.map(String)
   };
+}
+
+function getProviderApiKey(provider: string, env: WorkerEnv): string | undefined {
+  switch (provider) {
+    case "openai":
+      return env.OPENAI_API_KEY;
+    case "anthropic":
+      return env.ANTHROPIC_API_KEY;
+    default:
+      return undefined;
+  }
 }
 
 async function callModel(config: ModelConfig, prompt: string): Promise<string> {
