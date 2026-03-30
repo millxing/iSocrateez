@@ -1,5 +1,11 @@
 APP_SHARED_PASSWORD=choose-a-strong-passphrase
 JWT_SECRET=replace-with-a-long-random-secret
+
+# Provider-scoped secrets:
+# - use OPENAI_API_KEY whenever either selected model uses the `openai` provider
+# - use ANTHROPIC_API_KEY whenever either selected model uses the `anthropic` provider
+# Do not create separate planner/advisor API key variables.
+
 PLANNER_PROVIDER=openai
 PLANNER_MODEL=gpt-4o-mini
 ADVISOR_PROVIDER=openai

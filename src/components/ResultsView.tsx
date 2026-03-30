@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import type {
   AdviceResponse,
@@ -35,6 +35,8 @@ const SECTION_PATTERNS: { tab: Tab; patterns: RegExp[] }[] = [
   { tab: "watch", patterns: [/watch\s+for/i, /watch\s+out/i, /be\s+careful/i] },
   { tab: "next", patterns: [/next\s+steps?/i, /action\s+items?/i, /practical\s+steps?/i] }
 ];
+
+const MOBILE_RESULTS_BREAKPOINT = 859;
 
 function splitMarkdownSections(raw: string): Record<Tab, string> {
   const renamed = raw.replace(/^(#{1,3})\s*Core\s+advice/mi, "$1 Your Advice");
@@ -90,6 +92,10 @@ export function ResultsView({
 }: ResultsViewProps) {
   const [activeTab, setActiveTab] = useState<Tab>("advice");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [useHamburgerMenu, setUseHamburgerMenu] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth <= MOBILE_RESULTS_BREAKPOINT : false
+  );
+  const measureTabsRef = useRef<HTMLElement | null>(null);
   const primary = response.nearestProfiles[0];
   const alternates = response.nearestProfiles.slice(1, 3);
 
@@ -99,10 +105,14 @@ export function ResultsView({
   );
 
   // Only show tabs that have content (plus export and coordinates which are always available)
-  const availableTabs = TABS.filter((tab) => {
-    if (tab.id === "export" || tab.id === "coordinates") return true;
-    return sections[tab.id].length > 0;
-  });
+  const availableTabs = useMemo(
+    () =>
+      TABS.filter((tab) => {
+        if (tab.id === "export" || tab.id === "coordinates") return true;
+        return sections[tab.id].length > 0;
+      }),
+    [sections]
+  );
 
   const fullMarkdown = response.adviceMarkdown.replace(
     /^(#{1,3})\s*Core\s+advice/mi,
@@ -116,10 +126,73 @@ export function ResultsView({
     setMenuOpen(false);
   }
 
+  useEffect(() => {
+    function syncTabsLayout() {
+      const nextUseHamburger =
+        window.innerWidth <= MOBILE_RESULTS_BREAKPOINT ||
+        Boolean(
+          measureTabsRef.current &&
+            measureTabsRef.current.scrollWidth - measureTabsRef.current.clientWidth > 1
+        );
+
+      setUseHamburgerMenu((current) =>
+        current === nextUseHamburger ? current : nextUseHamburger
+      );
+    }
+
+    let frameId = 0;
+
+    function scheduleSync() {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(syncTabsLayout);
+    }
+
+    scheduleSync();
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined" && measureTabsRef.current
+        ? new ResizeObserver(scheduleSync)
+        : null;
+
+    if (resizeObserver && measureTabsRef.current) {
+      resizeObserver.observe(measureTabsRef.current);
+    }
+
+    window.addEventListener("resize", scheduleSync);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", scheduleSync);
+    };
+  }, [availableTabs]);
+
+  useEffect(() => {
+    if (!useHamburgerMenu) {
+      setMenuOpen(false);
+    }
+  }, [useHamburgerMenu]);
+
   return (
     <div className="results-layout">
+      <nav
+        ref={measureTabsRef}
+        className="results-tabs results-tabs-desktop results-tabs-measure"
+        aria-hidden="true"
+      >
+        {availableTabs.map((tab) => (
+          <button key={tab.id} className="results-tab" tabIndex={-1}>
+            {tab.label}
+          </button>
+        ))}
+      </nav>
+
       {/* Desktop: horizontal tab bar */}
-      <nav className="results-tabs results-tabs-desktop">
+      <nav
+        className={`results-tabs results-tabs-desktop ${useHamburgerMenu ? "is-hidden" : ""}`}
+        aria-hidden={useHamburgerMenu}
+        hidden={useHamburgerMenu}
+      >
         {availableTabs.map((tab) => (
           <button
             key={tab.id}
@@ -132,7 +205,11 @@ export function ResultsView({
       </nav>
 
       {/* Narrow screens: hamburger dropdown */}
-      <nav className="results-tabs results-tabs-mobile">
+      <nav
+        className={`results-tabs results-tabs-mobile ${useHamburgerMenu ? "" : "is-hidden"}`}
+        aria-hidden={!useHamburgerMenu}
+        hidden={!useHamburgerMenu}
+      >
         <button
           className="hamburger-toggle"
           onClick={() => setMenuOpen((v) => !v)}

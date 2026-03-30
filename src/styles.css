@@ -657,7 +657,23 @@ textarea {
 }
 
 .results-tabs-mobile {
+  display: block;
+  position: relative;
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.results-tabs.is-hidden {
   display: none;
+}
+
+.results-tabs-measure {
+  position: absolute;
+  inset: 0 0 auto;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: -1;
+  border-bottom: none;
 }
 
 .results-tab {
@@ -1013,23 +1029,6 @@ textarea {
 }
 
 /* ═══════════════════════════════════════════════════
-   Mid-width: swap tabs for hamburger when they'd overflow
-   ═══════════════════════════════════════════════════ */
-
-@media (max-width: 1100px) and (min-width: 860px) {
-  .results-tabs-desktop {
-    display: none;
-  }
-
-  .results-tabs-mobile {
-    display: block;
-    position: relative;
-    padding: 0.6rem;
-    border-bottom: 1px solid var(--border-strong);
-  }
-}
-
-/* ═══════════════════════════════════════════════════
    Desktop
    ═══════════════════════════════════════════════════ */
 
@@ -1202,17 +1201,6 @@ textarea {
   .results-body {
     padding: 1.5rem;
     border-radius: 0;
-  }
-
-  .results-tabs-desktop {
-    display: none;
-  }
-
-  .results-tabs-mobile {
-    display: block;
-    position: relative;
-    padding: 0.6rem;
-    border-bottom: 1px solid var(--border-strong);
   }
 
   .hamburger-toggle {

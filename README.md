@@ -12,9 +12,12 @@ A private ethical-advice web app with a React frontend and a Cloudflare Worker b
 
 1. Install dependencies with `npm install`
 2. Copy `worker/.dev.vars.example` to `worker/.dev.vars` and fill in your secrets
-3. Copy `.env.example` to `.env` if you want a custom API base URL
-4. Run the frontend with `npm run dev`
-5. Run the worker with `npm run worker:dev`
+3. In `worker/.dev.vars`, use provider-scoped secrets:
+   `OPENAI_API_KEY` for any selected `openai:*` model and `ANTHROPIC_API_KEY` for any selected `anthropic:*` model
+4. Do not create separate `PLANNER_API_KEY` or `ADVISOR_API_KEY` variables; the worker does not read them
+5. Copy `.env.example` to `.env` if you want a custom API base URL
+6. Run the frontend with `npm run dev`
+7. Run the worker with `npm run worker:dev`
 
 ## Deployment shape
 
