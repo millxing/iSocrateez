@@ -3,7 +3,9 @@ main = "src/index.ts"
 compatibility_date = "2026-03-28"
 
 [vars]
-PLANNER_PROVIDER = "openai"
-PLANNER_MODEL = "gpt-4o-mini"
-ADVISOR_PROVIDER = "openai"
-ADVISOR_MODEL = "gpt-4o"
+PLANNER_PROVIDER = "anthropic"
+PLANNER_MODEL = "claude-haiku-5-5"
+ADVISOR_PROVIDER = "anthropic"
+ADVISOR_MODEL = "claude-sonnet-5-5"
+
+ALLOWED_ORIGIN = "https://millxing.github.io"

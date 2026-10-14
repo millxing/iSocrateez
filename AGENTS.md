@@ -26,7 +26,7 @@ The UI is a wizard-style multi-page flow with a sticky hero bar and page-by-page
 - `src/components/DilemmaPage.tsx`: dilemma text entry (dynamic-height textarea)
 - `src/components/ExplanationPage.tsx`: 3-choice explanation style cards
 - `src/components/VoicePage.tsx`: 2-choice advice voice cards
-- `src/components/ModelPage.tsx`: model selection (defaults to GPT-5.4 Mini)
+- `src/components/ModelPage.tsx`: model selection (defaults to Claude Haiku 5.5 planner / Claude Sonnet 5.5 advisor)
 - `src/components/PathPage.tsx`: choose calibration questions or manual tuple
 - `src/components/CalibrationPage.tsx`: 9-question flow or 3-axis sliders
 - `src/components/ResultsView.tsx`: tabbed results with 6 tabs (advice, why, watch, next, coordinates, export); hamburger menu on narrow screens; export saves markdown via File System Access API

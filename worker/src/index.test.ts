@@ -10,7 +10,8 @@ const env: WorkerEnv = {
   PLANNER_MODEL: "planner-model",
   ADVISOR_PROVIDER: "openai",
   ADVISOR_MODEL: "advisor-model",
-  OPENAI_API_KEY: "openai-key"
+  OPENAI_API_KEY: "openai-key",
+  ALLOWED_ORIGIN: "https://millxing.github.io"
 };
 
 describe("worker routes", () => {
@@ -192,5 +193,51 @@ describe("worker routes", () => {
     } finally {
       globalThis.fetch = originalFetch;
     }
+  });
+
+  it("rejects model overrides that are not in the allowlist", async () => {
+    const token = await createSignedToken(
+      { exp: Math.floor(Date.now() / 1000) + 60 },
+      env.JWT_SECRET
+    );
+    const request = new Request("https://example.com/api/advice", {
+      method: "POST",
+      body: JSON.stringify({
+        token,
+        dilemma: "A real dilemma with enough text.",
+        explanationLevel: "general",
+        personaMode: "personalized",
+        answers: [],
+        profileOverride: {
+          outcomesPrinciples: 0,
+          individualCollective: 0,
+          reasonIntuition: 0
+        },
+        advisorModel: "anthropic:claude-fable-5-1"
+      })
+    });
+
+    const response = await handleRequest(request, env);
+    expect(response.status).toBe(400);
+  });
+
+  it("only allows CORS for the configured origin", async () => {
+    const allowed = await handleRequest(
+      new Request("https://example.com/api/health", {
+        headers: { Origin: "https://millxing.github.io" }
+      }),
+      env
+    );
+    expect(allowed.headers.get("Access-Control-Allow-Origin")).toBe(
+      "https://millxing.github.io"
+    );
+
+    const blocked = await handleRequest(
+      new Request("https://example.com/api/health", {
+        headers: { Origin: "https://evil.example" }
+      }),
+      env
+    );
+    expect(blocked.headers.get("Access-Control-Allow-Origin")).toBeNull();
   });
 });

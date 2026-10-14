@@ -137,8 +137,8 @@ describe("App", () => {
       expect(adviceBodies[0]).toMatchObject({
         explanationLevel: "phd",
         personaMode: "philosopher",
-        plannerModel: "openai:gpt-5.4-mini",
-        advisorModel: "openai:gpt-5.4-mini"
+        plannerModel: "anthropic:claude-haiku-5-5",
+        advisorModel: "anthropic:claude-sonnet-5-5"
       });
     } finally {
       globalThis.fetch = originalFetch;

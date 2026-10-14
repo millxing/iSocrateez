@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { modelOptions } from "../../shared/models";
 import type {
   ExplanationLevel,
   ProfileTuple,
@@ -39,17 +40,6 @@ const explanationOptions: { value: ExplanationLevel; label: string; hint: string
     label: "PhD-level philosophical training",
     hint: "Denser distinctions and sharper framing."
   }
-];
-
-const modelOptions = [
-  { value: "openai:gpt-5.4-mini", label: "GPT-5.4 Mini (default)" },
-  { value: "anthropic:claude-opus-4-6", label: "Claude Opus 4.6" },
-  { value: "anthropic:claude-sonnet-4-6", label: "Claude Sonnet 4.6" },
-  { value: "anthropic:claude-haiku-4-5-20251001", label: "Claude Haiku 4.5" },
-  { value: "openai:gpt-4o", label: "GPT-4o" },
-  { value: "openai:gpt-4o-mini", label: "GPT-4o Mini" },
-  { value: "openai:gpt-5.4", label: "GPT-5.4" },
-  { value: "openai:o3-mini", label: "o3-mini" }
 ];
 
 export function DilemmaForm({

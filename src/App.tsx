@@ -45,8 +45,8 @@ export default function App() {
   const [dilemma, setDilemma] = useState("");
   const [explanationLevel, setExplanationLevel] = useState<ExplanationLevel>("general");
   const [personaMode, setPersonaMode] = useState<PersonaMode>("personalized");
-  const [plannerModel, setPlannerModel] = useState("openai:gpt-5.4-mini");
-  const [advisorModel, setAdvisorModel] = useState("openai:gpt-5.4-mini");
+  const [plannerModel, setPlannerModel] = useState("anthropic:claude-haiku-5-5");
+  const [advisorModel, setAdvisorModel] = useState("anthropic:claude-sonnet-5-5");
   const [calibrationMode, setCalibrationMode] = useState<"questions" | "tuple">("questions");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [profileOverride, setProfileOverride] = useState<ProfileTuple | null>(null);

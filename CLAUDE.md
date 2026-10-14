@@ -29,7 +29,7 @@ Important files:
 - `src/components/DilemmaPage.tsx` — dilemma text entry
 - `src/components/ExplanationPage.tsx` — 3-choice explanation style
 - `src/components/VoicePage.tsx` — 2-choice advice voice
-- `src/components/ModelPage.tsx` — model selection (defaults to GPT-5.4 Mini)
+- `src/components/ModelPage.tsx` — model selection (defaults to Claude Haiku 5.5 planner / Claude Sonnet 5.5 advisor)
 - `src/components/PathPage.tsx` — calibration questions vs manual tuple
 - `src/components/CalibrationPage.tsx` — 9-question flow or 3-axis sliders
 - `src/components/ResultsView.tsx` — tabbed results (advice, why, watch, next, coordinates, export)
@@ -48,7 +48,7 @@ The frontend is a wizard-style multi-page flow with a sticky hero bar:
 2. Enter a dilemma (dynamic-height textarea)
 3. Choose explanation style (3 cards)
 4. Choose advice voice (2 cards)
-5. Confirm or change models (default: GPT-5.4 Mini)
+5. Confirm or change models (default: Haiku 5.5 planner, Sonnet 5.5 advisor)
 6. Choose path: 9-question calibration or manual 3-axis tuple
 7. Answer calibration questions or set sliders
 8. Results page with tabbed navigation:

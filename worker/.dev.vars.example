@@ -6,9 +6,12 @@ JWT_SECRET=replace-with-a-long-random-secret
 # - use ANTHROPIC_API_KEY whenever either selected model uses the `anthropic` provider
 # Do not create separate planner/advisor API key variables.
 
-PLANNER_PROVIDER=openai
-PLANNER_MODEL=gpt-4o-mini
-ADVISOR_PROVIDER=openai
-ADVISOR_MODEL=gpt-4o
+PLANNER_PROVIDER=anthropic
+PLANNER_MODEL=claude-haiku-5-5
+ADVISOR_PROVIDER=anthropic
+ADVISOR_MODEL=claude-sonnet-5-5
 OPENAI_API_KEY=
 ANTHROPIC_API_KEY=
+
+# Comma-separated browser origins allowed to call the Worker (CORS)
+ALLOWED_ORIGIN=http://localhost:5173,http://127.0.0.1:5173

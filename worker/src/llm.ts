@@ -20,6 +20,7 @@ export interface WorkerEnv {
   ADVISOR_BASE_URL?: string;
   ANTHROPIC_API_KEY?: string;
   OPENAI_API_KEY?: string;
+  ALLOWED_ORIGIN?: string;
 }
 
 interface ModelConfig {
@@ -217,7 +218,8 @@ async function callOpenAiCompatible(
     },
     body: JSON.stringify({
       model: config.model,
-      temperature: 0.7,
+      // Newer reasoning-style models reject non-default temperature.
+      ...(/^gpt-4/.test(config.model) ? { temperature: 0.7 } : {}),
       messages: [{ role: "user", content: prompt }]
     })
   });
@@ -251,7 +253,12 @@ async function callAnthropic(config: ModelConfig, prompt: string): Promise<strin
     },
     body: JSON.stringify({
       model: config.model,
-      max_tokens: 900,
+      // Headroom for thinking tokens, which count toward max_tokens on 5.x models.
+      max_tokens: 8000,
+      // Effort is only accepted by the 5.5 family (errors on Haiku 4.5).
+      ...(/^claude-(haiku|sonnet|opus)-5-5/.test(config.model)
+        ? { output_config: { effort: "medium" } }
+        : {}),
       messages: [{ role: "user", content: prompt }]
     })
   });
