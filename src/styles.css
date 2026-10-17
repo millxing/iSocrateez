@@ -1444,13 +1444,17 @@ textarea {
 }
 
 /* Path page: viewport-locked so Back is always visible */
-.app-shell:has(.path-page) {
+.app-shell:has(.path-page),
+.app-shell:has(.models-page) {
   height: 100vh;
   overflow: hidden;
 }
 
 .page-content:has(.path-page),
-.path-page {
+.path-page,
+.page-content:has(.models-page),
+.models-page,
+.model-custom {
   min-height: 0;
 }
 
@@ -1506,4 +1510,42 @@ textarea {
 
 .results-body .advice-markdown .dilemma-original {
   white-space: pre-wrap;
+}
+
+.model-custom {
+  flex: 1;
+  gap: 1rem;
+}
+
+.model-pickers {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.model-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 0;
+}
+
+.model-picker-heading {
+  margin: 0;
+  font-size: 1.9rem;
+  color: var(--text-secondary);
+}
+
+.philosopher-option.is-selected {
+  background: var(--accent-dim);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+@media (max-width: 800px) {
+  .model-pickers {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
 }

@@ -20,7 +20,7 @@ export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack, isSubm
   const [advisor, setAdvisor] = useState(advisorModel);
 
   return (
-    <div className="wizard-card">
+    <div className="wizard-card models-page">
       <h2 className="wizard-title">Models</h2>
       <p className="wizard-subtitle">
         Use the defaults?
@@ -47,23 +47,11 @@ export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack, isSubm
           </button>
         </div>
       ) : (
-        <div className="wizard-form">
-          <label className="wizard-field">
-            <span>Planner model</span>
-            <select value={planner} onChange={(e) => setPlanner(e.target.value)}>
-              {modelOptions.map((opt) => (
-                <option key={`p-${opt.value}`} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-          </label>
-          <label className="wizard-field">
-            <span>Advisor model</span>
-            <select value={advisor} onChange={(e) => setAdvisor(e.target.value)}>
-              {modelOptions.map((opt) => (
-                <option key={`a-${opt.value}`} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-          </label>
+        <div className="wizard-form model-custom">
+          <div className="model-pickers">
+            <ModelPicker label="Planner model" value={planner} onChange={setPlanner} />
+            <ModelPicker label="Advisor model" value={advisor} onChange={setAdvisor} />
+          </div>
           <button
             className="button-primary"
             disabled={isSubmitting}
@@ -79,6 +67,36 @@ export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack, isSubm
       <button className="button-back" type="button" onClick={onBack}>
         Back
       </button>
+    </div>
+  );
+}
+
+function ModelPicker({
+  label,
+  value,
+  onChange
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="model-picker" role="radiogroup" aria-label={label}>
+      <h3 className="model-picker-heading">{label}</h3>
+      <div className="philosopher-list">
+        {modelOptions.map((opt) => (
+          <button
+            key={opt.value}
+            type="button"
+            role="radio"
+            aria-checked={opt.value === value}
+            className={`philosopher-option ${opt.value === value ? "is-selected" : ""}`}
+            onClick={() => onChange(opt.value)}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
