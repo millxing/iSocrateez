@@ -20,7 +20,7 @@ export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack, isSubm
   const [advisor, setAdvisor] = useState(advisorModel);
 
   return (
-    <div className="wizard-card models-page">
+    <div className={`wizard-card models-page ${showCustom ? "is-custom" : ""}`}>
       <h2 className="wizard-title">Models</h2>
       <p className="wizard-subtitle">
         Use the defaults?

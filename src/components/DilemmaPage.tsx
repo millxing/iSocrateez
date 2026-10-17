@@ -72,7 +72,7 @@ export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
                   </>
                 ) : (
                   <p className="example-preview-empty">
-                    Select an example on the left to read it here.
+                    Select an example to read it here.
                   </p>
                 )}
               </div>

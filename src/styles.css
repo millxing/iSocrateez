@@ -50,6 +50,7 @@ button { cursor: pointer; }
 /* When showing results, lock to viewport height so scroll works */
 .app-shell:has(.results-layout) {
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -1335,6 +1336,7 @@ textarea {
 /* Dilemma page: viewport-locked so Continue stays pinned at the bottom */
 .app-shell:has(.dilemma-page) {
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -1451,6 +1453,7 @@ textarea {
 .app-shell:has(.path-page),
 .app-shell:has(.models-page) {
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -1610,6 +1613,7 @@ textarea {
 /* Philosopher picker page: viewport-locked, grid scrolls, Continue/Back stay visible */
 .app-shell:has(.philosopher-page) {
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -1700,4 +1704,141 @@ textarea {
   font-size: 1.3rem;
   font-style: italic;
   color: #6b665b;
+}
+
+/* Phones: scale the newer wizard components down and keep controls on-screen */
+@media (max-width: 859px) {
+  /* .page-stage aligns to flex-start on phones, which lets viewport-locked pages
+     grow past the screen; stretch them so their inner lists scroll instead. */
+  .page-content:has(.dilemma-page),
+  .page-content:has(.path-page),
+  .page-content:has(.models-page),
+  .page-content:has(.philosopher-page) {
+    align-self: stretch;
+  }
+
+  .app-shell:has(.dilemma-page),
+  .app-shell:has(.path-page),
+  .app-shell:has(.models-page),
+  .app-shell:has(.philosopher-page) {
+    min-height: 0;
+  }
+
+  .dilemma-page,
+  .philosopher-page,
+  .models-page,
+  .path-page {
+    gap: 0.9rem;
+  }
+
+  .dilemma-page .wizard-form {
+    gap: 0.9rem;
+  }
+
+  .path-page .choice-card {
+    padding: 0.8rem 1.1rem;
+  }
+
+  .mode-toggle-option {
+    font-size: 1.15rem;
+    padding: 0.7rem 0.6rem;
+    line-height: 1.2;
+  }
+
+  .example-split {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 0.8rem;
+  }
+
+  .example-option {
+    padding: 0.6rem 1rem;
+  }
+
+  .example-option .choice-label {
+    font-size: 1.2rem;
+  }
+
+  .example-list {
+    gap: 0.4rem;
+  }
+
+  .example-preview {
+    padding: 0.9rem 1.1rem;
+  }
+
+  .example-preview p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+
+  .example-preview-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .dilemma-body .wizard-textarea {
+    font-size: 1.2rem;
+  }
+
+  .philosopher-chip-name {
+    font-size: 1.25rem;
+  }
+
+  .philosopher-chip-school {
+    font-size: 1.05rem;
+  }
+
+  .philosopher-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .philosopher-chip {
+    padding: 0.5rem 0.7rem;
+  }
+
+  .philosopher-group-label {
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+
+  .philosopher-page .button-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .philosopher-page .button-row .button-primary {
+    flex: 1;
+  }
+
+  .philosopher-blurb {
+    font-size: 1.05rem;
+    line-height: 1.35;
+    min-height: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .philosopher-option {
+    font-size: 1.2rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .models-page.is-custom .wizard-subtitle,
+  .models-page.is-custom .model-defaults {
+    display: none;
+  }
+
+  .model-picker-heading {
+    font-size: 1.2rem;
+  }
+
+  .model-pickers {
+    gap: 0.8rem;
+  }
 }
