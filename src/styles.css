@@ -1922,6 +1922,7 @@ textarea {
 @media (max-width: 859px) {
   .wizard-card-wide {
     gap: 0.7rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
   }
 
   .progress-meta {
@@ -1960,13 +1961,19 @@ textarea {
     padding: 0.8rem 0 0;
   }
 
+  /* Spare height is shared above and below the question, keeping Back/Next pinned
+     to the bottom of the screen. */
+  .page-content:has(.wizard-card-wide) {
+    align-self: stretch;
+  }
+
   .question-block-top {
-    margin-top: 0;
+    margin-top: auto;
   }
 
   .question-block-bottom {
     margin-top: 1rem;
-    margin-bottom: 0;
+    margin-bottom: auto;
   }
 
   .question-prompt {
