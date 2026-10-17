@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { SAMPLE_DILEMMAS } from "../sampleDilemmas";
 
 interface DilemmaPageProps {
   initialDilemma: string;
@@ -22,6 +23,21 @@ export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
         What situation are you trying to navigate?
       </p>
       <form className="wizard-form" onSubmit={handleSubmit}>
+        <select
+          aria-label="Choose an example dilemma"
+          value={SAMPLE_DILEMMAS.find((s) => s.text === dilemma)?.title ?? ""}
+          onChange={(e) => {
+            const sample = SAMPLE_DILEMMAS.find((s) => s.title === e.target.value);
+            if (sample) setDilemma(sample.text);
+          }}
+        >
+          <option value="">Write your own, or choose an example…</option>
+          {SAMPLE_DILEMMAS.map((s) => (
+            <option key={s.title} value={s.title}>
+              {s.title}
+            </option>
+          ))}
+        </select>
         <textarea
           name="dilemma"
           value={dilemma}
