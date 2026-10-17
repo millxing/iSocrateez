@@ -1325,10 +1325,42 @@ textarea {
   color: #4a463e;
 }
 
-/* Dilemma source toggle + example list */
+/* Dilemma page: viewport-locked so Continue stays pinned at the bottom */
+.app-shell:has(.dilemma-page) {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.page-content:has(.dilemma-page) {
+  min-height: 0;
+}
+
+.dilemma-page,
+.dilemma-page .wizard-form {
+  min-height: 0;
+}
+
+.dilemma-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dilemma-body .wizard-textarea {
+  flex: 1;
+  min-height: 0;
+  resize: none;
+}
+
+.dilemma-continue {
+  flex-shrink: 0;
+}
+
 .mode-toggle {
   display: flex;
   gap: 0.6rem;
+  flex-shrink: 0;
 }
 
 .mode-toggle-option {
@@ -1354,15 +1386,56 @@ textarea {
   color: var(--text);
 }
 
+.example-split {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 1.5rem;
+}
+
 .example-list {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  max-height: 28vh;
+  min-height: 0;
   overflow-y: auto;
 }
 
 .example-option {
   padding: 0.9rem 1.4rem;
   flex-shrink: 0;
+}
+
+.example-preview {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1.4rem 1.8rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.example-preview p {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.6;
+}
+
+.example-preview-title {
+  margin: 0 0 1rem;
+  font-size: 2.2rem;
+  color: var(--accent);
+}
+
+.example-preview-empty {
+  color: var(--text-muted);
+}
+
+@media (max-width: 800px) {
+  .example-split {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  }
 }
