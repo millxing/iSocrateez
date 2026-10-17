@@ -22,11 +22,11 @@ import { LoadingOverlay } from "./components/LoadingOverlay";
 type Phase =
   | "locked"
   | "dilemma"
+  | "path"
+  | "calibration"
   | "explanation"
   | "voice"
   | "models"
-  | "path"
-  | "calibration"
   | "results";
 
 const SESSION_STORAGE_KEY = "isocrateez-token";
@@ -49,6 +49,7 @@ export default function App() {
   const [advisorModel, setAdvisorModel] = useState("anthropic:claude-sonnet-5-5");
   const [calibrationMode, setCalibrationMode] = useState<"questions" | "tuple">("questions");
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [answers, setAnswers] = useState<AnswerRecord[]>([]);
   const [profileOverride, setProfileOverride] = useState<ProfileTuple | null>(null);
 
   const [response, setResponse] = useState<AdviceResponse | null>(null);
@@ -80,6 +81,32 @@ export default function App() {
 
   function handleDilemmaSubmit(text: string) {
     setDilemma(text);
+    goTo("path");
+  }
+
+  function handlePath(mode: "questions" | "tuple") {
+    setCalibrationMode(mode);
+    if (mode === "questions") {
+      setQuestions(randomizeQuestions());
+    }
+    goTo("calibration");
+  }
+
+  function handlePhilosopher(_profileId: string, tuple: ProfileTuple) {
+    setAnswers([]);
+    setProfileOverride(tuple);
+    goTo("explanation");
+  }
+
+  function handleCalibrationComplete(nextAnswers: AnswerRecord[]) {
+    setAnswers(nextAnswers);
+    setProfileOverride(null);
+    goTo("explanation");
+  }
+
+  function handleTupleComplete(tuple: ProfileTuple) {
+    setAnswers([]);
+    setProfileOverride(tuple);
     goTo("explanation");
   }
 
@@ -94,25 +121,18 @@ export default function App() {
   }
 
   function handleModels(useDefaults: boolean, planner?: string, advisor?: string) {
+    let nextPlanner = plannerModel;
+    let nextAdvisor = advisorModel;
     if (!useDefaults && planner && advisor) {
       setPlannerModel(planner);
       setAdvisorModel(advisor);
+      nextPlanner = planner;
+      nextAdvisor = advisor;
     }
-    goTo("path");
+    void fetchAdvice(nextPlanner, nextAdvisor);
   }
 
-  function handlePath(mode: "questions" | "tuple") {
-    setCalibrationMode(mode);
-    if (mode === "questions") {
-      setQuestions(randomizeQuestions());
-    }
-    goTo("calibration");
-  }
-
-  const fetchAdvice = useCallback(async (
-    nextAnswers: AnswerRecord[],
-    nextProfileOverride: ProfileTuple | null
-  ) => {
+  const fetchAdvice = useCallback(async (nextPlanner: string, nextAdvisor: string) => {
     if (!sessionToken) {
       goTo("locked");
       return;
@@ -121,18 +141,17 @@ export default function App() {
     setIsLoadingAdvice(true);
     setLoadingStartTime(Date.now());
     setAdviceError(null);
-    setProfileOverride(nextProfileOverride);
 
     try {
       const nextResponse = await requestAdvice({
         token: sessionToken,
         dilemma,
-        answers: nextAnswers,
-        profileOverride: nextProfileOverride || undefined,
+        answers,
+        profileOverride: profileOverride || undefined,
         explanationLevel,
         personaMode,
-        plannerModel: plannerModel || undefined,
-        advisorModel: advisorModel || undefined
+        plannerModel: nextPlanner || undefined,
+        advisorModel: nextAdvisor || undefined
       });
       setResponse(nextResponse);
       goTo("results");
@@ -151,18 +170,11 @@ export default function App() {
       setIsLoadingAdvice(false);
       setLoadingStartTime(null);
     }
-  }, [sessionToken, dilemma, explanationLevel, personaMode, plannerModel, advisorModel]);
-
-  function handleCalibrationComplete(answers: AnswerRecord[]) {
-    void fetchAdvice(answers, null);
-  }
-
-  function handleTupleComplete(tuple: ProfileTuple) {
-    void fetchAdvice([], tuple);
-  }
+  }, [sessionToken, dilemma, answers, profileOverride, explanationLevel, personaMode]);
 
   function resetFlow() {
     setQuestions([]);
+    setAnswers([]);
     setProfileOverride(null);
     setResponse(null);
     setAdviceError(null);
@@ -194,11 +206,29 @@ export default function App() {
             />
           )}
 
+          {phase === "path" && (
+            <PathPage
+              onSelect={handlePath}
+              onSelectPhilosopher={handlePhilosopher}
+              onBack={() => goTo("dilemma")}
+            />
+          )}
+
+          {phase === "calibration" && (
+            <CalibrationPage
+              mode={calibrationMode}
+              questions={questions}
+              onCompleteQuestions={handleCalibrationComplete}
+              onCompleteTuple={handleTupleComplete}
+              onBack={() => goTo("path")}
+            />
+          )}
+
           {phase === "explanation" && (
             <ExplanationPage
               current={explanationLevel}
               onSelect={handleExplanation}
-              onBack={() => goTo("dilemma")}
+              onBack={() => goTo("path")}
             />
           )}
 
@@ -216,23 +246,6 @@ export default function App() {
               advisorModel={advisorModel}
               onSubmit={handleModels}
               onBack={() => goTo("voice")}
-            />
-          )}
-
-          {phase === "path" && (
-            <PathPage
-              onSelect={handlePath}
-              onBack={() => goTo("models")}
-            />
-          )}
-
-          {phase === "calibration" && (
-            <CalibrationPage
-              mode={calibrationMode}
-              questions={questions}
-              onCompleteQuestions={handleCalibrationComplete}
-              onCompleteTuple={handleTupleComplete}
-              onBack={() => goTo("path")}
               isSubmitting={isLoadingAdvice}
               error={adviceError}
             />
@@ -258,7 +271,7 @@ export default function App() {
 }
 
 const PHASE_ORDER: Phase[] = [
-  "locked", "dilemma", "explanation", "voice", "models", "path", "calibration", "results"
+  "locked", "dilemma", "path", "calibration", "explanation", "voice", "models", "results"
 ];
 
 function getDirection(prev: Phase | null, next: Phase): "enter" | "forward" | "backward" {

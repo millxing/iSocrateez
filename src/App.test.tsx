@@ -1,8 +1,10 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "./App";
 
 describe("App", () => {
+  afterEach(cleanup);
+
   beforeEach(() => {
     sessionStorage.clear();
   });
@@ -112,15 +114,6 @@ describe("App", () => {
       });
       fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
 
-      await screen.findByRole("heading", { name: /explanation style/i });
-      fireEvent.click(screen.getByRole("button", { name: /phd-level philosophical training/i }));
-
-      await screen.findByRole("heading", { name: /advice voice/i });
-      fireEvent.click(screen.getByRole("button", { name: /philosopher persona/i }));
-
-      await screen.findByRole("heading", { name: /^models$/i });
-      fireEvent.click(screen.getByRole("button", { name: /yes, use defaults/i }));
-
       await screen.findByRole("heading", { name: /calibration/i });
       fireEvent.click(screen.getByRole("button", { name: /9-question calibration/i }));
 
@@ -130,7 +123,16 @@ describe("App", () => {
       }
 
       fireEvent.click(screen.getByRole("button", { name: /^neutral$/i }));
-      fireEvent.click(screen.getByRole("button", { name: /see advice/i }));
+      fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
+
+      await screen.findByRole("heading", { name: /explanation style/i });
+      fireEvent.click(screen.getByRole("button", { name: /phd-level philosophical training/i }));
+
+      await screen.findByRole("heading", { name: /advice voice/i });
+      fireEvent.click(screen.getByRole("button", { name: /philosopher persona/i }));
+
+      await screen.findByRole("heading", { name: /^models$/i });
+      fireEvent.click(screen.getByRole("button", { name: /yes, use defaults/i }));
 
       await screen.findByText(/as kant, i would tell you to disclose the truth/i);
       fireEvent.click(screen.getByRole("button", { name: /ethical coordinates/i }));
@@ -247,15 +249,6 @@ describe("App", () => {
       });
       fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
 
-      await screen.findByRole("heading", { name: /explanation style/i });
-      fireEvent.click(screen.getByRole("button", { name: /no philosophy training/i }));
-
-      await screen.findByRole("heading", { name: /advice voice/i });
-      fireEvent.click(screen.getByRole("button", { name: /personalized/i }));
-
-      await screen.findByRole("heading", { name: /^models$/i });
-      fireEvent.click(screen.getByRole("button", { name: /yes, use defaults/i }));
-
       await screen.findByRole("heading", { name: /calibration/i });
       fireEvent.click(screen.getByRole("button", { name: /enter 3-axis alignment/i }));
 
@@ -264,7 +257,16 @@ describe("App", () => {
       fireEvent.change(sliders[1], { target: { value: "25" } });
       fireEvent.change(sliders[2], { target: { value: "75" } });
 
-      fireEvent.click(screen.getByRole("button", { name: /get advice/i }));
+      fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
+
+      await screen.findByRole("heading", { name: /explanation style/i });
+      fireEvent.click(screen.getByRole("button", { name: /no philosophy training/i }));
+
+      await screen.findByRole("heading", { name: /advice voice/i });
+      fireEvent.click(screen.getByRole("button", { name: /personalized/i }));
+
+      await screen.findByRole("heading", { name: /^models$/i });
+      fireEvent.click(screen.getByRole("button", { name: /yes, use defaults/i }));
 
       await screen.findByText(/use the manual tuple directly/i);
       expect(screen.queryByText(/question 1 of 9/i)).not.toBeInTheDocument();
@@ -277,6 +279,73 @@ describe("App", () => {
           reasonIntuition: 0.75
         }
       });
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
+
+  it("snaps to a chosen philosopher and shows the original dilemma in results", async () => {
+    const originalFetch = globalThis.fetch;
+    const adviceBodies: any[] = [];
+    const dilemmaText = "Should I report a friend who cheated on an exam?";
+
+    globalThis.fetch = vi.fn(async (input, init) => {
+      const url = typeof input === "string" ? input : input.url;
+      const body = init?.body ? JSON.parse(String(init.body)) : {};
+      if (url.endsWith("/api/session")) {
+        return new Response(JSON.stringify({ token: "t", expiresAt: "2030-01-01T00:00:00.000Z" }));
+      }
+      if (url.endsWith("/api/advice")) {
+        adviceBodies.push(body);
+        return new Response(
+          JSON.stringify({
+            adviceMarkdown: "## Core advice\n\nSnapped advice.",
+            profile: body.profileOverride,
+            nearestProfiles: [
+              {
+                id: "kant-deontology",
+                name: "Kantian Deontology",
+                representative: "Immanuel Kant",
+                coordinates: body.profileOverride,
+                summary: "Duty.",
+                exampleConcerns: [],
+                distance: 0,
+                whyItFits: "Exact."
+              }
+            ],
+            safetyMode: "standard",
+            modelsUsed: ["a", "b"]
+          })
+        );
+      }
+      return new Response("Not found", { status: 404 });
+    }) as typeof fetch;
+
+    try {
+      render(<App />);
+      fireEvent.change(screen.getByPlaceholderText(/shared passphrase/i), { target: { value: "secret" } });
+      fireEvent.click(screen.getByRole("button", { name: /^enter$/i }));
+      await screen.findByRole("heading", { name: /name the dilemma/i });
+      fireEvent.change(screen.getByPlaceholderText(/example:/i), { target: { value: dilemmaText } });
+      fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
+
+      await screen.findByRole("heading", { name: /calibration/i });
+      fireEvent.click(screen.getByRole("button", { name: /choose a philosopher/i }));
+      fireEvent.click(screen.getByRole("option", { name: /kantian deontology/i }));
+
+      await screen.findByRole("heading", { name: /explanation style/i });
+      fireEvent.click(screen.getByRole("button", { name: /no philosophy training/i }));
+      await screen.findByRole("heading", { name: /advice voice/i });
+      fireEvent.click(screen.getByRole("button", { name: /personalized/i }));
+      await screen.findByRole("heading", { name: /^models$/i });
+      fireEvent.click(screen.getByRole("button", { name: /yes, use defaults/i }));
+
+      await screen.findByText(/snapped advice/i);
+      expect(adviceBodies[0].answers).toEqual([]);
+      expect(adviceBodies[0].profileOverride).toMatchObject({ outcomesPrinciples: 0.95 });
+
+      fireEvent.click(screen.getAllByRole("button", { name: /original dilemma/i }).find((b) => !b.closest(".results-tabs-measure"))!);
+      expect(await screen.findByText(dilemmaText)).toBeInTheDocument();
     } finally {
       globalThis.fetch = originalFetch;
     }

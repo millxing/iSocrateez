@@ -13,8 +13,6 @@ interface CalibrationPageProps {
   onCompleteQuestions: (answers: AnswerRecord[]) => void;
   onCompleteTuple: (tuple: ProfileTuple) => void;
   onBack: () => void;
-  isSubmitting: boolean;
-  error: string | null;
 }
 
 const SCALE: { value: AnswerValue; label: string }[] = [
@@ -30,17 +28,13 @@ export function CalibrationPage({
   questions,
   onCompleteQuestions,
   onCompleteTuple,
-  onBack,
-  isSubmitting,
-  error
+  onBack
 }: CalibrationPageProps) {
   if (mode === "tuple") {
     return (
       <TupleEntry
         onComplete={onCompleteTuple}
         onBack={onBack}
-        isSubmitting={isSubmitting}
-        error={error}
       />
     );
   }
@@ -50,8 +44,6 @@ export function CalibrationPage({
       questions={questions}
       onComplete={onCompleteQuestions}
       onBack={onBack}
-      isSubmitting={isSubmitting}
-      error={error}
     />
   );
 }
@@ -59,15 +51,11 @@ export function CalibrationPage({
 function QuestionFlow({
   questions,
   onComplete,
-  onBack,
-  isSubmitting,
-  error
+  onBack
 }: {
   questions: Question[];
   onComplete: (answers: AnswerRecord[]) => void;
   onBack: () => void;
-  isSubmitting: boolean;
-  error: string | null;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, AnswerValue>>({});
@@ -157,8 +145,6 @@ function QuestionFlow({
         </div>
       </div>
 
-      {error ? <p className="error">{error}</p> : null}
-
       <div className="button-row">
         <button className="button-back" type="button" onClick={previous}>
           {currentIndex === 0 ? "Back" : "Previous"}
@@ -166,14 +152,10 @@ function QuestionFlow({
         <button
           className="button-primary"
           type="button"
-          disabled={currentAnswer === undefined || isSubmitting}
+          disabled={currentAnswer === undefined}
           onClick={next}
         >
-          {isSubmitting && currentIndex === questions.length - 1
-            ? "Requesting advice..."
-            : currentIndex === questions.length - 1
-              ? "See advice"
-              : "Next"}
+          {currentIndex === questions.length - 1 ? "Continue" : "Next"}
         </button>
       </div>
     </div>
@@ -182,14 +164,10 @@ function QuestionFlow({
 
 function TupleEntry({
   onComplete,
-  onBack,
-  isSubmitting,
-  error
+  onBack
 }: {
   onComplete: (tuple: ProfileTuple) => void;
   onBack: () => void;
-  isSubmitting: boolean;
-  error: string | null;
 }) {
   const [fields, setFields] = useState({
     outcomesPrinciples: 0,
@@ -236,8 +214,6 @@ function TupleEntry({
         ))}
       </div>
 
-      {error ? <p className="error">{error}</p> : null}
-
       <div className="button-row">
         <button className="button-back" type="button" onClick={onBack}>
           Back
@@ -245,10 +221,9 @@ function TupleEntry({
         <button
           className="button-primary"
           type="button"
-          disabled={isSubmitting}
           onClick={handleSubmit}
         >
-          {isSubmitting ? "Requesting advice..." : "Get advice"}
+          Continue
         </button>
       </div>
     </div>

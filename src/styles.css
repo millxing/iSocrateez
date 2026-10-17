@@ -330,18 +330,21 @@ textarea {
 }
 
 .button-back {
-  padding: 0.8rem 0;
-  font-weight: 500;
+  padding: 0.8rem 2rem;
+  font-weight: 600;
   font-size: 1.84rem;
-  background: none;
-  color: var(--text-muted);
-  border: none;
-  transition: color 120ms ease;
+  background: var(--surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
   align-self: flex-start;
 }
 
 .button-back:hover {
   color: var(--text);
+  background: var(--surface-hover);
+  border-color: rgba(255, 255, 255, 0.28);
 }
 
 .button-secondary {
@@ -1438,4 +1441,12 @@ textarea {
     grid-template-columns: 1fr;
     grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
   }
+}
+
+.philosopher-list {
+  max-height: 40vh;
+}
+
+.results-body .advice-markdown .dilemma-original {
+  white-space: pre-wrap;
 }

@@ -18,13 +18,14 @@ interface ResultsViewProps {
   onRestart: () => void;
 }
 
-type Tab = "advice" | "why" | "watch" | "next" | "export" | "coordinates";
+type Tab = "advice" | "why" | "watch" | "next" | "dilemma" | "export" | "coordinates";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "advice", label: "Your Advice" },
   { id: "why", label: "Why This Advice" },
   { id: "watch", label: "What to Watch For" },
   { id: "next", label: "Next Step" },
+  { id: "dilemma", label: "Original Dilemma" },
   { id: "coordinates", label: "Ethical Coordinates" },
   { id: "export", label: "Export Advice" }
 ];
@@ -47,6 +48,7 @@ function splitMarkdownSections(raw: string): Record<Tab, string> {
     why: [],
     watch: [],
     next: [],
+    dilemma: [],
     export: [],
     coordinates: []
   };
@@ -80,6 +82,7 @@ function splitMarkdownSections(raw: string): Record<Tab, string> {
     watch: sections.watch.join("\n").trim(),
     next: sections.next.join("\n").trim(),
     export: "",
+    dilemma: "",
     coordinates: ""
   };
 }
@@ -115,7 +118,7 @@ export function ResultsView({
   const availableTabs = useMemo(
     () =>
       TABS.filter((tab) => {
-        if (tab.id === "export" || tab.id === "coordinates") return true;
+        if (tab.id === "export" || tab.id === "coordinates" || tab.id === "dilemma") return true;
         return sections[tab.id].length > 0;
       }),
     [sections]
@@ -255,7 +258,13 @@ export function ResultsView({
           </div>
         )}
 
-        {activeTab !== "export" && activeTab !== "coordinates" && (
+        {activeTab === "dilemma" && (
+          <div className="advice-markdown">
+            <p className="dilemma-original">{dilemma}</p>
+          </div>
+        )}
+
+        {activeTab !== "export" && activeTab !== "coordinates" && activeTab !== "dilemma" && (
           <div className="advice-markdown">
             <ReactMarkdown>{sections[activeTab] || ""}</ReactMarkdown>
           </div>

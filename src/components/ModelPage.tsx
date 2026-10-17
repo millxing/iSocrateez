@@ -6,13 +6,15 @@ interface ModelPageProps {
   advisorModel: string;
   onSubmit: (useDefaults: boolean, planner?: string, advisor?: string) => void;
   onBack: () => void;
+  isSubmitting: boolean;
+  error: string | null;
 }
 
 function displayName(value: string): string {
   return modelOptions.find((o) => o.value === value)?.label ?? value;
 }
 
-export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack }: ModelPageProps) {
+export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack, isSubmitting, error }: ModelPageProps) {
   const [showCustom, setShowCustom] = useState(false);
   const [planner, setPlanner] = useState(plannerModel);
   const [advisor, setAdvisor] = useState(advisorModel);
@@ -32,6 +34,7 @@ export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack }: Mode
         <div className="wizard-choices">
           <button
             className="choice-card"
+            disabled={isSubmitting}
             onClick={() => onSubmit(true)}
           >
             <span className="choice-label">Yes, use defaults</span>
@@ -63,12 +66,15 @@ export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack }: Mode
           </label>
           <button
             className="button-primary"
+            disabled={isSubmitting}
             onClick={() => onSubmit(false, planner, advisor)}
           >
-            Continue
+            {isSubmitting ? "Requesting advice..." : "Get advice"}
           </button>
         </div>
       )}
+
+      {error ? <p className="error">{error}</p> : null}
 
       <button className="button-back" type="button" onClick={onBack}>
         Back
