@@ -28,7 +28,7 @@ const response: AdviceResponse = {
   },
   nearestProfiles: [
     {
-      id: "care",
+      id: "gilligan-care-ethics",
       name: "Care Ethics",
       representative: "Carol Gilligan",
       speaker: { years: "born 1936", region: "United States", traditions: "Care ethics" },
@@ -43,7 +43,7 @@ const response: AdviceResponse = {
       whyItFits: "It stays attentive to harm, trust, and relationships."
     },
     {
-      id: "virtue",
+      id: "aristotle-virtue-ethics",
       name: "Virtue Ethics",
       representative: "Aristotle",
       speaker: { years: "384–322 BCE", region: "Ancient Greece", traditions: "Virtue ethics" },
@@ -155,7 +155,7 @@ describe("ResultsView", () => {
     const { rerender } = render(<ResultsView {...props} personaMode="philosopher" />);
     expect(screen.getByText("Carol Gilligan", { exact: false })).toBeInTheDocument();
     expect(screen.getByText("born 1936 · United States")).toBeInTheDocument();
-    expect(screen.getByText("Care ethics")).toBeInTheDocument();
+    expect(screen.getByText("Care ethics, feminist ethics, moral psychology")).toBeInTheDocument();
 
     rerender(<ResultsView {...props} personaMode="personalized" />);
     expect(screen.queryByText("Speaking as")).not.toBeInTheDocument();

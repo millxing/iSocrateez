@@ -7,6 +7,7 @@ import type {
   PersonaMode,
   ProfileTuple
 } from "../../shared/contracts";
+import { philosophyProfiles } from "../../shared/philosophyProfiles";
 import { axisLabels, describeAxisPosition, formatTuple } from "../../shared/ethics";
 
 interface ResultsViewProps {
@@ -83,6 +84,11 @@ function splitMarkdownSections(raw: string): Record<Tab, string> {
   };
 }
 
+/** Look up by id so responses from an older Worker (without `speaker`) don't crash the page. */
+function getSpeaker(profileId: string) {
+  return philosophyProfiles.find((p) => p.id === profileId)?.speaker;
+}
+
 export function ResultsView({
   response,
   dilemma,
@@ -98,6 +104,7 @@ export function ResultsView({
   const measureTabsRef = useRef<HTMLElement | null>(null);
   const primary = response.nearestProfiles[0];
   const alternates = response.nearestProfiles.slice(1, 3);
+  const speaker = primary ? getSpeaker(primary.id) : undefined;
 
   const sections = useMemo(
     () => splitMarkdownSections(response.adviceMarkdown),
@@ -235,16 +242,16 @@ export function ResultsView({
       </nav>
 
       <div className="results-body">
-        {activeTab === "advice" && personaMode === "philosopher" && primary && (
+        {activeTab === "advice" && personaMode === "philosopher" && primary && speaker && (
           <div className="speaker-card">
             <p className="speaker-label">Speaking as</p>
             <p className="speaker-name">
               {primary.representative} <span>· {primary.name}</span>
             </p>
             <p className="speaker-detail">
-              {primary.speaker.years} · {primary.speaker.region}
+              {speaker.years} · {speaker.region}
             </p>
-            <p className="speaker-detail">{primary.speaker.traditions}</p>
+            <p className="speaker-detail">{speaker.traditions}</p>
           </div>
         )}
 
@@ -326,12 +333,13 @@ function ExportTab({
       : [])
   ].join("\n");
 
+  const speaker = getSpeaker(primary.id);
   const speakerSection =
-    personaMode === "philosopher"
+    personaMode === "philosopher" && speaker
       ? [
           `**Speaking as ${primary.representative}** · ${primary.name}  `,
-          `${primary.speaker.years} · ${primary.speaker.region}  `,
-          primary.speaker.traditions,
+          `${speaker.years} · ${speaker.region}  `,
+          speaker.traditions,
           ""
         ]
       : [];
