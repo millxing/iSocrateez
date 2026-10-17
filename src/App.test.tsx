@@ -46,6 +46,7 @@ describe("App", () => {
                 id: "kant",
                 name: "Kantian Deontology",
                 representative: "Immanuel Kant",
+                speaker: { years: "1724–1804", region: "Prussia", traditions: "Deontology" },
                 coordinates: {
                   outcomesPrinciples: 0.95,
                   individualCollective: -0.3,
@@ -60,6 +61,7 @@ describe("App", () => {
                 id: "scanlon",
                 name: "Contractualism",
                 representative: "T. M. Scanlon",
+                speaker: { years: "1724–1804", region: "Prussia", traditions: "Deontology" },
                 coordinates: {
                   outcomesPrinciples: 0.55,
                   individualCollective: -0.1,
@@ -74,6 +76,7 @@ describe("App", () => {
                 id: "stoic",
                 name: "Stoicism",
                 representative: "Epictetus",
+                speaker: { years: "1724–1804", region: "Prussia", traditions: "Deontology" },
                 coordinates: {
                   outcomesPrinciples: 0.7,
                   individualCollective: -0.1,
@@ -178,6 +181,7 @@ describe("App", () => {
                 id: "particularism",
                 name: "Moral Particularism",
                 representative: "Jonathan Dancy",
+                speaker: { years: "1724–1804", region: "Prussia", traditions: "Deontology" },
                 coordinates: {
                   outcomesPrinciples: 0.1,
                   individualCollective: -0.05,
@@ -192,6 +196,7 @@ describe("App", () => {
                 id: "care",
                 name: "Care Ethics",
                 representative: "Carol Gilligan",
+                speaker: { years: "1724–1804", region: "Prussia", traditions: "Deontology" },
                 coordinates: {
                   outcomesPrinciples: 0.1,
                   individualCollective: 0.75,
@@ -206,6 +211,7 @@ describe("App", () => {
                 id: "virtue",
                 name: "Virtue Ethics",
                 representative: "Aristotle",
+                speaker: { years: "1724–1804", region: "Prussia", traditions: "Deontology" },
                 coordinates: {
                   outcomesPrinciples: 0.15,
                   individualCollective: 0.15,

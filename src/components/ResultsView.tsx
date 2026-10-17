@@ -235,6 +235,19 @@ export function ResultsView({
       </nav>
 
       <div className="results-body">
+        {activeTab === "advice" && personaMode === "philosopher" && primary && (
+          <div className="speaker-card">
+            <p className="speaker-label">Speaking as</p>
+            <p className="speaker-name">
+              {primary.representative} <span>· {primary.name}</span>
+            </p>
+            <p className="speaker-detail">
+              {primary.speaker.years} · {primary.speaker.region}
+            </p>
+            <p className="speaker-detail">{primary.speaker.traditions}</p>
+          </div>
+        )}
+
         {activeTab !== "export" && activeTab !== "coordinates" && (
           <div className="advice-markdown">
             <ReactMarkdown>{sections[activeTab] || ""}</ReactMarkdown>
@@ -313,6 +326,16 @@ function ExportTab({
       : [])
   ].join("\n");
 
+  const speakerSection =
+    personaMode === "philosopher"
+      ? [
+          `**Speaking as ${primary.representative}** · ${primary.name}  `,
+          `${primary.speaker.years} · ${primary.speaker.region}  `,
+          primary.speaker.traditions,
+          ""
+        ]
+      : [];
+
   const exportMarkdown = [
     `# iSocrateez Advice`,
     "",
@@ -323,6 +346,7 @@ function ExportTab({
     "",
     dilemma,
     "",
+    ...speakerSection,
     fullMarkdown,
     "",
     coordinatesSection

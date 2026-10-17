@@ -8,6 +8,9 @@ interface DilemmaPageProps {
 
 export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
   const [dilemma, setDilemma] = useState(initialDilemma);
+  const [mode, setMode] = useState<"own" | "example">(
+    SAMPLE_DILEMMAS.some((s) => s.text === initialDilemma) ? "example" : "own"
+  );
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,21 +26,40 @@ export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
         What situation are you trying to navigate?
       </p>
       <form className="wizard-form" onSubmit={handleSubmit}>
-        <select
-          aria-label="Choose an example dilemma"
-          value={SAMPLE_DILEMMAS.find((s) => s.text === dilemma)?.title ?? ""}
-          onChange={(e) => {
-            const sample = SAMPLE_DILEMMAS.find((s) => s.title === e.target.value);
-            if (sample) setDilemma(sample.text);
-          }}
-        >
-          <option value="">Write your own, or choose an example…</option>
-          {SAMPLE_DILEMMAS.map((s) => (
-            <option key={s.title} value={s.title}>
-              {s.title}
-            </option>
-          ))}
-        </select>
+        <div className="mode-toggle" role="group" aria-label="Dilemma source">
+          <button
+            type="button"
+            className={`mode-toggle-option ${mode === "own" ? "is-active" : ""}`}
+            aria-pressed={mode === "own"}
+            onClick={() => setMode("own")}
+          >
+            Write my own
+          </button>
+          <button
+            type="button"
+            className={`mode-toggle-option ${mode === "example" ? "is-active" : ""}`}
+            aria-pressed={mode === "example"}
+            onClick={() => setMode("example")}
+          >
+            Choose an example
+          </button>
+        </div>
+        {mode === "example" && (
+          <div className="example-list" role="listbox" aria-label="Example dilemmas">
+            {SAMPLE_DILEMMAS.map((sample) => (
+              <button
+                key={sample.title}
+                type="button"
+                role="option"
+                aria-selected={sample.text === dilemma}
+                className={`choice-card example-option ${sample.text === dilemma ? "is-active" : ""}`}
+                onClick={() => setDilemma(sample.text)}
+              >
+                <span className="choice-label">{sample.title}</span>
+              </button>
+            ))}
+          </div>
+        )}
         <textarea
           name="dilemma"
           value={dilemma}

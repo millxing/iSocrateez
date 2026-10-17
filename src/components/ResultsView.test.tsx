@@ -31,6 +31,7 @@ const response: AdviceResponse = {
       id: "care",
       name: "Care Ethics",
       representative: "Carol Gilligan",
+      speaker: { years: "born 1936", region: "United States", traditions: "Care ethics" },
       coordinates: {
         outcomesPrinciples: -0.1,
         individualCollective: 0.8,
@@ -45,6 +46,7 @@ const response: AdviceResponse = {
       id: "virtue",
       name: "Virtue Ethics",
       representative: "Aristotle",
+      speaker: { years: "384–322 BCE", region: "Ancient Greece", traditions: "Virtue ethics" },
       coordinates: {
         outcomesPrinciples: 0.2,
         individualCollective: 0.1,
@@ -141,5 +143,21 @@ describe("ResultsView", () => {
     expect(screen.queryByRole("button", { name: "Why This Advice" })).not.toBeInTheDocument();
     expect(desktopNav).toHaveAttribute("hidden");
     expect(mobileNav).not.toHaveAttribute("hidden");
+  });
+
+  it("shows the speaker card only in philosopher mode", () => {
+    const props = {
+      response,
+      dilemma: "I heard a rumor about a colleague and do not know whether to raise it.",
+      explanationLevel: "general" as const,
+      onRestart: () => undefined
+    };
+    const { rerender } = render(<ResultsView {...props} personaMode="philosopher" />);
+    expect(screen.getByText("Carol Gilligan", { exact: false })).toBeInTheDocument();
+    expect(screen.getByText("born 1936 · United States")).toBeInTheDocument();
+    expect(screen.getByText("Care ethics")).toBeInTheDocument();
+
+    rerender(<ResultsView {...props} personaMode="personalized" />);
+    expect(screen.queryByText("Speaking as")).not.toBeInTheDocument();
   });
 });

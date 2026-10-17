@@ -1284,3 +1284,85 @@ textarea {
   }
 
 }
+
+/* Philosopher speaker card (Your Advice tab) */
+.results-body .speaker-card {
+  max-width: 75vw;
+  margin: 0 0 2rem;
+  padding: 1.2rem 1.6rem;
+  border-left: 4px solid #9a7b1f;
+  background: rgba(154, 123, 31, 0.1);
+  border-radius: 0 8px 8px 0;
+}
+
+.results-body .speaker-card p {
+  margin: 0;
+}
+
+.results-body .speaker-label {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #7a6217;
+}
+
+.results-body .speaker-name {
+  margin-top: 0.3rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a18;
+}
+
+.results-body .speaker-name span {
+  font-weight: 400;
+  color: #4a463e;
+}
+
+.results-body .speaker-detail {
+  margin-top: 0.3rem;
+  font-size: 1.6rem;
+  color: #4a463e;
+}
+
+/* Dilemma source toggle + example list */
+.mode-toggle {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.mode-toggle-option {
+  flex: 1;
+  padding: 1rem 1.4rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 1.9rem;
+  font-weight: 600;
+  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+}
+
+.mode-toggle-option:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.mode-toggle-option.is-active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--text);
+}
+
+.example-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-height: 28vh;
+  overflow-y: auto;
+}
+
+.example-option {
+  padding: 0.9rem 1.4rem;
+  flex-shrink: 0;
+}

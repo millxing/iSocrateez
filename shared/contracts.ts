@@ -33,6 +33,11 @@ export interface PhilosophyProfile {
   id: string;
   name: string;
   representative: string;
+  speaker: {
+    years: string;
+    region: string;
+    traditions: string;
+  };
   coordinates: ProfileTuple;
   summary: string;
   exampleConcerns: string[];

@@ -5,6 +5,11 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     id: "mill-utilitarianism",
     name: "Utilitarianism",
     representative: "John Stuart Mill",
+    speaker: {
+      years: "1806–1873",
+      region: "England",
+      traditions: "Utilitarianism, classical liberalism, empiricism"
+    },
     coordinates: {
       outcomesPrinciples: -0.95,
       individualCollective: 0.35,
@@ -17,6 +22,11 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     id: "kant-deontology",
     name: "Kantian Deontology",
     representative: "Immanuel Kant",
+    speaker: {
+      years: "1724–1804",
+      region: "Königsberg, Prussia (now Russia)",
+      traditions: "Enlightenment, German idealism, deontological ethics"
+    },
     coordinates: {
       outcomesPrinciples: 0.95,
       individualCollective: -0.3,
@@ -29,6 +39,11 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     id: "scanlon-contractualism",
     name: "Contractualism",
     representative: "T. M. Scanlon",
+    speaker: {
+      years: "born 1940",
+      region: "United States",
+      traditions: "Contractualism, contemporary analytic ethics"
+    },
     coordinates: {
       outcomesPrinciples: 0.55,
       individualCollective: -0.1,
@@ -41,6 +56,11 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     id: "gilligan-care-ethics",
     name: "Care Ethics",
     representative: "Carol Gilligan",
+    speaker: {
+      years: "born 1936",
+      region: "United States",
+      traditions: "Care ethics, feminist ethics, moral psychology"
+    },
     coordinates: {
       outcomesPrinciples: 0.1,
       individualCollective: 0.75,
@@ -53,6 +73,11 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     id: "aristotle-virtue-ethics",
     name: "Virtue Ethics",
     representative: "Aristotle",
+    speaker: {
+      years: "384–322 BCE",
+      region: "Ancient Greece",
+      traditions: "Virtue ethics, Peripatetic school"
+    },
     coordinates: {
       outcomesPrinciples: 0.15,
       individualCollective: 0.15,
@@ -65,6 +90,11 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     id: "epictetus-stoicism",
     name: "Stoicism",
     representative: "Epictetus",
+    speaker: {
+      years: "c. 50–c. 135 CE",
+      region: "Roman Empire (Phrygia and Nicopolis, Greece)",
+      traditions: "Stoicism"
+    },
     coordinates: {
       outcomesPrinciples: 0.7,
       individualCollective: -0.1,
@@ -77,6 +107,11 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     id: "confucius-role-ethics",
     name: "Confucian Role Ethics",
     representative: "Confucius",
+    speaker: {
+      years: "551–479 BCE",
+      region: "China (state of Lu)",
+      traditions: "Confucianism, role ethics"
+    },
     coordinates: {
       outcomesPrinciples: 0.45,
       individualCollective: 0.85,
@@ -89,6 +124,11 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     id: "pragmatism",
     name: "Pragmatism",
     representative: "William James and John Dewey",
+    speaker: {
+      years: "James 1842–1910; Dewey 1859–1952",
+      region: "United States",
+      traditions: "Pragmatism, empiricism, functional psychology"
+    },
     coordinates: {
       outcomesPrinciples: -0.45,
       individualCollective: 0.25,
@@ -101,6 +141,11 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     id: "existentialism",
     name: "Existentialism",
     representative: "Jean-Paul Sartre and Simone de Beauvoir",
+    speaker: {
+      years: "Sartre 1905–1980; Beauvoir 1908–1986",
+      region: "France",
+      traditions: "Existentialism, phenomenology, feminist philosophy"
+    },
     coordinates: {
       outcomesPrinciples: -0.05,
       individualCollective: -0.5,
@@ -113,6 +158,11 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     id: "moral-particularism",
     name: "Moral Particularism",
     representative: "Jonathan Dancy",
+    speaker: {
+      years: "born 1946",
+      region: "England",
+      traditions: "Moral particularism, contemporary analytic ethics"
+    },
     coordinates: {
       outcomesPrinciples: 0.1,
       individualCollective: -0.05,
