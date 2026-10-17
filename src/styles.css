@@ -1215,6 +1215,10 @@ textarea {
     border-radius: 0;
   }
 
+  .results-footer {
+    padding: 0.7rem 0;
+  }
+
   .hamburger-toggle {
     font-size: 1.2rem;
     padding: 0.7rem 1rem;
@@ -1710,6 +1714,7 @@ textarea {
 @media (max-width: 859px) {
   /* .page-stage aligns to flex-start on phones, which lets viewport-locked pages
      grow past the screen; stretch them so their inner lists scroll instead. */
+  .page-content:has(.results-layout),
   .page-content:has(.dilemma-page),
   .page-content:has(.path-page),
   .page-content:has(.models-page),
