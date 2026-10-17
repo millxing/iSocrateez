@@ -249,12 +249,12 @@ export default function App() {
               onRestart={resetFlow}
             />
           )}
-
-          {isLoadingAdvice && loadingStartTime && (
-            <LoadingOverlay startTime={loadingStartTime} />
-          )}
         </div>
       </main>
+
+      {isLoadingAdvice && loadingStartTime && (
+        <LoadingOverlay startTime={loadingStartTime} />
+      )}
     </div>
   );
 }
