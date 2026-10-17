@@ -1443,8 +1443,65 @@ textarea {
   }
 }
 
+/* Path page: viewport-locked so Back is always visible */
+.app-shell:has(.path-page) {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.page-content:has(.path-page),
+.path-page {
+  min-height: 0;
+}
+
+.path-page .wizard-choices,
+.path-page .button-back {
+  flex-shrink: 0;
+}
+
 .philosopher-list {
-  max-height: 40vh;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+}
+
+.philosopher-option {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.8rem 1.4rem;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: none;
+  text-align: left;
+  color: var(--text);
+  font-size: 1.9rem;
+}
+
+.philosopher-option:last-child {
+  border-bottom: none;
+}
+
+.philosopher-option:hover,
+.philosopher-option:focus-visible {
+  background: var(--accent-dim);
+  outline: none;
+}
+
+.philosopher-school {
+  font-weight: 600;
+}
+
+.philosopher-name {
+  color: var(--text-muted);
+}
+
+.philosopher-name::before {
+  content: "\2014\00a0";
 }
 
 .results-body .advice-markdown .dilemma-original {

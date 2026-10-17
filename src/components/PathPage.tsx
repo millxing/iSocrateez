@@ -43,18 +43,18 @@ export function PathPage({ onSelect, onSelectPhilosopher, onBack }: PathPageProp
       </div>
 
       {choosingPhilosopher && (
-        <div className="example-list philosopher-list" role="listbox" aria-label="Philosophers">
+        <div className="philosopher-list" role="listbox" aria-label="Philosophers">
           {philosophyProfiles.map((profile) => (
             <button
               key={profile.id}
               type="button"
               role="option"
               aria-selected={false}
-              className="choice-card example-option"
+              className="philosopher-option"
               onClick={() => onSelectPhilosopher(profile.id, profile.coordinates)}
             >
-              <span className="choice-label">{profile.name}</span>
-              <span className="choice-hint">{profile.representative}</span>
+              <span className="philosopher-school">{profile.name}</span>
+              <span className="philosopher-name">{profile.representative}</span>
             </button>
           ))}
         </div>
