@@ -129,6 +129,9 @@ function voiceInstruction(voice: PhilosophyProfile): string {
     : `Write in the spirit of ${voice.representative} (${voice.name}), as that tradition would counsel. Do not claim to literally be this person and do not put invented quotations in their mouth; phrases like "In this tradition…" or "From this perspective…" are fine, and you may speak in a warm second person to the user.`;
 }
 
+const NO_DISCLAIMER_NOTE =
+  "Do not add any disclaimer or aside saying this is an AI interpretation or not the person's real words; the app already shows that to the user.";
+
 export function buildVoicePlannerPrompt(context: VoicePromptContext): string {
   const { voice } = context;
   return [
@@ -153,6 +156,7 @@ export function buildVoiceAdvisorPrompt(
   return [
     "You are the advice stage of an ethical reflection app.",
     voiceInstruction(voice),
+    NO_DISCLAIMER_NOTE,
     `Perspective: ${voiceIdentity(voice)}`,
     `Voice brief: ${voice.voiceBrief}`,
     `Presentation level: ${presentationGuidance(context.explanationLevel)}`,
@@ -178,6 +182,7 @@ export function buildVoiceFallbackPrompt(context: VoicePromptContext): string {
   return [
     "Provide ethical advice for the following dilemma.",
     voiceInstruction(voice),
+    NO_DISCLAIMER_NOTE,
     `Perspective: ${voiceIdentity(voice)}`,
     `Voice brief: ${voice.voiceBrief}`,
     `Presentation level: ${presentationGuidance(context.explanationLevel)}`,

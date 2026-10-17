@@ -80,6 +80,7 @@ describe("generateAdvice", () => {
     const advisorPrompt = invoker.mock.calls[1][1] as string;
     expect(advisorPrompt).toContain("Friedrich Nietzsche");
     expect(advisorPrompt).not.toContain("Ethical tuple");
+    expect(advisorPrompt).toContain("Do not add any disclaimer");
   });
 
   it("frames religious figures 'in the spirit of' rather than literal first person", async () => {
@@ -95,6 +96,7 @@ describe("generateAdvice", () => {
     );
 
     expect(invoker.mock.calls[1][1]).toContain("Write in the spirit of");
+    expect(invoker.mock.calls[1][1]).toContain("Do not add any disclaimer");
   });
 
   it("short-circuits dangerous requests with local safety handling", async () => {

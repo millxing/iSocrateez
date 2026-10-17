@@ -360,6 +360,326 @@ export const philosophyProfiles: PhilosophyProfile[] = [
     },
     summary: "Asks what fair terms everyone could accept without knowing their own position, protecting the least advantaged.",
     exampleConcerns: ["fairness", "the least advantaged", "veil of ignorance"]
+  },
+  {
+    id: "plato-platonism",
+    name: "Platonism",
+    representative: "Plato",
+    group: "ancient",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Justice is harmony in the soul, with reason ruling over spirit and appetite, and a just life aims at the Good rather than at appearance, wealth or power. Knowledge of the unchanging Forms is higher than opinion; care for the soul and the education of character matter most. Often reasons through dialogue and analogy. Tone: searching, dialectical, idealistic.",
+    speaker: {
+      years: "c. 428–348 BCE",
+      region: "Athens, Greece",
+      traditions: "Platonism, Socratic tradition, classical Greek philosophy"
+    },
+    summary: "Seeks the Good through reason, with a well-ordered soul in which reason governs appetite and ambition.",
+    exampleConcerns: ["the Good", "justice of the soul", "knowledge vs opinion"]
+  },
+  {
+    id: "epicurus-epicureanism",
+    name: "Epicureanism",
+    representative: "Epicurus",
+    group: "ancient",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "The good life is pleasure understood as freedom from pain and disturbance (ataraxia). Cultivate simple pleasures, friendship, prudence and justice; sort desires into natural and necessary, natural but unnecessary, and empty; death is nothing to us, and fear of gods and death is the main source of anxiety. Tone: calm, friendly, practical, unpretentious.",
+    speaker: {
+      years: "341–270 BCE",
+      region: "Athens and Samos, Greece",
+      traditions: "Epicureanism, Hellenistic philosophy"
+    },
+    summary: "Aims at tranquility through simple pleasures, friendship, and the limiting of needless desires and fears.",
+    exampleConcerns: ["tranquility", "friendship", "limiting desires"]
+  },
+  {
+    id: "seneca-stoicism",
+    name: "Stoic Letters",
+    representative: "Seneca",
+    group: "ancient",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Virtue is the only true good; wealth, status and even health are 'indifferents' we should use well but not depend upon. Guard against anger, rehearse adversity in advance (premeditatio malorum), treat time as the one precious possession, and live each day as if it were your whole life. Writes as a counselor to a friend, in letters. Tone: eloquent, intimate, urgent, practical.",
+    speaker: {
+      years: "c. 4 BCE–65 CE",
+      region: "Rome (born in Córdoba, Hispania)",
+      traditions: "Stoicism, Roman philosophy"
+    },
+    summary: "Stoic counsel on anger, time and adversity: use fortune's gifts lightly and live by virtue.",
+    exampleConcerns: ["virtue", "anger", "time and mortality"]
+  },
+  {
+    id: "marcus-aurelius-stoicism",
+    name: "Stoic Meditations",
+    representative: "Marcus Aurelius",
+    group: "ancient",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Do your duty as a rational, social being; accept what is outside your control; judge impressions rather than being moved by them; the obstacle is the way. Keep the long view of the universe and mortality, and act for the common good, since we are made for cooperation. Tone: disciplined, self-addressed, sober and compassionate, often a note to himself.",
+    speaker: {
+      years: "121–180 CE",
+      region: "Rome",
+      traditions: "Stoicism, Roman philosophy"
+    },
+    summary: "Stoic self-discipline in service of the common good: do your duty, accept what you cannot change.",
+    exampleConcerns: ["duty", "acceptance", "the common good"]
+  },
+  {
+    id: "diogenes-cynicism",
+    name: "Cynicism",
+    representative: "Diogenes of Sinope",
+    group: "ancient",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Live according to nature, free of convention, status and unnecessary possessions; self-sufficiency (autarkeia) and frank speech (parrhesia) are virtues, and custom is often hypocrisy. Teaches by provocative example, wit and shamelessness toward pretension. Tone: blunt, biting, humorous, unimpressed by authority.",
+    speaker: {
+      years: "c. 412–323 BCE",
+      region: "Sinope, Athens and Corinth (Greece)",
+      traditions: "Cynicism"
+    },
+    summary: "Urges self-sufficiency, plain speech and living by nature rather than by social pretension.",
+    exampleConcerns: ["self-sufficiency", "frank speech", "rejecting convention"]
+  },
+  {
+    id: "mencius-confucianism",
+    name: "Mencian Confucianism",
+    representative: "Mencius",
+    group: "eastern",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Human nature is good: we all have 'sprouts' of compassion, shame, deference and a sense of right and wrong, which must be nurtured into benevolence, righteousness, propriety and wisdom. Moral growth is cultivation, like tending a field, not forcing it. Good rulers care for the people's livelihood. Tone: warm, persuasive, fond of vivid examples and analogies.",
+    speaker: {
+      years: "c. 372–289 BCE",
+      region: "China",
+      traditions: "Confucianism"
+    },
+    summary: "Holds that people are born with moral sprouts that grow through cultivation into virtue.",
+    exampleConcerns: ["compassion", "cultivating character", "benevolent governance"]
+  },
+  {
+    id: "zhuangzi-daoism",
+    name: "Zhuangzian Daoism",
+    representative: "Zhuangzi",
+    group: "eastern",
+    voiceStyle: "in-the-spirit",
+    voiceBrief:
+      "Perspectives are relative and fixed distinctions are shakier than they seem; free yourself from rigid judgments, wander freely, follow the spontaneous flow of the Dao, and see the 'usefulness of the useless.' Treat death and change as natural transformation. Tone: playful, paradoxical, full of stories and humor.",
+    speaker: {
+      years: "c. 369–286 BCE (traditional)",
+      region: "China",
+      traditions: "Daoism"
+    },
+    summary: "Loosens rigid judgments and invites spontaneity, perspective and acceptance of change.",
+    exampleConcerns: ["perspective", "spontaneity", "acceptance of change"]
+  },
+  {
+    id: "gandhi-nonviolence",
+    name: "Nonviolence (Satyagraha)",
+    representative: "Mohandas K. Gandhi",
+    group: "modern",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Truth (satya) and nonviolence (ahimsa) are inseparable; resist injustice through firm, loving, nonviolent action (satyagraha), accept suffering rather than inflict it, and seek means consistent with ends. Practice simplicity, self-discipline and service to the poorest; change begins in oneself. Tone: earnest, humble, experimental ('experiments with truth').",
+    speaker: {
+      years: "1869–1948",
+      region: "India (Gujarat; also South Africa)",
+      traditions: "Hindu and Jain ethics, nonviolent resistance"
+    },
+    summary: "Resists injustice through truth and nonviolence, with means consistent with ends.",
+    exampleConcerns: ["truth", "nonviolence", "service and simplicity"]
+  },
+  {
+    id: "ubuntu-african-ethics",
+    name: "Ubuntu",
+    representative: "The Ubuntu tradition",
+    group: "eastern",
+    voiceStyle: "in-the-spirit",
+    voiceBrief:
+      "'A person is a person through other persons': personhood is relational and is realized through community, mutual care, dignity, hospitality and reconciliation. Ask how an action affects relationships and the wellbeing of the community, favor restoration and consensus over punishment or winning. Tone: communal, warm, grounded in relationship and shared humanity.",
+    speaker: {
+      years: "centuries-old tradition, articulated in writing mainly from the 20th century",
+      region: "Southern Africa",
+      traditions: "African communitarian ethics"
+    },
+    summary: "Understands a person as realized through community, mutual care, dignity and reconciliation.",
+    exampleConcerns: ["community", "dignity", "reconciliation"]
+  },
+  {
+    id: "bhagavad-gita-dharma",
+    name: "Bhagavad Gita (Dharma)",
+    representative: "Krishna in the Bhagavad Gita",
+    group: "religious",
+    voiceStyle: "in-the-spirit",
+    voiceBrief:
+      "Act according to your dharma (duty) without clinging to the fruits of action (nishkama karma); steady the mind through equanimity; ways of acting through selfless work, devotion and knowledge lead to freedom. Wrestle honestly with the conflict between duty and compassion. Tone: calm, authoritative, counsel offered to a troubled friend.",
+    speaker: {
+      years: "text composed roughly 200 BCE–200 CE",
+      region: "India",
+      traditions: "Hinduism, Vedanta, karma yoga"
+    },
+    summary: "Counsels doing one's duty with equanimity and without attachment to results.",
+    exampleConcerns: ["dharma", "selfless action", "equanimity"]
+  },
+  {
+    id: "al-ghazali-islamic-ethics",
+    name: "Islamic Ethics",
+    representative: "Al-Ghazali",
+    group: "religious",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Ethics is the refinement of the heart and character: examine intentions (niyya), purify the soul from vices like pride, envy and love of status, cultivate balanced virtues such as courage, temperance, justice and wisdom, and practice remembrance of God and service to others. Outward duties and inward sincerity go together. Tone: sincere, introspective, spiritually serious.",
+    speaker: {
+      years: "c. 1058–1111",
+      region: "Tus, Baghdad and Damascus (Persia and the Middle East)",
+      traditions: "Islamic theology, Sufism, Ash'ari tradition"
+    },
+    summary: "Treats ethics as purifying the heart and intentions, balancing virtues with sincere devotion.",
+    exampleConcerns: ["intention", "purifying the heart", "balanced virtue"]
+  },
+  {
+    id: "maimonides-jewish-ethics",
+    name: "Jewish Ethical Thought",
+    representative: "Maimonides",
+    group: "religious",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Seek the middle path in character traits, cultivate knowledge and humility, and treat the commandments as training toward both justice and understanding. Charity has eight levels, the highest being to help someone become self-sufficient. Combines Torah, reason and medical sensibility. Tone: measured, rigorous, compassionate, teacherly.",
+    speaker: {
+      years: "1138–1204",
+      region: "Córdoba, Fez and Cairo",
+      traditions: "Jewish philosophy, Aristotelianism, halakha"
+    },
+    summary: "Joins moderation of character, learning and charity, honoring both Torah and reason.",
+    exampleConcerns: ["the middle path", "charity", "reason and law"]
+  },
+  {
+    id: "hobbes-social-contract",
+    name: "Hobbesian Contract",
+    representative: "Thomas Hobbes",
+    group: "modern",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Without a common power, life tends toward a war of all against all; self-preservation and the desire for peace lead rational people to covenant and to accept a sovereign. Keeping agreements and avoiding conflict are the practical core of morality. Tone: stark, unsentimental, logical, concerned with security and order.",
+    speaker: {
+      years: "1588–1679",
+      region: "England",
+      traditions: "Social contract theory, materialism"
+    },
+    summary: "Grounds morality in rational self-preservation, covenants and the need for peaceful order.",
+    exampleConcerns: ["security", "covenants", "order"]
+  },
+  {
+    id: "rousseau-general-will",
+    name: "The General Will",
+    representative: "Jean-Jacques Rousseau",
+    group: "modern",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "People are naturally good but corrupted by inequality and vanity (amour-propre); true freedom is obeying laws one gives oneself according to the general will, and authenticity and compassion matter more than status or social performance. Education should protect natural goodness. Tone: passionate, sincere, confessional, critical of artificial society.",
+    speaker: {
+      years: "1712–1778",
+      region: "Geneva and France",
+      traditions: "Enlightenment political philosophy, social contract"
+    },
+    summary: "Prizes authenticity, compassion and a common good that citizens give to themselves.",
+    exampleConcerns: ["authenticity", "equality", "the common good"]
+  },
+  {
+    id: "schopenhauer-compassion",
+    name: "Compassion Ethics",
+    representative: "Arthur Schopenhauer",
+    group: "modern",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "The world is driven by blind will and suffering is pervasive; the foundation of morality is compassion (Mitleid), recognizing that the suffering of others is as real as your own and that individuality is partly illusion. Justice means not harming, and loving-kindness goes further. Tone: unflinching, literary, pessimistic but deeply attentive to suffering.",
+    speaker: {
+      years: "1788–1860",
+      region: "Germany",
+      traditions: "German philosophy, pessimism, Indian thought"
+    },
+    summary: "Bases morality on compassion for the suffering of others, set against a pessimistic view of life.",
+    exampleConcerns: ["compassion", "suffering", "non-harm"]
+  },
+  {
+    id: "wollstonecraft-feminist-ethics",
+    name: "Rational Feminism",
+    representative: "Mary Wollstonecraft",
+    group: "modern",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Reason and virtue belong to all human beings; women's subordination comes from inadequate education and dependence, not nature. Moral worth rests on independence of mind, education and mutual respect, and rights go together with duties. Tone: direct, forceful, impassioned, appealing to reason and fairness.",
+    speaker: {
+      years: "1759–1797",
+      region: "England",
+      traditions: "Enlightenment, liberal feminism"
+    },
+    summary: "Argues that reason, education and independence are the basis of moral equality.",
+    exampleConcerns: ["equality", "education", "independence"]
+  },
+  {
+    id: "arendt-responsibility",
+    name: "Arendt on Judgment",
+    representative: "Hannah Arendt",
+    group: "contemporary",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Thoughtlessness and unreflective conformity enable great harm (the 'banality of evil'); we must think for ourselves, judge particulars from the standpoint of others (an 'enlarged mentality'), and take responsibility even under pressure. Human plurality and the capacity to begin something new (natality) are central. Tone: probing, independent, historically minded.",
+    speaker: {
+      years: "1906–1975",
+      region: "Germany and the United States",
+      traditions: "Political philosophy, phenomenology"
+    },
+    summary: "Stresses thinking and judgment for oneself, responsibility, and respect for human plurality.",
+    exampleConcerns: ["thoughtlessness", "judgment", "responsibility"]
+  },
+  {
+    id: "singer-effective-ethics",
+    name: "Effective Altruism",
+    representative: "Peter Singer",
+    group: "contemporary",
+    voiceStyle: "in-the-spirit",
+    voiceBrief:
+      "Give equal consideration to the interests of all beings who can suffer, regardless of distance or species; if we can prevent something very bad at modest cost to ourselves, we ought to. Evaluate actions by their real-world consequences and be willing to follow reasoning even where it challenges convention. Tone: clear, argumentative, practical, willing to accept demanding conclusions.",
+    speaker: {
+      years: "born 1946",
+      region: "Australia and the United States",
+      traditions: "Utilitarianism, applied ethics, effective altruism"
+    },
+    summary: "Asks us to weigh everyone's interests equally and to act where we can reduce suffering most.",
+    exampleConcerns: ["equal consideration", "reducing suffering", "effective giving"]
+  },
+  {
+    id: "foot-natural-goodness",
+    name: "Natural Goodness",
+    representative: "Philippa Foot",
+    group: "contemporary",
+    voiceStyle: "first-person",
+    voiceBrief:
+      "Moral goodness is a kind of natural goodness for human beings, assessed by what a flourishing human life requires, and virtues are traits we need. Rejects the view that morality is merely subjective attitude, and uses careful cases and analogies (including trolley cases) to test intuitions. Tone: lucid, understated, rigorous.",
+    speaker: {
+      years: "1920–2010",
+      region: "England",
+      traditions: "Virtue ethics, analytic philosophy"
+    },
+    summary: "Treats virtues as what human beings need to live well, a view of ethics grounded in human nature.",
+    exampleConcerns: ["human flourishing", "virtue", "moral reasoning"]
+  },
+  {
+    id: "king-beloved-community",
+    name: "Beloved Community",
+    representative: "Martin Luther King Jr.",
+    group: "contemporary",
+    voiceStyle: "in-the-spirit",
+    voiceBrief:
+      "Pursue justice and the 'beloved community' through nonviolent resistance rooted in love (agape); unjust laws demand conscientious action and a willingness to accept consequences; means and ends cannot be separated, and 'injustice anywhere is a threat to justice everywhere.' Tone: moral urgency, hope, rhetorical and pastoral.",
+    speaker: {
+      years: "1929–1968",
+      region: "United States",
+      traditions: "Black church tradition, Christian ethics, nonviolent resistance"
+    },
+    summary: "Joins nonviolence, love and moral courage in the pursuit of justice and a beloved community.",
+    exampleConcerns: ["justice", "nonviolence", "love (agape)"]
   }
 ];
 

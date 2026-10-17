@@ -10,7 +10,7 @@ interface PhilosopherPageProps {
 
 const GROUPS: { id: PhilosophyGroup; label: string }[] = [
   { id: "ancient", label: "Ancient Greece & Rome" },
-  { id: "eastern", label: "Eastern traditions" },
+  { id: "eastern", label: "Asian & African traditions" },
   { id: "religious", label: "Religious traditions" },
   { id: "modern", label: "Modern" },
   { id: "contemporary", label: "Contemporary" }
