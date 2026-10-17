@@ -29,16 +29,26 @@ export interface ProfileTuple {
   reasonIntuition: number;
 }
 
+export type PhilosophyGroup = "ancient" | "eastern" | "religious" | "modern" | "contemporary";
+
+export type VoiceStyle = "first-person" | "in-the-spirit";
+
 export interface PhilosophyProfile {
   id: string;
   name: string;
   representative: string;
+  group: PhilosophyGroup;
+  /** How the advice voice is framed: literal first person, or "in the spirit of". */
+  voiceStyle: VoiceStyle;
+  /** Core tenets, concerns, and tone, fed to the model when answering in this voice. */
+  voiceBrief: string;
   speaker: {
     years: string;
     region: string;
     traditions: string;
   };
-  coordinates: ProfileTuple;
+  /** Only profiles with coordinates take part in nearest-match ranking. */
+  coordinates?: ProfileTuple;
   summary: string;
   exampleConcerns: string[];
 }
@@ -58,6 +68,8 @@ export interface AdviceRequest {
   dilemma: string;
   answers: AnswerRecord[];
   profileOverride?: ProfileTuple;
+  /** When set, advice is given in this philosopher's voice and the axes are ignored. */
+  philosopherId?: string;
   explanationLevel: ExplanationLevel;
   personaMode: PersonaMode;
   plannerModel?: string;
@@ -72,7 +84,9 @@ export interface AdviceTiming {
 
 export interface AdviceResponse {
   adviceMarkdown: string;
-  profile: ProfileTuple;
+  /** Absent when the advice was given in a chosen philosopher's voice. */
+  profile?: ProfileTuple;
+  selectedPhilosopherId?: string;
   nearestProfiles: RankedProfile[];
   safetyMode: "standard" | "supportive_refusal";
   modelsUsed: string[];

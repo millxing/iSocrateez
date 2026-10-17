@@ -1,11 +1,15 @@
 import type { AdviceRequest, AdviceResponse, AdviceTiming } from "../../shared/contracts";
 import { rankPhilosophies, scoreProfile } from "../../shared/ethics";
+import { getPhilosophyById } from "../../shared/philosophyProfiles";
 import { questionBank } from "../../shared/questionBank";
 import { assessSafety } from "./safety";
 import {
   buildAdvisorPrompt,
   buildFallbackPrompt,
   buildPlannerPrompt,
+  buildVoiceAdvisorPrompt,
+  buildVoiceFallbackPrompt,
+  buildVoicePlannerPrompt,
   type PlannerOutput
 } from "./prompts";
 
@@ -59,8 +63,22 @@ export async function generateAdvice(
   invokeModel: ModelInvoker = callModel
 ): Promise<AdviceResponse> {
   const totalStart = Date.now();
-  const profile = request.profileOverride || scoreProfile(request.answers, questionBank);
-  const nearestProfiles = rankPhilosophies(profile).slice(0, 3);
+  const voice = request.philosopherId ? getPhilosophyById(request.philosopherId) : undefined;
+  if (request.philosopherId && !voice) {
+    throw new Error("Unknown philosopher.");
+  }
+
+  const profile = voice
+    ? undefined
+    : request.profileOverride || scoreProfile(request.answers, questionBank);
+  const nearestProfiles = profile ? rankPhilosophies(profile).slice(0, 3) : [];
+  // Fields describing who the advice is for/from; the same on every return path.
+  const identity: Pick<AdviceResponse, "profile" | "nearestProfiles" | "selectedPhilosopherId"> = {
+    profile,
+    nearestProfiles,
+    selectedPhilosopherId: voice?.id
+  };
+
   const safety = assessSafety(
     request.dilemma,
     request.explanationLevel,
@@ -70,8 +88,7 @@ export async function generateAdvice(
   if (safety.mode === "supportive_refusal") {
     return {
       adviceMarkdown: safety.markdown || "I can't help with that request.",
-      profile,
-      nearestProfiles,
+      ...identity,
       safetyMode: safety.mode,
       modelsUsed: ["local-safety"]
     };
@@ -97,22 +114,33 @@ export async function generateAdvice(
     dilemma: request.dilemma,
     explanationLevel: request.explanationLevel,
     personaMode: request.personaMode,
-    profile,
+    profile: profile as NonNullable<typeof profile>,
     nearestProfiles
   };
+  const voiceContext = voice
+    ? { dilemma: request.dilemma, explanationLevel: request.explanationLevel, voice }
+    : undefined;
+
+  const plannerPrompt = voiceContext
+    ? buildVoicePlannerPrompt(voiceContext)
+    : buildPlannerPrompt(context);
+  const advisorPromptFor = (plannerOutput: PlannerOutput) =>
+    voiceContext
+      ? buildVoiceAdvisorPrompt(voiceContext, plannerOutput)
+      : buildAdvisorPrompt(context, plannerOutput);
+  const fallbackPrompt = voiceContext
+    ? buildVoiceFallbackPrompt(voiceContext)
+    : buildFallbackPrompt(context);
 
   try {
     const plannerStart = Date.now();
-    const plannerRaw = await invokeModel(plannerConfig, buildPlannerPrompt(context));
+    const plannerRaw = await invokeModel(plannerConfig, plannerPrompt);
     const plannerMs = Date.now() - plannerStart;
 
     const plannerOutput = validatePlannerOutput(plannerRaw);
 
     const advisorStart = Date.now();
-    const adviceMarkdown = await invokeModel(
-      advisorConfig,
-      buildAdvisorPrompt(context, plannerOutput)
-    );
+    const adviceMarkdown = await invokeModel(advisorConfig, advisorPromptFor(plannerOutput));
     const advisorMs = Date.now() - advisorStart;
 
     const timing: AdviceTiming = {
@@ -123,8 +151,7 @@ export async function generateAdvice(
 
     return {
       adviceMarkdown,
-      profile,
-      nearestProfiles,
+      ...identity,
       safetyMode: "standard",
       modelsUsed: [
         `${plannerConfig.provider}:${plannerConfig.model}`,
@@ -134,7 +161,7 @@ export async function generateAdvice(
     };
   } catch {
     const advisorStart = Date.now();
-    const adviceMarkdown = await invokeModel(advisorConfig, buildFallbackPrompt(context));
+    const adviceMarkdown = await invokeModel(advisorConfig, fallbackPrompt);
     const advisorMs = Date.now() - advisorStart;
 
     const timing: AdviceTiming = {
@@ -145,8 +172,7 @@ export async function generateAdvice(
 
     return {
       adviceMarkdown,
-      profile,
-      nearestProfiles,
+      ...identity,
       safetyMode: "standard",
       modelsUsed: [`fallback:${advisorConfig.provider}:${advisorConfig.model}`],
       timing

@@ -280,7 +280,7 @@ describe("App", () => {
     }
   });
 
-  it("snaps to a chosen philosopher and shows the original dilemma in results", async () => {
+  it("sends the chosen philosopher (no axes) and shows the original dilemma in results", async () => {
     const originalFetch = globalThis.fetch;
     const adviceBodies: any[] = [];
     const dilemmaText = "Should I report a friend who cheated on an exam?";
@@ -296,19 +296,8 @@ describe("App", () => {
         return new Response(
           JSON.stringify({
             adviceMarkdown: "## Core advice\n\nSnapped advice.",
-            profile: body.profileOverride,
-            nearestProfiles: [
-              {
-                id: "kant-deontology",
-                name: "Kantian Deontology",
-                representative: "Immanuel Kant",
-                coordinates: body.profileOverride,
-                summary: "Duty.",
-                exampleConcerns: [],
-                distance: 0,
-                whyItFits: "Exact."
-              }
-            ],
+            nearestProfiles: [],
+            selectedPhilosopherId: body.philosopherId,
             safetyMode: "standard",
             modelsUsed: ["a", "b"]
           })
@@ -327,7 +316,10 @@ describe("App", () => {
 
       await screen.findByRole("heading", { name: /calibration/i });
       fireEvent.click(screen.getByRole("button", { name: /choose a philosopher/i }));
-      fireEvent.click(screen.getByRole("option", { name: /kantian deontology/i }));
+      await screen.findByRole("heading", { name: /choose a philosopher/i });
+      expect(screen.getByRole("button", { name: /^continue$/i })).toBeDisabled();
+      fireEvent.click(screen.getByRole("radio", { name: /nietzsche/i }));
+      fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
 
       await screen.findByRole("heading", { name: /explanation style/i });
       fireEvent.click(screen.getByRole("button", { name: /no philosophy training/i }));
@@ -337,7 +329,8 @@ describe("App", () => {
       await screen.findByText(/snapped advice/i);
       expect(adviceBodies[0].answers).toEqual([]);
       expect(adviceBodies[0].personaMode).toBe("philosopher");
-      expect(adviceBodies[0].profileOverride).toMatchObject({ outcomesPrinciples: 0.95 });
+      expect(adviceBodies[0].philosopherId).toBe("nietzsche-perspectivism");
+      expect(adviceBodies[0].profileOverride).toBeUndefined();
 
       fireEvent.click(screen.getAllByRole("button", { name: /original dilemma/i }).find((b) => !b.closest(".results-tabs-measure"))!);
       expect(await screen.findByText(dilemmaText)).toBeInTheDocument();

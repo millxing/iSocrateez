@@ -13,6 +13,7 @@ import { PasswordGate } from "./components/PasswordGate";
 import { DilemmaPage } from "./components/DilemmaPage";
 import { ExplanationPage } from "./components/ExplanationPage";
 import { ModelPage } from "./components/ModelPage";
+import { PhilosopherPage } from "./components/PhilosopherPage";
 import { PathPage } from "./components/PathPage";
 import { CalibrationPage } from "./components/CalibrationPage";
 import { ResultsView } from "./components/ResultsView";
@@ -23,6 +24,7 @@ type Phase =
   | "dilemma"
   | "path"
   | "calibration"
+  | "philosopher"
   | "explanation"
   | "models"
   | "results";
@@ -83,7 +85,11 @@ export default function App() {
     goTo("path");
   }
 
-  function handlePath(mode: "questions" | "tuple") {
+  function handlePath(mode: "questions" | "tuple" | "philosopher") {
+    if (mode === "philosopher") {
+      goTo("philosopher");
+      return;
+    }
     setChosenPhilosopher(null);
     setCalibrationMode(mode);
     if (mode === "questions") {
@@ -92,10 +98,10 @@ export default function App() {
     goTo("calibration");
   }
 
-  function handlePhilosopher(profileId: string, tuple: ProfileTuple) {
+  function handlePhilosopher(profileId: string) {
     setChosenPhilosopher(profileId);
     setAnswers([]);
-    setProfileOverride(tuple);
+    setProfileOverride(null);
     goTo("explanation");
   }
 
@@ -144,6 +150,7 @@ export default function App() {
         dilemma,
         answers,
         profileOverride: profileOverride || undefined,
+        philosopherId: chosenPhilosopher || undefined,
         explanationLevel,
         personaMode,
         plannerModel: nextPlanner || undefined,
@@ -166,7 +173,7 @@ export default function App() {
       setIsLoadingAdvice(false);
       setLoadingStartTime(null);
     }
-  }, [sessionToken, dilemma, answers, profileOverride, explanationLevel, personaMode]);
+  }, [sessionToken, dilemma, answers, profileOverride, chosenPhilosopher, explanationLevel, personaMode]);
 
   function resetFlow() {
     setQuestions([]);
@@ -206,8 +213,15 @@ export default function App() {
           {phase === "path" && (
             <PathPage
               onSelect={handlePath}
-              onSelectPhilosopher={handlePhilosopher}
               onBack={() => goTo("dilemma")}
+            />
+          )}
+
+          {phase === "philosopher" && (
+            <PhilosopherPage
+              initialId={chosenPhilosopher}
+              onSubmit={handlePhilosopher}
+              onBack={() => goTo("path")}
             />
           )}
 
@@ -260,7 +274,7 @@ export default function App() {
 }
 
 const PHASE_ORDER: Phase[] = [
-  "locked", "dilemma", "path", "calibration", "explanation", "models", "results"
+  "locked", "dilemma", "path", "calibration", "philosopher", "explanation", "models", "results"
 ];
 
 function getDirection(prev: Phase | null, next: Phase): "enter" | "forward" | "backward" {

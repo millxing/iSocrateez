@@ -1,16 +1,9 @@
-import { useState } from "react";
-import type { ProfileTuple } from "../../shared/contracts";
-import { philosophyProfiles } from "../../shared/philosophyProfiles";
-
 interface PathPageProps {
-  onSelect: (mode: "questions" | "tuple") => void;
-  onSelectPhilosopher: (profileId: string, tuple: ProfileTuple) => void;
+  onSelect: (mode: "questions" | "tuple" | "philosopher") => void;
   onBack: () => void;
 }
 
-export function PathPage({ onSelect, onSelectPhilosopher, onBack }: PathPageProps) {
-  const [choosingPhilosopher, setChoosingPhilosopher] = useState(false);
-
+export function PathPage({ onSelect, onBack }: PathPageProps) {
   return (
     <div className="wizard-card path-page">
       <h2 className="wizard-title">Calibration</h2>
@@ -33,32 +26,13 @@ export function PathPage({ onSelect, onSelectPhilosopher, onBack }: PathPageProp
           <span className="choice-hint">Set your ethical coordinates directly with sliders.</span>
         </button>
         <button
-          className={`choice-card ${choosingPhilosopher ? "is-active" : ""}`}
-          aria-expanded={choosingPhilosopher}
-          onClick={() => setChoosingPhilosopher((open) => !open)}
+          className="choice-card"
+          onClick={() => onSelect("philosopher")}
         >
           <span className="choice-label">Choose a philosopher</span>
-          <span className="choice-hint">Snap your alignment to a philosopher or school of thought.</span>
+          <span className="choice-hint">Get advice in the voice of a specific thinker or tradition.</span>
         </button>
       </div>
-
-      {choosingPhilosopher && (
-        <div className="philosopher-list" role="listbox" aria-label="Philosophers">
-          {philosophyProfiles.map((profile) => (
-            <button
-              key={profile.id}
-              type="button"
-              role="option"
-              aria-selected={false}
-              className="philosopher-option"
-              onClick={() => onSelectPhilosopher(profile.id, profile.coordinates)}
-            >
-              <span className="philosopher-school">{profile.name}</span>
-              <span className="philosopher-name">{profile.representative}</span>
-            </button>
-          ))}
-        </div>
-      )}
 
       <button className="button-back" type="button" onClick={onBack}>
         Back

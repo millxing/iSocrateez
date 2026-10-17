@@ -31,6 +31,9 @@ const response: AdviceResponse = {
       id: "gilligan-care-ethics",
       name: "Care Ethics",
       representative: "Carol Gilligan",
+      group: "contemporary",
+      voiceStyle: "in-the-spirit",
+      voiceBrief: "brief",
       speaker: { years: "born 1936", region: "United States", traditions: "Care ethics" },
       coordinates: {
         outcomesPrinciples: -0.1,
@@ -46,6 +49,9 @@ const response: AdviceResponse = {
       id: "aristotle-virtue-ethics",
       name: "Virtue Ethics",
       representative: "Aristotle",
+      group: "ancient",
+      voiceStyle: "first-person",
+      voiceBrief: "brief",
       speaker: { years: "384–322 BCE", region: "Ancient Greece", traditions: "Virtue ethics" },
       coordinates: {
         outcomesPrinciples: 0.2,
@@ -145,19 +151,33 @@ describe("ResultsView", () => {
     expect(mobileNav).not.toHaveAttribute("hidden");
   });
 
-  it("shows the speaker card only in philosopher mode", () => {
+  it("shows the speaker card and speaker tab only when a philosopher voice was used", async () => {
     const props = {
-      response,
       dilemma: "I heard a rumor about a colleague and do not know whether to raise it.",
       explanationLevel: "general" as const,
       onRestart: () => undefined
     };
-    const { rerender } = render(<ResultsView {...props} personaMode="philosopher" />);
-    expect(screen.getByText("Carol Gilligan", { exact: false })).toBeInTheDocument();
-    expect(screen.getByText("born 1936 · United States")).toBeInTheDocument();
-    expect(screen.getByText("Care ethics, feminist ethics, moral psychology")).toBeInTheDocument();
+    const voiceResponse: AdviceResponse = {
+      ...response,
+      profile: undefined,
+      nearestProfiles: [],
+      selectedPhilosopherId: "nietzsche-perspectivism"
+    };
+    const { rerender } = render(
+      <ResultsView {...props} response={voiceResponse} personaMode="philosopher" />
+    );
+    expect(screen.getByText("Speaking as")).toBeInTheDocument();
+    expect(screen.getByText("1844–1900 · Prussia and Germany")).toBeInTheDocument();
+    expect(screen.getByText(/ai interpretation/i)).toBeInTheDocument();
+    expect(
+      screen.getAllByRole("button", { name: "About the Speaker" }).length
+    ).toBeGreaterThan(0);
+    expect(screen.queryByRole("button", { name: "Ethical Coordinates" })).not.toBeInTheDocument();
 
-    rerender(<ResultsView {...props} personaMode="personalized" />);
+    rerender(<ResultsView {...props} response={response} personaMode="personalized" />);
     expect(screen.queryByText("Speaking as")).not.toBeInTheDocument();
+    expect(
+      screen.getAllByRole("button", { name: "Ethical Coordinates" }).length
+    ).toBeGreaterThan(0);
   });
 });

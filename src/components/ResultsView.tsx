@@ -2,12 +2,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import type {
   AdviceResponse,
+  PhilosophyProfile,
   Axis,
   ExplanationLevel,
   PersonaMode,
   ProfileTuple
 } from "../../shared/contracts";
-import { philosophyProfiles } from "../../shared/philosophyProfiles";
+import { getPhilosophyById } from "../../shared/philosophyProfiles";
 import { axisLabels, describeAxisPosition, formatTuple } from "../../shared/ethics";
 
 interface ResultsViewProps {
@@ -87,11 +88,6 @@ function splitMarkdownSections(raw: string): Record<Tab, string> {
   };
 }
 
-/** Look up by id so responses from an older Worker (without `speaker`) don't crash the page. */
-function getSpeaker(profileId: string) {
-  return philosophyProfiles.find((p) => p.id === profileId)?.speaker;
-}
-
 export function ResultsView({
   response,
   dilemma,
@@ -107,21 +103,32 @@ export function ResultsView({
   const measureTabsRef = useRef<HTMLElement | null>(null);
   const primary = response.nearestProfiles[0];
   const alternates = response.nearestProfiles.slice(1, 3);
-  const speaker = primary ? getSpeaker(primary.id) : undefined;
+  // Looked up client-side so the page doesn't depend on the Worker echoing the full profile.
+  const voice = response.selectedPhilosopherId
+    ? getPhilosophyById(response.selectedPhilosopherId)
+    : undefined;
 
   const sections = useMemo(
     () => splitMarkdownSections(response.adviceMarkdown),
     [response.adviceMarkdown]
   );
 
+  const tabs = useMemo(
+    () =>
+      TABS.map((tab) =>
+        tab.id === "coordinates" && voice ? { ...tab, label: "About the Speaker" } : tab
+      ),
+    [voice]
+  );
+
   // Only show tabs that have content (plus export and coordinates which are always available)
   const availableTabs = useMemo(
     () =>
-      TABS.filter((tab) => {
+      tabs.filter((tab) => {
         if (tab.id === "export" || tab.id === "coordinates" || tab.id === "dilemma") return true;
         return sections[tab.id].length > 0;
       }),
-    [sections]
+    [sections, tabs]
   );
 
   const fullMarkdown = response.adviceMarkdown.replace(
@@ -129,7 +136,7 @@ export function ResultsView({
     "$1 Your Advice"
   );
 
-  const activeLabel = TABS.find((t) => t.id === activeTab)?.label ?? "";
+  const activeLabel = tabs.find((t) => t.id === activeTab)?.label ?? "";
 
   function selectTab(id: Tab) {
     setActiveTab(id);
@@ -245,16 +252,21 @@ export function ResultsView({
       </nav>
 
       <div className="results-body">
-        {activeTab === "advice" && personaMode === "philosopher" && primary && speaker && (
+        {activeTab === "advice" && voice && (
           <div className="speaker-card">
-            <p className="speaker-label">Speaking as</p>
+            <p className="speaker-label">
+              {voice.voiceStyle === "first-person" ? "Speaking as" : "In the spirit of"}
+            </p>
             <p className="speaker-name">
-              {primary.representative} <span>· {primary.name}</span>
+              {voice.representative} <span>· {voice.name}</span>
             </p>
             <p className="speaker-detail">
-              {speaker.years} · {speaker.region}
+              {voice.speaker.years} · {voice.speaker.region}
             </p>
-            <p className="speaker-detail">{speaker.traditions}</p>
+            <p className="speaker-detail">{voice.speaker.traditions}</p>
+            <p className="speaker-note">
+              An AI interpretation of this perspective, not the person's own words.
+            </p>
           </div>
         )}
 
@@ -281,14 +293,19 @@ export function ResultsView({
           />
         )}
 
-        {activeTab === "coordinates" && (
-          <CoordinatesTab
-            profile={response.profile}
-            primary={primary}
-            alternates={alternates}
-            philosophySelected={personaMode === "philosopher"}
-          />
-        )}
+        {activeTab === "coordinates" &&
+          (voice ? (
+            <SpeakerTab voice={voice} />
+          ) : (
+            response.profile &&
+            primary && (
+              <CoordinatesTab
+                profile={response.profile}
+                primary={primary}
+                alternates={alternates}
+              />
+            )
+          ))}
       </div>
 
       <div className="results-footer">
@@ -317,42 +334,59 @@ function ExportTab({
 }) {
   const primary = response.nearestProfiles[0];
   const alternates = response.nearestProfiles.slice(1, 3);
+  const voice = response.selectedPhilosopherId
+    ? getPhilosophyById(response.selectedPhilosopherId)
+    : undefined;
 
-  const coordinatesSection = [
-    "## Ethical Coordinates",
-    "",
-    `**Profile:** ${formatTuple(response.profile)}`,
-    "",
-    ...Object.entries(axisLabels).map(([axisKey, labels]) => {
-      const axis = axisKey as Axis;
-      const value = response.profile[axis];
-      return `- **${labels.title}:** ${describeAxisPosition(axis, value)} (${value.toFixed(2)})`;
-    }),
-    "",
-    `**${personaMode === "philosopher" ? "Selected philosophy" : "Nearest match"}:** ${primary.name} via ${primary.representative}`,
-    primary.summary,
-    ...(personaMode === "philosopher" ? [] : [primary.whyItFits]),
-    ...(alternates.length > 0
+  const profile = response.profile;
+  const coordinatesSection =
+    !voice && profile && primary
       ? [
+          "## Ethical Coordinates",
           "",
-          "**Nearby alternatives:**",
-          ...alternates.map(
-            (p) => `- **${p.name} / ${p.representative}** — ${p.whyItFits}`
-          )
-        ]
-      : [])
-  ].join("\n");
+          `**Profile:** ${formatTuple(profile)}`,
+          "",
+          ...Object.entries(axisLabels).map(([axisKey, labels]) => {
+            const axis = axisKey as Axis;
+            const value = profile[axis];
+            return `- **${labels.title}:** ${describeAxisPosition(axis, value)} (${value.toFixed(2)})`;
+          }),
+          "",
+          `**Nearest match:** ${primary.name} via ${primary.representative}`,
+          primary.summary,
+          primary.whyItFits,
+          ...(alternates.length > 0
+            ? [
+                "",
+                "**Nearby alternatives:**",
+                ...alternates.map(
+                  (p) => `- **${p.name} / ${p.representative}** — ${p.whyItFits}`
+                )
+              ]
+            : [])
+        ].join("\n")
+      : voice
+        ? [
+            "## About the Speaker",
+            "",
+            `**${voice.representative}** · ${voice.name}`,
+            `${voice.speaker.years} · ${voice.speaker.region}  `,
+            `${voice.speaker.traditions}`,
+            "",
+            voice.summary,
+            "",
+            "*An AI interpretation of this perspective, not the person's own words.*"
+          ].join("\n")
+        : "";
 
-  const speaker = getSpeaker(primary.id);
-  const speakerSection =
-    personaMode === "philosopher" && speaker
-      ? [
-          `**Speaking as ${primary.representative}** · ${primary.name}  `,
-          `${speaker.years} · ${speaker.region}  `,
-          speaker.traditions,
-          ""
-        ]
-      : [];
+  const speakerSection = voice
+    ? [
+        `**${voice.voiceStyle === "first-person" ? "Speaking as" : "In the spirit of"} ${voice.representative}** · ${voice.name}  `,
+        `${voice.speaker.years} · ${voice.speaker.region}  `,
+        voice.speaker.traditions,
+        ""
+      ]
+    : [];
 
   const exportMarkdown = [
     `# iSocrateez Advice`,
@@ -413,27 +447,23 @@ function ExportTab({
 function CoordinatesTab({
   profile,
   primary,
-  alternates,
-  philosophySelected
+  alternates
 }: {
   profile: ProfileTuple;
   primary: AdviceResponse["nearestProfiles"][0];
   alternates: AdviceResponse["nearestProfiles"];
-  philosophySelected: boolean;
 }) {
   return (
     <div className="coordinates-tab">
       <ProfileBars profile={profile} />
 
       <div className="match-section">
-        <h3 className="match-heading">
-          {philosophySelected ? "Selected philosophy" : "Nearest match"}
-        </h3>
+        <h3 className="match-heading">Nearest match</h3>
         <p className="match-name">
           {primary.name} via {primary.representative}
         </p>
         <p className="match-summary">{primary.summary}</p>
-        {!philosophySelected && <p className="match-why">{primary.whyItFits}</p>}
+        <p className="match-why">{primary.whyItFits}</p>
       </div>
 
       {alternates.length > 0 && (
@@ -449,6 +479,27 @@ function CoordinatesTab({
           </ul>
         </div>
       )}
+    </div>
+  );
+}
+
+function SpeakerTab({ voice }: { voice: PhilosophyProfile }) {
+  return (
+    <div className="coordinates-tab">
+      <div className="match-section">
+        <h3 className="match-heading">About the speaker</h3>
+        <p className="match-name">
+          {voice.representative} · {voice.name}
+        </p>
+        <p className="match-summary">
+          {voice.speaker.years} · {voice.speaker.region}
+        </p>
+        <p className="match-summary">{voice.speaker.traditions}</p>
+        <p className="match-why">{voice.summary}</p>
+        <p className="match-why">
+          Key concerns: {voice.exampleConcerns.join(", ")}.
+        </p>
+      </div>
     </div>
   );
 }

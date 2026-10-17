@@ -1,6 +1,7 @@
 import type {
   ExplanationLevel,
   PersonaMode,
+  PhilosophyProfile,
   ProfileTuple,
   RankedProfile
 } from "../../shared/contracts";
@@ -110,4 +111,78 @@ function presentationGuidance(explanationLevel: ExplanationLevel): string {
     case "phd":
       return "Assume PhD-level philosophical training. Use sharper distinctions and cleaner terminology.";
   }
+}
+
+interface VoicePromptContext {
+  dilemma: string;
+  explanationLevel: ExplanationLevel;
+  voice: PhilosophyProfile;
+}
+
+function voiceIdentity(voice: PhilosophyProfile): string {
+  return `${voice.representative} (${voice.name}; ${voice.speaker.years}; ${voice.speaker.traditions})`;
+}
+
+function voiceInstruction(voice: PhilosophyProfile): string {
+  return voice.voiceStyle === "first-person"
+    ? `Write in the first-person voice of ${voice.representative}, staying faithful to their actual views and manner, readable and concrete. Do not invent specific quotations or cite works they did not write.`
+    : `Write in the spirit of ${voice.representative} (${voice.name}), as that tradition would counsel. Do not claim to literally be this person and do not put invented quotations in their mouth; phrases like "In this tradition…" or "From this perspective…" are fine, and you may speak in a warm second person to the user.`;
+}
+
+export function buildVoicePlannerPrompt(context: VoicePromptContext): string {
+  const { voice } = context;
+  return [
+    "You are the planning stage of an ethical advice system.",
+    "Return strict JSON only with keys: dilemmaSummary, keyTensions, profileInterpretation, framingNotes, advisorBrief, cautionPoints.",
+    "Do not include markdown fences or commentary outside the JSON object.",
+    "",
+    `Dilemma: ${context.dilemma}`,
+    `The advice will be given from the perspective of: ${voiceIdentity(voice)}`,
+    `Voice brief: ${voice.voiceBrief}`,
+    `Presentation level: ${presentationGuidance(context.explanationLevel)}`,
+    "Use profileInterpretation to describe how this thinker or tradition would read the dilemma.",
+    "The planner should surface moral tensions, not collapse them too quickly."
+  ].join("\n");
+}
+
+export function buildVoiceAdvisorPrompt(
+  context: VoicePromptContext,
+  plannerOutput: PlannerOutput
+): string {
+  const { voice } = context;
+  return [
+    "You are the advice stage of an ethical reflection app.",
+    voiceInstruction(voice),
+    `Perspective: ${voiceIdentity(voice)}`,
+    `Voice brief: ${voice.voiceBrief}`,
+    `Presentation level: ${presentationGuidance(context.explanationLevel)}`,
+    "Write concise, actionable markdown with these sections:",
+    "1. Core advice",
+    "2. Why this advice",
+    "3. What to watch for",
+    "4. A concrete next step in the next 24 hours",
+    "Do not end with follow-up offers, suggestions to continue the conversation, or phrases like 'If you want, I can help you...' — end cleanly after the last section.",
+    "",
+    `Original dilemma: ${context.dilemma}`,
+    `Planner summary: ${plannerOutput.dilemmaSummary}`,
+    `Planner key tensions: ${plannerOutput.keyTensions.join("; ")}`,
+    `How this perspective reads the dilemma: ${plannerOutput.profileInterpretation}`,
+    `Planner framing notes: ${plannerOutput.framingNotes.join("; ")}`,
+    `Planner caution points: ${plannerOutput.cautionPoints.join("; ")}`,
+    `Advisor brief: ${plannerOutput.advisorBrief}`
+  ].join("\n");
+}
+
+export function buildVoiceFallbackPrompt(context: VoicePromptContext): string {
+  const { voice } = context;
+  return [
+    "Provide ethical advice for the following dilemma.",
+    voiceInstruction(voice),
+    `Perspective: ${voiceIdentity(voice)}`,
+    `Voice brief: ${voice.voiceBrief}`,
+    `Presentation level: ${presentationGuidance(context.explanationLevel)}`,
+    "Return markdown with the sections: Core advice, Why this advice, What to watch for, Next step.",
+    "Do not end with follow-up offers, suggestions to continue the conversation, or phrases like 'If you want, I can help you...' — end cleanly after the last section.",
+    `Dilemma: ${context.dilemma}`
+  ].join("\n");
 }

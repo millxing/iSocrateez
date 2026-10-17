@@ -49,6 +49,54 @@ describe("generateAdvice", () => {
     expect(response.adviceMarkdown).toContain("Fallback answer");
   });
 
+  it("answers in a chosen philosopher's voice without using the axes", async () => {
+    const plannerJson = JSON.stringify({
+      dilemmaSummary: "s",
+      keyTensions: ["t"],
+      profileInterpretation: "how Nietzsche reads it",
+      framingNotes: ["f"],
+      advisorBrief: "b",
+      cautionPoints: ["c"]
+    });
+    const invoker = vi
+      .fn()
+      .mockResolvedValueOnce(plannerJson)
+      .mockResolvedValueOnce("## Core advice\n\nVoice answer");
+
+    const response = await generateAdvice(
+      {
+        ...baseRequest,
+        answers: [],
+        personaMode: "philosopher",
+        philosopherId: "nietzsche-perspectivism"
+      },
+      env,
+      invoker
+    );
+
+    expect(response.selectedPhilosopherId).toBe("nietzsche-perspectivism");
+    expect(response.profile).toBeUndefined();
+    expect(response.nearestProfiles).toEqual([]);
+    const advisorPrompt = invoker.mock.calls[1][1] as string;
+    expect(advisorPrompt).toContain("Friedrich Nietzsche");
+    expect(advisorPrompt).not.toContain("Ethical tuple");
+  });
+
+  it("frames religious figures 'in the spirit of' rather than literal first person", async () => {
+    const invoker = vi
+      .fn()
+      .mockResolvedValueOnce("not-json")
+      .mockResolvedValueOnce("## Core advice\n\nOk");
+
+    await generateAdvice(
+      { ...baseRequest, answers: [], personaMode: "philosopher", philosopherId: "jesus-christian-ethics" },
+      env,
+      invoker
+    );
+
+    expect(invoker.mock.calls[1][1]).toContain("Write in the spirit of");
+  });
+
   it("short-circuits dangerous requests with local safety handling", async () => {
     const invoker = vi.fn();
     const response = await generateAdvice(

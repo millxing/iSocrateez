@@ -24,7 +24,7 @@ If you touch any of those, check the full path from UI -> shared contracts -> Wo
 
 Important files:
 
-- `src/App.tsx` — wizard flow controller (phases: locked → dilemma → path → calibration → explanation → models → results)
+- `src/App.tsx` — wizard flow controller (phases: locked → dilemma → path → calibration | philosopher → explanation → models → results)
 - `src/components/PasswordGate.tsx` — shared password entry
 - `src/components/DilemmaPage.tsx` — dilemma text entry
 - `src/components/ExplanationPage.tsx` — 3-choice explanation style
@@ -45,8 +45,8 @@ The frontend is a wizard-style multi-page flow with a sticky hero bar:
 
 1. Password gate
 2. Enter a dilemma (dynamic-height textarea)
-3. Choose path: 9-question calibration, manual 3-axis tuple, or choose a philosopher (snaps the alignment to that school; advice is then written in that philosopher's voice)
-4. Answer calibration questions or set sliders (skipped for the philosopher path)
+3. Choose path: 9-question calibration, manual 3-axis tuple, or choose a philosopher
+4. Answer calibration questions or set sliders; or pick one philosopher/tradition from a grid (`PhilosopherPage`). The philosopher path ignores the axes: the request carries `philosopherId`, the Worker answers from that figure's `voiceBrief`, and the response has `selectedPhilosopherId` with no `profile`
 5. Choose explanation style (3 cards)
 6. Confirm or change models (default: Haiku 5.5 planner, Sonnet 5.5 advisor); this step requests the advice
 7. Results page with tabbed navigation:

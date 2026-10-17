@@ -84,13 +84,14 @@ function normalizeAverage(values: number[]): number {
 
 export function rankPhilosophies(profile: ProfileTuple): RankedProfile[] {
   return philosophyProfiles
-    .map((philosophy) => {
-      const distance = euclideanDistance(profile, philosophy.coordinates);
+    .flatMap((philosophy) => (philosophy.coordinates ? [{ philosophy, coordinates: philosophy.coordinates }] : []))
+    .map(({ philosophy, coordinates }) => {
+      const distance = euclideanDistance(profile, coordinates);
 
       return {
         ...philosophy,
         distance: Number(distance.toFixed(3)),
-        whyItFits: buildWhyItFits(profile, philosophy.coordinates)
+        whyItFits: buildWhyItFits(profile, coordinates)
       };
     })
     .sort((left, right) => left.distance - right.distance);

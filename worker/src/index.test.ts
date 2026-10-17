@@ -221,6 +221,27 @@ describe("worker routes", () => {
     expect(response.status).toBe(400);
   });
 
+  it("rejects an unknown philosopherId", async () => {
+    const token = await createSignedToken(
+      { exp: Math.floor(Date.now() / 1000) + 60 },
+      env.JWT_SECRET
+    );
+    const request = new Request("https://example.com/api/advice", {
+      method: "POST",
+      body: JSON.stringify({
+        token,
+        dilemma: "A real dilemma with enough text.",
+        explanationLevel: "general",
+        personaMode: "philosopher",
+        answers: [],
+        philosopherId: "not-a-philosopher"
+      })
+    });
+
+    const response = await handleRequest(request, env);
+    expect(response.status).toBe(400);
+  });
+
   it("only allows CORS for the configured origin", async () => {
     const allowed = await handleRequest(
       new Request("https://example.com/api/health", {

@@ -1,5 +1,6 @@
 import type { AdviceRequest } from "../../shared/contracts";
 import { isAllowedModel } from "../../shared/models";
+import { getPhilosophyById } from "../../shared/philosophyProfiles";
 import { createSignedToken, verifySignedToken } from "./auth";
 import { generateAdvice, type WorkerEnv } from "./llm";
 
@@ -52,9 +53,15 @@ export async function handleRequest(
       return json({ error: "Session expired or invalid." }, 401, request, env);
     }
 
-    if (
-      typeof body.dilemma !== "string" ||
-      body.dilemma.trim().length < 10 ||
+    if (typeof body.dilemma !== "string" || body.dilemma.trim().length < 10) {
+      return json({ error: "Provide a dilemma of at least 10 characters." }, 400, request, env);
+    }
+
+    if (body.philosopherId !== undefined) {
+      if (typeof body.philosopherId !== "string" || !getPhilosophyById(body.philosopherId)) {
+        return json({ error: "Unknown philosopher." }, 400, request, env);
+      }
+    } else if (
       !Array.isArray(body.answers) ||
       (!hasValidProfileOverride(body.profileOverride) && body.answers.length !== 9)
     ) {
