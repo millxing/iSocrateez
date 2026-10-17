@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { SAMPLE_DILEMMAS } from "../sampleDilemmas";
 
 interface DilemmaPageProps {
@@ -49,21 +49,8 @@ export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
         </div>
         <div className="dilemma-body">
           {mode === "example" ? (
-            <div className="example-split">
-              <div className="example-list" role="listbox" aria-label="Example dilemmas">
-                {SAMPLE_DILEMMAS.map((sample) => (
-                  <button
-                    key={sample.title}
-                    type="button"
-                    role="option"
-                    aria-selected={sample.title === selected?.title}
-                    className={`choice-card example-option ${sample.title === selected?.title ? "is-active" : ""}`}
-                    onClick={() => setDilemma(sample.text)}
-                  >
-                    <span className="choice-label">{sample.title}</span>
-                  </button>
-                ))}
-              </div>
+            <div className={`example-split ${selected ? "has-selection" : ""}`}>
+              <ExampleList selectedTitle={selected?.title} onPick={setDilemma} />
               <div className="example-preview" tabIndex={0} aria-live="polite">
                 {selected ? (
                   <>
@@ -92,6 +79,59 @@ export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
           Continue
         </button>
       </form>
+    </div>
+  );
+}
+
+function ExampleList({
+  selectedTitle,
+  onPick
+}: {
+  selectedTitle?: string;
+  onPick: (text: string) => void;
+}) {
+  const listRef = useRef<HTMLDivElement>(null);
+  const [moreBelow, setMoreBelow] = useState(false);
+
+  const update = useCallback(() => {
+    const el = listRef.current;
+    if (!el) return;
+    setMoreBelow(el.scrollTop + el.clientHeight < el.scrollHeight - 4);
+  }, []);
+
+  useEffect(() => {
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [update]);
+
+  return (
+    <div className="example-list-wrap">
+      <div
+        className="example-list"
+        role="listbox"
+        aria-label="Example dilemmas"
+        ref={listRef}
+        onScroll={update}
+      >
+        {SAMPLE_DILEMMAS.map((sample) => (
+          <button
+            key={sample.title}
+            type="button"
+            role="option"
+            aria-selected={sample.title === selectedTitle}
+            className={`choice-card example-option ${sample.title === selectedTitle ? "is-active" : ""}`}
+            onClick={() => onPick(sample.text)}
+          >
+            <span className="choice-label">{sample.title}</span>
+          </button>
+        ))}
+      </div>
+      {moreBelow && (
+        <div className="example-scroll-hint" aria-hidden="true">
+          <span>Scroll for more ▾</span>
+        </div>
+      )}
     </div>
   );
 }

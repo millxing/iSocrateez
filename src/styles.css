@@ -1752,8 +1752,12 @@ textarea {
 
   .example-split {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-rows: minmax(0, 1fr) auto;
     gap: 0.8rem;
+  }
+
+  .example-split.has-selection {
+    grid-template-rows: minmax(0, 2fr) minmax(0, 3fr);
   }
 
   .example-option {
@@ -1846,4 +1850,38 @@ textarea {
   .model-pickers {
     gap: 0.8rem;
   }
+}
+
+/* Example list: fade + hint so it's clear there is more to scroll to */
+.example-list-wrap {
+  position: relative;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.example-list-wrap .example-list {
+  flex: 1;
+}
+
+.example-scroll-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3.6rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 0.3rem;
+  background: linear-gradient(to bottom, rgba(17, 17, 16, 0), var(--bg) 85%);
+  pointer-events: none;
+  border-radius: 0 0 10px 10px;
+}
+
+.example-scroll-hint span {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--accent);
 }
