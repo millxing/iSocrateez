@@ -1553,3 +1553,56 @@ textarea {
     overflow-y: auto;
   }
 }
+
+/* Loading screen: philosopher surnames drifting from the border into the center */
+.loading-overlay {
+  overflow: hidden;
+}
+
+.loading-front {
+  position: relative;
+  z-index: 1;
+}
+
+.floating-names {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.floating-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  white-space: nowrap;
+  font-family: "Funnel Sans", sans-serif;
+  font-weight: 700;
+  font-size: 4rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  opacity: 0;
+  animation-name: name-drift;
+  animation-timing-function: cubic-bezier(0.35, 0.05, 0.6, 1);
+  animation-fill-mode: both;
+}
+
+@keyframes name-drift {
+  0% {
+    transform: translate(-50%, -50%)
+      translate(calc(var(--sx) * 1vw), calc(var(--sy) * 1vh)) scale(1.5);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.15);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-names {
+    display: none;
+  }
+}
