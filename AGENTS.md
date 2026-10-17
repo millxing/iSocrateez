@@ -21,11 +21,10 @@ Then it generates advice based on the resulting ethical profile.
 
 The UI is a wizard-style multi-page flow with a sticky hero bar and page-by-page progression.
 
-- `src/App.tsx`: wizard flow controller managing phases (locked → dilemma → explanation → voice → models → path → calibration → results)
+- `src/App.tsx`: wizard flow controller managing phases (locked → dilemma → path → calibration → explanation → models → results)
 - `src/components/PasswordGate.tsx`: shared password entry
 - `src/components/DilemmaPage.tsx`: dilemma text entry (dynamic-height textarea)
 - `src/components/ExplanationPage.tsx`: 3-choice explanation style cards
-- `src/components/VoicePage.tsx`: 2-choice advice voice cards
 - `src/components/ModelPage.tsx`: model selection (defaults to Claude Haiku 5.5 planner / Claude Sonnet 5.5 advisor)
 - `src/components/PathPage.tsx`: choose calibration questions or manual tuple
 - `src/components/CalibrationPage.tsx`: 9-question flow or 3-axis sliders

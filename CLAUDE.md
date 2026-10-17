@@ -24,11 +24,10 @@ If you touch any of those, check the full path from UI -> shared contracts -> Wo
 
 Important files:
 
-- `src/App.tsx` — wizard flow controller (phases: locked → dilemma → explanation → voice → models → path → calibration → results)
+- `src/App.tsx` — wizard flow controller (phases: locked → dilemma → path → calibration → explanation → models → results)
 - `src/components/PasswordGate.tsx` — shared password entry
 - `src/components/DilemmaPage.tsx` — dilemma text entry
 - `src/components/ExplanationPage.tsx` — 3-choice explanation style
-- `src/components/VoicePage.tsx` — 2-choice advice voice
 - `src/components/ModelPage.tsx` — model selection (defaults to Claude Haiku 5.5 planner / Claude Sonnet 5.5 advisor)
 - `src/components/PathPage.tsx` — calibration questions vs manual tuple
 - `src/components/CalibrationPage.tsx` — 9-question flow or 3-axis sliders
@@ -46,13 +45,12 @@ The frontend is a wizard-style multi-page flow with a sticky hero bar:
 
 1. Password gate
 2. Enter a dilemma (dynamic-height textarea)
-3. Choose explanation style (3 cards)
-4. Choose advice voice (2 cards)
-5. Confirm or change models (default: Haiku 5.5 planner, Sonnet 5.5 advisor)
-6. Choose path: 9-question calibration or manual 3-axis tuple
-7. Answer calibration questions or set sliders
-8. Results page with tabbed navigation:
-   - Your Advice, Why This Advice, What to Watch For, Next Step, Ethical Coordinates, Export Advice
+3. Choose path: 9-question calibration, manual 3-axis tuple, or choose a philosopher (snaps the alignment to that school; advice is then written in that philosopher's voice)
+4. Answer calibration questions or set sliders (skipped for the philosopher path)
+5. Choose explanation style (3 cards)
+6. Confirm or change models (default: Haiku 5.5 planner, Sonnet 5.5 advisor); this step requests the advice
+7. Results page with tabbed navigation:
+   - Your Advice, Why This Advice, What to Watch For, Next Step, Original Dilemma, Ethical Coordinates, Export Advice
    - On narrow screens, tabs collapse to a hamburger dropdown menu
    - Export saves a single markdown file (dilemma + all advice sections + ethical coordinates)
    - "Start a new dilemma" button is pinned at the bottom of the viewport

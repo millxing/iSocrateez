@@ -286,6 +286,7 @@ export function ResultsView({
             profile={response.profile}
             primary={primary}
             alternates={alternates}
+            philosophySelected={personaMode === "philosopher"}
           />
         )}
       </div>
@@ -328,9 +329,9 @@ function ExportTab({
       return `- **${labels.title}:** ${describeAxisPosition(axis, value)} (${value.toFixed(2)})`;
     }),
     "",
-    `**Nearest match:** ${primary.name} via ${primary.representative}`,
+    `**${personaMode === "philosopher" ? "Selected philosophy" : "Nearest match"}:** ${primary.name} via ${primary.representative}`,
     primary.summary,
-    primary.whyItFits,
+    ...(personaMode === "philosopher" ? [] : [primary.whyItFits]),
     ...(alternates.length > 0
       ? [
           "",
@@ -412,23 +413,27 @@ function ExportTab({
 function CoordinatesTab({
   profile,
   primary,
-  alternates
+  alternates,
+  philosophySelected
 }: {
   profile: ProfileTuple;
   primary: AdviceResponse["nearestProfiles"][0];
   alternates: AdviceResponse["nearestProfiles"];
+  philosophySelected: boolean;
 }) {
   return (
     <div className="coordinates-tab">
       <ProfileBars profile={profile} />
 
       <div className="match-section">
-        <h3 className="match-heading">Nearest match</h3>
+        <h3 className="match-heading">
+          {philosophySelected ? "Selected philosophy" : "Nearest match"}
+        </h3>
         <p className="match-name">
           {primary.name} via {primary.representative}
         </p>
         <p className="match-summary">{primary.summary}</p>
-        <p className="match-why">{primary.whyItFits}</p>
+        {!philosophySelected && <p className="match-why">{primary.whyItFits}</p>}
       </div>
 
       {alternates.length > 0 && (

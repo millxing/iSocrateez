@@ -12,7 +12,6 @@ import { createSession, ApiError, requestAdvice } from "./api/client";
 import { PasswordGate } from "./components/PasswordGate";
 import { DilemmaPage } from "./components/DilemmaPage";
 import { ExplanationPage } from "./components/ExplanationPage";
-import { VoicePage } from "./components/VoicePage";
 import { ModelPage } from "./components/ModelPage";
 import { PathPage } from "./components/PathPage";
 import { CalibrationPage } from "./components/CalibrationPage";
@@ -25,7 +24,6 @@ type Phase =
   | "path"
   | "calibration"
   | "explanation"
-  | "voice"
   | "models"
   | "results";
 
@@ -44,7 +42,8 @@ export default function App() {
 
   const [dilemma, setDilemma] = useState("");
   const [explanationLevel, setExplanationLevel] = useState<ExplanationLevel>("general");
-  const [personaMode, setPersonaMode] = useState<PersonaMode>("personalized");
+  const [chosenPhilosopher, setChosenPhilosopher] = useState<string | null>(null);
+  const personaMode: PersonaMode = chosenPhilosopher ? "philosopher" : "personalized";
   const [plannerModel, setPlannerModel] = useState("anthropic:claude-haiku-5-5");
   const [advisorModel, setAdvisorModel] = useState("anthropic:claude-sonnet-5-5");
   const [calibrationMode, setCalibrationMode] = useState<"questions" | "tuple">("questions");
@@ -85,6 +84,7 @@ export default function App() {
   }
 
   function handlePath(mode: "questions" | "tuple") {
+    setChosenPhilosopher(null);
     setCalibrationMode(mode);
     if (mode === "questions") {
       setQuestions(randomizeQuestions());
@@ -92,7 +92,8 @@ export default function App() {
     goTo("calibration");
   }
 
-  function handlePhilosopher(_profileId: string, tuple: ProfileTuple) {
+  function handlePhilosopher(profileId: string, tuple: ProfileTuple) {
+    setChosenPhilosopher(profileId);
     setAnswers([]);
     setProfileOverride(tuple);
     goTo("explanation");
@@ -112,11 +113,6 @@ export default function App() {
 
   function handleExplanation(level: ExplanationLevel) {
     setExplanationLevel(level);
-    goTo("voice");
-  }
-
-  function handleVoice(mode: PersonaMode) {
-    setPersonaMode(mode);
     goTo("models");
   }
 
@@ -176,6 +172,7 @@ export default function App() {
     setQuestions([]);
     setAnswers([]);
     setProfileOverride(null);
+    setChosenPhilosopher(null);
     setResponse(null);
     setAdviceError(null);
     goTo("dilemma");
@@ -232,20 +229,12 @@ export default function App() {
             />
           )}
 
-          {phase === "voice" && (
-            <VoicePage
-              current={personaMode}
-              onSelect={handleVoice}
-              onBack={() => goTo("explanation")}
-            />
-          )}
-
           {phase === "models" && (
             <ModelPage
               plannerModel={plannerModel}
               advisorModel={advisorModel}
               onSubmit={handleModels}
-              onBack={() => goTo("voice")}
+              onBack={() => goTo("explanation")}
               isSubmitting={isLoadingAdvice}
               error={adviceError}
             />
@@ -271,7 +260,7 @@ export default function App() {
 }
 
 const PHASE_ORDER: Phase[] = [
-  "locked", "dilemma", "path", "calibration", "explanation", "voice", "models", "results"
+  "locked", "dilemma", "path", "calibration", "explanation", "models", "results"
 ];
 
 function getDirection(prev: Phase | null, next: Phase): "enter" | "forward" | "backward" {

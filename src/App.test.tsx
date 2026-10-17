@@ -9,7 +9,7 @@ describe("App", () => {
     sessionStorage.clear();
   });
 
-  it("submits the selected explanation and voice settings through the questionnaire path", async () => {
+  it("submits the selected explanation setting through the questionnaire path", async () => {
     const originalFetch = globalThis.fetch;
     const adviceBodies: unknown[] = [];
 
@@ -128,20 +128,18 @@ describe("App", () => {
       await screen.findByRole("heading", { name: /explanation style/i });
       fireEvent.click(screen.getByRole("button", { name: /phd-level philosophical training/i }));
 
-      await screen.findByRole("heading", { name: /advice voice/i });
-      fireEvent.click(screen.getByRole("button", { name: /philosopher persona/i }));
 
       await screen.findByRole("heading", { name: /^models$/i });
       fireEvent.click(screen.getByRole("button", { name: /yes, use defaults/i }));
 
-      await screen.findByText(/as kant, i would tell you to disclose the truth/i);
+      await screen.findByText(/at a more technical level/i);
       fireEvent.click(screen.getByRole("button", { name: /ethical coordinates/i }));
       expect(screen.getByText(/kantian deontology/i)).toBeInTheDocument();
       expect(screen.getByText(/moderately toward outcomes/i)).toBeInTheDocument();
       expect(adviceBodies).toHaveLength(1);
       expect(adviceBodies[0]).toMatchObject({
         explanationLevel: "phd",
-        personaMode: "philosopher",
+        personaMode: "personalized",
         plannerModel: "anthropic:claude-haiku-5-5",
         advisorModel: "anthropic:claude-sonnet-5-5"
       });
@@ -262,8 +260,6 @@ describe("App", () => {
       await screen.findByRole("heading", { name: /explanation style/i });
       fireEvent.click(screen.getByRole("button", { name: /no philosophy training/i }));
 
-      await screen.findByRole("heading", { name: /advice voice/i });
-      fireEvent.click(screen.getByRole("button", { name: /personalized/i }));
 
       await screen.findByRole("heading", { name: /^models$/i });
       fireEvent.click(screen.getByRole("button", { name: /yes, use defaults/i }));
@@ -335,13 +331,12 @@ describe("App", () => {
 
       await screen.findByRole("heading", { name: /explanation style/i });
       fireEvent.click(screen.getByRole("button", { name: /no philosophy training/i }));
-      await screen.findByRole("heading", { name: /advice voice/i });
-      fireEvent.click(screen.getByRole("button", { name: /personalized/i }));
       await screen.findByRole("heading", { name: /^models$/i });
       fireEvent.click(screen.getByRole("button", { name: /yes, use defaults/i }));
 
       await screen.findByText(/snapped advice/i);
       expect(adviceBodies[0].answers).toEqual([]);
+      expect(adviceBodies[0].personaMode).toBe("philosopher");
       expect(adviceBodies[0].profileOverride).toMatchObject({ outcomesPrinciples: 0.95 });
 
       fireEvent.click(screen.getAllByRole("button", { name: /original dilemma/i }).find((b) => !b.closest(".results-tabs-measure"))!);
