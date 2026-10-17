@@ -15,12 +15,14 @@ interface CalibrationPageProps {
   onBack: () => void;
 }
 
-const SCALE: { value: AnswerValue; label: string }[] = [
-  { value: -2, label: "Strongly" },
-  { value: -1, label: "\u2190" },
-  { value: 0, label: "Neutral" },
-  { value: 1, label: "\u2192" },
-  { value: 2, label: "Strongly" }
+// `label` is the compact desktop text; `stackedLabel` is used when the buttons are
+// stacked vertically (phones), where the end captions sit above and below the list.
+const SCALE: { value: AnswerValue; label: string; stackedLabel: string }[] = [
+  { value: -2, label: "Strongly", stackedLabel: "Strongly" },
+  { value: -1, label: "\u2190", stackedLabel: "Somewhat" },
+  { value: 0, label: "Neutral", stackedLabel: "Neutral" },
+  { value: 1, label: "\u2192", stackedLabel: "Somewhat" },
+  { value: 2, label: "Strongly", stackedLabel: "Strongly" }
 ];
 
 export function CalibrationPage({
@@ -130,18 +132,26 @@ function QuestionFlow({
             <span>{currentQuestion.lowLabel}</span>
             <span>{currentQuestion.highLabel}</span>
           </div>
+          <p className="scale-end scale-end-low">&#9650; {currentQuestion.lowLabel}</p>
           <div className="scale-grid">
             {SCALE.map((option) => (
               <button
                 key={option.value}
                 className={`scale-option ${currentAnswer === option.value ? "is-active" : ""}`}
                 type="button"
+                aria-label={
+                  option.value === 0
+                    ? "Neutral"
+                    : `${option.stackedLabel}: ${option.value < 0 ? currentQuestion.lowLabel : currentQuestion.highLabel}`
+                }
                 onClick={() => setAnswer(option.value)}
               >
-                {option.label}
+                <span className="scale-text-inline">{option.label}</span>
+                <span className="scale-text-stacked">{option.stackedLabel}</span>
               </button>
             ))}
           </div>
+          <p className="scale-end scale-end-high">&#9660; {currentQuestion.highLabel}</p>
         </div>
       </div>
 

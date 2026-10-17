@@ -489,6 +489,25 @@ textarea {
   margin-bottom: 1.2rem;
 }
 
+.scale-end {
+  display: none;
+  margin: 0;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.scale-end-low {
+  margin-bottom: 0.5rem;
+}
+
+.scale-end-high {
+  margin-top: 0.5rem;
+}
+
+.scale-text-stacked {
+  display: none;
+}
+
 .scale-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1161,18 +1180,31 @@ textarea {
   }
 
   .scale-labels {
-    flex-direction: column;
-    align-items: stretch;
-    font-size: 1.1rem;
+    display: none;
+  }
+
+  .scale-end {
+    display: block;
+    font-size: 1.15rem;
   }
 
   .scale-grid {
     grid-template-columns: 1fr;
+    gap: 0.4rem;
   }
 
   .scale-option {
-    font-size: 1.2rem;
-    min-height: 2.8rem;
+    font-size: 1.05rem;
+    min-height: 2.2rem;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .scale-text-inline {
+    display: none;
+  }
+
+  .scale-text-stacked {
+    display: inline;
   }
 
   .slider-row {
@@ -1884,4 +1916,60 @@ textarea {
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--accent);
+}
+
+/* Phones: compact calibration question so the whole scale fits on one screen */
+@media (max-width: 859px) {
+  .wizard-card-wide {
+    gap: 0.7rem;
+  }
+
+  .progress-meta {
+    gap: 0.2rem;
+  }
+
+  .axis-tally {
+    display: none;
+  }
+
+  .page-stage:has(.wizard-card-wide) {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .wizard-card-wide .button-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .wizard-card-wide .button-row .button-primary {
+    flex: 1;
+  }
+
+  .wizard-card-wide .scale-grid {
+    gap: 0.3rem;
+  }
+
+  .wizard-card-wide .scale-option {
+    min-height: 2rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .question-block {
+    padding: 0.8rem 0 0;
+  }
+
+  .question-block-top {
+    margin-top: 0;
+  }
+
+  .question-block-bottom {
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
+
+  .question-prompt {
+    font-size: clamp(1.3rem, 5vw, 1.7rem);
+  }
 }
