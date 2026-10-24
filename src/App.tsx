@@ -191,6 +191,23 @@ export default function App() {
     <div className="app-shell">
       <header className="sticky-hero">
         <h1>iSocrateez</h1>
+        <div className="hero-credit">
+          <a
+            href="https://creativecommons.org/licenses/by-sa/4.0/"
+            target="_blank"
+            rel="noopener noreferrer license"
+          >
+            CC BY-SA 4.0
+          </a>
+          <span aria-hidden="true"> · </span>
+          <a
+            href="https://entangledparticles.xyz"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            entangledparticles.xyz
+          </a>
+        </div>
       </header>
 
       <main className="page-stage">
