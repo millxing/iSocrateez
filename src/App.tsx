@@ -199,7 +199,6 @@ export default function App() {
           >
             CC BY-SA 4.0
           </a>
-          <span aria-hidden="true"> · </span>
           <a
             href="https://entangledparticles.xyz"
             target="_blank"
