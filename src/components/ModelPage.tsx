@@ -1,3 +1,4 @@
+import { navigateRadios } from "./radioNavigation";
 import { useState } from "react";
 import { modelOptions } from "../../shared/models";
 
@@ -22,9 +23,6 @@ export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack, isSubm
   return (
     <div className={`wizard-card models-page ${showCustom ? "is-custom" : ""}`}>
       <h2 className="wizard-title">Models</h2>
-      <p className="wizard-subtitle">
-        Use the defaults?
-      </p>
       <div className="model-defaults">
         <span className="model-default-label">Planner: <strong>{displayName(plannerModel)}</strong></span>
         <span className="model-default-label">Advisor: <strong>{displayName(advisorModel)}</strong></span>
@@ -37,13 +35,13 @@ export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack, isSubm
             disabled={isSubmitting}
             onClick={() => onSubmit(true)}
           >
-            <span className="choice-label">Yes, use defaults</span>
+            <span className="choice-label">Get advice</span>
           </button>
           <button
             className="choice-card"
             onClick={() => setShowCustom(true)}
           >
-            <span className="choice-label">No, let me choose</span>
+            <span className="choice-label">Change models</span>
           </button>
         </div>
       ) : (
@@ -62,7 +60,7 @@ export function ModelPage({ plannerModel, advisorModel, onSubmit, onBack, isSubm
         </div>
       )}
 
-      {error ? <p className="error">{error}</p> : null}
+      {error ? <p className="error" role="alert">{error}</p> : null}
 
       <button className="button-back" type="button" onClick={onBack}>
         Back
@@ -81,7 +79,7 @@ function ModelPicker({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="model-picker" role="radiogroup" aria-label={label}>
+    <div className="model-picker" role="radiogroup" onKeyDown={navigateRadios} aria-label={label}>
       <h3 className="model-picker-heading">{label}</h3>
       <div className="philosopher-list">
         {modelOptions.map((opt) => (
@@ -90,6 +88,7 @@ function ModelPicker({
             type="button"
             role="radio"
             aria-checked={opt.value === value}
+            tabIndex={opt.value === value ? 0 : -1}
             className={`philosopher-option ${opt.value === value ? "is-selected" : ""}`}
             onClick={() => onChange(opt.value)}
           >

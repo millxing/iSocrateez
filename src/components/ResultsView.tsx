@@ -214,6 +214,7 @@ export function ResultsView({
           <button
             key={tab.id}
             className={`results-tab ${activeTab === tab.id ? "is-active" : ""}`}
+            aria-pressed={activeTab === tab.id}
             onClick={() => selectTab(tab.id)}
           >
             {tab.label}
@@ -242,7 +243,8 @@ export function ResultsView({
               <button
                 key={tab.id}
                 className={`hamburger-item ${activeTab === tab.id ? "is-active" : ""}`}
-                onClick={() => selectTab(tab.id)}
+                aria-pressed={activeTab === tab.id}
+            onClick={() => selectTab(tab.id)}
               >
                 {tab.label}
               </button>

@@ -2,7 +2,7 @@ import type { AdviceRequest } from "../../shared/contracts";
 import { isAllowedModel } from "../../shared/models";
 import { getPhilosophyById } from "../../shared/philosophyProfiles";
 import { createSignedToken, verifySignedToken } from "./auth";
-import { generateAdvice, type WorkerEnv } from "./llm";
+import { generateAdvice, ProviderError, type WorkerEnv } from "./llm";
 
 const SESSION_TTL_SECONDS = 60 * 60 * 12;
 
@@ -78,8 +78,8 @@ export async function handleRequest(
     try {
       const response = await generateAdvice(body, env);
       return json(response, 200, request, env);
-    } catch {
-      return json({ error: "Advice generation failed." }, 500, request, env);
+    } catch (error) {
+      return json({ error: error instanceof ProviderError ? error.message : "Advice generation failed. Try again." }, error instanceof ProviderError ? 502 : 500, request, env);
     }
   }
 

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import type {
   AdviceResponse,
   AnswerRecord,
@@ -12,7 +12,8 @@ import { createSession, ApiError, requestAdvice } from "./api/client";
 import { PasswordGate } from "./components/PasswordGate";
 import { DilemmaPage } from "./components/DilemmaPage";
 import { ExplanationPage } from "./components/ExplanationPage";
-import { ModelPage } from "./components/ModelPage";
+import { SettingsPage } from "./components/SettingsPage";
+import { modelOptions } from "../shared/models";
 import { PhilosopherPage } from "./components/PhilosopherPage";
 import { PathPage } from "./components/PathPage";
 import { CalibrationPage } from "./components/CalibrationPage";
@@ -26,10 +27,16 @@ type Phase =
   | "calibration"
   | "philosopher"
   | "explanation"
-  | "models"
   | "results";
 
-const SESSION_STORAGE_KEY = "isocrateez-token";
+function savedModel(key: string, fallback: string) {
+  try {
+    const value = localStorage.getItem(key);
+    return modelOptions.some(option => option.value === value) ? value! : fallback;
+  } catch { return fallback; }
+}
+
+const SESSION_STORAGE_KEY = "isocrateez-v2-production-token";
 
 export default function App() {
   const [phase, setPhase] = useState<Phase>(() =>
@@ -46,8 +53,8 @@ export default function App() {
   const [explanationLevel, setExplanationLevel] = useState<ExplanationLevel>("general");
   const [chosenPhilosopher, setChosenPhilosopher] = useState<string | null>(null);
   const personaMode: PersonaMode = chosenPhilosopher ? "philosopher" : "personalized";
-  const [plannerModel, setPlannerModel] = useState("anthropic:claude-haiku-5-5");
-  const [advisorModel, setAdvisorModel] = useState("anthropic:claude-sonnet-5-5");
+  const [plannerModel, setPlannerModel] = useState(() => savedModel("isocrateez-v2-planner", "anthropic:claude-haiku-5-5"));
+  const [advisorModel, setAdvisorModel] = useState(() => savedModel("isocrateez-v2-advisor", "anthropic:claude-sonnet-5-5"));
   const [calibrationMode, setCalibrationMode] = useState<"questions" | "tuple">("questions");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<AnswerRecord[]>([]);
@@ -92,7 +99,7 @@ export default function App() {
     }
     setChosenPhilosopher(null);
     setCalibrationMode(mode);
-    if (mode === "questions") {
+    if (mode === "questions" && questions.length === 0) {
       setQuestions(randomizeQuestions());
     }
     goTo("calibration");
@@ -115,23 +122,6 @@ export default function App() {
     setAnswers([]);
     setProfileOverride(tuple);
     goTo("explanation");
-  }
-
-  function handleExplanation(level: ExplanationLevel) {
-    setExplanationLevel(level);
-    goTo("models");
-  }
-
-  function handleModels(useDefaults: boolean, planner?: string, advisor?: string) {
-    let nextPlanner = plannerModel;
-    let nextAdvisor = advisorModel;
-    if (!useDefaults && planner && advisor) {
-      setPlannerModel(planner);
-      setAdvisorModel(advisor);
-      nextPlanner = planner;
-      nextAdvisor = advisor;
-    }
-    void fetchAdvice(nextPlanner, nextAdvisor);
   }
 
   const fetchAdvice = useCallback(async (nextPlanner: string, nextAdvisor: string) => {
@@ -185,32 +175,73 @@ export default function App() {
     goTo("dilemma");
   }
 
+  const [settingsOpen, setSettingsOpen] = useState(() => window.location.hash === "#settings");
+  useEffect(() => {
+    const sync = () => setSettingsOpen(window.location.hash === "#settings");
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, []);
+  useEffect(() => {
+    try {
+      localStorage.setItem("isocrateez-v2-planner", plannerModel);
+      localStorage.setItem("isocrateez-v2-advisor", advisorModel);
+    } catch { /* Settings still work for this session. */ }
+  }, [plannerModel, advisorModel]);
+
   const direction = getDirection(prevPhase, phase);
+  const stageRef = useRef<HTMLElement>(null);
+  const [appearance, setAppearance] = useState(() => {
+    try { return localStorage.getItem("isocrateez-v2-appearance") || "system"; }
+    catch { return "system"; }
+  });
+  useEffect(() => {
+    document.documentElement.dataset.theme = appearance;
+    try { localStorage.setItem("isocrateez-v2-appearance", appearance); } catch { /* preference is optional */ }
+  }, [appearance]);
+  useEffect(() => {
+    stageRef.current?.focus();
+    window.scrollTo?.(0, 0);
+  }, [phase, settingsOpen]);
+  const step = phase === "locked" ? -1 : phase === "dilemma" ? 0 : ["path", "calibration", "philosopher"].includes(phase) ? 1 : phase === "explanation" ? 2 : 3;
+  const steps = ["Dilemma", "Perspective", "Style", "Advice"];
+
+  function revisitStep(index: number) {
+    if (index >= step || isLoadingAdvice || settingsOpen) return;
+    setResponse(null);
+    setAdviceError(null);
+    if (index === 0) goTo("dilemma");
+    else if (index === 1) goTo(chosenPhilosopher ? "philosopher" : "calibration");
+    else if (index === 2) goTo("explanation");
+  }
+
 
   return (
     <div className="app-shell">
-      <header className="sticky-hero">
-        <h1>iSocrateez</h1>
-        <div className="hero-credit">
-          <a
-            href="https://creativecommons.org/licenses/by-sa/4.0/"
-            target="_blank"
-            rel="noopener noreferrer license"
-          >
-            CC BY-SA 4.0
-          </a>
-          <a
-            href="https://entangledparticles.xyz"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            entangledparticles.xyz
-          </a>
-        </div>
-      </header>
-
-      <main className="page-stage">
-        <div className={`page-content page-${direction}`} key={phase}>
+      <a className="skip-link" href="#main">Skip to content</a>
+      <aside className="sidebar" aria-label="Session progress">
+        <div className="brand"><span className="brand-mark" aria-hidden="true">iS</span><div><h1>iSocrateez</h1></div></div>
+        <ol className="step-list">
+          {steps.map((label, index) => (
+            <li key={label} className={`${step === index ? "current" : ""} ${step > index ? "complete" : ""}`} aria-current={step === index ? "step" : undefined}>
+              {index < step ? (
+                <button className="step-link" type="button" aria-label={label}
+                  disabled={isLoadingAdvice || settingsOpen} onClick={() => revisitStep(index)}>
+                  <span className="step-number" aria-hidden="true">✓</span>
+                  <span className="step-label">{label}</span>
+                </button>
+              ) : <><span className="step-number" aria-hidden="true">{index + 1}</span><span className="step-label">{label}</span></>}
+            </li>
+          ))}
+        </ol>
+        <nav className="settings-nav" aria-label="App"><a href="#settings" aria-current={settingsOpen ? "page" : undefined}>Settings</a></nav>
+        <div className="sidebar-footer"><a href="https://entangledparticles.xyz" target="_blank" rel="noopener noreferrer">entangledparticles.xyz ↗</a><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer license">CC BY-SA 4.0</a></div>
+      </aside>
+      <div className="workspace">
+        <main className="page-stage" id="main" ref={stageRef} tabIndex={-1} aria-label={settingsOpen ? "Settings" : phase === "locked" ? "Sign in" : steps[step]} aria-busy={isLoadingAdvice}>
+        {settingsOpen && <SettingsPage appearance={appearance} onAppearance={setAppearance}
+          plannerModel={plannerModel} onPlannerModel={setPlannerModel}
+          advisorModel={advisorModel} onAdvisorModel={setAdvisorModel} />}
+        <div className={`page-content page-${direction}`} key={phase} hidden={settingsOpen}>
           {phase === "locked" && (
             <PasswordGate
               error={authError}
@@ -245,6 +276,8 @@ export default function App() {
             <CalibrationPage
               mode={calibrationMode}
               questions={questions}
+              initialAnswers={answers}
+              initialTuple={profileOverride}
               onCompleteQuestions={handleCalibrationComplete}
               onCompleteTuple={handleTupleComplete}
               onBack={() => goTo("path")}
@@ -254,19 +287,11 @@ export default function App() {
           {phase === "explanation" && (
             <ExplanationPage
               current={explanationLevel}
-              onSelect={handleExplanation}
-              onBack={() => goTo("path")}
-            />
-          )}
-
-          {phase === "models" && (
-            <ModelPage
-              plannerModel={plannerModel}
-              advisorModel={advisorModel}
-              onSubmit={handleModels}
-              onBack={() => goTo("explanation")}
+              onSelect={setExplanationLevel}
+              onSubmit={() => void fetchAdvice(plannerModel, advisorModel)}
               isSubmitting={isLoadingAdvice}
               error={adviceError}
+              onBack={() => goTo("path")}
             />
           )}
 
@@ -281,6 +306,7 @@ export default function App() {
           )}
         </div>
       </main>
+      </div>
 
       {isLoadingAdvice && loadingStartTime && (
         <LoadingOverlay startTime={loadingStartTime} />
@@ -290,7 +316,7 @@ export default function App() {
 }
 
 const PHASE_ORDER: Phase[] = [
-  "locked", "dilemma", "path", "calibration", "philosopher", "explanation", "models", "results"
+  "locked", "dilemma", "path", "calibration", "philosopher", "explanation", "results"
 ];
 
 function getDirection(prev: Phase | null, next: Phase): "enter" | "forward" | "backward" {

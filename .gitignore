@@ -9,3 +9,8 @@ worker/.dev.vars
 coverage
 *.log
 /.DS_Store
+
+.env.*
+!.env.example
+!.env.development
+.DS_Store

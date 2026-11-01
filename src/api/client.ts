@@ -37,7 +37,7 @@ async function request<T>(path: string, init: RequestInit): Promise<T> {
       "Content-Type": "application/json",
       ...(init.headers || {})
     }
-  });
+  }).catch(() => { throw new ApiError("Cannot reach the advice server. Check that the backend is running.", 0); });
 
   const text = await response.text();
   const data = text ? JSON.parse(text) : null;

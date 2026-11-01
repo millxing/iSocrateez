@@ -1,3 +1,4 @@
+import { navigateRadios } from "./radioNavigation";
 import { useState } from "react";
 import type { PhilosophyGroup } from "../../shared/contracts";
 import { philosophyProfiles } from "../../shared/philosophyProfiles";
@@ -22,12 +23,10 @@ export function PhilosopherPage({ initialId, onSubmit, onBack }: PhilosopherPage
 
   return (
     <div className="wizard-card philosopher-page">
+      <div className="wizard-scroll">
       <h2 className="wizard-title">Choose a philosopher</h2>
-      <p className="wizard-subtitle">
-        Whose perspective would you like on your dilemma?
-      </p>
 
-      <div className="philosopher-groups" role="radiogroup" aria-label="Philosophers">
+      <div className="philosopher-groups" role="radiogroup" onKeyDown={navigateRadios} aria-label="Philosophers">
         {GROUPS.map((group) => {
           const members = philosophyProfiles.filter((p) => p.group === group.id);
           if (members.length === 0) return null;
@@ -41,6 +40,7 @@ export function PhilosopherPage({ initialId, onSubmit, onBack }: PhilosopherPage
                     type="button"
                     role="radio"
                     aria-checked={p.id === selectedId}
+                    tabIndex={p.id === (selectedId || philosophyProfiles[0].id) ? 0 : -1}
                     className={`philosopher-chip ${p.id === selectedId ? "is-selected" : ""}`}
                     onClick={() => setSelectedId(p.id)}
                   >
@@ -54,10 +54,11 @@ export function PhilosopherPage({ initialId, onSubmit, onBack }: PhilosopherPage
         })}
       </div>
 
-      <p className="philosopher-blurb" aria-live="polite">
-        {selected ? selected.summary : "Select one to see a short description."}
+      <p className="philosopher-blurb" aria-live="polite" hidden={!selected}>
+        {selected?.summary}
       </p>
 
+      </div>
       <div className="button-row">
         <button className="button-back" type="button" onClick={onBack}>
           Back

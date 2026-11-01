@@ -1,4 +1,4 @@
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { FormEvent, useState } from "react";
 import { SAMPLE_DILEMMAS } from "../sampleDilemmas";
 
 interface DilemmaPageProps {
@@ -24,10 +24,7 @@ export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
 
   return (
     <div className="wizard-card dilemma-page">
-      <h2 className="wizard-title">Name the dilemma</h2>
-      <p className="wizard-subtitle">
-        What situation are you trying to navigate?
-      </p>
+      <h2 className="wizard-title">Dilemma</h2>
       <form className="wizard-form" onSubmit={handleSubmit}>
         <div className="mode-toggle" role="group" aria-label="Dilemma source">
           <button
@@ -59,25 +56,31 @@ export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
                   </>
                 ) : (
                   <p className="example-preview-empty">
-                    Select an example to read it here.
+                    Select an example.
                   </p>
                 )}
               </div>
             </div>
           ) : (
+            <>
             <textarea
+              id="dilemma"
+              aria-label="Dilemma"
               name="dilemma"
               value={dilemma}
               onChange={(e) => setDilemma(e.target.value)}
-              placeholder="Example: I learned something at work that could protect my team if I disclose it, but I would be violating a confidence."
               className="wizard-textarea"
               rows={6}
             />
+            <details className="optional-help"><summary>What to include</summary><p>What happened, who is affected, and what makes the choice difficult?</p></details>
+            </>
           )}
         </div>
+        <div className="button-row dilemma-actions">
         <button className="button-primary dilemma-continue" type="submit" disabled={!canContinue}>
           Continue
         </button>
+        </div>
       </form>
     </div>
   );
@@ -90,36 +93,18 @@ function ExampleList({
   selectedTitle?: string;
   onPick: (text: string) => void;
 }) {
-  const listRef = useRef<HTMLDivElement>(null);
-  const [moreBelow, setMoreBelow] = useState(false);
-
-  const update = useCallback(() => {
-    const el = listRef.current;
-    if (!el) return;
-    setMoreBelow(el.scrollTop + el.clientHeight < el.scrollHeight - 4);
-  }, []);
-
-  useEffect(() => {
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, [update]);
-
   return (
     <div className="example-list-wrap">
       <div
         className="example-list"
-        role="listbox"
+        role="group"
         aria-label="Example dilemmas"
-        ref={listRef}
-        onScroll={update}
       >
         {SAMPLE_DILEMMAS.map((sample) => (
           <button
             key={sample.title}
             type="button"
-            role="option"
-            aria-selected={sample.title === selectedTitle}
+            aria-pressed={sample.title === selectedTitle}
             className={`choice-card example-option ${sample.title === selectedTitle ? "is-active" : ""}`}
             onClick={() => onPick(sample.text)}
           >
@@ -127,11 +112,6 @@ function ExampleList({
           </button>
         ))}
       </div>
-      {moreBelow && (
-        <div className="example-scroll-hint" aria-hidden="true">
-          <span>Scroll for more ▾</span>
-        </div>
-      )}
     </div>
   );
 }

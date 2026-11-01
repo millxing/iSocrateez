@@ -13,3 +13,6 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: () => false
   })
 });
+
+// jsdom does not implement viewport scrolling.
+window.scrollTo = () => undefined;

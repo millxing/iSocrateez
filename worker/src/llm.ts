@@ -27,6 +27,19 @@ export interface WorkerEnv {
   ALLOWED_ORIGIN?: string;
 }
 
+export class ProviderError extends Error {
+  constructor(public readonly provider: string, public readonly status: number) {
+    const label = provider === "anthropic" ? "Anthropic" : "OpenAI";
+    super(status === 401 || status === 403
+      ? `${label} rejected its API key. Update the backend credential or choose another provider in Settings.`
+      : status === 404
+      ? `${label} could not find the selected model. Choose another model in Settings.`
+      : status === 429
+      ? `${label} is rate-limited or out of credits. Check the provider account and retry.`
+      : `${label} is unavailable. Try again shortly.`);
+  }
+}
+
 interface ModelConfig {
   provider: string;
   model: string;
@@ -217,7 +230,7 @@ function getProviderApiKey(provider: string, env: WorkerEnv): string | undefined
 
 async function callModel(config: ModelConfig, prompt: string): Promise<string> {
   if (!config.apiKey) {
-    throw new Error(`Missing API key for ${config.provider}:${config.model}`);
+    throw new ProviderError(config.provider, 401);
   }
 
   switch (config.provider) {
@@ -256,7 +269,7 @@ async function callOpenAiCompatible(
   };
 
   if (!response.ok) {
-    throw new Error(data.error?.message || "OpenAI-compatible request failed.");
+    throw new ProviderError("openai", response.status);
   }
 
   const content = data.choices?.[0]?.message?.content;
@@ -295,7 +308,7 @@ async function callAnthropic(config: ModelConfig, prompt: string): Promise<strin
   };
 
   if (!response.ok) {
-    throw new Error(data.error?.message || "Anthropic request failed.");
+    throw new ProviderError("anthropic", response.status);
   }
 
   const content = data.content?.find((entry) => entry.type === "text")?.text;

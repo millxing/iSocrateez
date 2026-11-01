@@ -19,18 +19,19 @@ Then it generates advice based on the resulting ethical profile.
 
 ### Frontend
 
-The UI is a wizard-style multi-page flow with a sticky hero bar and page-by-page progression.
+The UI uses a fixed sidebar, independently scrolling content panes, and pinned bottom actions. Completed steps are clickable for regeneration. The previous tracked app is preserved under `archive/v1/`; do not edit it when changing the current app.
 
-- `src/App.tsx`: wizard flow controller managing phases (locked → dilemma → path → calibration → explanation → models → results)
+- `src/App.tsx`: wizard flow controller managing phases (locked → dilemma → path → calibration/philosopher → explanation → results)
 - `src/components/PasswordGate.tsx`: shared password entry
 - `src/components/DilemmaPage.tsx`: dilemma text entry (dynamic-height textarea)
 - `src/components/ExplanationPage.tsx`: 3-choice explanation style cards
-- `src/components/ModelPage.tsx`: model selection (defaults to Claude Haiku 5.5 planner / Claude Sonnet 5.5 advisor)
+- `src/components/SettingsPage.tsx`: sidebar-accessible appearance and model selection, preserving the current flow
+- `src/components/ModelPage.tsx`: unused previous model-selection screen
 - `src/components/PathPage.tsx`: choose calibration questions or manual tuple
 - `src/components/CalibrationPage.tsx`: 9-question flow or 3-axis sliders
 - `src/components/ResultsView.tsx`: tabbed results with 6 tabs (advice, why, watch, next, coordinates, export); hamburger menu on narrow screens; export saves markdown via File System Access API
 - `src/api/client.ts`: frontend API client
-- `src/styles.css`: all styling — dark theme, 75vw layout, responsive breakpoints
+- `src/styles.css`: all styling — light/dark semantic palettes, fixed app shell, responsive content panes
 
 Note: `src/components/DilemmaForm.tsx` and `src/components/AssessmentFlow.tsx` are legacy files no longer imported.
 
@@ -77,8 +78,7 @@ cp worker/.dev.vars.example worker/.dev.vars
 Start the app:
 
 ```bash
-npm run worker:dev
-npm run dev
+npm run dev -- --host 127.0.0.1 --port 5174
 ```
 
 Useful checks:
@@ -88,6 +88,8 @@ npm run test
 npm run check
 npm run build
 ```
+
+Development uses the existing deployed backend through `.env.development` and the Vite proxy; no local Worker or provider keys are needed. The root GitHub Pages workflow remains active. `archive/v1` is excluded by the explicit Vitest include patterns.
 
 ## Environment
 

@@ -10,6 +10,8 @@ import { axisLabels } from "../../shared/ethics";
 interface CalibrationPageProps {
   mode: "questions" | "tuple";
   questions: Question[];
+  initialAnswers: AnswerRecord[];
+  initialTuple: ProfileTuple | null;
   onCompleteQuestions: (answers: AnswerRecord[]) => void;
   onCompleteTuple: (tuple: ProfileTuple) => void;
   onBack: () => void;
@@ -28,6 +30,8 @@ const SCALE: { value: AnswerValue; label: string; stackedLabel: string }[] = [
 export function CalibrationPage({
   mode,
   questions,
+  initialAnswers,
+  initialTuple,
   onCompleteQuestions,
   onCompleteTuple,
   onBack
@@ -35,6 +39,7 @@ export function CalibrationPage({
   if (mode === "tuple") {
     return (
       <TupleEntry
+        initialTuple={initialTuple}
         onComplete={onCompleteTuple}
         onBack={onBack}
       />
@@ -44,6 +49,7 @@ export function CalibrationPage({
   return (
     <QuestionFlow
       questions={questions}
+      initialAnswers={initialAnswers}
       onComplete={onCompleteQuestions}
       onBack={onBack}
     />
@@ -52,15 +58,17 @@ export function CalibrationPage({
 
 function QuestionFlow({
   questions,
+  initialAnswers,
   onComplete,
   onBack
 }: {
   questions: Question[];
+  initialAnswers: AnswerRecord[];
   onComplete: (answers: AnswerRecord[]) => void;
   onBack: () => void;
 }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, AnswerValue>>({});
+  const [answers, setAnswers] = useState<Record<string, AnswerValue>>(() => Object.fromEntries(initialAnswers.map(answer => [answer.questionId, answer.value])));
 
   const currentQuestion = questions[currentIndex];
   if (!currentQuestion) return null;
@@ -107,6 +115,7 @@ function QuestionFlow({
 
   return (
     <div className="wizard-card wizard-card-wide">
+      <div className="wizard-scroll">
       <div className="progress-shell" aria-hidden="true">
         <div className="progress-bar" style={{ width: `${progress}%` }} />
       </div>
@@ -144,6 +153,7 @@ function QuestionFlow({
                     ? "Neutral"
                     : `${option.stackedLabel}: ${option.value < 0 ? currentQuestion.lowLabel : currentQuestion.highLabel}`
                 }
+                aria-pressed={currentAnswer === option.value}
                 onClick={() => setAnswer(option.value)}
               >
                 <span className="scale-text-inline">{option.label}</span>
@@ -155,6 +165,7 @@ function QuestionFlow({
         </div>
       </div>
 
+      </div>
       <div className="button-row">
         <button className="button-back" type="button" onClick={previous}>
           {currentIndex === 0 ? "Back" : "Previous"}
@@ -173,13 +184,14 @@ function QuestionFlow({
 }
 
 function TupleEntry({
-  onComplete,
+  initialTuple,  onComplete,
   onBack
 }: {
+  initialTuple: ProfileTuple | null;
   onComplete: (tuple: ProfileTuple) => void;
   onBack: () => void;
 }) {
-  const [fields, setFields] = useState({
+  const [fields, setFields] = useState(initialTuple || {
     outcomesPrinciples: 0,
     individualCollective: 0,
     reasonIntuition: 0
@@ -195,10 +207,8 @@ function TupleEntry({
 
   return (
     <div className="wizard-card">
+      <div className="wizard-scroll">
       <h2 className="wizard-title">Set your coordinates</h2>
-      <p className="wizard-subtitle">
-        Position each slider between the two endpoints.
-      </p>
       <div className="tuple-sliders">
         {([
           { key: "outcomesPrinciples" as const, neg: "Outcomes", pos: "Principles" },
@@ -210,6 +220,7 @@ function TupleEntry({
               <span className="slider-label">{axis.neg}</span>
               <input
                 type="range"
+                aria-label={`${axis.neg} to ${axis.pos}`}
                 className="question-slider"
                 min={-100}
                 max={100}
@@ -224,6 +235,7 @@ function TupleEntry({
         ))}
       </div>
 
+      </div>
       <div className="button-row">
         <button className="button-back" type="button" onClick={onBack}>
           Back

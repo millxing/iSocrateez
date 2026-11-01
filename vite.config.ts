@@ -7,6 +7,11 @@ export default defineConfig(({ mode }) => {
   return {
     base: env.VITE_BASE_PATH || "/",
     plugins: [react()],
+    server: {
+      proxy: env.API_PROXY_TARGET ? {
+        "/api": { target: env.API_PROXY_TARGET, changeOrigin: true, secure: true }
+      } : undefined
+    },
     test: {
       environment: "jsdom",
       setupFiles: "./src/test/setup.ts"

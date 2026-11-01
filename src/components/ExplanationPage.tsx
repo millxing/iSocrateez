@@ -4,48 +4,51 @@ interface ExplanationPageProps {
   current: ExplanationLevel;
   onSelect: (level: ExplanationLevel) => void;
   onBack: () => void;
+  onSubmit: () => void;
+  isSubmitting: boolean;
+  error: string | null;
 }
 
-const options: { value: ExplanationLevel; label: string; hint: string }[] = [
+const options: { value: ExplanationLevel; label: string }[] = [
   {
     value: "general",
-    label: "No philosophy training",
-    hint: "Plain language and fewer references."
+    label: "Plain language"
   },
   {
     value: "informed",
-    label: "Some philosophy training",
-    hint: "Keeps some vocabulary and contrast."
+    label: "Some technical detail"
   },
   {
     value: "phd",
-    label: "PhD-level philosophical training",
-    hint: "Denser distinctions and sharper framing."
+    label: "Advanced"
   }
 ];
 
-export function ExplanationPage({ current, onSelect, onBack }: ExplanationPageProps) {
+export function ExplanationPage({ current, onSelect, onBack, onSubmit, isSubmitting, error }: ExplanationPageProps) {
   return (
     <div className="wizard-card">
+      <div className="wizard-scroll">
       <h2 className="wizard-title">Explanation style</h2>
-      <p className="wizard-subtitle">
-        How technical should the response feel?
-      </p>
-      <div className="wizard-choices">
+      <div className="wizard-choices style-choices">
         {options.map((opt) => (
           <button
             key={opt.value}
             className={`choice-card ${opt.value === current ? "is-active" : ""}`}
+            aria-pressed={opt.value === current}
             onClick={() => onSelect(opt.value)}
           >
             <span className="choice-label">{opt.label}</span>
-            <span className="choice-hint">{opt.hint}</span>
           </button>
         ))}
       </div>
-      <button className="button-back" type="button" onClick={onBack}>
-        Back
-      </button>
+      {error && <p className="error" role="alert">{error}</p>}
+      </div>
+      <div className="button-row">
+        <button className="button-back" type="button" onClick={onBack}>Back</button>
+        <button className="button-primary" type="button" onClick={onSubmit} disabled={isSubmitting}>
+          {isSubmitting ? "Generating…" : "Get advice"}
+        </button>
+      </div>
     </div>
   );
 }

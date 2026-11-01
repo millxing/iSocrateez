@@ -261,4 +261,23 @@ describe("worker routes", () => {
     );
     expect(blocked.headers.get("Access-Control-Allow-Origin")).toBeNull();
   });
+  it("reports provider authentication errors without exposing raw provider details", async () => {
+    const fetchMock = vi.spyOn(globalThis, "fetch").mockImplementation(async () => new Response(
+      JSON.stringify({ error: { message: "sensitive upstream diagnostic" } }), { status: 401 }
+    ));
+    try {
+      const token = await createSignedToken({ exp: Math.floor(Date.now() / 1000) + 60 }, env.JWT_SECRET);
+      const response = await handleRequest(new Request("https://example.com/api/advice", {
+        method: "POST",
+        body: JSON.stringify({ token, dilemma: "Should I return a lost umbrella?", answers: [],
+          profileOverride: { outcomesPrinciples: 0, individualCollective: 0, reasonIntuition: 0 },
+          explanationLevel: "general", personaMode: "personalized" })
+      }), env);
+      expect(response.status).toBe(502);
+      const body = await response.text();
+      expect(body).toContain("OpenAI rejected its API key");
+      expect(body).not.toContain("sensitive upstream diagnostic");
+    } finally { fetchMock.mockRestore(); }
+  });
+
 });
