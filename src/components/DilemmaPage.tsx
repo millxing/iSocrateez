@@ -72,7 +72,6 @@ export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
               className="wizard-textarea"
               rows={6}
             />
-            <details className="optional-help"><summary>What to include</summary><p>What happened, who is affected, and what makes the choice difficult?</p></details>
             </>
           )}
         </div>

@@ -11,6 +11,32 @@ describe("App", () => {
     window.history.replaceState(null, "", "/");
   });
 
+  it("starts a blank dilemma from the brand, including drafts and Settings", () => {
+    sessionStorage.setItem("isocrateez-v2-production-token", "test-token");
+    render(<App />);
+    const reset = () => fireEvent.click(screen.getByRole("button", { name: "iSocrateez — new dilemma" }));
+    fireEvent.change(screen.getByRole("textbox", { name: "Dilemma" }), { target: { value: "An unfinished draft" } });
+    reset();
+    expect(screen.getByRole("textbox", { name: "Dilemma" })).toHaveValue("");
+    expect(screen.getByRole("button", { name: "Continue" })).toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: "Choose an example" }));
+    fireEvent.click(screen.getByRole("button", { name: "The Shared Garden" }));
+    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
+    window.history.replaceState(null, "", "#settings");
+    fireEvent(window, new HashChangeEvent("hashchange"));
+    expect(screen.getByRole("heading", { name: "Settings" })).toBeInTheDocument();
+    reset();
+    expect(screen.getByRole("textbox", { name: "Dilemma" })).toHaveValue("");
+    expect(screen.getByRole("button", { name: "Continue" })).toBeDisabled();
+    expect(screen.queryByText("What to include")).not.toBeInTheDocument();
+  });
+
+  it("keeps sign-in required when the brand is clicked", () => {
+    render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "iSocrateez — new dilemma" }));
+    expect(screen.queryByRole("textbox", { name: "Dilemma" })).not.toBeInTheDocument();
+  });
+
   it("submits the selected explanation setting through the questionnaire path", async () => {
     const originalFetch = globalThis.fetch;
     const adviceBodies: unknown[] = [];

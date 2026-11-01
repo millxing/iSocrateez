@@ -43,5 +43,45 @@ export const SAMPLE_DILEMMAS: SampleDilemma[] = [
   {
     title: "The Lifeboat",
     text: "After a passenger ship sinks during a violent storm, six survivors manage to climb into a lifeboat designed to support only five people. The boat is taking on water, and the survivors realize that unless someone leaves, it will probably sink before rescuers arrive. Among the survivors are a pregnant woman, a 14-year-old boy, an elderly physician, and three other adults. No one volunteers to sacrifice themselves, and there is no reliable way to determine who would be most likely to survive in the freezing water. Should the group force one person overboard to save the others, or refuse to sacrifice anyone and risk everyone dying?"
+  },
+  {
+    "title": "The Conditional Donation",
+    "text": "A public library faces closing its only evening study room. A donor offers enough money to keep it open for five years, provided the library removes books that criticize the donor’s industry. Students without quiet homes depend on the room, and no other funding is available this year. The donor is willing to keep the condition private. Should the library accept the restriction to preserve access, refuse and reduce its services, or seek a compromise that could still undermine its independence?"
+  },
+  {
+    "title": "The Hiring Algorithm",
+    "text": "You manage hiring for a company that uses an automated screening tool. It predicts job performance better than the previous process, but rejects applicants with career breaks at a much higher rate. Many of those applicants have been caregivers. Reviewing every application manually would delay hiring and strain an already understaffed team. The tool’s supplier cannot explain individual rejections. Should you suspend the system, adjust its criteria without knowing the effects, or continue using it while offering rejected applicants a review?"
+  },
+  {
+    "title": "The Museum’s Inheritance",
+    "text": "A small museum owns a ceremonial object taken from another community generations ago without its consent. Descendants ask for its return so it can be used in religious ceremonies. The object is the museum’s main attraction, and admission revenue supports local jobs and free school visits. Museum staff also worry about preservation, while the community says those concerns deny its right to care for its own heritage. Should the museum return the object unconditionally, negotiate shared custody, or retain it for public access?"
+  },
+  {
+    "title": "The Family Inheritance",
+    "text": "Your parent asks you to divide an inheritance equally among three siblings. One sibling spent years providing unpaid care, while another paid for professional help and the third could contribute little because of illness. After your parent dies, you discover a private note suggesting that the caregiver should receive more, but it gives no amount and contradicts the earlier conversation. All three siblings need the money. How should you balance your parent’s expressed wishes, unequal contributions, and each sibling’s present needs?"
+  },
+  {
+    "title": "The Water Ration",
+    "text": "During a severe drought, you help allocate a town’s remaining water. Equal limits for every household seem simple, but some residents have medical needs and some grow food they rely on. A local farm employs many townspeople and says a sharp reduction will destroy its harvest. Giving it extra water would leave households with stricter limits. There is no reliable forecast for rain. What would make the rationing fair, and who should bear the greatest sacrifice?"
+  },
+  {
+    "title": "The Research Archive",
+    "text": "You oversee a study whose participants consented to research on one rare illness. Years later, another team discovers that the stored samples could help investigate an unrelated disease. Many participants cannot be reached, and some originally expressed concerns about future uses of their data. Removing names reduces but does not eliminate the possibility of identification. Recollecting the samples would take years. Should you permit the new study, require renewed consent, or restrict access in a way that may weaken the research?"
+  },
+  {
+    "title": "The Employee Monitor",
+    "text": "You run a remote team and suspect that two employees are doing very little work while colleagues cover for them. Monitoring software could help establish what is happening, but it would also record activity on everyone’s computers, including people whose work involves long periods of thinking away from the screen. Several employees have asked for help with the unequal workload. Should you introduce monitoring, rely on output measures that may miss valuable work, or address the suspected cases individually with incomplete evidence?"
+  },
+  {
+    "title": "The Flood Retreat",
+    "text": "Your coastal town can fund either another flood barrier or a relocation program, but not both. A barrier may protect residents for another decade, though future storms could overwhelm it. Relocation offers greater long-term safety but would scatter a close community and separate residents from ancestral homes. Some older residents want to stay, while younger families worry about being trapped with unsellable houses. As a council member, how should you weigh immediate consent, future risk, and obligations to people who cannot afford to leave?"
+  },
+  {
+    "title": "The Private Photograph",
+    "text": "You edit a local newspaper and receive a private photograph showing a candidate socializing with a developer they publicly claim not to know. The photograph also reveals a family member’s sensitive personal situation that has no bearing on public office. Cropping the image would protect the relative but remove context that helps establish its authenticity. The election is days away, and the candidate disputes your account. Should you publish the image, report the relationship without it, or wait for stronger independent evidence?"
+  },
+  {
+    "title": "The Shared Garden",
+    "text": "Residents turn an unused lot into a community garden with the owner’s informal permission. Years later, the owner plans affordable apartments on the site. The garden now provides food, accessible outdoor space, and a place for isolated neighbors to meet. The proposed apartments would serve families currently in temporary housing, and moving the garden would take years of work. You represent the neighborhood in negotiations. How should you weigh the needs of current residents against those of people who cannot yet live there?"
   }
 ];

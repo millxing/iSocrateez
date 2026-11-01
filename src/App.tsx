@@ -50,6 +50,7 @@ export default function App() {
   const [isUnlocking, setIsUnlocking] = useState(false);
 
   const [dilemma, setDilemma] = useState("");
+  const [flowRevision, setFlowRevision] = useState(0);
   const [explanationLevel, setExplanationLevel] = useState<ExplanationLevel>("general");
   const [chosenPhilosopher, setChosenPhilosopher] = useState<string | null>(null);
   const personaMode: PersonaMode = chosenPhilosopher ? "philosopher" : "personalized";
@@ -166,13 +167,17 @@ export default function App() {
   }, [sessionToken, dilemma, answers, profileOverride, chosenPhilosopher, explanationLevel, personaMode]);
 
   function resetFlow() {
+    setDilemma("");
+    setFlowRevision(value => value + 1);
+    setSettingsOpen(false);
+    window.history.replaceState(null, "", window.location.pathname + window.location.search + "#reflection");
     setQuestions([]);
     setAnswers([]);
     setProfileOverride(null);
     setChosenPhilosopher(null);
     setResponse(null);
     setAdviceError(null);
-    goTo("dilemma");
+    goTo(sessionToken ? "dilemma" : "locked");
   }
 
   const [settingsOpen, setSettingsOpen] = useState(() => window.location.hash === "#settings");
@@ -219,7 +224,7 @@ export default function App() {
     <div className="app-shell">
       <a className="skip-link" href="#main">Skip to content</a>
       <aside className="sidebar" aria-label="Session progress">
-        <div className="brand"><span className="brand-mark" aria-hidden="true">iS</span><div><h1>iSocrateez</h1></div></div>
+        <h1 className="brand"><button className="brand-home" type="button" onClick={resetFlow} disabled={isLoadingAdvice} aria-label="iSocrateez — new dilemma"><img src={`${import.meta.env.BASE_URL}socrates-bust.png`} alt="" width="48" height="48" /><span>iSocrateez</span></button></h1>
         <ol className="step-list">
           {steps.map((label, index) => (
             <li key={label} className={`${step === index ? "current" : ""} ${step > index ? "complete" : ""}`} aria-current={step === index ? "step" : undefined}>
@@ -241,7 +246,7 @@ export default function App() {
         {settingsOpen && <SettingsPage appearance={appearance} onAppearance={setAppearance}
           plannerModel={plannerModel} onPlannerModel={setPlannerModel}
           advisorModel={advisorModel} onAdvisorModel={setAdvisorModel} />}
-        <div className={`page-content page-${direction}`} key={phase} hidden={settingsOpen}>
+        <div className={`page-content page-${direction}`} key={`${phase}:${flowRevision}`} hidden={settingsOpen}>
           {phase === "locked" && (
             <PasswordGate
               error={authError}
