@@ -127,7 +127,7 @@ describe("ResultsView", () => {
     try {
       render(<ResultsView response={{ ...response, modelsUsed: models }} dilemma="A difficult choice"
         explanationLevel="general" personaMode="personalized" onRestart={() => undefined} />);
-      fireEvent.click(screen.getByRole("button", { name: "Export Advice" }));
+      fireEvent.click(screen.getByRole("tab", { name: "Export" }));
       fireEvent.click(screen.getByRole("button", { name: "Save as markdown file" }));
       await waitFor(() => expect(write).toHaveBeenCalled());
       const markdown = write.mock.calls[0][0];
@@ -150,15 +150,15 @@ describe("ResultsView", () => {
     );
 
     const desktopNav = container.querySelector(
-      "nav.results-tabs-desktop:not(.results-tabs-measure)"
+      "[role=tablist].results-tabs-desktop"
     );
     const mobileNav = container.querySelector("nav.results-tabs-mobile");
 
     await waitFor(() => {
-      expect(screen.queryByRole("button", { name: "Menu" })).not.toBeInTheDocument();
+      expect(screen.queryByRole("button", { name: /^Advice sections/ })).not.toBeInTheDocument();
     });
 
-    expect(screen.getByRole("button", { name: "Why This Advice" })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Reasoning" })).toBeInTheDocument();
     expect(desktopNav).not.toHaveAttribute("hidden");
     expect(mobileNav).toHaveAttribute("hidden");
 
@@ -167,10 +167,10 @@ describe("ResultsView", () => {
     fireEvent(window, new Event("resize"));
 
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: "Menu" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: /^Advice sections/ })).toBeInTheDocument();
     });
 
-    expect(screen.queryByRole("button", { name: "Why This Advice" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("tab", { name: "Reasoning" })).not.toBeInTheDocument();
     expect(desktopNav).toHaveAttribute("hidden");
     expect(mobileNav).not.toHaveAttribute("hidden");
   });
@@ -194,14 +194,14 @@ describe("ResultsView", () => {
     expect(screen.getByText("1844–1900 · Prussia and Germany")).toBeInTheDocument();
     expect(screen.getByText(/ai interpretation/i)).toBeInTheDocument();
     expect(
-      screen.getAllByRole("button", { name: "About the Speaker" }).length
+      screen.getAllByRole("tab", { name: "Speaker" }).length
     ).toBeGreaterThan(0);
-    expect(screen.queryByRole("button", { name: "Ethical Coordinates" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("tab", { name: "Coordinates" })).not.toBeInTheDocument();
 
     rerender(<ResultsView {...props} response={response} personaMode="personalized" />);
     expect(screen.queryByText("Speaking as")).not.toBeInTheDocument();
     expect(
-      screen.getAllByRole("button", { name: "Ethical Coordinates" }).length
+      screen.getAllByRole("tab", { name: "Coordinates" }).length
     ).toBeGreaterThan(0);
   });
 });

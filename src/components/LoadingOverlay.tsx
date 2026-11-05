@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const PHILOSOPHERS = [
   "Socrates", "Plato", "Aristotle", "Epicurus", "Diogenes", "Zeno", "Epictetus", "Seneca",
@@ -33,7 +33,7 @@ function spawnName(): FloatingName {
   };
 }
 
-function FloatingNames() {
+export function FloatingNames({ className = "" }: { className?: string }) {
   const [names, setNames] = useState<FloatingName[]>([]);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ function FloatingNames() {
   }, []);
 
   return (
-    <div className="floating-names" aria-hidden="true">
+    <div className={`floating-names ${className}`} aria-hidden="true">
       {names.map((n) => (
         <span
           key={n.id}
@@ -64,15 +64,28 @@ function FloatingNames() {
   );
 }
 
-export function LoadingOverlay({ startTime }: { startTime: number }) {
+export function LoadingOverlay({ startTime, onCancel }: { startTime: number; onCancel?: () => void }) {
   const [elapsed, setElapsed] = useState(0);
+  const cancelRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     const interval = setInterval(() => setElapsed(Date.now() - startTime), 1000);
     return () => clearInterval(interval);
   }, [startTime]);
-  return <div className="loading-overlay">
+  useEffect(() => {
+    cancelRef.current?.focus();
+  }, []);
+  const seconds = Math.floor(elapsed / 1000);
+
+  return <div className="loading-overlay" role="dialog" aria-modal="true" aria-label="Generating advice">
     <FloatingNames />
-    <p className="loading-message loading-front" role="status">{elapsed < 20000 ? "Considering your dilemma…" : "Still working through your perspective…"}</p>
-    <p className="loading-timer loading-front">{Math.floor(elapsed / 1000)} seconds elapsed</p>
+    <div className="loading-card loading-front">
+      <img className="loading-bust" src={`${import.meta.env.BASE_URL}socrates-bust.png`} alt="" width="96" height="96" />
+      <span className="loading-dots" aria-hidden="true"><span /><span /><span /></span>
+      <p className="loading-message" role="status">{elapsed < 20000 ? "Considering your dilemma…" : "Still working through your perspective…"}</p>
+      <p className="loading-timer">
+        {seconds < 3 ? "This usually takes under a minute." : `${seconds} ${seconds === 1 ? "second" : "seconds"} elapsed`}
+      </p>
+      {onCancel && <button ref={cancelRef} className="button-back loading-cancel" type="button" onClick={onCancel}>Cancel</button>}
+    </div>
   </div>;
 }

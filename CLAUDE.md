@@ -32,7 +32,7 @@ Important files:
 - `src/components/PathPage.tsx` — calibration questions vs manual tuple
 - `src/components/CalibrationPage.tsx` — 9-question flow or 3-axis sliders
 - `src/components/ResultsView.tsx` — tabbed results (advice, why, watch, next, coordinates, export)
-- `src/styles.css` — all styling (dark theme, responsive hamburger menu on narrow screens)
+- `src/styles.css` — all styling (light/dark themes, responsive layout)
 - `shared/contracts.ts`
 - `shared/ethics.ts`
 - `worker/src/index.ts`
@@ -72,12 +72,12 @@ The Worker returns:
 
 ## Frontend Notes
 
-- Typography is Funnel Sans, dark editorial theme (`--bg: #111110`, `--accent: #c9a84c`)
-- Layout is 75vw max-width, wizard pages use `flex: 1` chains to fill the viewport
-- Each wizard page is a separate component in `src/components/`
-- Results page uses a light cream card (`#f0ede6`) with scrollable body and fixed footer
-- Tab bar switches to hamburger dropdown on screens narrower than ~1100px
-- Calibration question layout: two visual groups (question + scale buttons) vertically centered with spacing
+- Typography: Newsreader serif (Google Fonts) for headings and reading text, system sans for UI. Warm paper/sage palette with light and dark themes; tokens live at the top of `src/styles.css`
+- Shell: left sidebar with progress steps; it becomes a top step bar at ≤1000px. The sign-in page has no sidebar (large wordmark, drifting philosopher names)
+- Desktop/tablet wizard pages sit just above the vertical middle with their buttons directly underneath; phones keep the buttons pinned at the bottom
+- Each wizard page is a separate component in `src/components/`, using `PageHeader` for the step eyebrow/title/subtitle
+- Philosopher page: uniform cards, a summary column beside the list on wide screens; search uses `src/philosopherSearch.ts` (name, school, region, traditions plus hidden keywords)
+- Results: tabs on wide screens, a section menu below 640px; the advice card fills the height and scrolls inside
 - Export uses the File System Access API (`showSaveFilePicker`) with blob download fallback
 
 ## Worker Notes

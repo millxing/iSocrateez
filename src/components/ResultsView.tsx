@@ -1,5 +1,5 @@
 import { modelOptions } from "../../shared/models";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import ReactMarkdown from "react-markdown";
 import type {
   AdviceResponse,
@@ -17,19 +17,21 @@ interface ResultsViewProps {
   dilemma: string;
   explanationLevel: ExplanationLevel;
   personaMode: PersonaMode;
+  /** Human-readable description of how the perspective was chosen. */
+  perspectiveLabel?: string;
   onRestart: () => void;
 }
 
 type Tab = "advice" | "why" | "watch" | "next" | "dilemma" | "export" | "coordinates";
 
-const TABS: { id: Tab; label: string }[] = [
-  { id: "advice", label: "Your Advice" },
-  { id: "why", label: "Why This Advice" },
-  { id: "watch", label: "What to Watch For" },
-  { id: "next", label: "Next Step" },
-  { id: "dilemma", label: "Original Dilemma" },
-  { id: "coordinates", label: "Ethical Coordinates" },
-  { id: "export", label: "Export Advice" }
+const TABS: { id: Tab; label: string; title: string }[] = [
+  { id: "advice", label: "Advice", title: "Your advice" },
+  { id: "why", label: "Reasoning", title: "Why this advice" },
+  { id: "watch", label: "Watch for", title: "What to watch for" },
+  { id: "next", label: "Next step", title: "Your next step" },
+  { id: "dilemma", label: "Dilemma", title: "Your dilemma" },
+  { id: "coordinates", label: "Coordinates", title: "Ethical coordinates" },
+  { id: "export", label: "Export", title: "Export advice" }
 ];
 
 /** Heading patterns for section splitting */
@@ -40,7 +42,7 @@ const SECTION_PATTERNS: { tab: Tab; patterns: RegExp[] }[] = [
   { tab: "next", patterns: [/next\s+steps?/i, /action\s+items?/i, /practical\s+steps?/i] }
 ];
 
-const MOBILE_RESULTS_BREAKPOINT = 859;
+const MOBILE_RESULTS_BREAKPOINT = 640;
 
 function splitMarkdownSections(raw: string): Record<Tab, string> {
   const renamed = raw.replace(/^(#{1,3})\s*Core\s+advice/mi, "$1 Your Advice");
@@ -89,11 +91,18 @@ function splitMarkdownSections(raw: string): Record<Tab, string> {
   };
 }
 
+const STYLE_LABELS: Record<ExplanationLevel, string> = {
+  general: "Plain language",
+  informed: "Some technical detail",
+  phd: "Advanced"
+};
+
 export function ResultsView({
   response,
   dilemma,
   explanationLevel,
   personaMode,
+  perspectiveLabel,
   onRestart
 }: ResultsViewProps) {
   const [activeTab, setActiveTab] = useState<Tab>("advice");
@@ -102,6 +111,9 @@ export function ResultsView({
     typeof window !== "undefined" ? window.innerWidth <= MOBILE_RESULTS_BREAKPOINT : false
   );
   const measureTabsRef = useRef<HTMLElement | null>(null);
+  const menuRef = useRef<HTMLElement | null>(null);
+  const toggleRef = useRef<HTMLButtonElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
   const primary = response.nearestProfiles[0];
   const alternates = response.nearestProfiles.slice(1, 3);
   // Looked up client-side so the page doesn't depend on the Worker echoing the full profile.
@@ -117,7 +129,7 @@ export function ResultsView({
   const tabs = useMemo(
     () =>
       TABS.map((tab) =>
-        tab.id === "coordinates" && voice ? { ...tab, label: "About the Speaker" } : tab
+        tab.id === "coordinates" && voice ? { ...tab, label: "Speaker", title: "About the speaker" } : tab
       ),
     [voice]
   );
@@ -137,11 +149,30 @@ export function ResultsView({
     "$1 Your Advice"
   );
 
-  const activeLabel = tabs.find((t) => t.id === activeTab)?.label ?? "";
+  const activeIndex = availableTabs.findIndex((t) => t.id === activeTab);
+  const active = availableTabs[activeIndex] ?? availableTabs[0];
+  const nextTab = availableTabs[activeIndex + 1];
 
-  function selectTab(id: Tab) {
+  function selectTab(id: Tab, focusPanel = false) {
     setActiveTab(id);
-    setMenuOpen(false);
+    if (menuOpen) {
+      setMenuOpen(false);
+      toggleRef.current?.focus();
+    }
+    if (focusPanel) requestAnimationFrame(() => panelRef.current?.focus());
+    panelRef.current?.scrollTo?.({ top: 0 });
+  }
+
+  function handleTabKeys(event: KeyboardEvent<HTMLElement>) {
+    const keys = ["ArrowRight", "ArrowLeft", "Home", "End"];
+    if (!keys.includes(event.key)) return;
+    event.preventDefault();
+    const count = availableTabs.length;
+    const nextIndex = event.key === "Home" ? 0 : event.key === "End" ? count - 1
+      : (activeIndex + (event.key === "ArrowRight" ? 1 : -1) + count) % count;
+    const id = availableTabs[nextIndex].id;
+    setActiveTab(id);
+    requestAnimationFrame(() => document.getElementById(`tab-${id}`)?.focus());
   }
 
   useEffect(() => {
@@ -191,8 +222,44 @@ export function ResultsView({
     }
   }, [useHamburgerMenu]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    menuRef.current?.querySelector<HTMLButtonElement>(".hamburger-item.is-active")?.focus();
+    function onKey(event: globalThis.KeyboardEvent) {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+        toggleRef.current?.focus();
+      }
+    }
+    function onPointer(event: PointerEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) setMenuOpen(false);
+    }
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+    };
+  }, [menuOpen]);
+
+  const headline = voice
+    ? `${voice.voiceStyle === "first-person" ? "Advice from" : "Advice in the spirit of"} ${voice.representative}`
+    : "Advice for your dilemma";
+
   return (
     <div className="results-layout">
+      <header className="results-header">
+        <div className="results-header-text">
+          <p className="eyebrow">Step 4 of 4</p>
+          <h2 className="wizard-title">{headline}</h2>
+          <p className="results-excerpt" title={dilemma}>{dilemma}</p>
+        </div>
+        <ul className="results-meta" aria-label="How this advice was made">
+          {perspectiveLabel && <li>{perspectiveLabel}</li>}
+          <li>{STYLE_LABELS[explanationLevel]}</li>
+        </ul>
+      </header>
+
       <nav
         ref={measureTabsRef}
         className="results-tabs results-tabs-desktop results-tabs-measure"
@@ -206,97 +273,152 @@ export function ResultsView({
       </nav>
 
       {/* Desktop: horizontal tab bar */}
-      <nav
+      <div
         className={`results-tabs results-tabs-desktop ${useHamburgerMenu ? "is-hidden" : ""}`}
-        aria-hidden={useHamburgerMenu}
+        role="tablist"
+        aria-label="Advice sections"
         hidden={useHamburgerMenu}
+        onKeyDown={handleTabKeys}
       >
         {availableTabs.map((tab) => (
           <button
             key={tab.id}
-            className={`results-tab ${activeTab === tab.id ? "is-active" : ""}`}
-            aria-pressed={activeTab === tab.id}
+            id={`tab-${tab.id}`}
+            type="button"
+            role="tab"
+            aria-selected={active.id === tab.id}
+            aria-controls="results-panel"
+            tabIndex={active.id === tab.id ? 0 : -1}
+            className={`results-tab ${active.id === tab.id ? "is-active" : ""}`}
             onClick={() => selectTab(tab.id)}
           >
             {tab.label}
           </button>
         ))}
-      </nav>
+      </div>
 
-      {/* Narrow screens: hamburger dropdown */}
+      {/* Narrow screens: dropdown menu */}
       <nav
+        ref={menuRef}
         className={`results-tabs results-tabs-mobile ${useHamburgerMenu ? "" : "is-hidden"}`}
-        aria-hidden={!useHamburgerMenu}
+        aria-label="Advice sections"
         hidden={!useHamburgerMenu}
       >
         <button
+          ref={toggleRef}
+          type="button"
           className="hamburger-toggle"
           onClick={() => setMenuOpen((v) => !v)}
-          aria-label="Menu"
+          aria-label={`Advice sections: ${active.title}`}
           aria-expanded={menuOpen}
+          aria-controls="results-menu"
         >
-          <span className="hamburger-icon">{menuOpen ? "\u2715" : "\u2630"}</span>
-          <span className="hamburger-label">{activeLabel}</span>
+          <span className="hamburger-label"><small>Section {activeIndex + 1} of {availableTabs.length}</small>{active.title}</span>
+          <span className="hamburger-icon" aria-hidden="true">{menuOpen ? "✕" : "▾"}</span>
         </button>
         {menuOpen && (
-          <div className="hamburger-dropdown">
+          <div
+            className="hamburger-dropdown"
+            id="results-menu"
+            onKeyDown={(event) => {
+              if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
+              event.preventDefault();
+              const items = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>(".hamburger-item"));
+              const i = items.indexOf(document.activeElement as HTMLButtonElement);
+              const n = event.key === "Home" ? 0 : event.key === "End" ? items.length - 1
+                : (i + (event.key === "ArrowDown" ? 1 : -1) + items.length) % items.length;
+              items[n]?.focus();
+            }}
+          >
             {availableTabs.map((tab) => (
               <button
                 key={tab.id}
-                className={`hamburger-item ${activeTab === tab.id ? "is-active" : ""}`}
-                aria-pressed={activeTab === tab.id}
-            onClick={() => selectTab(tab.id)}
+                type="button"
+                className={`hamburger-item ${active.id === tab.id ? "is-active" : ""}`}
+                aria-current={active.id === tab.id ? "true" : undefined}
+                onClick={() => selectTab(tab.id, true)}
               >
-                {tab.label}
+                {tab.title}
               </button>
             ))}
           </div>
         )}
       </nav>
 
-      <div className="results-body">
-        {activeTab === "advice" && voice && (
-          <div className="speaker-card">
-            <p className="speaker-label">
-              {voice.voiceStyle === "first-person" ? "Speaking as" : "In the spirit of"}
-            </p>
-            <p className="speaker-name">
-              {voice.representative} <span>· {voice.name}</span>
-            </p>
-            <p className="speaker-detail">
-              {voice.speaker.years} · {voice.speaker.region}
-            </p>
-            <p className="speaker-detail">{voice.speaker.traditions}</p>
-            <p className="speaker-note">
-              An AI interpretation of this perspective, not the person's own words.
-            </p>
-          </div>
-        )}
+      <div
+        className="results-body"
+        id="results-panel"
+        ref={panelRef}
+        role={useHamburgerMenu ? "region" : "tabpanel"}
+        aria-labelledby={useHamburgerMenu ? "results-panel-title" : `tab-${active.id}`}
+        tabIndex={-1}
+      >
+        <h3 className="panel-title" id="results-panel-title">{active.title}</h3>
 
-        {activeTab === "dilemma" && (
+        {active.id === "dilemma" && (
           <div className="advice-markdown">
             <p className="dilemma-original">{dilemma}</p>
           </div>
         )}
 
-        {activeTab !== "export" && activeTab !== "coordinates" && activeTab !== "dilemma" && (
-          <div className="advice-markdown">
-            <ReactMarkdown>{sections[activeTab] || ""}</ReactMarkdown>
+        {active.id === "advice" && (
+          <div className="advice-layout">
+            <div className="advice-markdown is-lead">
+              <ReactMarkdown>{sections.advice || ""}</ReactMarkdown>
+            </div>
+            {voice ? (
+              <aside className="speaker-card" aria-label="About this voice">
+                <p className="speaker-label">
+                  {voice.voiceStyle === "first-person" ? "Speaking as" : "In the spirit of"}
+                </p>
+                <p className="speaker-name">
+                  {voice.representative} <span>· {voice.name}</span>
+                </p>
+                <p className="speaker-detail">
+                  {voice.speaker.years} · {voice.speaker.region}
+                </p>
+                <p className="speaker-detail speaker-traditions">{voice.speaker.traditions}</p>
+                <p className="speaker-note">
+                  An AI interpretation of this perspective, not the person's own words.
+                </p>
+              </aside>
+            ) : response.profile && primary ? (
+              <aside className="speaker-card profile-glance" aria-label="Your perspective at a glance">
+                <p className="speaker-label">Closest tradition</p>
+                <p className="speaker-name">{primary.name}</p>
+                <p className="speaker-detail">via {primary.representative}</p>
+                <ul className="glance-axes">
+                  {Object.entries(axisLabels).map(([axisKey]) => (
+                    <li key={axisKey}>{describeAxisPosition(axisKey as Axis, response.profile![axisKey as Axis])}</li>
+                  ))}
+                </ul>
+                <button type="button" className="link-button" onClick={() => selectTab("coordinates", true)}>See your coordinates</button>
+              </aside>
+            ) : null}
           </div>
         )}
 
-        {activeTab === "export" && (
+        {active.id !== "advice" && active.id !== "export" && active.id !== "coordinates" && active.id !== "dilemma" && (
+          <div className={`advice-markdown ${active.id === "next" ? "is-next-step" : ""}`}>
+            <ReactMarkdown>{sections[active.id] || ""}</ReactMarkdown>
+          </div>
+        )}
+
+        {active.id === "next" && sections.next && <CopyButton text={sections.next} label="Copy this step" />}
+
+        {active.id === "export" && (
           <ExportTab
             dilemma={dilemma}
             sections={sections}
             fullMarkdown={fullMarkdown}
             explanationLevel={explanationLevel}
             personaMode={personaMode}
+            perspectiveLabel={perspectiveLabel}
             response={response}
           />
         )}
 
-        {activeTab === "coordinates" &&
+        {active.id === "coordinates" &&
           (voice ? (
             <SpeakerTab voice={voice} />
           ) : (
@@ -309,10 +431,19 @@ export function ResultsView({
               />
             )
           ))}
+
+        {nextTab && (
+          <div className="panel-next">
+            <button type="button" className="button-secondary" onClick={() => selectTab(nextTab.id, true)}>
+              Next: {nextTab.title} <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="results-footer">
-        <button className="button-primary" type="button" onClick={onRestart}>
+        <p className="form-note">Want to try another perspective? Use the steps in the sidebar to change an answer.</p>
+        <button className="button-secondary restart-button" type="button" onClick={onRestart}>
           Start a new dilemma
         </button>
       </div>
@@ -326,6 +457,7 @@ function ExportTab({
   fullMarkdown,
   explanationLevel,
   personaMode,
+  perspectiveLabel,
   response
 }: {
   dilemma: string;
@@ -333,8 +465,14 @@ function ExportTab({
   fullMarkdown: string;
   explanationLevel: ExplanationLevel;
   personaMode: PersonaMode;
+  perspectiveLabel?: string;
   response: AdviceResponse;
 }) {
+  const [status, setStatus] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
+  const statusRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (status) statusRef.current?.scrollIntoView?.({ block: "nearest", behavior: "smooth" });
+  }, [status]);
   const primary = response.nearestProfiles[0];
   const alternates = response.nearestProfiles.slice(1, 3);
   const voice = response.selectedPhilosopherId
@@ -409,7 +547,7 @@ function ExportTab({
   const exportMarkdown = [
     `# iSocrateez Advice`,
     "",
-    `> Explanation: ${explanationLevel} | Mode: ${personaMode}`,
+    `> Explanation style: ${STYLE_LABELS[explanationLevel]} · Perspective: ${perspectiveLabel ?? (personaMode === "philosopher" ? "Philosopher's voice" : "Your ethical profile")}`,
     ...modelDetails,
     "",
     "## Dilemma",
@@ -423,6 +561,7 @@ function ExportTab({
   ].join("\n");
 
   async function handleSave() {
+    setStatus(null);
     try {
       if ("showSaveFilePicker" in window) {
         const handle = await (window as any).showSaveFilePicker({
@@ -437,6 +576,7 @@ function ExportTab({
         const writable = await handle.createWritable();
         await writable.write(exportMarkdown);
         await writable.close();
+        setStatus({ kind: "ok", text: `Saved ${handle.name ?? "isocrateez-advice.md"}.` });
       } else {
         const blob = new Blob([exportMarkdown], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
@@ -447,17 +587,48 @@ function ExportTab({
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+        setStatus({ kind: "ok", text: "Downloaded isocrateez-advice.md." });
       }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") return; // user cancelled
+      setStatus({ kind: "error", text: "The file couldn’t be saved. Try again, or copy the text instead." });
+    }
+  }
+
+  async function handleCopy() {
+    setStatus(null);
+    try {
+      await navigator.clipboard.writeText(exportMarkdown);
+      setStatus({ kind: "ok", text: "Copied to clipboard as Markdown." });
     } catch {
-      // User cancelled the save dialog
+      setStatus({ kind: "error", text: "Copying isn’t available here. Use Save instead." });
     }
   }
 
   return (
     <div className="export-tab">
-      <button className="button-primary" onClick={handleSave}>
-        Save as markdown file
-      </button>
+      <p className="export-intro">Keep a copy of this session as a Markdown file you can open in any notes app.</p>
+      <ul className="export-includes">
+        <li>Your dilemma</li>
+        <li>The advice, reasoning, what to watch for and next step</li>
+        <li>{voice ? "About the speaker" : "Your ethical coordinates and nearest philosophies"}</li>
+        <li>The models that generated it</li>
+      </ul>
+      <div className="export-actions">
+        <button className="button-primary" type="button" onClick={handleSave}>
+          Save as markdown file
+        </button>
+        <button className="button-secondary" type="button" onClick={handleCopy}>
+          Copy to clipboard
+        </button>
+      </div>
+      <p ref={statusRef} className={`export-status ${status?.kind === "error" ? "is-error" : ""}`} role="status">
+        {status && <span aria-hidden="true">{status.kind === "ok" ? "✓ " : "! "}</span>}{status?.text}
+      </p>
+      <details className="export-preview">
+        <summary>Preview the file</summary>
+        <pre>{exportMarkdown}</pre>
+      </details>
     </div>
   );
 }
@@ -505,7 +676,6 @@ function SpeakerTab({ voice }: { voice: PhilosophyProfile }) {
   return (
     <div className="coordinates-tab">
       <div className="match-section">
-        <h3 className="match-heading">About the speaker</h3>
         <p className="match-name">
           {voice.representative} · {voice.name}
         </p>
@@ -547,6 +717,27 @@ function ProfileBars({ profile }: { profile: ProfileTuple }) {
           </article>
         );
       })}
+    </div>
+  );
+}
+
+function CopyButton({ text, label }: { text: string; label: string }) {
+  const [state, setState] = useState<"idle" | "done" | "failed">("idle");
+  async function copy() {
+    try {
+      // Plain text: drop markdown emphasis markers.
+      await navigator.clipboard.writeText(text.replace(/[*_`]/g, ""));
+      setState("done");
+    } catch {
+      setState("failed");
+    }
+  }
+  return (
+    <div className="copy-row">
+      <button type="button" className="button-secondary" onClick={copy}>{label}</button>
+      <span role="status" className={`copy-status ${state === "failed" ? "is-error" : ""}`}>
+        {state === "done" ? "✓ Copied" : state === "failed" ? "Copying isn’t available here" : ""}
+      </span>
     </div>
   );
 }

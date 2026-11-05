@@ -23,10 +23,11 @@ export async function createSession(password: string): Promise<SessionResponse> 
   });
 }
 
-export async function requestAdvice(payload: AdviceRequest): Promise<AdviceResponse> {
+export async function requestAdvice(payload: AdviceRequest, signal?: AbortSignal): Promise<AdviceResponse> {
   return request<AdviceResponse>("/api/advice", {
     method: "POST",
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
+    signal
   });
 }
 
@@ -37,7 +38,10 @@ async function request<T>(path: string, init: RequestInit): Promise<T> {
       "Content-Type": "application/json",
       ...(init.headers || {})
     }
-  }).catch(() => { throw new ApiError("Cannot reach the advice server. Check that the backend is running.", 0); });
+  }).catch((error: unknown) => {
+    if (error instanceof DOMException && error.name === "AbortError") throw error;
+    throw new ApiError("Cannot reach the advice server. Check that the backend is running.", 0);
+  });
 
   const text = await response.text();
   const data = text ? JSON.parse(text) : null;

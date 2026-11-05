@@ -1,19 +1,33 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { SAMPLE_DILEMMAS } from "../sampleDilemmas";
+import { PageHeader } from "./PageHeader";
 
 interface DilemmaPageProps {
   initialDilemma: string;
+  /** Reports the text that would be submitted, so the shell knows about unsaved edits. */
+  onDraftChange?: (text: string) => void;
   onSubmit: (dilemma: string) => void;
 }
 
-export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
-  const [dilemma, setDilemma] = useState(initialDilemma);
-  const [mode, setMode] = useState<"own" | "example">(
-    SAMPLE_DILEMMAS.some((s) => s.text === initialDilemma) ? "example" : "own"
-  );
+export function DilemmaPage({ initialDilemma, onDraftChange, onSubmit }: DilemmaPageProps) {
+  const initialExample = SAMPLE_DILEMMAS.find((s) => s.text === initialDilemma);
+  // Own text and example choice are kept separately so browsing examples never erases a draft.
+  const [ownText, setOwnText] = useState(initialExample ? "" : initialDilemma);
+  const [exampleTitle, setExampleTitle] = useState<string | undefined>(initialExample?.title);
+  const [mode, setMode] = useState<"own" | "example">(initialExample ? "example" : "own");
 
-  const selected = SAMPLE_DILEMMAS.find((s) => s.text === dilemma);
-  const canContinue = mode === "example" ? Boolean(selected) : Boolean(dilemma.trim());
+  const selected = SAMPLE_DILEMMAS.find((s) => s.title === exampleTitle);
+  const dilemma = mode === "example" ? selected?.text ?? "" : ownText;
+  const canContinue = Boolean(dilemma.trim());
+  useEffect(() => { onDraftChange?.(dilemma); }, [dilemma, onDraftChange]);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  useLayoutEffect(() => {
+    // Grow with the text; CSS min/max-height keep it within a comfortable range.
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight + 2}px`;
+  }, [ownText, mode]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,61 +38,68 @@ export function DilemmaPage({ initialDilemma, onSubmit }: DilemmaPageProps) {
 
   return (
     <div className="wizard-card dilemma-page">
-      <h2 className="wizard-title">Dilemma</h2>
       <form className="wizard-form" onSubmit={handleSubmit}>
-        <div className="mode-toggle" role="group" aria-label="Dilemma source">
-          <button
-            type="button"
-            className={`mode-toggle-option ${mode === "own" ? "is-active" : ""}`}
-            aria-pressed={mode === "own"}
-            onClick={() => setMode("own")}
-          >
-            Write my own
-          </button>
-          <button
-            type="button"
-            className={`mode-toggle-option ${mode === "example" ? "is-active" : ""}`}
-            aria-pressed={mode === "example"}
-            onClick={() => setMode("example")}
-          >
-            Choose an example
-          </button>
-        </div>
-        <div className="dilemma-body">
-          {mode === "example" ? (
-            <div className={`example-split ${selected ? "has-selection" : ""}`}>
-              <ExampleList selectedTitle={selected?.title} onPick={setDilemma} />
-              <div className="example-preview" tabIndex={0} aria-live="polite">
-                {selected ? (
-                  <>
-                    <h3 className="example-preview-title">{selected.title}</h3>
-                    <p>{selected.text}</p>
-                  </>
-                ) : (
-                  <p className="example-preview-empty">
-                    Select an example.
-                  </p>
-                )}
+        <div className="wizard-scroll">
+          <PageHeader step="Step 1 of 4" title="Dilemma">
+            Describe the choice you’re facing: what happened, who is affected, and the options you’re weighing. Or start from an example.
+          </PageHeader>
+          <div className="mode-toggle" role="group" aria-label="Dilemma source">
+            <button
+              type="button"
+              className={`mode-toggle-option ${mode === "own" ? "is-active" : ""}`}
+              aria-pressed={mode === "own"}
+              onClick={() => setMode("own")}
+            >
+              Write my own
+            </button>
+            <button
+              type="button"
+              className={`mode-toggle-option ${mode === "example" ? "is-active" : ""}`}
+              aria-pressed={mode === "example"}
+              onClick={() => setMode("example")}
+            >
+              Choose an example
+            </button>
+          </div>
+          <div className="dilemma-body">
+            {mode === "example" ? (
+              <div className={`example-split ${selected ? "has-selection" : ""}`}>
+                <ExampleList selectedTitle={selected?.title} onPick={setExampleTitle} />
+                <div className="example-preview" aria-live="polite">
+                  {selected ? (
+                    <>
+                      <p className="eyebrow">Selected example</p>
+                      <h3 className="example-preview-title">{selected.title}</h3>
+                      <p>{selected.text}</p>
+                    </>
+                  ) : (
+                    <p className="example-preview-empty">
+                      Pick an example on the left to read it here.
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-          ) : (
-            <>
-            <textarea
-              id="dilemma"
-              aria-label="Dilemma"
-              name="dilemma"
-              value={dilemma}
-              onChange={(e) => setDilemma(e.target.value)}
-              className="wizard-textarea"
-              rows={6}
-            />
-            </>
-          )}
+            ) : (
+              <div className="textarea-wrap">
+                <textarea
+                  ref={textareaRef}
+                  id="dilemma"
+                  aria-label="Dilemma"
+                  name="dilemma"
+                  value={ownText}
+                  onChange={(e) => setOwnText(e.target.value)}
+                  className="wizard-textarea"
+                  placeholder="For example: My manager asked me to quietly adjust some figures so our team hits its target. I'm not comfortable, but pushing back could cost me…"
+                  rows={8}
+                />
+              </div>
+            )}
+          </div>
         </div>
         <div className="button-row dilemma-actions">
-        <button className="button-primary dilemma-continue" type="submit" disabled={!canContinue}>
-          Continue
-        </button>
+          <button className="button-primary dilemma-continue" type="submit" disabled={!canContinue}>
+            Continue
+          </button>
         </div>
       </form>
     </div>
@@ -90,7 +111,7 @@ function ExampleList({
   onPick
 }: {
   selectedTitle?: string;
-  onPick: (text: string) => void;
+  onPick: (title: string) => void;
 }) {
   return (
     <div className="example-list-wrap">
@@ -98,18 +119,33 @@ function ExampleList({
         className="example-list"
         role="group"
         aria-label="Example dilemmas"
+        onKeyDown={(event) => {
+          if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+          const items = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>(".example-option"));
+          const i = items.indexOf(document.activeElement as HTMLButtonElement);
+          if (i < 0) return;
+          event.preventDefault();
+          items[Math.min(items.length - 1, Math.max(0, i + (event.key === "ArrowDown" ? 1 : -1)))].focus();
+        }}
       >
-        {SAMPLE_DILEMMAS.map((sample) => (
-          <button
-            key={sample.title}
-            type="button"
-            aria-pressed={sample.title === selectedTitle}
-            className={`choice-card example-option ${sample.title === selectedTitle ? "is-active" : ""}`}
-            onClick={() => onPick(sample.text)}
-          >
-            <span className="choice-label">{sample.title}</span>
-          </button>
-        ))}
+        {SAMPLE_DILEMMAS.map((sample) => {
+          const active = sample.title === selectedTitle;
+          const id = `example-${sample.title.replace(/\W+/g, "-").toLowerCase()}`;
+          return (
+            <button
+              key={sample.title}
+              type="button"
+              aria-pressed={active}
+              aria-labelledby={id}
+              className={`example-option ${active ? "is-active" : ""}`}
+              onClick={() => onPick(sample.title)}
+            >
+              <span className="choice-label" id={id}>{sample.title}</span>
+              {/* Narrow screens read the selection inline instead of in a separate pane. */}
+              {active && <span className="example-option-text">{sample.text}</span>}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

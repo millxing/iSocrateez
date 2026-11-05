@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import type {
   AdviceResponse,
   AnswerRecord,
@@ -50,8 +50,15 @@ export default function App() {
   const [isUnlocking, setIsUnlocking] = useState(false);
 
   const [dilemma, setDilemma] = useState("");
+  const [draft, setDraft] = useState("");
+  const [confirmingReset, setConfirmingReset] = useState(false);
   const [flowRevision, setFlowRevision] = useState(0);
-  const [explanationLevel, setExplanationLevel] = useState<ExplanationLevel>("general");
+  const [explanationLevel, setExplanationLevel] = useState<ExplanationLevel>(() => {
+    try {
+      const saved = localStorage.getItem("isocrateez-v2-style");
+      return saved === "informed" || saved === "phd" ? saved : "general";
+    } catch { return "general"; }
+  });
   const [chosenPhilosopher, setChosenPhilosopher] = useState<string | null>(null);
   const personaMode: PersonaMode = chosenPhilosopher ? "philosopher" : "personalized";
   const [plannerModel, setPlannerModel] = useState(() => savedModel("isocrateez-v2-planner", "anthropic:claude-haiku-5-5"));
@@ -65,6 +72,11 @@ export default function App() {
   const [adviceError, setAdviceError] = useState<string | null>(null);
   const [isLoadingAdvice, setIsLoadingAdvice] = useState(false);
   const [loadingStartTime, setLoadingStartTime] = useState<number | null>(null);
+  const adviceAbort = useRef<AbortController | null>(null);
+  // The inputs that produced `response`; results stay reachable until an input changes.
+  const [responseKey, setResponseKey] = useState<string | null>(null);
+  const inputsKey = JSON.stringify([dilemma, answers, profileOverride, chosenPhilosopher, explanationLevel]);
+  const resultsAreCurrent = Boolean(response) && responseKey === inputsKey;
 
   function goTo(next: Phase) {
     setPrevPhase(phase);
@@ -134,6 +146,8 @@ export default function App() {
     setIsLoadingAdvice(true);
     setLoadingStartTime(Date.now());
     setAdviceError(null);
+    const controller = new AbortController();
+    adviceAbort.current = controller;
 
     try {
       const nextResponse = await requestAdvice({
@@ -146,10 +160,12 @@ export default function App() {
         personaMode,
         plannerModel: nextPlanner || undefined,
         advisorModel: nextAdvisor || undefined
-      });
+      }, controller.signal);
       setResponse(nextResponse);
+      setResponseKey(inputsKey);
       goTo("results");
     } catch (error) {
+      if (controller.signal.aborted) return;
       if (error instanceof ApiError && error.status === 401) {
         sessionStorage.removeItem(SESSION_STORAGE_KEY);
         setSessionToken(null);
@@ -161,12 +177,20 @@ export default function App() {
         error instanceof ApiError ? error.message : "Advice generation failed. Try again."
       );
     } finally {
+      if (adviceAbort.current === controller) adviceAbort.current = null;
       setIsLoadingAdvice(false);
       setLoadingStartTime(null);
     }
-  }, [sessionToken, dilemma, answers, profileOverride, chosenPhilosopher, explanationLevel, personaMode]);
+  }, [sessionToken, dilemma, answers, profileOverride, chosenPhilosopher, explanationLevel, personaMode, inputsKey]);
+
+  function cancelAdvice() {
+    adviceAbort.current?.abort();
+    requestAnimationFrame(() => stageRef.current?.querySelector<HTMLElement>(".button-row .button-primary")?.focus());
+  }
 
   function resetFlow() {
+    setConfirmingReset(false);
+    setDraft("");
     setDilemma("");
     setFlowRevision(value => value + 1);
     setSettingsOpen(false);
@@ -176,6 +200,7 @@ export default function App() {
     setProfileOverride(null);
     setChosenPhilosopher(null);
     setResponse(null);
+    setResponseKey(null);
     setAdviceError(null);
     goTo(sessionToken ? "dilemma" : "locked");
   }
@@ -190,11 +215,20 @@ export default function App() {
     try {
       localStorage.setItem("isocrateez-v2-planner", plannerModel);
       localStorage.setItem("isocrateez-v2-advisor", advisorModel);
+      localStorage.setItem("isocrateez-v2-style", explanationLevel);
     } catch { /* Settings still work for this session. */ }
-  }, [plannerModel, advisorModel]);
+  }, [plannerModel, advisorModel, explanationLevel]);
 
   const direction = getDirection(prevPhase, phase);
   const stageRef = useRef<HTMLElement>(null);
+  const shellRef = useRef<HTMLDivElement>(null);
+  // Layout effect so `inert` is lifted before child effects (e.g. focusing an error) run.
+  useLayoutEffect(() => {
+    // The loading dialog is modal: keep focus and assistive tech out of the page behind it.
+    const modalOpen = isLoadingAdvice || confirmingReset;
+    shellRef.current?.querySelector(".sidebar")?.toggleAttribute("inert", modalOpen);
+    shellRef.current?.querySelector(".workspace")?.toggleAttribute("inert", modalOpen);
+  }, [isLoadingAdvice, confirmingReset]);
   const [appearance, setAppearance] = useState(() => {
     try { return localStorage.getItem("isocrateez-v2-appearance") || "system"; }
     catch { return "system"; }
@@ -210,25 +244,48 @@ export default function App() {
   const step = phase === "locked" ? -1 : phase === "dilemma" ? 0 : ["path", "calibration", "philosopher"].includes(phase) ? 1 : phase === "explanation" ? 2 : 3;
   const steps = ["Dilemma", "Perspective", "Style", "Advice"];
 
+  const perspectiveRoute: Phase = chosenPhilosopher ? "philosopher" : profileOverride || answers.length ? "calibration" : "path";
+  // An unsubmitted edit on the dilemma page means the saved advice no longer matches.
+  const draftPending = phase === "dilemma" && draft.trim() !== dilemma;
+  const adviceReachable = resultsAreCurrent && !draftPending;
+  const canRevisit = (index: number) => index !== step && (index < step || adviceReachable);
+  const hasWork = Boolean(draft.trim() || dilemma || response);
+
+  // Captured before the dialog makes the page inert, so focus can return to it on cancel.
+  const resetOpener = useRef<HTMLElement | null>(null);
+  function requestReset() {
+    if (hasWork && sessionToken) {
+      resetOpener.current = document.activeElement as HTMLElement | null;
+      setConfirmingReset(true);
+    } else resetFlow();
+  }
+  function cancelReset() {
+    setConfirmingReset(false);
+    requestAnimationFrame(() => resetOpener.current?.focus());
+  }
+
   function revisitStep(index: number) {
-    if (index >= step || isLoadingAdvice || settingsOpen) return;
-    setResponse(null);
+    if (!canRevisit(index) || isLoadingAdvice || settingsOpen) return;
     setAdviceError(null);
-    if (index === 0) goTo("dilemma");
+    if (index === 3) goTo("results");
+    else if (index === 0) goTo("dilemma");
     else if (index === 1) goTo(chosenPhilosopher ? "philosopher" : "calibration");
     else if (index === 2) goTo("explanation");
   }
 
 
+  // The sign-in page stands alone: no progress sidebar until there is a session.
+  const welcomeView = phase === "locked" && !settingsOpen;
+
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${welcomeView ? "is-welcome" : ""}`} ref={shellRef}>
       <a className="skip-link" href="#main">Skip to content</a>
-      <aside className="sidebar" aria-label="Session progress">
-        <h1 className="brand"><button className="brand-home" type="button" onClick={resetFlow} disabled={isLoadingAdvice} aria-label="iSocrateez — new dilemma"><img src={`${import.meta.env.BASE_URL}socrates-bust.png`} alt="" width="48" height="48" /><span>iSocrateez</span></button></h1>
+      {!welcomeView && <aside className="sidebar" aria-label="Session progress">
+        <h1 className="brand"><button className="brand-home" type="button" onClick={requestReset} disabled={isLoadingAdvice} aria-label="iSocrateez — new dilemma"><img src={`${import.meta.env.BASE_URL}socrates-bust.png`} alt="" width="48" height="48" /><span>iSocrateez</span></button></h1>
         <ol className="step-list">
           {steps.map((label, index) => (
-            <li key={label} className={`${step === index ? "current" : ""} ${step > index ? "complete" : ""}`} aria-current={step === index ? "step" : undefined}>
-              {index < step ? (
+            <li key={label} className={`${step === index ? "current" : ""} ${canRevisit(index) ? "complete" : ""}`} aria-current={step === index ? "step" : undefined}>
+              {canRevisit(index) ? (
                 <button className="step-link" type="button" aria-label={label}
                   disabled={isLoadingAdvice || settingsOpen} onClick={() => revisitStep(index)}>
                   <span className="step-number" aria-hidden="true">✓</span>
@@ -240,7 +297,7 @@ export default function App() {
         </ol>
         <nav className="settings-nav" aria-label="App"><a href="#settings" aria-current={settingsOpen ? "page" : undefined}>Settings</a></nav>
         <div className="sidebar-footer"><a href="https://entangledparticles.xyz" target="_blank" rel="noopener noreferrer">entangledparticles.xyz ↗</a><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer license">CC BY-SA 4.0</a></div>
-      </aside>
+      </aside>}
       <div className="workspace">
         <main className="page-stage" id="main" ref={stageRef} tabIndex={-1} aria-label={settingsOpen ? "Settings" : phase === "locked" ? "Sign in" : steps[step]} aria-busy={isLoadingAdvice}>
         {settingsOpen && <SettingsPage appearance={appearance} onAppearance={setAppearance}
@@ -258,6 +315,7 @@ export default function App() {
           {phase === "dilemma" && (
             <DilemmaPage
               initialDilemma={dilemma}
+              onDraftChange={setDraft}
               onSubmit={handleDilemmaSubmit}
             />
           )}
@@ -296,26 +354,60 @@ export default function App() {
               onSubmit={() => void fetchAdvice(plannerModel, advisorModel)}
               isSubmitting={isLoadingAdvice}
               error={adviceError}
-              onBack={() => goTo("path")}
+              onBack={() => goTo(perspectiveRoute)}
             />
           )}
 
           {phase === "results" && response && (
             <ResultsView
               response={response}
+              perspectiveLabel={chosenPhilosopher ? "Philosopher's voice" : profileOverride ? "Your own coordinates" : "9-question calibration"}
               dilemma={dilemma}
               explanationLevel={explanationLevel}
               personaMode={personaMode}
-              onRestart={resetFlow}
+              onRestart={requestReset}
             />
           )}
         </div>
       </main>
       </div>
 
-      {isLoadingAdvice && loadingStartTime && (
-        <LoadingOverlay startTime={loadingStartTime} />
+      {confirmingReset && (
+        <ConfirmReset onCancel={cancelReset} onConfirm={resetFlow} />
       )}
+
+      {isLoadingAdvice && loadingStartTime && (
+        <LoadingOverlay startTime={loadingStartTime} onCancel={cancelAdvice} />
+      )}
+    </div>
+  );
+}
+
+function ConfirmReset({ onCancel, onConfirm }: { onCancel: () => void; onConfirm: () => void }) {
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    cancelRef.current?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onCancel();
+      if (event.key !== "Tab") return;
+      const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>(".dialog button"));
+      const index = buttons.indexOf(document.activeElement as HTMLButtonElement);
+      event.preventDefault();
+      buttons[(index + (event.shiftKey ? -1 : 1) + buttons.length) % buttons.length]?.focus();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onCancel]);
+  return (
+    <div className="dialog-backdrop" onPointerDown={(event) => { if (event.target === event.currentTarget) onCancel(); }}>
+      <div className="dialog" role="alertdialog" aria-modal="true" aria-labelledby="reset-title" aria-describedby="reset-desc">
+        <h2 id="reset-title">Start over?</h2>
+        <p id="reset-desc">Your current dilemma, answers and advice will be cleared. Export the advice first if you want to keep it.</p>
+        <div className="dialog-actions">
+          <button ref={cancelRef} type="button" className="button-back" onClick={onCancel}>Keep working</button>
+          <button type="button" className="button-primary" onClick={onConfirm}>Start over</button>
+        </div>
+      </div>
     </div>
   );
 }

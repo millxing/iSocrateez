@@ -14,7 +14,11 @@ describe("App", () => {
   it("starts a blank dilemma from the brand, including drafts and Settings", () => {
     sessionStorage.setItem("isocrateez-v2-production-token", "test-token");
     render(<App />);
-    const reset = () => fireEvent.click(screen.getByRole("button", { name: "iSocrateez — new dilemma" }));
+    const reset = () => {
+      fireEvent.click(screen.getByRole("button", { name: "iSocrateez — new dilemma" }));
+      const confirm = screen.queryByRole("button", { name: "Start over" });
+      if (confirm) fireEvent.click(confirm);
+    };
     fireEvent.change(screen.getByRole("textbox", { name: "Dilemma" }), { target: { value: "An unfinished draft" } });
     reset();
     expect(screen.getByRole("textbox", { name: "Dilemma" })).toHaveValue("");
@@ -31,10 +35,34 @@ describe("App", () => {
     expect(screen.queryByText("What to include")).not.toBeInTheDocument();
   });
 
-  it("keeps sign-in required when the brand is clicked", () => {
+  it("asks before the brand discards a draft, and keeps it on cancel", () => {
+    sessionStorage.setItem("isocrateez-v2-production-token", "test-token");
     render(<App />);
+    fireEvent.change(screen.getByRole("textbox", { name: "Dilemma" }), { target: { value: "Half-written thought" } });
     fireEvent.click(screen.getByRole("button", { name: "iSocrateez — new dilemma" }));
+    expect(screen.getByRole("alertdialog", { name: "Start over?" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Keep working" }));
+    expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "Dilemma" })).toHaveValue("Half-written thought");
+    fireEvent.click(screen.getByRole("button", { name: "iSocrateez — new dilemma" }));
+    fireEvent.click(screen.getByRole("button", { name: "Start over" }));
+    expect(screen.getByRole("textbox", { name: "Dilemma" })).toHaveValue("");
+  });
+
+  it("shows the sign-in page on its own, without the progress sidebar", () => {
+    render(<App />);
+    expect(screen.getByRole("heading", { level: 1, name: "iSocrateez" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "iSocrateez — new dilemma" })).not.toBeInTheDocument();
     expect(screen.queryByRole("textbox", { name: "Dilemma" })).not.toBeInTheDocument();
+  });
+
+  it("lets the passphrase be shown while typing", () => {
+    render(<App />);
+    const field = screen.getByLabelText(/shared passphrase/i);
+    expect(field).toHaveAttribute("type", "password");
+    fireEvent.click(screen.getByRole("button", { name: "Show passphrase" }));
+    expect(field).toHaveAttribute("type", "text");
+    expect(screen.getByRole("button", { name: "Show passphrase" })).toHaveAttribute("aria-pressed", "true");
   });
 
   it("submits the selected explanation setting through the questionnaire path", async () => {
@@ -142,25 +170,25 @@ describe("App", () => {
       });
       fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
 
-      await screen.findByRole("heading", { name: /calibration/i });
+      await screen.findByRole("heading", { name: /choose a perspective/i });
       fireEvent.click(screen.getByRole("button", { name: /9-question calibration/i }));
 
       for (let step = 0; step < 8; step += 1) {
-        fireEvent.click(screen.getByRole("button", { name: /^neutral$/i }));
+        fireEvent.click(screen.getByRole("radio", { name: /^neutral$/i }));
         fireEvent.click(screen.getByRole("button", { name: /^next$/i }));
       }
 
-      fireEvent.click(screen.getByRole("button", { name: /^neutral$/i }));
+      fireEvent.click(screen.getByRole("radio", { name: /^neutral$/i }));
       fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
 
       await screen.findByRole("heading", { name: /explanation style/i });
-      fireEvent.click(screen.getByRole("button", { name: /^advanced$/i }));
+      fireEvent.click(screen.getByRole("radio", { name: /^advanced$/i }));
 
 
       fireEvent.click(screen.getByRole("button", { name: /^get advice$/i }));
 
       await screen.findByText(/at a more technical level/i);
-      fireEvent.click(screen.getByRole("button", { name: /ethical coordinates/i }));
+      fireEvent.click(screen.getByRole("tab", { name: /^coordinates$/i }));
       expect(screen.getByText(/kantian deontology/i)).toBeInTheDocument();
       expect(screen.getByText(/moderately toward outcomes/i)).toBeInTheDocument();
       expect(adviceBodies).toHaveLength(1);
@@ -171,7 +199,7 @@ describe("App", () => {
         advisorModel: "anthropic:claude-sonnet-5-5"
       });
       fireEvent.click(screen.getByRole("button", { name: "Perspective" }));
-      expect(screen.getByRole("button", { name: "Neutral" })).toHaveAttribute("aria-pressed", "true");
+      expect(screen.getByRole("radio", { name: "Neutral" })).toHaveAttribute("aria-checked", "true");
     } finally {
       globalThis.fetch = originalFetch;
     }
@@ -276,7 +304,7 @@ describe("App", () => {
       });
       fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
 
-      await screen.findByRole("heading", { name: /calibration/i });
+      await screen.findByRole("heading", { name: /choose a perspective/i });
       fireEvent.click(screen.getByRole("button", { name: /enter 3-axis alignment/i }));
 
       const sliders = screen.getAllByRole("slider");
@@ -287,7 +315,7 @@ describe("App", () => {
       fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
 
       await screen.findByRole("heading", { name: /explanation style/i });
-      fireEvent.click(screen.getByRole("button", { name: /^plain language$/i }));
+      fireEvent.click(screen.getByRole("radio", { name: /^plain language$/i }));
 
 
       fireEvent.click(screen.getByRole("button", { name: /^get advice$/i }));
@@ -346,7 +374,7 @@ describe("App", () => {
       fireEvent.change(screen.getByRole("textbox", { name: "Dilemma" }), { target: { value: dilemmaText } });
       fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
 
-      await screen.findByRole("heading", { name: /calibration/i });
+      await screen.findByRole("heading", { name: /choose a perspective/i });
       fireEvent.click(screen.getByRole("button", { name: /choose a philosopher/i }));
       await screen.findByRole("heading", { name: /choose a philosopher/i });
       expect(screen.getByRole("button", { name: /^continue$/i })).toBeDisabled();
@@ -354,7 +382,7 @@ describe("App", () => {
       fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
 
       await screen.findByRole("heading", { name: /explanation style/i });
-      fireEvent.click(screen.getByRole("button", { name: /^plain language$/i }));
+      fireEvent.click(screen.getByRole("radio", { name: /^plain language$/i }));
       fireEvent.click(screen.getByRole("button", { name: /^get advice$/i }));
 
       await screen.findByText(/snapped advice/i);
@@ -363,8 +391,8 @@ describe("App", () => {
       expect(adviceBodies[0].philosopherId).toBe("nietzsche-perspectivism");
       expect(adviceBodies[0].profileOverride).toBeUndefined();
 
-      fireEvent.click(screen.getAllByRole("button", { name: /original dilemma/i }).find((b) => !b.closest(".results-tabs-measure"))!);
-      expect(await screen.findByText(dilemmaText)).toBeInTheDocument();
+      fireEvent.click(screen.getAllByRole("tab", { name: /^dilemma$/i }).find((b) => !b.closest(".results-tabs-measure"))!);
+      expect(await screen.findByText(dilemmaText, { selector: ".dilemma-original" })).toBeInTheDocument();
     } finally {
       globalThis.fetch = originalFetch;
     }
@@ -382,7 +410,7 @@ describe("App", () => {
     fireEvent.change(screen.getByLabelText("Advisor model"), { target: { value: "openai:gpt-5.4-mini" } });
     expect(localStorage.getItem("isocrateez-v2-advisor")).toBe("openai:gpt-5.4-mini");
     expect(document.documentElement.dataset.theme).toBe("dark");
-    fireEvent.click(screen.getByRole("link", { name: "Done" }));
+    fireEvent.click(screen.getByRole("button", { name: "Done" }));
     expect(await screen.findByRole("textbox", { name: "Dilemma" })).toHaveValue(draft);
     expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
   });
@@ -398,7 +426,7 @@ describe("App", () => {
       fireEvent.click(screen.getByRole("button", { name: "Continue" }));
       fireEvent.click(screen.getByRole("button", { name: "Enter 3-axis alignment" }));
       fireEvent.click(screen.getByRole("button", { name: "Continue" }));
-      fireEvent.click(screen.getByRole("button", { name: "Advanced" }));
+      fireEvent.click(screen.getByRole("radio", { name: "Advanced" }));
       fireEvent.click(screen.getByRole("button", { name: "Get advice" }));
       expect(await screen.findByRole("alert")).toHaveTextContent("Anthropic rejected its API key.");
       expect(screen.getByRole("heading", { name: "Explanation style" })).toBeInTheDocument();
@@ -434,9 +462,9 @@ describe("App", () => {
       await screen.findByText("Advice version 1.");
 
       fireEvent.click(screen.getByRole("button", { name: "Style" }));
-      expect(screen.getByRole("button", { name: "Plain language" })).toHaveAttribute("aria-pressed", "true");
+      expect(screen.getByRole("radio", { name: "Plain language" })).toHaveAttribute("aria-checked", "true");
       expect(fetchMock).toHaveBeenCalledTimes(1);
-      fireEvent.click(screen.getByRole("button", { name: "Advanced" }));
+      fireEvent.click(screen.getByRole("radio", { name: "Advanced" }));
       fireEvent.click(screen.getByRole("button", { name: "Get advice" }));
       await screen.findByText("Advice version 2.");
       expect(requests[1]).toMatchObject({ dilemma, philosopherId: requests[0].philosopherId, explanationLevel: "phd" });
@@ -445,7 +473,7 @@ describe("App", () => {
       expect(screen.getByRole("radio", { name: /Nietzsche/ })).toHaveAttribute("aria-checked", "true");
       fireEvent.click(screen.getByRole("radio", { name: /Aristotle/ }));
       fireEvent.click(screen.getByRole("button", { name: "Continue" }));
-      expect(screen.getByRole("button", { name: "Advanced" })).toHaveAttribute("aria-pressed", "true");
+      expect(screen.getByRole("radio", { name: "Advanced" })).toHaveAttribute("aria-checked", "true");
       fireEvent.click(screen.getByRole("button", { name: "Get advice" }));
       await screen.findByText("Advice version 3.");
       expect(requests[2]).toMatchObject({ dilemma, philosopherId: "aristotle-virtue-ethics", explanationLevel: "phd" });
