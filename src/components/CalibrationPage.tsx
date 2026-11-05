@@ -1,11 +1,13 @@
-import { useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type {
   AnswerRecord,
   AnswerValue,
   ProfileTuple,
   Question
 } from "../../shared/contracts";
-import { axisLabels } from "../../shared/ethics";
+import { axisLabels, describeAxisPosition } from "../../shared/ethics";
+import { navigateRadios } from "./radioNavigation";
+import { PageHeader } from "./PageHeader";
 
 interface CalibrationPageProps {
   mode: "questions" | "tuple";
@@ -17,15 +19,9 @@ interface CalibrationPageProps {
   onBack: () => void;
 }
 
-// `label` is the compact desktop text; `stackedLabel` is used when the buttons are
-// stacked vertically (phones), where the end captions sit above and below the list.
-const SCALE: { value: AnswerValue; label: string; stackedLabel: string }[] = [
-  { value: -2, label: "Strongly", stackedLabel: "Strongly" },
-  { value: -1, label: "\u2190", stackedLabel: "Somewhat" },
-  { value: 0, label: "Neutral", stackedLabel: "Neutral" },
-  { value: 1, label: "\u2192", stackedLabel: "Somewhat" },
-  { value: 2, label: "Strongly", stackedLabel: "Strongly" }
-];
+// Ends show the pole label on its own; inner points lean toward it. This reads naturally
+// whether a pole is a position ("Judge by outcomes") or a degree ("Very little").
+const SCALE: AnswerValue[] = [-2, -1, 0, 1, 2];
 
 export function CalibrationPage({
   mode,
@@ -67,24 +63,25 @@ function QuestionFlow({
   onComplete: (answers: AnswerRecord[]) => void;
   onBack: () => void;
 }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, AnswerValue>>(() => Object.fromEntries(initialAnswers.map(answer => [answer.questionId, answer.value])));
+  // Returning to a finished questionnaire resumes at the last question rather than the first.
+  const [currentIndex, setCurrentIndex] = useState(() =>
+    questions.length > 0 && questions.every((q) => answers[q.id] !== undefined) ? questions.length - 1 : 0
+  );
+  const groupRef = useRef<HTMLDivElement>(null);
+  const moved = useRef(false);
+
+  useEffect(() => {
+    // Keep keyboard users on the answers when the question changes (not on first render).
+    if (!moved.current) return;
+    groupRef.current?.querySelector<HTMLButtonElement>('[role="radio"][tabindex="0"]')?.focus();
+  }, [currentIndex]);
 
   const currentQuestion = questions[currentIndex];
   if (!currentQuestion) return null;
 
   const currentAnswer = answers[currentQuestion.id];
-  const progress = ((currentIndex + 1) / questions.length) * 100;
-
-  const groupedProgress = useMemo(() => {
-    return Object.entries(axisLabels).map(([axis, labels]) => ({
-      axis,
-      title: labels.title,
-      count: questions.filter(
-        (q) => q.axis === axis && answers[q.id] !== undefined
-      ).length
-    }));
-  }, [answers, questions]);
+  const isLast = currentIndex === questions.length - 1;
 
   function setAnswer(value: AnswerValue) {
     setAnswers((cur) => ({ ...cur, [currentQuestion.id]: value }));
@@ -93,7 +90,7 @@ function QuestionFlow({
   function next() {
     if (currentAnswer === undefined) return;
 
-    if (currentIndex === questions.length - 1) {
+    if (isLast) {
       const payload = questions.map((q) => ({
         questionId: q.id,
         value: answers[q.id] ?? 0
@@ -102,6 +99,7 @@ function QuestionFlow({
       return;
     }
 
+    moved.current = true;
     setCurrentIndex((v) => v + 1);
   }
 
@@ -110,59 +108,70 @@ function QuestionFlow({
       onBack();
       return;
     }
+    moved.current = true;
     setCurrentIndex((v) => v - 1);
   }
 
+  const promptId = `question-${currentQuestion.id}`;
+
   return (
-    <div className="wizard-card wizard-card-wide">
+    <div className="wizard-card calibration-page">
       <div className="wizard-scroll">
-      <div className="progress-shell" aria-hidden="true">
-        <div className="progress-bar" style={{ width: `${progress}%` }} />
-      </div>
-
-      <div className="progress-meta">
-        <strong>Question {currentIndex + 1} of {questions.length}</strong>
-        <div className="axis-tally">
-          {groupedProgress.map((item) => (
-            <span key={item.axis}>
-              {item.title}: {item.count}/3
-            </span>
+      <div className="question-progress">
+        <p className="eyebrow">Step 2 of 4 · Calibration</p>
+        <div className="progress-meta">
+          <strong aria-live="polite">Question {currentIndex + 1} of {questions.length}</strong>
+          <span>{Object.keys(answers).filter((id) => questions.some((q) => q.id === id)).length} answered</span>
+        </div>
+        <ol className="progress-segments" aria-hidden="true">
+          {questions.map((q, index) => (
+            <li
+              key={q.id}
+              className={`${answers[q.id] !== undefined ? "is-done" : ""} ${index === currentIndex ? "is-current" : ""}`}
+            />
           ))}
-        </div>
+        </ol>
       </div>
 
-      <div className="question-block">
-        <div className="question-block-top">
-          <p className="question-axis">{axisLabels[currentQuestion.axis].title}</p>
-          <h3 className="question-prompt">{currentQuestion.prompt}</h3>
-        </div>
-        <div className="question-block-bottom">
-          <div className="scale-labels">
-            <span>{currentQuestion.lowLabel}</span>
-            <span>{currentQuestion.highLabel}</span>
-          </div>
-          <p className="scale-end scale-end-low">&#9650; {currentQuestion.lowLabel}</p>
-          <div className="scale-grid">
-            {SCALE.map((option) => (
+      <div className="question-block" key={currentQuestion.id}>
+        <p className="question-axis">{axisLabels[currentQuestion.axis].title}</p>
+        <h2 className="question-prompt" id={promptId}>{currentQuestion.prompt}</h2>
+        <div
+          className="scale-grid"
+          role="radiogroup"
+          aria-labelledby={promptId}
+          ref={groupRef}
+          onKeyDown={navigateRadios}
+        >
+          {SCALE.map((value) => {
+            const pole = value < 0 ? currentQuestion.lowLabel : value > 0 ? currentQuestion.highLabel : "";
+            const extreme = Math.abs(value) === 2;
+            const checked = currentAnswer === value;
+            const focusable = currentAnswer === undefined ? value === 0 : checked;
+            return (
               <button
-                key={option.value}
-                className={`scale-option ${currentAnswer === option.value ? "is-active" : ""}`}
+                key={value}
+                className={`scale-option ${extreme ? "is-extreme" : ""} ${checked ? "is-active" : ""}`}
                 type="button"
-                aria-label={
-                  option.value === 0
-                    ? "Neutral"
-                    : `${option.stackedLabel}: ${option.value < 0 ? currentQuestion.lowLabel : currentQuestion.highLabel}`
-                }
-                aria-pressed={currentAnswer === option.value}
-                onClick={() => setAnswer(option.value)}
+                role="radio"
+                aria-checked={checked}
+                tabIndex={focusable ? 0 : -1}
+                aria-label={value === 0 ? "Neutral" : extreme ? pole : `Leaning toward: ${pole}`}
+                onClick={() => setAnswer(value)}
               >
-                <span className="scale-text-inline">{option.label}</span>
-                <span className="scale-text-stacked">{option.stackedLabel}</span>
+                <span className="scale-dot" aria-hidden="true" />
+                {value === 0 ? (
+                  <><span className="scale-strength">Neutral</span><span className="scale-pole">No preference</span></>
+                ) : extreme ? (
+                  <span className="scale-strength">{pole}</span>
+                ) : (
+                  <><span className="scale-pole scale-lean">Leaning toward</span><span className="scale-strength is-lean">{pole}</span></>
+                )}
               </button>
-            ))}
-          </div>
-          <p className="scale-end scale-end-high">&#9660; {currentQuestion.highLabel}</p>
+            );
+          })}
         </div>
+        <p className="form-note scale-help">Use the arrow keys to move between answers.</p>
       </div>
 
       </div>
@@ -176,15 +185,22 @@ function QuestionFlow({
           disabled={currentAnswer === undefined}
           onClick={next}
         >
-          {currentIndex === questions.length - 1 ? "Continue" : "Next"}
+          {isLast ? "Continue" : "Next"}
         </button>
       </div>
     </div>
   );
 }
 
+const AXES: { key: keyof ProfileTuple; neg: string; pos: string; negHint: string; posHint: string }[] = [
+  { key: "outcomesPrinciples", neg: "Outcomes", pos: "Principles", negHint: "Judge actions by their consequences", posHint: "Judge actions by duties and rules" },
+  { key: "individualCollective", neg: "Individual", pos: "Collective", negHint: "Personal freedom and rights come first", posHint: "Community and shared good come first" },
+  { key: "reasonIntuition", neg: "Reason", pos: "Intuition", negHint: "Trust explicit argument", posHint: "Trust moral feeling and lived wisdom" }
+];
+
 function TupleEntry({
-  initialTuple,  onComplete,
+  initialTuple,
+  onComplete,
   onBack
 }: {
   initialTuple: ProfileTuple | null;
@@ -201,38 +217,43 @@ function TupleEntry({
     setFields((cur) => ({ ...cur, [field]: value }));
   }
 
-  function handleSubmit() {
-    onComplete(fields);
-  }
-
   return (
-    <div className="wizard-card">
+    <div className="wizard-card tuple-page">
       <div className="wizard-scroll">
-      <h2 className="wizard-title">Set your coordinates</h2>
+      <PageHeader step="Step 2 of 4 · Your coordinates" title="Set your coordinates">
+        Drag each slider toward the side that sounds more like you. The middle means you weigh both equally.
+      </PageHeader>
       <div className="tuple-sliders">
-        {([
-          { key: "outcomesPrinciples" as const, neg: "Outcomes", pos: "Principles" },
-          { key: "individualCollective" as const, neg: "Individual", pos: "Collective" },
-          { key: "reasonIntuition" as const, neg: "Reason", pos: "Intuition" }
-        ]).map((axis) => (
-          <div className="tuple-slider-field" key={axis.key}>
-            <div className="slider-row">
-              <span className="slider-label">{axis.neg}</span>
+        {AXES.map((axis) => {
+          const value = fields[axis.key];
+          const description = describeAxisPosition(axis.key, value);
+          return (
+            <div className="tuple-slider-field" key={axis.key}>
+              <div className="slider-head">
+                <h3 className="slider-title">{axis.neg} <span>vs</span> {axis.pos}</h3>
+                <output className="slider-value" htmlFor={`slider-${axis.key}`}>
+                  {description} <span>({value >= 0 ? "+" : ""}{value.toFixed(2)})</span>
+                </output>
+              </div>
               <input
+                id={`slider-${axis.key}`}
                 type="range"
                 aria-label={`${axis.neg} to ${axis.pos}`}
+                aria-valuetext={`${description} (${value >= 0 ? "+" : ""}${value.toFixed(2)})`}
                 className="question-slider"
                 min={-100}
                 max={100}
-                step={1}
-                value={fields[axis.key] * 100}
+                step={5}
+                value={Math.round(value * 100)}
                 onChange={(e) => update(axis.key, Number(e.target.value) / 100)}
               />
-              <span className="slider-label">{axis.pos}</span>
+              <div className="slider-poles">
+                <span><strong>{axis.neg}</strong>{axis.negHint}</span>
+                <span><strong>{axis.pos}</strong>{axis.posHint}</span>
+              </div>
             </div>
-            <span className="slider-value">{fields[axis.key].toFixed(2)}</span>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       </div>
@@ -243,7 +264,7 @@ function TupleEntry({
         <button
           className="button-primary"
           type="button"
-          onClick={handleSubmit}
+          onClick={() => onComplete(fields)}
         >
           Continue
         </button>

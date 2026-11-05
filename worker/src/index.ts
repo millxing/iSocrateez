@@ -30,7 +30,7 @@ export async function handleRequest(
     const body = await safeJson<{ password?: string }>(request);
 
     if (!body?.password || body.password !== env.APP_SHARED_PASSWORD) {
-      return json({ error: "Incorrect shared password." }, 401, request, env);
+      return json({ error: "That passphrase didn’t match. Check it and try again." }, 401, request, env);
     }
 
     const expiresAt = new Date(Date.now() + SESSION_TTL_SECONDS * 1000).toISOString();
