@@ -3,6 +3,8 @@ import { isAllowedModel } from "../../shared/models";
 import { getPhilosophyById } from "../../shared/philosophyProfiles";
 import { createSignedToken, verifySignedToken } from "./auth";
 import { generateAdvice, ProviderError, type WorkerEnv } from "./llm";
+import { generateDebateTurn, isDebateTurnRequest } from "./debate";
+import { DEBATE_LIMITS } from "../../shared/debate";
 
 const SESSION_TTL_SECONDS = 60 * 60 * 12;
 
@@ -40,6 +42,31 @@ export async function handleRequest(
     );
 
     return json({ token, expiresAt }, 200, request, env);
+  }
+
+  if (request.method === "POST" && url.pathname === "/api/debate/turn") {
+    let body: unknown;
+    try {
+      body = await readDebateBody(request);
+    } catch (error) {
+      return json({ error: error instanceof RangeError ? "The debate is too long." : "Invalid request body." },
+        error instanceof RangeError ? 413 : 400, request, env);
+    }
+    if (!body || typeof body !== "object" || !("token" in body) || typeof body.token !== "string") {
+      return json({ error: "Invalid request body." }, 400, request, env);
+    }
+    if (!await verifySignedToken(body.token, env.JWT_SECRET)) {
+      return json({ error: "Session expired or invalid." }, 401, request, env);
+    }
+    if (!isDebateTurnRequest(body)) {
+      return json({ error: "Invalid debate participants, turn order, model, or message length." }, 400, request, env);
+    }
+    try {
+      return json(await generateDebateTurn(body, env), 200, request, env);
+    } catch (error) {
+      return json({ error: error instanceof ProviderError ? error.message : "The reply failed. Try again." },
+        error instanceof ProviderError ? 502 : 500, request, env);
+    }
   }
 
   if (request.method === "POST" && url.pathname === "/api/advice") {
@@ -137,4 +164,27 @@ function hasValidProfileOverride(value: AdviceRequest["profileOverride"]) {
 
 function isNormalizedNumber(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) && value >= -1 && value <= 1;
+}
+
+async function readDebateBody(request: Request): Promise<unknown> {
+  const reader = request.body?.getReader();
+  if (!reader) return null;
+  const decoder = new TextDecoder();
+  let size = 0;
+  let text = "";
+  try {
+    while (true) {
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      size += chunk.value.byteLength;
+      if (size > DEBATE_LIMITS.requestBytes) {
+        await reader.cancel();
+        throw new RangeError("Debate request too large.");
+      }
+      text += decoder.decode(chunk.value, { stream: true });
+    }
+    return JSON.parse(text + decoder.decode());
+  } finally {
+    reader.releaseLock();
+  }
 }

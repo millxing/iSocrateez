@@ -41,3 +41,31 @@ The existing backend remains `https://isocrateez-worker.millxing-isocrateez.work
 - `shared/`: contracts, model choices, philosophy profiles, and scoring
 - `worker/`: Cloudflare Worker source
 - `archive/v1/`: preserved previous app source
+
+## Debate
+
+After advice, select **Explore through debate**. Choose two philosophers for three
+rounds (six replies), or choose one philosopher and write your own position (up to
+six exchanges). The voices can agree on a conclusion while testing assumptions,
+evidence, and missing consequences. They are AI interpretations, not quotations.
+
+Each turn uses the advisor model selected when the debate starts. No planner call
+is needed. Use **Next reply** to advance a philosopher debate. A failed or cancelled
+reply can be retried without duplicating the user's message. Cancellation stops the
+client from accepting the reply; a provider call already in progress can still incur
+usage. **Back to advice** preserves the transcript. A new dilemma or a change to the
+advice inputs clears the debate. Reloading the tab also clears it. No transcript is
+stored on the server or in browser storage.
+
+The Worker exposes authenticated `POST /api/debate/turn`, with types in
+`shared/contracts.ts` and limits in `shared/debate.ts`. It validates participants,
+turn order, models, and message sizes, then checks the dilemma and user messages
+with the existing safety gate. Safety responses stop the debate and appear outside
+the philosopher transcript. Use **Export debate** to save the dilemma, participants,
+model, explanation style, and messages as Markdown. You can export a partial debate.
+Unsent drafts are not included. Debate prompts and orchestration are in
+`worker/src/debatePrompts.ts` and `worker/src/debate.ts`. Provider transport is shared
+with advice through `worker/src/providers.ts`.
+
+Deploy the updated Worker before the frontend so the debate endpoint is available.
+The existing advice endpoint and its request/response format are unchanged.

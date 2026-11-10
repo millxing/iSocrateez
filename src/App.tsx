@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import type {
   AdviceResponse,
+  DebateParticipants,
   AnswerRecord,
   ExplanationLevel,
   ProfileTuple,
@@ -8,7 +9,7 @@ import type {
   Question
 } from "../shared/contracts";
 import { randomizeQuestions } from "../shared/ethics";
-import { createSession, ApiError, requestAdvice } from "./api/client";
+import { createSession, ApiError, requestAdvice, requestDebateTurn } from "./api/client";
 import { PasswordGate } from "./components/PasswordGate";
 import { DilemmaPage } from "./components/DilemmaPage";
 import { ExplanationPage } from "./components/ExplanationPage";
@@ -18,6 +19,7 @@ import { PhilosopherPage } from "./components/PhilosopherPage";
 import { PathPage } from "./components/PathPage";
 import { CalibrationPage } from "./components/CalibrationPage";
 import { ResultsView } from "./components/ResultsView";
+import { DebatePage, type DebateSession } from "./components/DebatePage";
 import { LoadingOverlay } from "./components/LoadingOverlay";
 
 type Phase =
@@ -27,7 +29,8 @@ type Phase =
   | "calibration"
   | "philosopher"
   | "explanation"
-  | "results";
+  | "results"
+  | "debate";
 
 function savedModel(key: string, fallback: string) {
   try {
@@ -78,7 +81,77 @@ export default function App() {
   const inputsKey = JSON.stringify([dilemma, answers, profileOverride, chosenPhilosopher, explanationLevel]);
   const resultsAreCurrent = Boolean(response) && responseKey === inputsKey;
 
+  const [debate, setDebate] = useState<DebateSession | null>(null);
+  const [debateError, setDebateError] = useState<string | null>(null);
+  const [isLoadingDebate, setIsLoadingDebate] = useState(false);
+  const debateAbort = useRef<AbortController | null>(null);
+
+  function cancelDebate() {
+    debateAbort.current?.abort();
+    debateAbort.current = null;
+    setIsLoadingDebate(false);
+  }
+
+  function clearDebate() {
+    cancelDebate();
+    setDebate(null);
+    setDebateError(null);
+  }
+
+  // A debate belongs to the exact dilemma and perspective that produced the advice.
+  useEffect(() => { clearDebate(); }, [inputsKey]);
+  useEffect(() => () => { debateAbort.current?.abort(); }, []);
+
+  async function fetchDebateTurn(current: DebateSession) {
+    if (debateAbort.current || current.complete) return;
+    if (!sessionToken) { goTo("locked"); return; }
+    let messages = current.messages;
+    if (current.participants.mode === "user" && messages.length % 2 === 0) {
+      if (!current.draft.trim()) return;
+      messages = [...messages, { speakerId: "user", content: current.draft.trim() }];
+    }
+    const pending = { ...current, messages, draft: "" };
+    setDebate(pending);
+    setDebateError(null);
+    setIsLoadingDebate(true);
+    const controller = new AbortController();
+    debateAbort.current = controller;
+    try {
+      const reply = await requestDebateTurn({
+        token: sessionToken, dilemma: current.dilemma, participants: current.participants,
+        messages, explanationLevel: current.explanationLevel, advisorModel: current.advisorModel
+      }, controller.signal);
+      if (controller.signal.aborted || debateAbort.current !== controller) return;
+      setDebate(reply.safetyMode === "supportive_refusal"
+        ? { ...pending, complete: true, safetyMarkdown: reply.safetyMarkdown }
+        : { ...pending, messages: [...messages, reply.message], complete: reply.complete });
+    } catch (error) {
+      if (controller.signal.aborted || debateAbort.current !== controller) return;
+      if (error instanceof ApiError && error.status === 401) {
+        sessionStorage.removeItem(SESSION_STORAGE_KEY);
+        setSessionToken(null);
+        setAuthError("Your session expired. Enter the shared password again.");
+        goTo("locked");
+        return;
+      }
+      setDebateError(error instanceof ApiError ? error.message : "The reply failed. Try again.");
+    } finally {
+      if (debateAbort.current === controller) {
+        debateAbort.current = null;
+        setIsLoadingDebate(false);
+      }
+    }
+  }
+
+  function startDebate(participants: DebateParticipants) {
+    const next: DebateSession = { dilemma, participants, explanationLevel, advisorModel, messages: [], draft: "", complete: false };
+    setDebate(next);
+    setDebateError(null);
+    if (participants.mode === "philosophers") void fetchDebateTurn(next);
+  }
+
   function goTo(next: Phase) {
+    if (next !== "debate") cancelDebate();
     setPrevPhase(phase);
     setPhase(next);
   }
@@ -90,7 +163,7 @@ export default function App() {
       const session = await createSession(password);
       sessionStorage.setItem(SESSION_STORAGE_KEY, session.token);
       setSessionToken(session.token);
-      goTo("dilemma");
+      goTo(debate ? "debate" : "dilemma");
     } catch (error) {
       setAuthError(
         error instanceof ApiError ? error.message : "Unable to unlock the app right now."
@@ -189,6 +262,7 @@ export default function App() {
   }
 
   function resetFlow() {
+    clearDebate();
     setConfirmingReset(false);
     setDraft("");
     setDilemma("");
@@ -248,7 +322,7 @@ export default function App() {
   // An unsubmitted edit on the dilemma page means the saved advice no longer matches.
   const draftPending = phase === "dilemma" && draft.trim() !== dilemma;
   const adviceReachable = resultsAreCurrent && !draftPending;
-  const canRevisit = (index: number) => index !== step && (index < step || adviceReachable);
+  const canRevisit = (index: number) => (index !== step || phase === "debate") && (index < step || adviceReachable);
   const hasWork = Boolean(draft.trim() || dilemma || response);
 
   // Captured before the dialog makes the page inert, so focus can return to it on cancel.
@@ -299,7 +373,7 @@ export default function App() {
         <div className="sidebar-footer"><a href="https://entangledparticles.xyz" target="_blank" rel="noopener noreferrer">entangledparticles.xyz ↗</a><a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer license">CC BY-SA 4.0</a></div>
       </aside>}
       <div className="workspace">
-        <main className="page-stage" id="main" ref={stageRef} tabIndex={-1} aria-label={settingsOpen ? "Settings" : phase === "locked" ? "Sign in" : steps[step]} aria-busy={isLoadingAdvice}>
+        <main className="page-stage" id="main" ref={stageRef} tabIndex={-1} aria-label={settingsOpen ? "Settings" : phase === "locked" ? "Sign in" : phase === "debate" ? "Debate" : steps[step]} aria-busy={isLoadingAdvice}>
         {settingsOpen && <SettingsPage appearance={appearance} onAppearance={setAppearance}
           plannerModel={plannerModel} onPlannerModel={setPlannerModel}
           advisorModel={advisorModel} onAdvisorModel={setAdvisorModel} />}
@@ -366,7 +440,17 @@ export default function App() {
               explanationLevel={explanationLevel}
               personaMode={personaMode}
               onRestart={requestReset}
+              onDebate={() => goTo("debate")}
             />
+          )}
+          {phase === "debate" && response && (
+            <DebatePage session={debate} dilemma={dilemma}
+              initialPhilosopherId={chosenPhilosopher || response.nearestProfiles[0]?.id || null}
+              busy={isLoadingDebate} error={debateError}
+              onStart={startDebate}
+              onDraft={draft => setDebate(current => current ? { ...current, draft } : current)}
+              onTurn={() => { if (debate) void fetchDebateTurn(debate); }}
+              onCancel={cancelDebate} onBack={() => goTo("results")} onReset={clearDebate} />
           )}
         </div>
       </main>
@@ -413,7 +497,7 @@ function ConfirmReset({ onCancel, onConfirm }: { onCancel: () => void; onConfirm
 }
 
 const PHASE_ORDER: Phase[] = [
-  "locked", "dilemma", "path", "calibration", "philosopher", "explanation", "results"
+  "locked", "dilemma", "path", "calibration", "philosopher", "explanation", "results", "debate"
 ];
 
 function getDirection(prev: Phase | null, next: Phase): "enter" | "forward" | "backward" {

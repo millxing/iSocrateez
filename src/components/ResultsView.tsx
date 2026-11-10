@@ -20,6 +20,7 @@ interface ResultsViewProps {
   /** Human-readable description of how the perspective was chosen. */
   perspectiveLabel?: string;
   onRestart: () => void;
+  onDebate?: () => void;
 }
 
 type Tab = "advice" | "why" | "watch" | "next" | "dilemma" | "export" | "coordinates";
@@ -103,7 +104,8 @@ export function ResultsView({
   explanationLevel,
   personaMode,
   perspectiveLabel,
-  onRestart
+  onRestart,
+  onDebate
 }: ResultsViewProps) {
   const [activeTab, setActiveTab] = useState<Tab>("advice");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -442,6 +444,7 @@ export function ResultsView({
       </div>
 
       <div className="results-footer">
+        {onDebate && response.safetyMode === "standard" && <button className="button-primary" type="button" onClick={onDebate}>Explore through debate</button>}
         <p className="form-note">Want to try another perspective? Use the steps in the sidebar to change an answer.</p>
         <button className="button-secondary restart-button" type="button" onClick={onRestart}>
           Start a new dilemma

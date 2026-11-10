@@ -1,4 +1,6 @@
 import type {
+  DebateTurnRequest,
+  DebateTurnResponse,
   AdviceRequest,
   AdviceResponse,
   SessionResponse
@@ -25,6 +27,14 @@ export async function createSession(password: string): Promise<SessionResponse> 
 
 export async function requestAdvice(payload: AdviceRequest, signal?: AbortSignal): Promise<AdviceResponse> {
   return request<AdviceResponse>("/api/advice", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    signal
+  });
+}
+
+export async function requestDebateTurn(payload: DebateTurnRequest, signal?: AbortSignal): Promise<DebateTurnResponse> {
+  return request<DebateTurnResponse>("/api/debate/turn", {
     method: "POST",
     body: JSON.stringify(payload),
     signal

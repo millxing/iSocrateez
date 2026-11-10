@@ -92,3 +92,26 @@ export interface AdviceResponse {
   modelsUsed: string[];
   timing?: AdviceTiming;
 }
+
+export type DebateParticipants =
+  | { mode: "philosophers"; philosopherIds: [string, string] }
+  | { mode: "user"; philosopherIds: [string] };
+
+export interface DebateMessage {
+  /** A catalogue philosopher ID, or "user". Never a provider message role. */
+  speakerId: string;
+  content: string;
+}
+
+export interface DebateTurnRequest {
+  token: string;
+  dilemma: string;
+  participants: DebateParticipants;
+  messages: DebateMessage[];
+  explanationLevel: ExplanationLevel;
+  advisorModel?: string;
+}
+
+export type DebateTurnResponse =
+  | { safetyMode: "standard"; message: DebateMessage; complete: boolean; modelUsed: string }
+  | { safetyMode: "supportive_refusal"; safetyMarkdown: string; complete: true; modelUsed: "local-safety" };
