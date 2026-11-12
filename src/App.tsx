@@ -8,7 +8,9 @@ import type {
   PersonaMode,
   Question
 } from "../shared/contracts";
-import { randomizeQuestions } from "../shared/ethics";
+import { extendQuestions, randomizeQuestions } from "../shared/ethics";
+import { questionBank } from "../shared/questionBank";
+import type { LoadedCalibration } from "./calibrationFile";
 import { createSession, ApiError, requestAdvice, requestDebateTurn } from "./api/client";
 import { PasswordGate } from "./components/PasswordGate";
 import { DilemmaPage } from "./components/DilemmaPage";
@@ -187,6 +189,23 @@ export default function App() {
     setCalibrationMode(mode);
     if (mode === "questions" && questions.length === 0) {
       setQuestions(randomizeQuestions());
+    }
+    goTo("calibration");
+  }
+
+  function handleLoadCalibration(loaded: LoadedCalibration) {
+    setChosenPhilosopher(null);
+    if ("answers" in loaded) {
+      // Keep the answer order so the questionnaire reads as it did when it was saved.
+      const byId = new Map(questionBank.map(question => [question.id, question]));
+      setQuestions(loaded.answers.flatMap(answer => byId.get(answer.questionId) ?? []));
+      setAnswers(loaded.answers);
+      setProfileOverride(null);
+      setCalibrationMode("questions");
+    } else {
+      setAnswers([]);
+      setProfileOverride(loaded.profile);
+      setCalibrationMode("tuple");
     }
     goTo("calibration");
   }
@@ -397,6 +416,7 @@ export default function App() {
           {phase === "path" && (
             <PathPage
               onSelect={handlePath}
+              onLoadCalibration={handleLoadCalibration}
               onBack={() => goTo("dilemma")}
             />
           )}
@@ -415,6 +435,7 @@ export default function App() {
               questions={questions}
               initialAnswers={answers}
               initialTuple={profileOverride}
+              onExtend={questions.length < questionBank.length ? () => setQuestions(current => extendQuestions(current)) : undefined}
               onCompleteQuestions={handleCalibrationComplete}
               onCompleteTuple={handleTupleComplete}
               onBack={() => goTo("path")}
@@ -435,7 +456,7 @@ export default function App() {
           {phase === "results" && response && (
             <ResultsView
               response={response}
-              perspectiveLabel={chosenPhilosopher ? "Philosopher's voice" : profileOverride ? "Your own coordinates" : "9-question calibration"}
+              perspectiveLabel={chosenPhilosopher ? "Philosopher's voice" : profileOverride ? "Your own coordinates" : `${answers.length}-question calibration`}
               dilemma={dilemma}
               explanationLevel={explanationLevel}
               personaMode={personaMode}

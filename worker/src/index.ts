@@ -1,4 +1,5 @@
 import type { AdviceRequest } from "../../shared/contracts";
+import { isValidAnswerSet, isValidProfileTuple } from "../../shared/ethics";
 import { isAllowedModel } from "../../shared/models";
 import { getPhilosophyById } from "../../shared/philosophyProfiles";
 import { createSignedToken, verifySignedToken } from "./auth";
@@ -90,9 +91,9 @@ export async function handleRequest(
       }
     } else if (
       !Array.isArray(body.answers) ||
-      (!hasValidProfileOverride(body.profileOverride) && body.answers.length !== 9)
+      (!isValidProfileTuple(body.profileOverride) && !isValidAnswerSet(body.answers))
     ) {
-      return json({ error: "Provide either 9 answers or a valid 3-number ethical tuple." }, 400, request, env);
+      return json({ error: "Provide either a valid set of calibration answers or a valid 3-number ethical tuple." }, 400, request, env);
     }
 
     if (
@@ -148,22 +149,6 @@ async function safeJson<T>(request: Request): Promise<T | null> {
   } catch {
     return null;
   }
-}
-
-function hasValidProfileOverride(value: AdviceRequest["profileOverride"]) {
-  if (!value) {
-    return false;
-  }
-
-  return (
-    isNormalizedNumber(value.outcomesPrinciples) &&
-    isNormalizedNumber(value.individualCollective) &&
-    isNormalizedNumber(value.reasonIntuition)
-  );
-}
-
-function isNormalizedNumber(value: unknown) {
-  return typeof value === "number" && Number.isFinite(value) && value >= -1 && value <= 1;
 }
 
 async function readDebateBody(request: Request): Promise<unknown> {

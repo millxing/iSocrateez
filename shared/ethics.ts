@@ -45,6 +45,68 @@ export function randomizeQuestions(
   return shuffle(picks, random);
 }
 
+/** Fewer answers than this on an axis give too coarse a score to use. */
+export const MIN_ANSWERS_PER_AXIS = 3;
+
+/** Adds one unused question for each axis, so a calibration can be refined in rounds. */
+export function extendQuestions(
+  current: Question[],
+  source: Question[] = questionBank,
+  random = Math.random
+): Question[] {
+  const used = new Set(current.map((question) => question.id));
+  const picks = AXES.flatMap((axis) => {
+    const pool = source.filter((question) => question.axis === axis && !used.has(question.id));
+    return shuffle(pool, random).slice(0, 1);
+  });
+
+  return [...current, ...shuffle(picks, random)];
+}
+
+/** True for a set of answers that can be scored: known, unique questions and enough for each axis. */
+export function isValidAnswerSet(
+  value: unknown,
+  source: Question[] = questionBank
+): value is AnswerRecord[] {
+  if (!Array.isArray(value) || value.length > source.length) {
+    return false;
+  }
+
+  const questionById = new Map(source.map((question) => [question.id, question]));
+  const seen = new Set<string>();
+  const counts: Record<Axis, number> = {
+    outcomesPrinciples: 0,
+    individualCollective: 0,
+    reasonIntuition: 0
+  };
+
+  for (const answer of value as Partial<AnswerRecord>[]) {
+    const question = typeof answer?.questionId === "string" ? questionById.get(answer.questionId) : undefined;
+    if (!question || seen.has(question.id)) {
+      return false;
+    }
+    if (!Number.isInteger(answer.value) || Math.abs(answer.value as number) > 2) {
+      return false;
+    }
+    seen.add(question.id);
+    counts[question.axis] += 1;
+  }
+
+  return AXES.every((axis) => counts[axis] >= MIN_ANSWERS_PER_AXIS);
+}
+
+export function isValidProfileTuple(value: unknown): value is ProfileTuple {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const tuple = value as Record<Axis, unknown>;
+  return AXES.every((axis) => {
+    const entry = tuple[axis];
+    return typeof entry === "number" && Number.isFinite(entry) && entry >= -1 && entry <= 1;
+  });
+}
+
 export function scoreProfile(
   answers: AnswerRecord[],
   source: Question[] = questionBank

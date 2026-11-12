@@ -30,7 +30,8 @@ Important files:
 - `src/components/ExplanationPage.tsx` — 3-choice explanation style
 - `src/components/ModelPage.tsx` — model selection (defaults to Claude Haiku 5.5 planner / Claude Sonnet 5.5 advisor)
 - `src/components/PathPage.tsx` — calibration questions vs manual tuple
-- `src/components/CalibrationPage.tsx` — 9-question flow or 3-axis sliders
+- `src/components/CalibrationPage.tsx` — question flow (9 questions, extendable to 30) with a summary page, or 3-axis sliders
+- `src/calibrationFile.ts` — save/load format for a calibration file
 - `src/components/ResultsView.tsx` — tabbed results (advice, why, watch, next, coordinates, export)
 - `src/styles.css` — all styling (light/dark themes, responsive layout)
 - `shared/contracts.ts`
@@ -45,8 +46,8 @@ The frontend is a wizard-style multi-page flow with a sticky hero bar:
 
 1. Password gate
 2. Enter a dilemma (dynamic-height textarea)
-3. Choose path: 9-question calibration, manual 3-axis tuple, or choose a philosopher
-4. Answer calibration questions or set sliders; or pick one philosopher/tradition from a grid (`PhilosopherPage`). The philosopher path ignores the axes: the request carries `philosopherId`, the Worker answers from that figure's `voiceBrief`, and the response has `selectedPhilosopherId` with no `profile`
+3. Choose path: 9-question calibration, manual 3-axis tuple, choose a philosopher, or load a saved calibration file
+4. Answer calibration questions or set sliders. The questionnaire ends on a summary page, where the user can answer 3 more questions (one for each axis, up to all 30), save the calibration to a JSON file, or continue. A loaded file restores the answers and opens the summary; if its answers no longer match the question bank, its coordinates open in the sliders. Or or pick one philosopher/tradition from a grid (`PhilosopherPage`). The philosopher path ignores the axes: the request carries `philosopherId`, the Worker answers from that figure's `voiceBrief`, and the response has `selectedPhilosopherId` with no `profile`
 5. Choose explanation style (3 cards)
 6. Confirm or change models (default: Haiku 5.5 planner, Sonnet 5.5 advisor); this step requests the advice
 7. Results page with tabbed navigation:
@@ -84,7 +85,7 @@ The Worker returns:
 
 - `POST /api/session`: validates the shared password and issues a token
 - `POST /api/advice`: accepts either:
-  - 9 answers, or
+  - 9 to 30 answers (known, unique question IDs; at least 3 for each axis; see `isValidAnswerSet` in `shared/ethics.ts`), or
   - `profileOverride`
 - `GET /api/health`: simple status route
 

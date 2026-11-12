@@ -179,6 +179,10 @@ describe("App", () => {
       }
 
       fireEvent.click(screen.getByRole("radio", { name: /^neutral$/i }));
+      fireEvent.click(screen.getByRole("button", { name: /^see result$/i }));
+
+      await screen.findByRole("heading", { name: /your calibration/i });
+      expect(screen.getByText(/based on 9 answers/i)).toBeInTheDocument();
       fireEvent.click(screen.getByRole("button", { name: /^continue$/i }));
 
       await screen.findByRole("heading", { name: /explanation style/i });
@@ -199,6 +203,8 @@ describe("App", () => {
         advisorModel: "anthropic:claude-sonnet-5-5"
       });
       fireEvent.click(screen.getByRole("button", { name: "Perspective" }));
+      expect(screen.getByRole("heading", { name: /your calibration/i })).toBeInTheDocument();
+      fireEvent.click(screen.getByRole("button", { name: /^previous$/i }));
       expect(screen.getByRole("radio", { name: "Neutral" })).toHaveAttribute("aria-checked", "true");
     } finally {
       globalThis.fetch = originalFetch;

@@ -695,7 +695,7 @@ function SpeakerTab({ voice }: { voice: PhilosophyProfile }) {
   );
 }
 
-function ProfileBars({ profile }: { profile: ProfileTuple }) {
+export function ProfileBars({ profile }: { profile: ProfileTuple }) {
   return (
     <div className="axis-bars">
       {Object.entries(axisLabels).map(([axisKey, labels]) => {

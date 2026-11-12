@@ -10,7 +10,7 @@ iSocrateez is a private ethical-advice app with:
 
 The product asks the user for a dilemma, either:
 
-- walks them through a 9-question assessment, or
+- walks them through a 9-question assessment (extendable in rounds of 3, and savable to a file for later sessions), or
 - lets them enter a normalized 3-axis tuple directly
 
 Then it generates advice based on the resulting ethical profile.
@@ -28,7 +28,7 @@ The UI uses a fixed sidebar, independently scrolling content panes, and pinned b
 - `src/components/SettingsPage.tsx`: sidebar-accessible appearance and model selection, preserving the current flow
 - `src/components/ModelPage.tsx`: unused previous model-selection screen
 - `src/components/PathPage.tsx`: choose calibration questions or manual tuple
-- `src/components/CalibrationPage.tsx`: 9-question flow or 3-axis sliders
+- `src/components/CalibrationPage.tsx`: question flow with summary page, or 3-axis sliders
 - `src/components/ResultsView.tsx`: tabbed results with 6 tabs (advice, why, watch, next, coordinates, export); hamburger menu on narrow screens; export saves markdown via File System Access API
 - `src/api/client.ts`: frontend API client
 - `src/styles.css`: all styling — light/dark semantic palettes, fixed app shell, responsive content panes

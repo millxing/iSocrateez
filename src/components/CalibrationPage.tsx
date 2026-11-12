@@ -5,7 +5,9 @@ import type {
   ProfileTuple,
   Question
 } from "../../shared/contracts";
-import { axisLabels, describeAxisPosition } from "../../shared/ethics";
+import { axisLabels, describeAxisPosition, scoreProfile } from "../../shared/ethics";
+import { buildCalibrationFile, saveCalibrationFile } from "../calibrationFile";
+import { ProfileBars } from "./ResultsView";
 import { navigateRadios } from "./radioNavigation";
 import { PageHeader } from "./PageHeader";
 
@@ -14,6 +16,8 @@ interface CalibrationPageProps {
   questions: Question[];
   initialAnswers: AnswerRecord[];
   initialTuple: ProfileTuple | null;
+  /** Adds one more question for each axis; absent when the question bank is used up. */
+  onExtend?: () => void;
   onCompleteQuestions: (answers: AnswerRecord[]) => void;
   onCompleteTuple: (tuple: ProfileTuple) => void;
   onBack: () => void;
@@ -28,6 +32,7 @@ export function CalibrationPage({
   questions,
   initialAnswers,
   initialTuple,
+  onExtend,
   onCompleteQuestions,
   onCompleteTuple,
   onBack
@@ -46,6 +51,7 @@ export function CalibrationPage({
     <QuestionFlow
       questions={questions}
       initialAnswers={initialAnswers}
+      onExtend={onExtend}
       onComplete={onCompleteQuestions}
       onBack={onBack}
     />
@@ -55,19 +61,23 @@ export function CalibrationPage({
 function QuestionFlow({
   questions,
   initialAnswers,
+  onExtend,
   onComplete,
   onBack
 }: {
   questions: Question[];
   initialAnswers: AnswerRecord[];
+  onExtend?: () => void;
   onComplete: (answers: AnswerRecord[]) => void;
   onBack: () => void;
 }) {
   const [answers, setAnswers] = useState<Record<string, AnswerValue>>(() => Object.fromEntries(initialAnswers.map(answer => [answer.questionId, answer.value])));
-  // Returning to a finished questionnaire resumes at the last question rather than the first.
+  // An index one past the last question shows the summary. Returning to a finished
+  // questionnaire (or loading a saved one) resumes there rather than at the first question.
   const [currentIndex, setCurrentIndex] = useState(() =>
-    questions.length > 0 && questions.every((q) => answers[q.id] !== undefined) ? questions.length - 1 : 0
+    questions.length > 0 && questions.every((q) => answers[q.id] !== undefined) ? questions.length : 0
   );
+  const [saveStatus, setSaveStatus] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const groupRef = useRef<HTMLDivElement>(null);
   const moved = useRef(false);
 
@@ -77,8 +87,59 @@ function QuestionFlow({
     groupRef.current?.querySelector<HTMLButtonElement>('[role="radio"][tabindex="0"]')?.focus();
   }, [currentIndex]);
 
+  if (questions.length === 0) return null;
+
+  if (currentIndex >= questions.length) {
+    const payload = questions.map((q) => ({ questionId: q.id, value: answers[q.id] ?? 0 })) as AnswerRecord[];
+
+    const refine = () => {
+      moved.current = true;
+      setSaveStatus(null);
+      // The new questions follow the current ones, so this index is the first new question.
+      setCurrentIndex(questions.length);
+      onExtend?.();
+    };
+
+    const save = async () => {
+      setSaveStatus(null);
+      try {
+        const result = await saveCalibrationFile(buildCalibrationFile(payload));
+        if (result === "saved") setSaveStatus({ kind: "ok", text: "Calibration saved." });
+        if (result === "downloaded") setSaveStatus({ kind: "ok", text: "Calibration downloaded to your downloads folder." });
+      } catch {
+        setSaveStatus({ kind: "error", text: "The file could not be saved. Try again." });
+      }
+    };
+
+    return (
+      <div className="wizard-card calibration-page calibration-summary">
+        <div className="wizard-scroll">
+          <PageHeader step="Step 2 of 4 · Calibration" title="Your calibration">
+            Based on {questions.length} answers. More answers give a steadier result.
+          </PageHeader>
+          <ProfileBars profile={scoreProfile(payload)} />
+          <div className="calibration-actions">
+            {onExtend
+              ? <button className="button-secondary" type="button" onClick={refine}>Answer 3 more questions</button>
+              : <p className="form-note">You have answered all {questions.length} questions.</p>}
+            <button className="button-secondary" type="button" onClick={() => void save()}>Save calibration</button>
+          </div>
+          <p className={`export-status ${saveStatus?.kind === "error" ? "is-error" : ""}`} role="status">{saveStatus?.text}</p>
+          <p className="form-note">A saved calibration is a small file on your computer. Load it in a later session to skip the questions.</p>
+        </div>
+        <div className="button-row">
+          <button className="button-back" type="button" onClick={() => { setSaveStatus(null); setCurrentIndex(questions.length - 1); }}>
+            Previous
+          </button>
+          <button className="button-primary" type="button" onClick={() => onComplete(payload)}>
+            Continue
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const currentQuestion = questions[currentIndex];
-  if (!currentQuestion) return null;
 
   const currentAnswer = answers[currentQuestion.id];
   const isLast = currentIndex === questions.length - 1;
@@ -89,16 +150,6 @@ function QuestionFlow({
 
   function next() {
     if (currentAnswer === undefined) return;
-
-    if (isLast) {
-      const payload = questions.map((q) => ({
-        questionId: q.id,
-        value: answers[q.id] ?? 0
-      })) as AnswerRecord[];
-      onComplete(payload);
-      return;
-    }
-
     moved.current = true;
     setCurrentIndex((v) => v + 1);
   }
@@ -185,7 +236,7 @@ function QuestionFlow({
           disabled={currentAnswer === undefined}
           onClick={next}
         >
-          {isLast ? "Continue" : "Next"}
+          {isLast ? "See result" : "Next"}
         </button>
       </div>
     </div>

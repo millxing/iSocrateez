@@ -242,6 +242,46 @@ describe("worker routes", () => {
     expect(response.status).toBe(400);
   });
 
+  it("rejects answer sets that cannot be scored before calling a model", async () => {
+    const token = await createSignedToken(
+      { exp: Math.floor(Date.now() / 1000) + 60 },
+      env.JWT_SECRET
+    );
+    const valid = ["op-1", "op-2", "op-3", "ic-1", "ic-2", "ic-3", "ri-1", "ri-2", "ri-3"].map(
+      (questionId) => ({ questionId, value: 0 })
+    );
+    const invalidSets = [
+      valid.slice(1),
+      [...valid.slice(1), valid[1]],
+      [...valid.slice(1), { questionId: "op-99", value: 0 }],
+      [...valid.slice(1), { questionId: "op-1", value: 5 }]
+    ];
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = vi.fn();
+
+    try {
+      for (const answers of invalidSets) {
+        const response = await handleRequest(
+          new Request("https://example.com/api/advice", {
+            method: "POST",
+            body: JSON.stringify({
+              token,
+              dilemma: "A real dilemma with enough text.",
+              explanationLevel: "general",
+              personaMode: "personalized",
+              answers
+            })
+          }),
+          env
+        );
+        expect(response.status).toBe(400);
+      }
+      expect(globalThis.fetch).not.toHaveBeenCalled();
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
+
   it("only allows CORS for the configured origin", async () => {
     const allowed = await handleRequest(
       new Request("https://example.com/api/health", {
