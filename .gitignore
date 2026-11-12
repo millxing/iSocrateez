@@ -14,3 +14,6 @@ coverage
 !.env.example
 !.env.development
 .DS_Store
+
+# Promo film source (large binaries, kept in Dropbox only)
+promo/
