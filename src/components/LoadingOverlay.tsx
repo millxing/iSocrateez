@@ -83,7 +83,7 @@ export function LoadingOverlay({ startTime, onCancel }: { startTime: number; onC
       <span className="loading-dots" aria-hidden="true"><span /><span /><span /></span>
       <p className="loading-message" role="status">{elapsed < 20000 ? "Considering your dilemma…" : "Still working through your perspective…"}</p>
       <p className="loading-timer">
-        {seconds < 3 ? "This usually takes under a minute." : `${seconds} ${seconds === 1 ? "second" : "seconds"} elapsed`}
+        {seconds < 3 ? "This usually takes under 20 seconds." : `${seconds} ${seconds === 1 ? "second" : "seconds"} elapsed`}
       </p>
       {onCancel && <button ref={cancelRef} className="button-back loading-cancel" type="button" onClick={onCancel}>Cancel</button>}
     </div>
