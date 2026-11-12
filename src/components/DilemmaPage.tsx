@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { SAMPLE_DILEMMAS } from "../sampleDilemmas";
+import { SAMPLE_DILEMMAS, SampleDilemma, matchesSample, shuffledSamples } from "../sampleDilemmas";
 import { PageHeader } from "./PageHeader";
 
 interface DilemmaPageProps {
@@ -15,6 +15,10 @@ export function DilemmaPage({ initialDilemma, onDraftChange, onSubmit }: Dilemma
   const [ownText, setOwnText] = useState(initialExample ? "" : initialDilemma);
   const [exampleTitle, setExampleTitle] = useState<string | undefined>(initialExample?.title);
   const [mode, setMode] = useState<"own" | "example">(initialExample ? "example" : "own");
+  // New random order on each visit to this page; fixed while the user is on it.
+  const [samples] = useState(() => shuffledSamples(initialExample?.title));
+  // Kept here, not in the list, so the search survives a switch to "Write my own" and back.
+  const [query, setQuery] = useState("");
 
   const selected = SAMPLE_DILEMMAS.find((s) => s.title === exampleTitle);
   const dilemma = mode === "example" ? selected?.text ?? "" : ownText;
@@ -64,7 +68,13 @@ export function DilemmaPage({ initialDilemma, onDraftChange, onSubmit }: Dilemma
           <div className="dilemma-body">
             {mode === "example" ? (
               <div className={`example-split ${selected ? "has-selection" : ""}`}>
-                <ExampleList selectedTitle={selected?.title} onPick={setExampleTitle} />
+                <ExampleList
+                  samples={samples}
+                  query={query}
+                  onQueryChange={setQuery}
+                  selectedTitle={selected?.title}
+                  onPick={setExampleTitle}
+                />
                 <div className="example-preview" aria-live="polite">
                   {selected ? (
                     <>
@@ -107,15 +117,42 @@ export function DilemmaPage({ initialDilemma, onDraftChange, onSubmit }: Dilemma
 }
 
 function ExampleList({
+  samples,
+  query,
+  onQueryChange,
   selectedTitle,
   onPick
 }: {
+  samples: SampleDilemma[];
+  query: string;
+  onQueryChange: (query: string) => void;
   selectedTitle?: string;
   onPick: (title: string) => void;
 }) {
+  const listRef = useRef<HTMLDivElement>(null);
+  const visible = samples.filter((sample) => matchesSample(sample, query));
   return (
     <div className="example-list-wrap">
+      <div className="example-search">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.2-4.2" /></svg>
+        <input
+          type="search"
+          aria-label="Search examples"
+          placeholder="Search examples"
+          value={query}
+          onChange={(event) => onQueryChange(event.target.value)}
+          onKeyDown={(event) => {
+            // Down arrow moves from the search box into the results.
+            if (event.key !== "ArrowDown") return;
+            const first = listRef.current?.querySelector<HTMLButtonElement>(".example-option");
+            if (!first) return;
+            event.preventDefault();
+            first.focus();
+          }}
+        />
+      </div>
       <div
+        ref={listRef}
         className="example-list"
         role="group"
         aria-label="Example dilemmas"
@@ -128,7 +165,10 @@ function ExampleList({
           items[Math.min(items.length - 1, Math.max(0, i + (event.key === "ArrowDown" ? 1 : -1)))].focus();
         }}
       >
-        {SAMPLE_DILEMMAS.map((sample) => {
+        {visible.length === 0 && (
+          <p className="example-list-empty" role="status">No examples match “{query.trim()}”.</p>
+        )}
+        {visible.map((sample) => {
           const active = sample.title === selectedTitle;
           const id = `example-${sample.title.replace(/\W+/g, "-").toLowerCase()}`;
           return (

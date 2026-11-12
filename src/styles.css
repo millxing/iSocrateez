@@ -170,6 +170,10 @@ h1.brand { margin: 0 0 2.5rem; font-size: 1.5rem; }
 .word-count { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .example-split { display: grid; height: clamp(20rem, 52vh, 34rem); grid-template-columns: minmax(14rem, 1fr) minmax(0, 1.7fr); min-height: 22rem; max-height: 34rem; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; }
 .example-list-wrap { min-height: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; background: var(--bg-elevated); }
+.example-search { position: relative; flex-shrink: 0; padding: .5rem; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.example-search svg { position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.example-search input { width: 100%; min-height: 2.5rem; padding: .5rem .75rem .5rem 2.25rem; font-size: .9375rem; }
+.example-list-empty { margin: 0; padding: .75rem .875rem; font-size: .9375rem; color: var(--text-muted); }
 .example-list { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; padding: .375rem; gap: .125rem; }
 .example-option { flex-shrink: 0; display: flex; flex-direction: column; gap: .5rem; width: 100%; min-height: 2.75rem; padding: .75rem .875rem; text-align: left; border: 0; border-radius: var(--radius); background: transparent; }
 .example-option .choice-label { font-size: .9375rem; font-weight: 500; }
@@ -446,6 +450,7 @@ h1.brand { margin: 0 0 2.5rem; font-size: 1.5rem; }
   .example-split { grid-template-columns: minmax(0, 1fr); max-height: none; min-height: 0; }
   .example-list-wrap { border-right: 0; background: var(--surface); }
   .example-list { overflow: visible; }
+  .example-search input { min-height: 2.75rem; font-size: 1rem; }
   .example-preview { display: none; }
   .example-option-text { display: block; }
   .question-prompt { font-size: 1.5rem; margin-bottom: 1.25rem; }

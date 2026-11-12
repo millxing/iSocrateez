@@ -1,4 +1,5 @@
 import type { PhilosophyProfile } from "../shared/contracts";
+import { searchWords } from "./searchText";
 
 /**
  * Extra words people might search for that don't appear on a philosopher's card:
@@ -57,8 +58,6 @@ const GROUP_WORDS: Record<PhilosophyProfile["group"], string> = {
   contemporary: "contemporary modern living"
 };
 
-const fold = (text: string) =>
-  text.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ø/g, "o").replace(/[’']/g, "");
 
 const indexCache = new Map<string, string[]>();
 
@@ -73,7 +72,7 @@ function wordsFor(profile: PhilosophyProfile): string[] {
     GROUP_WORDS[profile.group],
     KEYWORDS[profile.id] ?? ""
   ].join(" ");
-  const words = fold(text).split(/[^a-z0-9]+/).filter(Boolean);
+  const words = searchWords(text);
   indexCache.set(profile.id, words);
   return words;
 }
@@ -83,7 +82,7 @@ function wordsFor(profile: PhilosophyProfile): string[] {
  * traditions, group or keywords. So "chin" finds Chinese thinkers and "stoic rome" finds the Roman Stoics.
  */
 export function matchesPhilosopher(profile: PhilosophyProfile, query: string): boolean {
-  const terms = fold(query).split(/[^a-z0-9]+/).filter(Boolean);
+  const terms = searchWords(query);
   if (terms.length === 0) return true;
   const words = wordsFor(profile);
   return terms.every((term) => words.some((word) => word.startsWith(term)));
