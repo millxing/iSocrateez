@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.35,"individualCollective":-0.1,"reasonIntuition":-0.65,"note":"The advice favors integrity and property rights while weighing consequences through explicit analysis."}

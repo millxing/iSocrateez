@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.7, "individualCollective": -0.2, "reasonIntuition": -0.2, "note": "The advice treats a continuing wrong and the community's autonomy as decisive over aggregate benefits, using structured analysis with some intuition-testing."}

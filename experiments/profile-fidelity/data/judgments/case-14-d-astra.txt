@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.75,"individualCollective":-0.55,"reasonIntuition":-0.65,"note":"The advice favors duty and personal consent, with explicit analysis of obligations, motives, and uncertainty."}

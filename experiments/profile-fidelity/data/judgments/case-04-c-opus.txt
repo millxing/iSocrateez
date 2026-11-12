@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.4, "individualCollective": 0.15, "reasonIntuition": -0.2, "note": "The advice leads with a role-bound duty to rescue, tempered by conditions and attention to consequences, and treats rescue as a shared norm. It argues analytically but ends with a conscience check."}

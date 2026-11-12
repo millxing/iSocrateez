@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.78,"individualCollective":-0.12,"reasonIntuition":-0.8,"note":"The advice uses explicit risk analysis and weighs consequences while balancing personal independence with public safety."}

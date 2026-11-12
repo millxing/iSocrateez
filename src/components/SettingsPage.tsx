@@ -4,15 +4,11 @@ import { PageHeader } from "./PageHeader";
 interface SettingsPageProps {
   appearance: string;
   onAppearance: (value: string) => void;
-  plannerModel: string;
-  onPlannerModel: (value: string) => void;
   advisorModel: string;
   onAdvisorModel: (value: string) => void;
 }
 
-const DEFAULT_PLANNER = "anthropic:claude-haiku-5-5";
 const DEFAULT_ADVISOR = "anthropic:claude-sonnet-5-5";
-const optionLabel = (label: string) => label.replace(/ \(default (planner|advisor)\)/, "");
 
 function ModelSelect({ label, help, value, fallback, onChange }: {
   label: string; help: string; value: string; fallback: string; onChange: (value: string) => void;
@@ -28,7 +24,7 @@ function ModelSelect({ label, help, value, fallback, onChange }: {
         <select id={id} aria-describedby={`${id}-help`} value={value} onChange={event => onChange(event.target.value)}>
           {modelOptions.map(option => (
             <option key={option.value} value={option.value}>
-              {optionLabel(option.label)}{option.value === fallback ? " (default)" : ""}
+              {option.label}{option.value === fallback ? " (default)" : ""}
             </option>
           ))}
         </select>
@@ -59,10 +55,8 @@ export function SettingsPage(props: SettingsPageProps) {
               </select>
             </div>
           </div>
-          <ModelSelect label="Planner model" value={props.plannerModel} fallback={DEFAULT_PLANNER} onChange={props.onPlannerModel}
-            help="Reads your dilemma and plans the angle the advice should take. A fast model works well." />
-          <ModelSelect label="Advisor model" value={props.advisorModel} fallback={DEFAULT_ADVISOR} onChange={props.onAdvisorModel}
-            help="Writes the advice you read. Larger models give richer, slower answers." />
+          <ModelSelect label="Model" value={props.advisorModel} fallback={DEFAULT_ADVISOR} onChange={props.onAdvisorModel}
+            help="Writes the advice and the debate replies. Larger models give richer, slower answers." />
         </div>
       </div>
       <div className="button-row">

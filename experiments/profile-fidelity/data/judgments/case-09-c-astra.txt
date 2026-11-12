@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.3,"individualCollective":0.15,"reasonIntuition":-0.9,"note":"The advice favors evidence, harm reduction, and revisable decisions while balancing team welfare with individual fairness."}

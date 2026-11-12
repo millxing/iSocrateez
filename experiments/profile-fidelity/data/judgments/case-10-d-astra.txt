@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.72,"individualCollective":0.55,"reasonIntuition":-0.68,"note":"The advice gives principles priority, stresses care for the wider community, and uses structured analysis to guide action."}

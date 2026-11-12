@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.12,"individualCollective":0.4,"reasonIntuition":-0.65,"note":"The advice balances duties and consequences, favors shared protection of vulnerable residents, and relies on explicit analysis and evidence."}

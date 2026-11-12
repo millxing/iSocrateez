@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.76,"individualCollective":0.42,"reasonIntuition":-0.77,"note":"The advice favors long-term shared outcomes through explicit analysis, while giving some weight to personal risk and moral intuition."}

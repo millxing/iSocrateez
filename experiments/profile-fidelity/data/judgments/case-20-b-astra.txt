@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.22,"individualCollective":0.12,"reasonIntuition":-0.44,"note":"The advice balances harm with fair process, gives modest weight to shared trust, and favors structured analysis over intuition."}

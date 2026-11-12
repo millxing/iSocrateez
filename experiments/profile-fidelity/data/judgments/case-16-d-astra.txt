@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.45,"individualCollective":-0.5,"reasonIntuition":-0.85,"note":"The advice favors evidence and consequence analysis, with individual protections that limit aggregate welfare claims."}

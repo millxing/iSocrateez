@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.65,"individualCollective":-0.55,"reasonIntuition":0.25,"note":"The advice prioritizes rights, redress, and self-determination over aggregate benefits, with moral feeling guiding practical checks."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.5, "individualCollective": -0.3, "reasonIntuition": 0.4, "note": "The advice describes the reader as favoring principle, person-centered attention and intuition, and it uses duty framing and a universalizability test while treating intuition as informative but needing testing."}

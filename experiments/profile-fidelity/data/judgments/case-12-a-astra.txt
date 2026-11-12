@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.65,"individualCollective":0.15,"reasonIntuition":-0.85,"note":"The advice explicitly identifies an outcomes lean, uses structured analysis, and gives modest weight to shared welfare and institutional process."}

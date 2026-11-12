@@ -4,7 +4,7 @@ import { handleRequest } from "./index";
 import type { WorkerEnv } from "./providers";
 
 const env: WorkerEnv = {
-  APP_SHARED_PASSWORD: "test", JWT_SECRET: "secret", PLANNER_PROVIDER: "openai", PLANNER_MODEL: "planner",
+  APP_SHARED_PASSWORD: "test", JWT_SECRET: "secret",
   ADVISOR_PROVIDER: "openai", ADVISOR_MODEL: "advisor", OPENAI_API_KEY: "test", ALLOWED_ORIGIN: "https://example.com"
 };
 const base = { dilemma: "Should I tell my friend about a mistake?", explanationLevel: "general", messages: [],

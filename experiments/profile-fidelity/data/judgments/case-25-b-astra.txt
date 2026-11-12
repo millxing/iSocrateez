@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.13, "individualCollective": -0.65, "reasonIntuition": -0.65, "note": "The advice balances consequences and duties but stresses individual responsibility, factual checks, and explicit reasoning."}

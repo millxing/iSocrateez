@@ -24,11 +24,11 @@ If you touch any of those, check the full path from UI -> shared contracts -> Wo
 
 Important files:
 
-- `src/App.tsx` — wizard flow controller (phases: locked → dilemma → path → calibration | philosopher → explanation → models → results)
+- `src/App.tsx` — wizard flow controller (phases: locked → dilemma → path → calibration | philosopher → explanation → results)
 - `src/components/PasswordGate.tsx` — shared password entry
 - `src/components/DilemmaPage.tsx` — dilemma text entry
 - `src/components/ExplanationPage.tsx` — 3-choice explanation style
-- `src/components/ModelPage.tsx` — model selection (defaults to Claude Haiku 5.5 planner / Claude Sonnet 5.5 advisor)
+- `src/components/SettingsPage.tsx` — appearance and the one advice model (default: Claude Sonnet 5.5)
 - `src/components/PathPage.tsx` — calibration questions vs manual tuple
 - `src/components/CalibrationPage.tsx` — question flow (9 questions, extendable to 30) with a summary page, or 3-axis sliders
 - `src/calibrationFile.ts` — save/load format for a calibration file
@@ -47,9 +47,9 @@ The frontend is a wizard-style multi-page flow with a sticky hero bar:
 1. Password gate
 2. Enter a dilemma (dynamic-height textarea)
 3. Choose path: 9-question calibration, manual 3-axis tuple, choose a philosopher, or load a saved calibration file
-4. Answer calibration questions or set sliders. The questionnaire ends on a summary page, where the user can answer 3 more questions (one for each axis, up to all 30), save the calibration to a JSON file, or continue. A loaded file restores the answers and opens the summary; if its answers no longer match the question bank, its coordinates open in the sliders. Or or pick one philosopher/tradition from a grid (`PhilosopherPage`). The philosopher path ignores the axes: the request carries `philosopherId`, the Worker answers from that figure's `voiceBrief`, and the response has `selectedPhilosopherId` with no `profile`
+4. Answer calibration questions or set sliders. The questionnaire ends on a summary page, where the user can answer 3 more questions (one for each axis, up to all 30), save the calibration to a JSON file, or continue. A loaded file restores the answers and opens the summary; if its answers no longer match the question bank, its coordinates open in the sliders. Or pick one philosopher/tradition from a grid (`PhilosopherPage`). The philosopher path ignores the axes: the request carries `philosopherId`, the Worker answers from that figure's `voiceBrief`, and the response has `selectedPhilosopherId` with no `profile`
 5. Choose explanation style (3 cards)
-6. Confirm or change models (default: Haiku 5.5 planner, Sonnet 5.5 advisor); this step requests the advice
+6. The explanation step requests the advice. The model is set in Settings (default: Sonnet 5.5) and is used for advice and debate replies
 7. Results page with tabbed navigation:
    - Your Advice, Why This Advice, What to Watch For, Next Step, Original Dilemma, Ethical Coordinates, Export Advice
    - On narrow screens, tabs collapse to a hamburger dropdown menu
@@ -61,7 +61,7 @@ The Worker returns:
   - the resolved profile tuple
   - nearest philosophy matches
   - safety mode
-  - models used
+  - model used
 
 ## Constraints
 
@@ -108,9 +108,9 @@ If you change ethical scoring:
 
 If you change model orchestration:
 
-- keep the two-stage planner/advisor shape unless intentionally redesigning it
-- preserve fallback behavior
-- do not let planner parse failures crash the whole route
+- advice is one model call (`buildAdvisorPrompt` / `buildVoiceAdvisorPrompt`). A separate planner call was removed on 2026-11-12: a 25-case test (`experiments/profile-fidelity/`) showed it gave no better fit to the profile, and about half of its JSON plans failed validation
+- give the model the plain-language axis descriptions, not only the tuple numbers
+- test a prompt change with the experiment harness before you keep it
 
 If you change safety:
 

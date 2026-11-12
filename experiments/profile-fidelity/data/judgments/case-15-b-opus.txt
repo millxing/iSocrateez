@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.2, "individualCollective": -0.3, "reasonIntuition": -0.5, "note": "The advice treats honesty as close to non-negotiable but justifies it partly through consequences, centers the friend's autonomy and the friendship rather than any wider community, and reasons analytically by breaking the problem into parts."}

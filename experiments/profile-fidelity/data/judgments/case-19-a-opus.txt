@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.3, "individualCollective": 0.15, "reasonIntuition": -0.45, "note": "Duty-framed stewardship and fidelity, weighed through explicit analysis of competing grounds, with a moderate emphasis on a shared, jointly endorsed family process."}

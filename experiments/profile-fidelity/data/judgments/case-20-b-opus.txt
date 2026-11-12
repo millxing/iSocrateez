@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.15, "individualCollective": 0.1, "reasonIntuition": -0.35, "note": "Balanced, pluralistic weighing of goods with a slight lean toward principles and accountability, mild attention to team and organizational trust, and a clearly analytical, structured style."}

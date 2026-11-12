@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.35, "individualCollective": 0.1, "reasonIntuition": -0.1, "note": "The advice leans on legal duty and the master's personal obligation, but it also weighs consequences, gives real attention to the crew and to character ('good character', 'moral residue'), and reasons in a structured, analytic way with some practical-wisdom tone."}

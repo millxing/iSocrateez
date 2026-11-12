@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.6, "individualCollective": -0.35, "reasonIntuition": -0.6, "note": "The advice weighs consequences of each option, treats the dilemma as harms to specific individuals rather than to institutional fairness, and reasons analytically with hedged, revisable estimates."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.74,"individualCollective":0.12,"reasonIntuition":-0.83,"note":"The advice emphasizes comparative harms, evidence, and explicit decision triggers while balancing personal dignity with public safety."}

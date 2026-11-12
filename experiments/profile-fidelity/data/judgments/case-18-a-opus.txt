@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.05, "individualCollective": 0.1, "reasonIntuition": -0.45, "note": "The advice balances consequences (risk forecasts, irreversibility) with duties (fairness to the least mobile, honesty, informed consent), gives slightly more weight to the shared good than to individual choice, and relies on analytic, evidence-gathering reasoning more than on intuition."}

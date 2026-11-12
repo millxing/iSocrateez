@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.48,"individualCollective":-0.25,"reasonIntuition":-0.75,"note":"The advice favors universal principles, equal personal worth, and explicit consistency tests over social contribution and moral feeling."}

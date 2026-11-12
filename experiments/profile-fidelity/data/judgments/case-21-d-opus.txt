@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.3, "individualCollective": -0.1, "reasonIntuition": -0.4, "note": "Structured, analytical weighing of consequences against integrity, leaning toward duty, with a focus on the individual rather than the community."}

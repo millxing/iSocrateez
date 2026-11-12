@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.7,"individualCollective":0.12,"reasonIntuition":-0.85,"note":"The advice centers on conflicting duties, balances family and community obligations, and strongly favors explicit analysis over guilt or intuition."}

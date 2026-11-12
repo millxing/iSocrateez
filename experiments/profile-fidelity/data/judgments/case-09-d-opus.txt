@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.35, "individualCollective": 0.35, "reasonIntuition": -0.5, "note": "The warnings about outcome-tunnel vision and collective scapegoating suggest a consequence-leaning, community-leaning reader, and the structured, evidence-testing style points to a preference for explicit analysis."}

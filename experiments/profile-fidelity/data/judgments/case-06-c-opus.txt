@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.45, "individualCollective": 0.1, "reasonIntuition": 0.25, "note": "The advice frames the case as clashing duties and uses a universalizability test, while giving some respect to compassion and intuition, and it weighs individual and communal stakes about equally."}

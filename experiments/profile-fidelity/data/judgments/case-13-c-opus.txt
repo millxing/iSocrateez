@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.2, "individualCollective": 0.0, "reasonIntuition": -0.4, "note": "The advice weighs evidence and probable harms in an analytic, consequence-leaning way, balancing others' road safety against the neighbor's autonomy and dignity, with little appeal to intuition."}

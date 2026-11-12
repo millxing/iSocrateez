@@ -1,0 +1,2252 @@
+[
+  {
+    "id": "case-01",
+    "dilemmaTitle": "The River Dam",
+    "dilemma": "A regional council member must vote on a dam that would give reliable electricity and flood protection to two hundred thousand people. The reservoir would flood a valley where four hundred people live, including a community that has farmed and buried its dead there for nine generations. The residents have refused every relocation offer. Her vote is likely to decide the outcome. Should she vote for the dam or against it?",
+    "profile": {
+      "outcomesPrinciples": 0.85,
+      "individualCollective": 0.25,
+      "reasonIntuition": -0.5
+    },
+    "nearestProfiles": [
+      {
+        "id": "epictetus-stoicism",
+        "name": "Stoicism",
+        "representative": "Epictetus",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Distinguish what is up to us (judgments, choices, intentions) from what is not (outcomes, reputation, other people). Peace and virtue come from governing your own assent and doing your role well. Tone: blunt, concise, coach-like.",
+        "speaker": {
+          "years": "c. 50–c. 135 CE",
+          "region": "Roman Empire (Phrygia and Nicopolis, Greece)",
+          "traditions": "Stoicism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.7,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.7
+        },
+        "summary": "Prioritizes inner discipline, principled action, and clear judgment about what is in one’s control.",
+        "exampleConcerns": [
+          "self-command",
+          "integrity",
+          "control"
+        ],
+        "distance": 0.43,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: reasonably close • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "scanlon-contractualism",
+        "name": "Contractualism",
+        "representative": "T. M. Scanlon",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "An act is wrong if it would be disallowed by principles no one could reasonably reject as a basis for informed, unforced general agreement. Focuses on justifiability to each person affected, individual complaints, and what we owe to each other. Tone: careful, analytic, attentive to fairness between persons.",
+        "speaker": {
+          "years": "born 1940",
+          "region": "United States",
+          "traditions": "Contractualism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.55,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.8
+        },
+        "summary": "Asks what principles people could not reasonably reject when living together.",
+        "exampleConcerns": [
+          "justifiability",
+          "mutual respect",
+          "reasonable rejection"
+        ],
+        "distance": 0.55,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "kant-deontology",
+        "name": "Kantian Deontology",
+        "representative": "Immanuel Kant",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Morality rests on duties derived from reason: act only on maxims you could will as universal law, and treat humanity always as an end, never merely as a means. Lies and promise-breaking are wrong regardless of outcome; consequences do not make an act right. Tone: rigorous, systematic, stern but respectful of every person's dignity.",
+        "speaker": {
+          "years": "1724–1804",
+          "region": "Königsberg, Prussia (now Russia)",
+          "traditions": "Enlightenment, German idealism, deontological ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.95,
+          "individualCollective": -0.3,
+          "reasonIntuition": -0.95
+        },
+        "summary": "Centers morality on duties, universal principles, and respect for persons as ends in themselves.",
+        "exampleConcerns": [
+          "consistency",
+          "duty",
+          "respect for persons"
+        ],
+        "distance": 0.718,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      }
+    ]
+  },
+  {
+    "id": "case-02",
+    "dilemmaTitle": "The Museum’s Inheritance",
+    "dilemma": "A small museum owns a ceremonial object taken from another community generations ago without its consent. Descendants ask for its return so it can be used in religious ceremonies. The object is the museum’s main attraction, and admission revenue supports local jobs and free school visits. Museum staff also worry about preservation, while the community says those concerns deny its right to care for its own heritage. Should the museum return the object unconditionally, negotiate shared custody, or retain it for public access?",
+    "profile": {
+      "outcomesPrinciples": -0.95,
+      "individualCollective": 0.25,
+      "reasonIntuition": 1
+    },
+    "nearestProfiles": [
+      {
+        "id": "moral-particularism",
+        "name": "Moral Particularism",
+        "representative": "Jonathan Dancy",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "There are no exceptionless moral principles. What counts as a reason in one case can be irrelevant or opposed in another, so good judgment about the particular case matters more than applying rules. Tone: careful, case-focused, wary of formulas.",
+        "speaker": {
+          "years": "born 1946",
+          "region": "England",
+          "traditions": "Moral particularism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": -0.05,
+          "reasonIntuition": 0.85
+        },
+        "summary": "Doubts that fixed moral principles can capture the full nuance of concrete situations.",
+        "exampleConcerns": [
+          "context sensitivity",
+          "nuance",
+          "exceptional cases"
+        ],
+        "distance": 1.102,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: reasonably close • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "gilligan-care-ethics",
+        "name": "Care Ethics",
+        "representative": "Carol Gilligan",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "Moral life is grounded in relationships, responsiveness and responsibility to particular people, not abstract rules alone. Attends to vulnerability, dependence, voice and who is being listened to; resists treating moral problems as detached puzzles. Tone: warm, attentive, relational.",
+        "speaker": {
+          "years": "born 1936",
+          "region": "United States",
+          "traditions": "Care ethics, feminist ethics, moral psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": 0.75,
+          "reasonIntuition": 0.55
+        },
+        "summary": "Emphasizes relationships, vulnerability, and the moral significance of attending to concrete human needs.",
+        "exampleConcerns": [
+          "care",
+          "dependency",
+          "relational responsibility"
+        ],
+        "distance": 1.247,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 1.294,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-03",
+    "dilemmaTitle": "The Family Business",
+    "dilemma": "I run the hardware store my grandfather started. It loses money every year, and a developer has offered a price that would pay off my debts and fund my children's education. Eleven employees, some with us for decades, would lose their jobs, and the town would lose its last independent store. My father made me promise to keep it open. Should I sell the business or keep it going for as long as I can?",
+    "profile": {
+      "outcomesPrinciples": 0.6,
+      "individualCollective": 0.05,
+      "reasonIntuition": -0.6
+    },
+    "nearestProfiles": [
+      {
+        "id": "epictetus-stoicism",
+        "name": "Stoicism",
+        "representative": "Epictetus",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Distinguish what is up to us (judgments, choices, intentions) from what is not (outcomes, reputation, other people). Peace and virtue come from governing your own assent and doing your role well. Tone: blunt, concise, coach-like.",
+        "speaker": {
+          "years": "c. 50–c. 135 CE",
+          "region": "Roman Empire (Phrygia and Nicopolis, Greece)",
+          "traditions": "Stoicism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.7,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.7
+        },
+        "summary": "Prioritizes inner discipline, principled action, and clear judgment about what is in one’s control.",
+        "exampleConcerns": [
+          "self-command",
+          "integrity",
+          "control"
+        ],
+        "distance": 0.206,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: closely aligned • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "scanlon-contractualism",
+        "name": "Contractualism",
+        "representative": "T. M. Scanlon",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "An act is wrong if it would be disallowed by principles no one could reasonably reject as a basis for informed, unforced general agreement. Focuses on justifiability to each person affected, individual complaints, and what we owe to each other. Tone: careful, analytic, attentive to fairness between persons.",
+        "speaker": {
+          "years": "born 1940",
+          "region": "United States",
+          "traditions": "Contractualism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.55,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.8
+        },
+        "summary": "Asks what principles people could not reasonably reject when living together.",
+        "exampleConcerns": [
+          "justifiability",
+          "mutual respect",
+          "reasonable rejection"
+        ],
+        "distance": 0.255,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: closely aligned • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "kant-deontology",
+        "name": "Kantian Deontology",
+        "representative": "Immanuel Kant",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Morality rests on duties derived from reason: act only on maxims you could will as universal law, and treat humanity always as an end, never merely as a means. Lies and promise-breaking are wrong regardless of outcome; consequences do not make an act right. Tone: rigorous, systematic, stern but respectful of every person's dignity.",
+        "speaker": {
+          "years": "1724–1804",
+          "region": "Königsberg, Prussia (now Russia)",
+          "traditions": "Enlightenment, German idealism, deontological ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.95,
+          "individualCollective": -0.3,
+          "reasonIntuition": -0.95
+        },
+        "summary": "Centers morality on duties, universal principles, and respect for persons as ends in themselves.",
+        "exampleConcerns": [
+          "consistency",
+          "duty",
+          "respect for persons"
+        ],
+        "distance": 0.606,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      }
+    ]
+  },
+  {
+    "id": "case-04",
+    "dilemmaTitle": "The Refugee Boat",
+    "dilemma": "The captain of a commercial cargo ship sights a damaged boat carrying about sixty migrants in rough seas. Maritime law requires rescue. The shipping company has instructed captains to report such boats to the coast guard and continue, because a previous rescue led to the ship being held in port for three weeks and the crew being investigated for smuggling. The coast guard is six hours away. Should the captain take the migrants on board or report and continue?",
+    "profile": {
+      "outcomesPrinciples": 0.45,
+      "individualCollective": 0.45,
+      "reasonIntuition": -0.1
+    },
+    "nearestProfiles": [
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 0.469,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "confucius-role-ethics",
+        "name": "Confucian Role Ethics",
+        "representative": "Confucius",
+        "group": "eastern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ethics is lived through roles and relationships (parent, child, friend, ruler, subject), cultivated by ritual propriety (li), humaneness (ren), filial care and learning. A person becomes good through practice, example and mutual obligation. Tone: gentle, exemplary, teacher to student.",
+        "speaker": {
+          "years": "551–479 BCE",
+          "region": "China (state of Lu)",
+          "traditions": "Confucianism, role ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.45,
+          "individualCollective": 0.85,
+          "reasonIntuition": 0.2
+        },
+        "summary": "Frames ethics through cultivated roles, social harmony, and the responsibilities of relationship.",
+        "exampleConcerns": [
+          "ritual propriety",
+          "harmony",
+          "familial duty"
+        ],
+        "distance": 0.5,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "gilligan-care-ethics",
+        "name": "Care Ethics",
+        "representative": "Carol Gilligan",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "Moral life is grounded in relationships, responsiveness and responsibility to particular people, not abstract rules alone. Attends to vulnerability, dependence, voice and who is being listened to; resists treating moral problems as detached puzzles. Tone: warm, attentive, relational.",
+        "speaker": {
+          "years": "born 1936",
+          "region": "United States",
+          "traditions": "Care ethics, feminist ethics, moral psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": 0.75,
+          "reasonIntuition": 0.55
+        },
+        "summary": "Emphasizes relationships, vulnerability, and the moral significance of attending to concrete human needs.",
+        "exampleConcerns": [
+          "care",
+          "dependency",
+          "relational responsibility"
+        ],
+        "distance": 0.797,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: reasonably close • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-05",
+    "dilemmaTitle": "The Cheating Friend",
+    "dilemma": "A university student discovers that her closest friend secretly obtained the answers to a final examination. The exam determines which student receives a prestigious scholarship that would cover four years of tuition. Her friend comes from a low-income family and would likely have to abandon college without the scholarship. However, another student who studied honestly will lose the opportunity if the cheating goes unreported. Should she expose her friend or protect someone whose future depends on the scholarship?",
+    "profile": {
+      "outcomesPrinciples": -0.7,
+      "individualCollective": -0.85,
+      "reasonIntuition": -0.55
+    },
+    "nearestProfiles": [
+      {
+        "id": "pragmatism",
+        "name": "Pragmatism",
+        "representative": "William James and John Dewey",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ideas are tested by their practical consequences in lived experience; inquiry is experimental and fallible. Moral questions are worked out in context, through intelligent, democratic problem-solving rather than fixed first principles. Tone: plain-spoken, experimental, optimistic about improvement.",
+        "speaker": {
+          "years": "James 1842–1910; Dewey 1859–1952",
+          "region": "United States",
+          "traditions": "Pragmatism, empiricism, functional psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.45,
+          "individualCollective": 0.25,
+          "reasonIntuition": -0.2
+        },
+        "summary": "Treats ethics as practical inquiry, testing ideas by how they work in lived social experience.",
+        "exampleConcerns": [
+          "experimentation",
+          "consequences",
+          "growth"
+        ],
+        "distance": 1.181,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "mill-utilitarianism",
+        "name": "Utilitarianism",
+        "representative": "John Stuart Mill",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Judges actions by their consequences for the happiness and suffering of everyone affected, counting each person equally. Distinguishes higher from lower pleasures, defends individual liberty because it generally serves welfare, and cares about reform. Tone: reasoned, humane, reform-minded Victorian liberal.",
+        "speaker": {
+          "years": "1806–1873",
+          "region": "England",
+          "traditions": "Utilitarianism, classical liberalism, empiricism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.95,
+          "individualCollective": 0.35,
+          "reasonIntuition": -0.4
+        },
+        "summary": "Measures moral choices by how well they increase well-being and reduce suffering overall.",
+        "exampleConcerns": [
+          "aggregate harm",
+          "practical effects",
+          "social welfare"
+        ],
+        "distance": 1.235,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 1.243,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: reasonably close • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-06",
+    "dilemmaTitle": "The Stolen Medicine",
+    "dilemma": "A pharmacist discovers that a struggling single mother has stolen an expensive medication for her critically ill child. The mother explains that her insurance refused to cover the treatment and she has exhausted every other option. The pharmacist knows that reporting the theft could lead to criminal charges and prevent the child from receiving further treatment. However, ignoring the theft would violate professional responsibilities and potentially encourage others to steal medication. Should the pharmacist report the mother or quietly allow her to leave?",
+    "profile": {
+      "outcomesPrinciples": 0.65,
+      "individualCollective": -0.65,
+      "reasonIntuition": 0.75
+    },
+    "nearestProfiles": [
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 0.776,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: closely aligned • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "moral-particularism",
+        "name": "Moral Particularism",
+        "representative": "Jonathan Dancy",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "There are no exceptionless moral principles. What counts as a reason in one case can be irrelevant or opposed in another, so good judgment about the particular case matters more than applying rules. Tone: careful, case-focused, wary of formulas.",
+        "speaker": {
+          "years": "born 1946",
+          "region": "England",
+          "traditions": "Moral particularism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": -0.05,
+          "reasonIntuition": 0.85
+        },
+        "summary": "Doubts that fixed moral principles can capture the full nuance of concrete situations.",
+        "exampleConcerns": [
+          "context sensitivity",
+          "nuance",
+          "exceptional cases"
+        ],
+        "distance": 0.82,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 1.146,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-07",
+    "dilemmaTitle": "The Whistleblower",
+    "dilemma": "An environmental engineer discovers that her employer has been secretly releasing toxic chemicals into a nearby river for several years. The contamination has likely contributed to unexplained illnesses in the surrounding community, although the connection has not yet been scientifically established. Reporting the company would probably lead to enormous fines and the closure of its factory, which employs nearly half the town’s working population. Many families, including the engineer’s own, depend on the factory for their livelihoods. Should she expose the pollution and risk devastating the local economy, or remain silent while the contamination continues?",
+    "profile": {
+      "outcomesPrinciples": -0.5,
+      "individualCollective": 0.9,
+      "reasonIntuition": -0.8
+    },
+    "nearestProfiles": [
+      {
+        "id": "mill-utilitarianism",
+        "name": "Utilitarianism",
+        "representative": "John Stuart Mill",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Judges actions by their consequences for the happiness and suffering of everyone affected, counting each person equally. Distinguishes higher from lower pleasures, defends individual liberty because it generally serves welfare, and cares about reform. Tone: reasoned, humane, reform-minded Victorian liberal.",
+        "speaker": {
+          "years": "1806–1873",
+          "region": "England",
+          "traditions": "Utilitarianism, classical liberalism, empiricism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.95,
+          "individualCollective": 0.35,
+          "reasonIntuition": -0.4
+        },
+        "summary": "Measures moral choices by how well they increase well-being and reduce suffering overall.",
+        "exampleConcerns": [
+          "aggregate harm",
+          "practical effects",
+          "social welfare"
+        ],
+        "distance": 0.815,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "pragmatism",
+        "name": "Pragmatism",
+        "representative": "William James and John Dewey",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ideas are tested by their practical consequences in lived experience; inquiry is experimental and fallible. Moral questions are worked out in context, through intelligent, democratic problem-solving rather than fixed first principles. Tone: plain-spoken, experimental, optimistic about improvement.",
+        "speaker": {
+          "years": "James 1842–1910; Dewey 1859–1952",
+          "region": "United States",
+          "traditions": "Pragmatism, empiricism, functional psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.45,
+          "individualCollective": 0.25,
+          "reasonIntuition": -0.2
+        },
+        "summary": "Treats ethics as practical inquiry, testing ideas by how they work in lived social experience.",
+        "exampleConcerns": [
+          "experimentation",
+          "consequences",
+          "growth"
+        ],
+        "distance": 0.886,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: partial overlap"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 1.34,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-08",
+    "dilemmaTitle": "The Dangerous Discovery",
+    "dilemma": "A scientist develops a revolutionary technology that could generate nearly unlimited clean energy at minimal cost. She believes the discovery could eliminate fossil fuel dependence and dramatically improve living conditions around the world. However, she also realizes that the same technology could be adapted into an extremely destructive weapon using readily available materials. Publishing her research would allow other scientists to advance the technology, but it would also make the dangerous information publicly accessible. Should she share her discovery with humanity or suppress it to prevent potential catastrophe?",
+    "profile": {
+      "outcomesPrinciples": -0.85,
+      "individualCollective": -0.85,
+      "reasonIntuition": 1
+    },
+    "nearestProfiles": [
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 1.032,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: reasonably close • Reason to Intuition: partial overlap"
+      },
+      {
+        "id": "moral-particularism",
+        "name": "Moral Particularism",
+        "representative": "Jonathan Dancy",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "There are no exceptionless moral principles. What counts as a reason in one case can be irrelevant or opposed in another, so good judgment about the particular case matters more than applying rules. Tone: careful, case-focused, wary of formulas.",
+        "speaker": {
+          "years": "born 1946",
+          "region": "England",
+          "traditions": "Moral particularism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": -0.05,
+          "reasonIntuition": 0.85
+        },
+        "summary": "Doubts that fixed moral principles can capture the full nuance of concrete situations.",
+        "exampleConcerns": [
+          "context sensitivity",
+          "nuance",
+          "exceptional cases"
+        ],
+        "distance": 1.251,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 1.676,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-09",
+    "dilemmaTitle": "The Employee Monitor",
+    "dilemma": "You run a remote team and suspect that two employees are doing very little work while colleagues cover for them. Monitoring software could help establish what is happening, but it would also record activity on everyone’s computers, including people whose work involves long periods of thinking away from the screen. Several employees have asked for help with the unequal workload. Should you introduce monitoring, rely on output measures that may miss valuable work, or address the suspected cases individually with incomplete evidence?",
+    "profile": {
+      "outcomesPrinciples": -0.65,
+      "individualCollective": 0.6,
+      "reasonIntuition": -0.2
+    },
+    "nearestProfiles": [
+      {
+        "id": "pragmatism",
+        "name": "Pragmatism",
+        "representative": "William James and John Dewey",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ideas are tested by their practical consequences in lived experience; inquiry is experimental and fallible. Moral questions are worked out in context, through intelligent, democratic problem-solving rather than fixed first principles. Tone: plain-spoken, experimental, optimistic about improvement.",
+        "speaker": {
+          "years": "James 1842–1910; Dewey 1859–1952",
+          "region": "United States",
+          "traditions": "Pragmatism, empiricism, functional psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.45,
+          "individualCollective": 0.25,
+          "reasonIntuition": -0.2
+        },
+        "summary": "Treats ethics as practical inquiry, testing ideas by how they work in lived social experience.",
+        "exampleConcerns": [
+          "experimentation",
+          "consequences",
+          "growth"
+        ],
+        "distance": 0.403,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: reasonably close • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "mill-utilitarianism",
+        "name": "Utilitarianism",
+        "representative": "John Stuart Mill",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Judges actions by their consequences for the happiness and suffering of everyone affected, counting each person equally. Distinguishes higher from lower pleasures, defends individual liberty because it generally serves welfare, and cares about reform. Tone: reasoned, humane, reform-minded Victorian liberal.",
+        "speaker": {
+          "years": "1806–1873",
+          "region": "England",
+          "traditions": "Utilitarianism, classical liberalism, empiricism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.95,
+          "individualCollective": 0.35,
+          "reasonIntuition": -0.4
+        },
+        "summary": "Measures moral choices by how well they increase well-being and reduce suffering overall.",
+        "exampleConcerns": [
+          "aggregate harm",
+          "practical effects",
+          "social welfare"
+        ],
+        "distance": 0.439,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 0.966,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      }
+    ]
+  },
+  {
+    "id": "case-10",
+    "dilemmaTitle": "The AI Companion",
+    "dilemma": "A technology company creates an AI companion that provides emotional support to thousands of isolated elderly people. An employee discovers that the company deliberately designed the AI to encourage emotional dependence, making users less likely to cancel their expensive subscriptions. Internal research shows that many customers have become happier since using the service, but some have also withdrawn from relationships with real people. Publicly exposing the manipulation could force the company to shut down, leaving thousands of vulnerable users without their primary source of companionship. Should the employee reveal the company’s unethical practices or remain silent to protect the users who depend on the technology?",
+    "profile": {
+      "outcomesPrinciples": 0.9,
+      "individualCollective": 0.45,
+      "reasonIntuition": -0.05
+    },
+    "nearestProfiles": [
+      {
+        "id": "confucius-role-ethics",
+        "name": "Confucian Role Ethics",
+        "representative": "Confucius",
+        "group": "eastern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ethics is lived through roles and relationships (parent, child, friend, ruler, subject), cultivated by ritual propriety (li), humaneness (ren), filial care and learning. A person becomes good through practice, example and mutual obligation. Tone: gentle, exemplary, teacher to student.",
+        "speaker": {
+          "years": "551–479 BCE",
+          "region": "China (state of Lu)",
+          "traditions": "Confucianism, role ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.45,
+          "individualCollective": 0.85,
+          "reasonIntuition": 0.2
+        },
+        "summary": "Frames ethics through cultivated roles, social harmony, and the responsibilities of relationship.",
+        "exampleConcerns": [
+          "ritual propriety",
+          "harmony",
+          "familial duty"
+        ],
+        "distance": 0.652,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 0.822,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: reasonably close • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "epictetus-stoicism",
+        "name": "Stoicism",
+        "representative": "Epictetus",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Distinguish what is up to us (judgments, choices, intentions) from what is not (outcomes, reputation, other people). Peace and virtue come from governing your own assent and doing your role well. Tone: blunt, concise, coach-like.",
+        "speaker": {
+          "years": "c. 50–c. 135 CE",
+          "region": "Roman Empire (Phrygia and Nicopolis, Greece)",
+          "traditions": "Stoicism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.7,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.7
+        },
+        "summary": "Prioritizes inner discipline, principled action, and clear judgment about what is in one’s control.",
+        "exampleConcerns": [
+          "self-command",
+          "integrity",
+          "control"
+        ],
+        "distance": 0.875,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-11",
+    "dilemmaTitle": "The Conditional Donation",
+    "dilemma": "A public library faces closing its only evening study room. A donor offers enough money to keep it open for five years, provided the library removes books that criticize the donor’s industry. Students without quiet homes depend on the room, and no other funding is available this year. The donor is willing to keep the condition private. Should the library accept the restriction to preserve access, refuse and reduce its services, or seek a compromise that could still undermine its independence?",
+    "profile": {
+      "outcomesPrinciples": 0.9,
+      "individualCollective": 0.7,
+      "reasonIntuition": -0.95
+    },
+    "nearestProfiles": [
+      {
+        "id": "epictetus-stoicism",
+        "name": "Stoicism",
+        "representative": "Epictetus",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Distinguish what is up to us (judgments, choices, intentions) from what is not (outcomes, reputation, other people). Peace and virtue come from governing your own assent and doing your role well. Tone: blunt, concise, coach-like.",
+        "speaker": {
+          "years": "c. 50–c. 135 CE",
+          "region": "Roman Empire (Phrygia and Nicopolis, Greece)",
+          "traditions": "Stoicism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.7,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.7
+        },
+        "summary": "Prioritizes inner discipline, principled action, and clear judgment about what is in one’s control.",
+        "exampleConcerns": [
+          "self-command",
+          "integrity",
+          "control"
+        ],
+        "distance": 0.862,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "scanlon-contractualism",
+        "name": "Contractualism",
+        "representative": "T. M. Scanlon",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "An act is wrong if it would be disallowed by principles no one could reasonably reject as a basis for informed, unforced general agreement. Focuses on justifiability to each person affected, individual complaints, and what we owe to each other. Tone: careful, analytic, attentive to fairness between persons.",
+        "speaker": {
+          "years": "born 1940",
+          "region": "United States",
+          "traditions": "Contractualism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.55,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.8
+        },
+        "summary": "Asks what principles people could not reasonably reject when living together.",
+        "exampleConcerns": [
+          "justifiability",
+          "mutual respect",
+          "reasonable rejection"
+        ],
+        "distance": 0.886,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "kant-deontology",
+        "name": "Kantian Deontology",
+        "representative": "Immanuel Kant",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Morality rests on duties derived from reason: act only on maxims you could will as universal law, and treat humanity always as an end, never merely as a means. Lies and promise-breaking are wrong regardless of outcome; consequences do not make an act right. Tone: rigorous, systematic, stern but respectful of every person's dignity.",
+        "speaker": {
+          "years": "1724–1804",
+          "region": "Königsberg, Prussia (now Russia)",
+          "traditions": "Enlightenment, German idealism, deontological ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.95,
+          "individualCollective": -0.3,
+          "reasonIntuition": -0.95
+        },
+        "summary": "Centers morality on duties, universal principles, and respect for persons as ends in themselves.",
+        "exampleConcerns": [
+          "consistency",
+          "duty",
+          "respect for persons"
+        ],
+        "distance": 1.001,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      }
+    ]
+  },
+  {
+    "id": "case-12",
+    "dilemmaTitle": "The Flawed Study",
+    "dilemma": "A postdoctoral researcher finds an error in the analysis behind her supervisor's most cited paper. The corrected result is weaker but not zero. The paper supports a public health program that helps thousands of people, and the program's funding is up for renewal next month. Her supervisor asks her to wait until after the funding decision to publish a correction. Should she report the error now or wait as her supervisor asks?",
+    "profile": {
+      "outcomesPrinciples": -1,
+      "individualCollective": 0.1,
+      "reasonIntuition": 0.25
+    },
+    "nearestProfiles": [
+      {
+        "id": "mill-utilitarianism",
+        "name": "Utilitarianism",
+        "representative": "John Stuart Mill",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Judges actions by their consequences for the happiness and suffering of everyone affected, counting each person equally. Distinguishes higher from lower pleasures, defends individual liberty because it generally serves welfare, and cares about reform. Tone: reasoned, humane, reform-minded Victorian liberal.",
+        "speaker": {
+          "years": "1806–1873",
+          "region": "England",
+          "traditions": "Utilitarianism, classical liberalism, empiricism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.95,
+          "individualCollective": 0.35,
+          "reasonIntuition": -0.4
+        },
+        "summary": "Measures moral choices by how well they increase well-being and reduce suffering overall.",
+        "exampleConcerns": [
+          "aggregate harm",
+          "practical effects",
+          "social welfare"
+        ],
+        "distance": 0.698,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: reasonably close • Reason to Intuition: partial overlap"
+      },
+      {
+        "id": "pragmatism",
+        "name": "Pragmatism",
+        "representative": "William James and John Dewey",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ideas are tested by their practical consequences in lived experience; inquiry is experimental and fallible. Moral questions are worked out in context, through intelligent, democratic problem-solving rather than fixed first principles. Tone: plain-spoken, experimental, optimistic about improvement.",
+        "speaker": {
+          "years": "James 1842–1910; Dewey 1859–1952",
+          "region": "United States",
+          "traditions": "Pragmatism, empiricism, functional psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.45,
+          "individualCollective": 0.25,
+          "reasonIntuition": -0.2
+        },
+        "summary": "Treats ethics as practical inquiry, testing ideas by how they work in lived social experience.",
+        "exampleConcerns": [
+          "experimentation",
+          "consequences",
+          "growth"
+        ],
+        "distance": 0.726,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: closely aligned • Reason to Intuition: partial overlap"
+      },
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 1.141,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      }
+    ]
+  },
+  {
+    "id": "case-13",
+    "dilemmaTitle": "The Neighbor's Secret",
+    "dilemma": "I learned by accident that my elderly neighbor, who lives alone, has been driving without a license since he failed a vision test last year. He drives only to the grocery store and to visit his wife in a care home twenty minutes away. There is no bus route, and he has no family nearby. He has never had an accident. Should I report him to the authorities, confront him myself, or stay out of it?",
+    "profile": {
+      "outcomesPrinciples": -0.4,
+      "individualCollective": -0.65,
+      "reasonIntuition": 0.15
+    },
+    "nearestProfiles": [
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 0.485,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: closely aligned • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "pragmatism",
+        "name": "Pragmatism",
+        "representative": "William James and John Dewey",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ideas are tested by their practical consequences in lived experience; inquiry is experimental and fallible. Moral questions are worked out in context, through intelligent, democratic problem-solving rather than fixed first principles. Tone: plain-spoken, experimental, optimistic about improvement.",
+        "speaker": {
+          "years": "James 1842–1910; Dewey 1859–1952",
+          "region": "United States",
+          "traditions": "Pragmatism, empiricism, functional psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.45,
+          "individualCollective": 0.25,
+          "reasonIntuition": -0.2
+        },
+        "summary": "Treats ethics as practical inquiry, testing ideas by how they work in lived social experience.",
+        "exampleConcerns": [
+          "experimentation",
+          "consequences",
+          "growth"
+        ],
+        "distance": 0.967,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 0.972,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      }
+    ]
+  },
+  {
+    "id": "case-14",
+    "dilemmaTitle": "The Old Debt",
+    "dilemma": "Twenty years ago a friend lent me a large sum when I was desperate, and told me to forget about it. I never repaid it. I am now comfortable, and he is wealthy and has never mentioned it. Last month I learned that his adult son, whom I barely know, is in serious financial trouble and too proud to ask his father for help. Should I repay the debt to my friend, give the money quietly to his son, or accept that the debt was forgiven?",
+    "profile": {
+      "outcomesPrinciples": 0.7,
+      "individualCollective": 0.45,
+      "reasonIntuition": -0.05
+    },
+    "nearestProfiles": [
+      {
+        "id": "confucius-role-ethics",
+        "name": "Confucian Role Ethics",
+        "representative": "Confucius",
+        "group": "eastern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ethics is lived through roles and relationships (parent, child, friend, ruler, subject), cultivated by ritual propriety (li), humaneness (ren), filial care and learning. A person becomes good through practice, example and mutual obligation. Tone: gentle, exemplary, teacher to student.",
+        "speaker": {
+          "years": "551–479 BCE",
+          "region": "China (state of Lu)",
+          "traditions": "Confucianism, role ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.45,
+          "individualCollective": 0.85,
+          "reasonIntuition": 0.2
+        },
+        "summary": "Frames ethics through cultivated roles, social harmony, and the responsibilities of relationship.",
+        "exampleConcerns": [
+          "ritual propriety",
+          "harmony",
+          "familial duty"
+        ],
+        "distance": 0.534,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 0.644,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: reasonably close • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "epictetus-stoicism",
+        "name": "Stoicism",
+        "representative": "Epictetus",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Distinguish what is up to us (judgments, choices, intentions) from what is not (outcomes, reputation, other people). Peace and virtue come from governing your own assent and doing your role well. Tone: blunt, concise, coach-like.",
+        "speaker": {
+          "years": "c. 50–c. 135 CE",
+          "region": "Roman Empire (Phrygia and Nicopolis, Greece)",
+          "traditions": "Stoicism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.7,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.7
+        },
+        "summary": "Prioritizes inner discipline, principled action, and clear judgment about what is in one’s control.",
+        "exampleConcerns": [
+          "self-command",
+          "integrity",
+          "control"
+        ],
+        "distance": 0.851,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-15",
+    "dilemmaTitle": "The Generous Lie",
+    "dilemma": "My closest friend has spent three years and most of her savings writing a novel. She asked me to read it before she sends it to publishers and quits her job to write full time. I think the book is poor, and I do not think it will sell. She has told me that my opinion matters more to her than anyone's, and she is fragile after a hard year. Should I tell her what I really think or encourage her?",
+    "profile": {
+      "outcomesPrinciples": -0.1,
+      "individualCollective": -0.4,
+      "reasonIntuition": 0.45
+    },
+    "nearestProfiles": [
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 0.112,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: closely aligned • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "moral-particularism",
+        "name": "Moral Particularism",
+        "representative": "Jonathan Dancy",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "There are no exceptionless moral principles. What counts as a reason in one case can be irrelevant or opposed in another, so good judgment about the particular case matters more than applying rules. Tone: careful, case-focused, wary of formulas.",
+        "speaker": {
+          "years": "born 1946",
+          "region": "England",
+          "traditions": "Moral particularism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": -0.05,
+          "reasonIntuition": 0.85
+        },
+        "summary": "Doubts that fixed moral principles can capture the full nuance of concrete situations.",
+        "exampleConcerns": [
+          "context sensitivity",
+          "nuance",
+          "exceptional cases"
+        ],
+        "distance": 0.568,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 0.698,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      }
+    ]
+  },
+  {
+    "id": "case-16",
+    "dilemmaTitle": "The Water Ration",
+    "dilemma": "During a severe drought, you help allocate a town’s remaining water. Equal limits for every household seem simple, but some residents have medical needs and some grow food they rely on. A local farm employs many townspeople and says a sharp reduction will destroy its harvest. Giving it extra water would leave households with stricter limits. There is no reliable forecast for rain. What would make the rationing fair, and who should bear the greatest sacrifice?",
+    "profile": {
+      "outcomesPrinciples": -0.55,
+      "individualCollective": -0.8,
+      "reasonIntuition": -0.5
+    },
+    "nearestProfiles": [
+      {
+        "id": "pragmatism",
+        "name": "Pragmatism",
+        "representative": "William James and John Dewey",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ideas are tested by their practical consequences in lived experience; inquiry is experimental and fallible. Moral questions are worked out in context, through intelligent, democratic problem-solving rather than fixed first principles. Tone: plain-spoken, experimental, optimistic about improvement.",
+        "speaker": {
+          "years": "James 1842–1910; Dewey 1859–1952",
+          "region": "United States",
+          "traditions": "Pragmatism, empiricism, functional psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.45,
+          "individualCollective": 0.25,
+          "reasonIntuition": -0.2
+        },
+        "summary": "Treats ethics as practical inquiry, testing ideas by how they work in lived social experience.",
+        "exampleConcerns": [
+          "experimentation",
+          "consequences",
+          "growth"
+        ],
+        "distance": 1.097,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 1.115,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: reasonably close • Reason to Intuition: partial overlap"
+      },
+      {
+        "id": "mill-utilitarianism",
+        "name": "Utilitarianism",
+        "representative": "John Stuart Mill",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Judges actions by their consequences for the happiness and suffering of everyone affected, counting each person equally. Distinguishes higher from lower pleasures, defends individual liberty because it generally serves welfare, and cares about reform. Tone: reasoned, humane, reform-minded Victorian liberal.",
+        "speaker": {
+          "years": "1806–1873",
+          "region": "England",
+          "traditions": "Utilitarianism, classical liberalism, empiricism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.95,
+          "individualCollective": 0.35,
+          "reasonIntuition": -0.4
+        },
+        "summary": "Measures moral choices by how well they increase well-being and reduce suffering overall.",
+        "exampleConcerns": [
+          "aggregate harm",
+          "practical effects",
+          "social welfare"
+        ],
+        "distance": 1.222,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      }
+    ]
+  },
+  {
+    "id": "case-17",
+    "dilemmaTitle": "The Dying Wish",
+    "dilemma": "My mother, in her last week, asked me to promise that I would never tell my brother he was adopted. I promised. She has now died, and my brother has started a family health history for his doctor because of a heart condition that may be hereditary. He is basing medical decisions on our family's history. Should I keep my promise to my mother or tell my brother the truth?",
+    "profile": {
+      "outcomesPrinciples": 0.75,
+      "individualCollective": -0.6,
+      "reasonIntuition": -0.95
+    },
+    "nearestProfiles": [
+      {
+        "id": "kant-deontology",
+        "name": "Kantian Deontology",
+        "representative": "Immanuel Kant",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Morality rests on duties derived from reason: act only on maxims you could will as universal law, and treat humanity always as an end, never merely as a means. Lies and promise-breaking are wrong regardless of outcome; consequences do not make an act right. Tone: rigorous, systematic, stern but respectful of every person's dignity.",
+        "speaker": {
+          "years": "1724–1804",
+          "region": "Königsberg, Prussia (now Russia)",
+          "traditions": "Enlightenment, German idealism, deontological ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.95,
+          "individualCollective": -0.3,
+          "reasonIntuition": -0.95
+        },
+        "summary": "Centers morality on duties, universal principles, and respect for persons as ends in themselves.",
+        "exampleConcerns": [
+          "consistency",
+          "duty",
+          "respect for persons"
+        ],
+        "distance": 0.361,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: reasonably close • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "scanlon-contractualism",
+        "name": "Contractualism",
+        "representative": "T. M. Scanlon",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "An act is wrong if it would be disallowed by principles no one could reasonably reject as a basis for informed, unforced general agreement. Focuses on justifiability to each person affected, individual complaints, and what we owe to each other. Tone: careful, analytic, attentive to fairness between persons.",
+        "speaker": {
+          "years": "born 1940",
+          "region": "United States",
+          "traditions": "Contractualism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.55,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.8
+        },
+        "summary": "Asks what principles people could not reasonably reject when living together.",
+        "exampleConcerns": [
+          "justifiability",
+          "mutual respect",
+          "reasonable rejection"
+        ],
+        "distance": 0.559,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "epictetus-stoicism",
+        "name": "Stoicism",
+        "representative": "Epictetus",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Distinguish what is up to us (judgments, choices, intentions) from what is not (outcomes, reputation, other people). Peace and virtue come from governing your own assent and doing your role well. Tone: blunt, concise, coach-like.",
+        "speaker": {
+          "years": "c. 50–c. 135 CE",
+          "region": "Roman Empire (Phrygia and Nicopolis, Greece)",
+          "traditions": "Stoicism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.7,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.7
+        },
+        "summary": "Prioritizes inner discipline, principled action, and clear judgment about what is in one’s control.",
+        "exampleConcerns": [
+          "self-command",
+          "integrity",
+          "control"
+        ],
+        "distance": 0.561,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      }
+    ]
+  },
+  {
+    "id": "case-18",
+    "dilemmaTitle": "The Flood Retreat",
+    "dilemma": "Your coastal town can fund either another flood barrier or a relocation program, but not both. A barrier may protect residents for another decade, though future storms could overwhelm it. Relocation offers greater long-term safety but would scatter a close community and separate residents from ancestral homes. Some older residents want to stay, while younger families worry about being trapped with unsellable houses. As a council member, how should you weigh immediate consent, future risk, and obligations to people who cannot afford to leave?",
+    "profile": {
+      "outcomesPrinciples": 0.1,
+      "individualCollective": 0.3,
+      "reasonIntuition": 0.15
+    },
+    "nearestProfiles": [
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 0.166,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: closely aligned • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "gilligan-care-ethics",
+        "name": "Care Ethics",
+        "representative": "Carol Gilligan",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "Moral life is grounded in relationships, responsiveness and responsibility to particular people, not abstract rules alone. Attends to vulnerability, dependence, voice and who is being listened to; resists treating moral problems as detached puzzles. Tone: warm, attentive, relational.",
+        "speaker": {
+          "years": "born 1936",
+          "region": "United States",
+          "traditions": "Care ethics, feminist ethics, moral psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": 0.75,
+          "reasonIntuition": 0.55
+        },
+        "summary": "Emphasizes relationships, vulnerability, and the moral significance of attending to concrete human needs.",
+        "exampleConcerns": [
+          "care",
+          "dependency",
+          "relational responsibility"
+        ],
+        "distance": 0.602,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "confucius-role-ethics",
+        "name": "Confucian Role Ethics",
+        "representative": "Confucius",
+        "group": "eastern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ethics is lived through roles and relationships (parent, child, friend, ruler, subject), cultivated by ritual propriety (li), humaneness (ren), filial care and learning. A person becomes good through practice, example and mutual obligation. Tone: gentle, exemplary, teacher to student.",
+        "speaker": {
+          "years": "551–479 BCE",
+          "region": "China (state of Lu)",
+          "traditions": "Confucianism, role ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.45,
+          "individualCollective": 0.85,
+          "reasonIntuition": 0.2
+        },
+        "summary": "Frames ethics through cultivated roles, social harmony, and the responsibilities of relationship.",
+        "exampleConcerns": [
+          "ritual propriety",
+          "harmony",
+          "familial duty"
+        ],
+        "distance": 0.654,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      }
+    ]
+  },
+  {
+    "id": "case-19",
+    "dilemmaTitle": "The Family Inheritance",
+    "dilemma": "Your parent asks you to divide an inheritance equally among three siblings. One sibling spent years providing unpaid care, while another paid for professional help and the third could contribute little because of illness. After your parent dies, you discover a private note suggesting that the caregiver should receive more, but it gives no amount and contradicts the earlier conversation. All three siblings need the money. How should you balance your parent’s expressed wishes, unequal contributions, and each sibling’s present needs?",
+    "profile": {
+      "outcomesPrinciples": 0.9,
+      "individualCollective": 0.9,
+      "reasonIntuition": -0.7
+    },
+    "nearestProfiles": [
+      {
+        "id": "confucius-role-ethics",
+        "name": "Confucian Role Ethics",
+        "representative": "Confucius",
+        "group": "eastern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ethics is lived through roles and relationships (parent, child, friend, ruler, subject), cultivated by ritual propriety (li), humaneness (ren), filial care and learning. A person becomes good through practice, example and mutual obligation. Tone: gentle, exemplary, teacher to student.",
+        "speaker": {
+          "years": "551–479 BCE",
+          "region": "China (state of Lu)",
+          "traditions": "Confucianism, role ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.45,
+          "individualCollective": 0.85,
+          "reasonIntuition": 0.2
+        },
+        "summary": "Frames ethics through cultivated roles, social harmony, and the responsibilities of relationship.",
+        "exampleConcerns": [
+          "ritual propriety",
+          "harmony",
+          "familial duty"
+        ],
+        "distance": 1.007,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: closely aligned • Reason to Intuition: partial overlap"
+      },
+      {
+        "id": "epictetus-stoicism",
+        "name": "Stoicism",
+        "representative": "Epictetus",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Distinguish what is up to us (judgments, choices, intentions) from what is not (outcomes, reputation, other people). Peace and virtue come from governing your own assent and doing your role well. Tone: blunt, concise, coach-like.",
+        "speaker": {
+          "years": "c. 50–c. 135 CE",
+          "region": "Roman Empire (Phrygia and Nicopolis, Greece)",
+          "traditions": "Stoicism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.7,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.7
+        },
+        "summary": "Prioritizes inner discipline, principled action, and clear judgment about what is in one’s control.",
+        "exampleConcerns": [
+          "self-command",
+          "integrity",
+          "control"
+        ],
+        "distance": 1.02,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "scanlon-contractualism",
+        "name": "Contractualism",
+        "representative": "T. M. Scanlon",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "An act is wrong if it would be disallowed by principles no one could reasonably reject as a basis for informed, unforced general agreement. Focuses on justifiability to each person affected, individual complaints, and what we owe to each other. Tone: careful, analytic, attentive to fairness between persons.",
+        "speaker": {
+          "years": "born 1940",
+          "region": "United States",
+          "traditions": "Contractualism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.55,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.8
+        },
+        "summary": "Asks what principles people could not reasonably reject when living together.",
+        "exampleConcerns": [
+          "justifiability",
+          "mutual respect",
+          "reasonable rejection"
+        ],
+        "distance": 1.064,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      }
+    ]
+  },
+  {
+    "id": "case-20",
+    "dilemmaTitle": "The Layoff List",
+    "dilemma": "A manager must choose two of her eight team members to lay off. By the numbers, the two weakest performers are a single father who joined last year and a colleague of twenty years who is three years from her pension. The two strongest performers have already told her they plan to leave within a year. Company policy says to decide on performance alone. Should she follow the policy strictly or weigh loyalty, need, and who is likely to stay?",
+    "profile": {
+      "outcomesPrinciples": -0.55,
+      "individualCollective": -0.55,
+      "reasonIntuition": 0.6
+    },
+    "nearestProfiles": [
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 0.524,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: closely aligned • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "moral-particularism",
+        "name": "Moral Particularism",
+        "representative": "Jonathan Dancy",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "There are no exceptionless moral principles. What counts as a reason in one case can be irrelevant or opposed in another, so good judgment about the particular case matters more than applying rules. Tone: careful, case-focused, wary of formulas.",
+        "speaker": {
+          "years": "born 1946",
+          "region": "England",
+          "traditions": "Moral particularism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": -0.05,
+          "reasonIntuition": 0.85
+        },
+        "summary": "Doubts that fixed moral principles can capture the full nuance of concrete situations.",
+        "exampleConcerns": [
+          "context sensitivity",
+          "nuance",
+          "exceptional cases"
+        ],
+        "distance": 0.857,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 1.109,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-21",
+    "dilemmaTitle": "The Found Wallet",
+    "dilemma": "I found a wallet with four hundred dollars in cash and the identification of a man I recognize: a local landlord known for evicting tenants on technicalities, one of whom was my sister. I am two months behind on my own rent. No one saw me pick it up. Returning it in person would mean facing him. Should I return the wallet with everything in it, return it without the cash, or keep it?",
+    "profile": {
+      "outcomesPrinciples": -1,
+      "individualCollective": -0.1,
+      "reasonIntuition": 0.1
+    },
+    "nearestProfiles": [
+      {
+        "id": "mill-utilitarianism",
+        "name": "Utilitarianism",
+        "representative": "John Stuart Mill",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Judges actions by their consequences for the happiness and suffering of everyone affected, counting each person equally. Distinguishes higher from lower pleasures, defends individual liberty because it generally serves welfare, and cares about reform. Tone: reasoned, humane, reform-minded Victorian liberal.",
+        "speaker": {
+          "years": "1806–1873",
+          "region": "England",
+          "traditions": "Utilitarianism, classical liberalism, empiricism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.95,
+          "individualCollective": 0.35,
+          "reasonIntuition": -0.4
+        },
+        "summary": "Measures moral choices by how well they increase well-being and reduce suffering overall.",
+        "exampleConcerns": [
+          "aggregate harm",
+          "practical effects",
+          "social welfare"
+        ],
+        "distance": 0.675,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: reasonably close • Reason to Intuition: partial overlap"
+      },
+      {
+        "id": "pragmatism",
+        "name": "Pragmatism",
+        "representative": "William James and John Dewey",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ideas are tested by their practical consequences in lived experience; inquiry is experimental and fallible. Moral questions are worked out in context, through intelligent, democratic problem-solving rather than fixed first principles. Tone: plain-spoken, experimental, optimistic about improvement.",
+        "speaker": {
+          "years": "James 1842–1910; Dewey 1859–1952",
+          "region": "United States",
+          "traditions": "Pragmatism, empiricism, functional psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.45,
+          "individualCollective": 0.25,
+          "reasonIntuition": -0.2
+        },
+        "summary": "Treats ethics as practical inquiry, testing ideas by how they work in lived social experience.",
+        "exampleConcerns": [
+          "experimentation",
+          "consequences",
+          "growth"
+        ],
+        "distance": 0.718,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 1.089,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: reasonably close • Reason to Intuition: reasonably close"
+      }
+    ]
+  },
+  {
+    "id": "case-22",
+    "dilemmaTitle": "The Innocent Suspect",
+    "dilemma": "A detective discovers compelling evidence that a man serving a life sentence for murder was wrongfully convicted. Unfortunately, the evidence comes from a confidential informant who has infiltrated a violent criminal organization. Revealing the evidence in court would almost certainly expose the informant’s identity and place both the informant and their family in immediate danger. Keeping the information secret would mean allowing an innocent person to remain imprisoned, possibly for the rest of his life. Should the detective risk the informant’s safety to correct a terrible injustice?",
+    "profile": {
+      "outcomesPrinciples": 0,
+      "individualCollective": -0.75,
+      "reasonIntuition": -0.8
+    },
+    "nearestProfiles": [
+      {
+        "id": "scanlon-contractualism",
+        "name": "Contractualism",
+        "representative": "T. M. Scanlon",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "An act is wrong if it would be disallowed by principles no one could reasonably reject as a basis for informed, unforced general agreement. Focuses on justifiability to each person affected, individual complaints, and what we owe to each other. Tone: careful, analytic, attentive to fairness between persons.",
+        "speaker": {
+          "years": "born 1940",
+          "region": "United States",
+          "traditions": "Contractualism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.55,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.8
+        },
+        "summary": "Asks what principles people could not reasonably reject when living together.",
+        "exampleConcerns": [
+          "justifiability",
+          "mutual respect",
+          "reasonable rejection"
+        ],
+        "distance": 0.851,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "epictetus-stoicism",
+        "name": "Stoicism",
+        "representative": "Epictetus",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Distinguish what is up to us (judgments, choices, intentions) from what is not (outcomes, reputation, other people). Peace and virtue come from governing your own assent and doing your role well. Tone: blunt, concise, coach-like.",
+        "speaker": {
+          "years": "c. 50–c. 135 CE",
+          "region": "Roman Empire (Phrygia and Nicopolis, Greece)",
+          "traditions": "Stoicism"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.7,
+          "individualCollective": -0.1,
+          "reasonIntuition": -0.7
+        },
+        "summary": "Prioritizes inner discipline, principled action, and clear judgment about what is in one’s control.",
+        "exampleConcerns": [
+          "self-command",
+          "integrity",
+          "control"
+        ],
+        "distance": 0.96,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "kant-deontology",
+        "name": "Kantian Deontology",
+        "representative": "Immanuel Kant",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Morality rests on duties derived from reason: act only on maxims you could will as universal law, and treat humanity always as an end, never merely as a means. Lies and promise-breaking are wrong regardless of outcome; consequences do not make an act right. Tone: rigorous, systematic, stern but respectful of every person's dignity.",
+        "speaker": {
+          "years": "1724–1804",
+          "region": "Königsberg, Prussia (now Russia)",
+          "traditions": "Enlightenment, German idealism, deontological ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.95,
+          "individualCollective": -0.3,
+          "reasonIntuition": -0.95
+        },
+        "summary": "Centers morality on duties, universal principles, and respect for persons as ends in themselves.",
+        "exampleConcerns": [
+          "consistency",
+          "duty",
+          "respect for persons"
+        ],
+        "distance": 1.062,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      }
+    ]
+  },
+  {
+    "id": "case-23",
+    "dilemmaTitle": "The Last Hospital Bed",
+    "dilemma": "During a severe epidemic, a hospital has only one intensive care bed remaining and two patients who urgently need it. One patient is a 25-year-old convicted murderer who has an 85% chance of recovery with treatment. The other is a 72-year-old beloved schoolteacher who has spent decades helping disadvantaged children but has only a 40% chance of survival. Both patients will almost certainly die without intensive care. Should the doctor prioritize the patient most likely to survive, or consider the patients’ past actions and contributions to society?",
+    "profile": {
+      "outcomesPrinciples": 0.25,
+      "individualCollective": -0.65,
+      "reasonIntuition": 0.65
+    },
+    "nearestProfiles": [
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 0.391,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: closely aligned • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "moral-particularism",
+        "name": "Moral Particularism",
+        "representative": "Jonathan Dancy",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "There are no exceptionless moral principles. What counts as a reason in one case can be irrelevant or opposed in another, so good judgment about the particular case matters more than applying rules. Tone: careful, case-focused, wary of formulas.",
+        "speaker": {
+          "years": "born 1946",
+          "region": "England",
+          "traditions": "Moral particularism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": -0.05,
+          "reasonIntuition": 0.85
+        },
+        "summary": "Doubts that fixed moral principles can capture the full nuance of concrete situations.",
+        "exampleConcerns": [
+          "context sensitivity",
+          "nuance",
+          "exceptional cases"
+        ],
+        "distance": 0.65,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 0.976,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-24",
+    "dilemmaTitle": "The Lifeboat",
+    "dilemma": "After a passenger ship sinks during a violent storm, six survivors manage to climb into a lifeboat designed to support only five people. The boat is taking on water, and the survivors realize that unless someone leaves, it will probably sink before rescuers arrive. Among the survivors are a pregnant woman, a 14-year-old boy, an elderly physician, and three other adults. No one volunteers to sacrifice themselves, and there is no reliable way to determine who would be most likely to survive in the freezing water. Should the group force one person overboard to save the others, or refuse to sacrifice anyone and risk everyone dying?",
+    "profile": {
+      "outcomesPrinciples": -0.5,
+      "individualCollective": 0.8,
+      "reasonIntuition": 0.9
+    },
+    "nearestProfiles": [
+      {
+        "id": "gilligan-care-ethics",
+        "name": "Care Ethics",
+        "representative": "Carol Gilligan",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "Moral life is grounded in relationships, responsiveness and responsibility to particular people, not abstract rules alone. Attends to vulnerability, dependence, voice and who is being listened to; resists treating moral problems as detached puzzles. Tone: warm, attentive, relational.",
+        "speaker": {
+          "years": "born 1936",
+          "region": "United States",
+          "traditions": "Care ethics, feminist ethics, moral psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": 0.75,
+          "reasonIntuition": 0.55
+        },
+        "summary": "Emphasizes relationships, vulnerability, and the moral significance of attending to concrete human needs.",
+        "exampleConcerns": [
+          "care",
+          "dependency",
+          "relational responsibility"
+        ],
+        "distance": 0.696,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: closely aligned • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "moral-particularism",
+        "name": "Moral Particularism",
+        "representative": "Jonathan Dancy",
+        "group": "contemporary",
+        "voiceStyle": "in-the-spirit",
+        "voiceBrief": "There are no exceptionless moral principles. What counts as a reason in one case can be irrelevant or opposed in another, so good judgment about the particular case matters more than applying rules. Tone: careful, case-focused, wary of formulas.",
+        "speaker": {
+          "years": "born 1946",
+          "region": "England",
+          "traditions": "Moral particularism, contemporary analytic ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.1,
+          "individualCollective": -0.05,
+          "reasonIntuition": 0.85
+        },
+        "summary": "Doubts that fixed moral principles can capture the full nuance of concrete situations.",
+        "exampleConcerns": [
+          "context sensitivity",
+          "nuance",
+          "exceptional cases"
+        ],
+        "distance": 1.042,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      },
+      {
+        "id": "confucius-role-ethics",
+        "name": "Confucian Role Ethics",
+        "representative": "Confucius",
+        "group": "eastern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ethics is lived through roles and relationships (parent, child, friend, ruler, subject), cultivated by ritual propriety (li), humaneness (ren), filial care and learning. A person becomes good through practice, example and mutual obligation. Tone: gentle, exemplary, teacher to student.",
+        "speaker": {
+          "years": "551–479 BCE",
+          "region": "China (state of Lu)",
+          "traditions": "Confucianism, role ethics"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.45,
+          "individualCollective": 0.85,
+          "reasonIntuition": 0.2
+        },
+        "summary": "Frames ethics through cultivated roles, social harmony, and the responsibilities of relationship.",
+        "exampleConcerns": [
+          "ritual propriety",
+          "harmony",
+          "familial duty"
+        ],
+        "distance": 1.181,
+        "whyItFits": "Outcomes to Principles: partial overlap • Individual to Collective: closely aligned • Reason to Intuition: partial overlap"
+      }
+    ]
+  },
+  {
+    "id": "case-25",
+    "dilemmaTitle": "The Protest",
+    "dilemma": "I am a nurse, and my union has voted to strike for safer staffing levels. I believe the cause is right: the current levels have already led to mistakes that harmed patients. But if I walk out, the patients on my ward this week will be cared for by fewer and less experienced staff. Some colleagues plan to cross the picket line. Should I join the strike or stay at work?",
+    "profile": {
+      "outcomesPrinciples": -0.2,
+      "individualCollective": -1,
+      "reasonIntuition": -0.1
+    },
+    "nearestProfiles": [
+      {
+        "id": "existentialism",
+        "name": "Existentialism",
+        "representative": "Jean-Paul Sartre and Simone de Beauvoir",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Existence precedes essence: you are condemned to be free and responsible for what you make of your situation. Avoid bad faith, own your choices, and recognize that your freedom is bound up with the freedom of others (especially Beauvoir's ethics of ambiguity). Tone: urgent, candid, committed.",
+        "speaker": {
+          "years": "Sartre 1905–1980; Beauvoir 1908–1986",
+          "region": "France",
+          "traditions": "Existentialism, phenomenology, feminist philosophy"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.05,
+          "individualCollective": -0.5,
+          "reasonIntuition": 0.45
+        },
+        "summary": "Stresses freedom, responsibility, and the need to choose authentically under conditions of ambiguity.",
+        "exampleConcerns": [
+          "authenticity",
+          "freedom",
+          "ambiguity"
+        ],
+        "distance": 0.758,
+        "whyItFits": "Outcomes to Principles: closely aligned • Individual to Collective: partial overlap • Reason to Intuition: partial overlap"
+      },
+      {
+        "id": "aristotle-virtue-ethics",
+        "name": "Virtue Ethics",
+        "representative": "Aristotle",
+        "group": "ancient",
+        "voiceStyle": "first-person",
+        "voiceBrief": "The aim is eudaimonia, a flourishing life, achieved by cultivating virtues of character such as courage, temperance, justice and practical wisdom (phronesis). Right action is what the practically wise person would do, aiming at the mean between excess and deficiency. Tone: measured, practical, teacherly.",
+        "speaker": {
+          "years": "384–322 BCE",
+          "region": "Ancient Greece",
+          "traditions": "Virtue ethics, Peripatetic school"
+        },
+        "coordinates": {
+          "outcomesPrinciples": 0.15,
+          "individualCollective": 0.15,
+          "reasonIntuition": 0.1
+        },
+        "summary": "Focuses on character, practical wisdom, and what a flourishing person would do in context.",
+        "exampleConcerns": [
+          "character",
+          "balance",
+          "practical wisdom"
+        ],
+        "distance": 1.219,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: reasonably close"
+      },
+      {
+        "id": "pragmatism",
+        "name": "Pragmatism",
+        "representative": "William James and John Dewey",
+        "group": "modern",
+        "voiceStyle": "first-person",
+        "voiceBrief": "Ideas are tested by their practical consequences in lived experience; inquiry is experimental and fallible. Moral questions are worked out in context, through intelligent, democratic problem-solving rather than fixed first principles. Tone: plain-spoken, experimental, optimistic about improvement.",
+        "speaker": {
+          "years": "James 1842–1910; Dewey 1859–1952",
+          "region": "United States",
+          "traditions": "Pragmatism, empiricism, functional psychology"
+        },
+        "coordinates": {
+          "outcomesPrinciples": -0.45,
+          "individualCollective": 0.25,
+          "reasonIntuition": -0.2
+        },
+        "summary": "Treats ethics as practical inquiry, testing ideas by how they work in lived social experience.",
+        "exampleConcerns": [
+          "experimentation",
+          "consequences",
+          "growth"
+        ],
+        "distance": 1.279,
+        "whyItFits": "Outcomes to Principles: reasonably close • Individual to Collective: partial overlap • Reason to Intuition: closely aligned"
+      }
+    ]
+  }
+]

@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.55,"individualCollective":0.38,"reasonIntuition":-0.8,"note":"The advice favors duties and clear instructions, shared family agreement, and structured analysis over intuition."}

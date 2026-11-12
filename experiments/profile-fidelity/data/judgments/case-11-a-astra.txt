@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.55,"individualCollective":0.3,"reasonIntuition":-0.85,"note":"The advice favors institutional duties and public trust while using explicit analysis to weigh student harm and test compromises."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.45,"individualCollective":-0.4,"reasonIntuition":-0.75,"note":"The advice favors consent, truth, and personal agency, while using explicit analysis to limit harm."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.48,"individualCollective":-0.38,"reasonIntuition":-0.68,"note":"The advice weighs practical harms, gives autonomy priority, and uses explicit analysis to set conditions for action."}

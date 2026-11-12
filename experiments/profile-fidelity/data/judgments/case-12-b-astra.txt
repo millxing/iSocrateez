@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.3,"individualCollective":0.1,"reasonIntuition":-0.65,"note":"The advice favors honesty as a duty, balances public benefit with personal protection, and uses explicit analysis with intuition as a secondary check."}

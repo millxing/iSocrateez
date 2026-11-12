@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.4, "individualCollective": 0.2, "reasonIntuition": -0.4, "note": "The advice explicitly mentions the reader's 'outcome-oriented judgment' and uses analytic, evidence-seeking steps, with a mild lean toward community and shared-good framing."}

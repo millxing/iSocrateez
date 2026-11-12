@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.3, "individualCollective": 0.1, "reasonIntuition": -0.3, "note": "The advice mainly argues from duty, in non-consent and what is owed, while still weighing harms; it balances community and individual stakes; and its procedure is analytical, with evidence thresholds and bias checks, plus a small nod to moral feeling."}

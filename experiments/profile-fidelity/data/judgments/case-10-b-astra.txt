@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.48,"individualCollective":0.2,"reasonIntuition":-0.73,"note":"The advice prioritizes duties against deception, care and social trust, and structured analysis of evidence and risks."}

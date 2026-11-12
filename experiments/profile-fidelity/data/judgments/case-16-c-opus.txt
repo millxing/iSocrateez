@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.1, "individualCollective": 0.1, "reasonIntuition": -0.35, "note": "Analytical, evidence-driven tiered design that balances consequences with fairness principles and individual protections with community obligations, and adds a light intuition check at the end."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.35,"individualCollective":-0.8,"reasonIntuition":-0.85,"note":"The advice stresses truthful disclosure and personal choice, using structured analysis, concrete evidence, and explicit uncertainty."}

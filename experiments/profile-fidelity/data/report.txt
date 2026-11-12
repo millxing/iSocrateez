@@ -1,0 +1,30 @@
+Cases: 25. Judgments: 200 of 200.
+
+Both judges
+route  mean abs error (OP / IC / RI / all)    correlation (OP / IC / RI / mean)   exaggeration  words
+  a     0.47 / 0.52 / 0.72 / 0.57         0.53 / 0.24 / 0.03 / 0.27         0.76   760
+  b     0.40 / 0.45 / 0.55 / 0.47         0.61 / 0.52 / 0.54 / 0.56         0.75   715
+  c     0.38 / 0.47 / 0.62 / 0.49         0.67 / 0.47 / 0.26 / 0.47         0.74   784
+  d     0.45 / 0.43 / 0.59 / 0.49         0.52 / 0.48 / 0.39 / 0.46         0.71   666
+
+Judge: opus
+route  mean abs error (OP / IC / RI / all)    correlation (OP / IC / RI / mean)   exaggeration  words
+  a     0.51 / 0.50 / 0.61 / 0.54         0.52 / 0.30 / 0.10 / 0.30         0.55   760
+  b     0.44 / 0.47 / 0.47 / 0.46         0.59 / 0.48 / 0.63 / 0.57         0.58   715
+  c     0.42 / 0.48 / 0.51 / 0.47         0.64 / 0.48 / 0.44 / 0.52         0.54   784
+  d     0.49 / 0.43 / 0.48 / 0.46         0.49 / 0.62 / 0.52 / 0.55         0.52   666
+
+Judge: astra
+route  mean abs error (OP / IC / RI / all)    correlation (OP / IC / RI / mean)   exaggeration  words
+  a     0.43 / 0.53 / 0.83 / 0.60         0.57 / 0.22 / 0.07 / 0.29         0.97   760
+  b     0.35 / 0.43 / 0.64 / 0.47         0.64 / 0.57 / 0.55 / 0.59         0.92   715
+  c     0.35 / 0.46 / 0.73 / 0.51         0.71 / 0.50 / 0.24 / 0.48         0.93   784
+  d     0.42 / 0.43 / 0.69 / 0.51         0.56 / 0.44 / 0.41 / 0.47         0.89   666
+
+Advice texts where the "why this fits" section was not found: 0
+Advice texts whose plan was not strict JSON (the app would use its fallback prompt): 33
+
+a = Haiku plan + Sonnet advice
+b = Sonnet plan + Haiku advice
+c = Sonnet plan + Sonnet advice
+d = Sonnet advice, no plan

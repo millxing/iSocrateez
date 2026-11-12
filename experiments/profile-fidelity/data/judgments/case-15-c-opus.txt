@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.2, "individualCollective": -0.3, "reasonIntuition": -0.5, "note": "The advice is analytical and structured, laying out options with explicit costs and benefits; it leans toward honesty as a principle while still weighing consequences, and it stresses her agency and autonomy over shared or relational goods."}

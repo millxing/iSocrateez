@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.12,"individualCollective":-0.08,"reasonIntuition":-0.22,"note":"The advice balances prognosis with equal moral claims and treats intuition as useful evidence subject to explicit analysis."}

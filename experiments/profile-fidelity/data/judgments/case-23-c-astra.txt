@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.08,"individualCollective":0.05,"reasonIntuition":-0.74,"note":"The advice balances consequences with equal standing and public benefit, while relying strongly on explicit arguments and consistency checks."}

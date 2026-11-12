@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.75,"individualCollective":-0.64,"reasonIntuition":-0.88,"note":"The advice uses explicit, uncertainty-aware consequence analysis and centers the interests and agency of each individual."}

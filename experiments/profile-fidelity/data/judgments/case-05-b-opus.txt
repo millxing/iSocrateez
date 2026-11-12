@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.2, "individualCollective": -0.15, "reasonIntuition": -0.6, "note": "Analytic, evidence-first reasoning about harms and responsibility with a light touch of duty, and attention to the friend's agency and the honest student's individual claim more than community norms."}

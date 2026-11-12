@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.55,"individualCollective":0.35,"reasonIntuition":-0.8,"note":"The advice prioritizes truthful disclosure and shared resource decisions through explicit analysis, independent checks, and proportionate action."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.7, "individualCollective": -0.2, "reasonIntuition": -0.5, "note": "The advice argues explicitly from downstream consequences and personal risk, focuses on the reader's own interests over community duty, and asks the reader to test their arguments rather than trust their feelings."}

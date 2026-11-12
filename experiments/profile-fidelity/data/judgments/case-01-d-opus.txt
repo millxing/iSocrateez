@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.35, "individualCollective": 0.4, "reasonIntuition": -0.2, "note": "The advice says outright that the reader leans collective, it gives principled nonconsent real weight against aggregate outcomes, and its memo-based, analytic method still leaves room for intuition."}

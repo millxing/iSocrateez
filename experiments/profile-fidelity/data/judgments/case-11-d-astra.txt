@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.91,"individualCollective":0.38,"reasonIntuition":-0.78,"note":"The advice gives firm priority to principles, stresses public trust and shared responsibility, and uses explicit analysis rather than intuition."}

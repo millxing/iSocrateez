@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.1, "individualCollective": 0.1, "reasonIntuition": -0.45, "note": "The advice tests arguments analytically, relies on consistency checks, and balances expected life-years against equal standing and fairness; it nods to the public resource and to guidelines, and leaves some room for moral residue."}

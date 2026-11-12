@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.55,"individualCollective":0.62,"reasonIntuition":-0.83,"note":"The advice emphasizes consequences, shared accountability, and explicit risk assessment over fixed rules or moral intuition."}

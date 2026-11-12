@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.12,"individualCollective":0.08,"reasonIntuition":-0.91,"note":"The advice strongly favors explicit analysis while balancing harm reduction with principles and individual needs with community welfare."}

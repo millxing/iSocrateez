@@ -10,7 +10,7 @@ const base: DebateTurnRequest = {
   messages: [], explanationLevel: "general"
 };
 const env: WorkerEnv = {
-  APP_SHARED_PASSWORD: "test", JWT_SECRET: "test", PLANNER_PROVIDER: "openai", PLANNER_MODEL: "planner",
+  APP_SHARED_PASSWORD: "test", JWT_SECRET: "test",
   ADVISOR_PROVIDER: "openai", ADVISOR_MODEL: "advisor", OPENAI_API_KEY: "test"
 };
 

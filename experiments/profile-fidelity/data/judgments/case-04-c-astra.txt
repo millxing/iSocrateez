@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.48,"individualCollective":0.18,"reasonIntuition":-0.58,"note":"The advice emphasizes role-based duty, balances shared obligations with individual costs, and relies mainly on explicit analysis."}

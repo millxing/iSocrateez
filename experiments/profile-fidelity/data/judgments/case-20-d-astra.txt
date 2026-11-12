@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.35,"individualCollective":0.05,"reasonIntuition":-0.75,"note":"The advice favors transparent principles and explicit analysis while balancing individual hardship with shared fairness."}

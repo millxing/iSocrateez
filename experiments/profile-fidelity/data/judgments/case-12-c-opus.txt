@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.6, "individualCollective": 0.1, "reasonIntuition": -0.5, "note": "The advice reasons explicitly from long-run consequences, balances public trust against personal risk, and treats intuition only as a supplement to analysis."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.75, "individualCollective": -0.3, "reasonIntuition": -0.6, "note": "The advice frames everything as conflicting duties and moral residue, uses Kantian universalizability, stresses the brother's agency, and reasons in an explicit, analytic style."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.55, "individualCollective": 0.3, "reasonIntuition": -0.5, "note": "The advice is deontic and duty-based ('wrong kind of price', trust held for all patrons) but takes harms seriously, emphasizes public trust and accountability to the community, and reasons analytically with explicit tests and a structured memo."}

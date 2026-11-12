@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.0, "individualCollective": 0.1, "reasonIntuition": -0.5, "note": "Balanced consequence-and-duty weighing with mild attention to community burden, delivered through structured, analytical steps like fact/suspicion/unknown memos and motivated-reasoning checks."}

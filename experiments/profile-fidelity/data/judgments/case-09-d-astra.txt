@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.05,"individualCollective":0.05,"reasonIntuition":-0.85,"note":"The advice balances results with dignity and team fairness with individual rights, while strongly favoring evidence, hypothesis testing, and structured review."}

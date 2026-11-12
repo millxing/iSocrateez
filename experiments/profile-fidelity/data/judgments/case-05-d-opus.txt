@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.3, "individualCollective": 0.1, "reasonIntuition": -0.5, "note": "The advice frames the choice as a pragmatist 'fewest irreparable harms' test but still respects desert, weighs system integrity alongside individual fairness, and relies on analytic, evidence-checking reasoning."}

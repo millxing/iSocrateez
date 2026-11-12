@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.05, "individualCollective": 0.0, "reasonIntuition": -0.35, "note": "Balanced treatment of duty vs consequences and rule-purposes vs individual, with a noticeable tilt toward explicit scrutiny ('a strong feeling is data, not a conclusion', written justification exercise)."}

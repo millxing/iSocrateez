@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.4, "individualCollective": 0.15, "reasonIntuition": -0.55, "note": "The advice leans on duties, such as the promise to the informant, not treating people as means, and disclosure obligations. It also gives institutions shared responsibility and works through the problem in an analytic, procedural way."}

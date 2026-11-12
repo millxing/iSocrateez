@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.6, "individualCollective": 0.2, "reasonIntuition": -0.3, "note": "The advice puts principle ahead of outcomes and warns against outcome rationalizing, mixes public trust and community concerns with the right to read, and uses structured analytical reasoning."}

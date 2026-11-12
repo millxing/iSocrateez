@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.35, "individualCollective": -0.15, "reasonIntuition": -0.5, "note": "The advice defaults to policy and transparency, protects individuals from being treated as assets, and favors analytic checks while warning that intuition can be rationalization."}

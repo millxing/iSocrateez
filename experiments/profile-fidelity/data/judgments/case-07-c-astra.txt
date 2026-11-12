@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.1,"individualCollective":0.2,"reasonIntuition":-0.75,"note":"The advice favors evidence and structured analysis, balances duties with harms, and gives modest priority to community welfare."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.65,"individualCollective":0.1,"reasonIntuition":-0.8,"note":"The advice stresses competing duties, explicit verification, and universal rules while balancing individual claims with shared institutional trust."}

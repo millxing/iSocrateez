@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.85,"individualCollective":-0.47,"reasonIntuition":-0.72,"note":"The advice emphasizes consequences, individual responsibility, and explicit analysis of uncertainty while treating intuition as evidence to test."}

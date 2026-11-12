@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.48,"individualCollective":0.12,"reasonIntuition":-0.91,"note":"The advice emphasizes measured harms, evidence and explicit tradeoffs, while balancing basic individual protections with shared welfare."}

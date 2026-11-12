@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.1, "individualCollective": 0.05, "reasonIntuition": -0.45, "note": "The advice weighs the promise and the consequences about equally, balances family needs against employees and town, and leans clearly toward structured analysis with numbers, checklists and bias-checks."}

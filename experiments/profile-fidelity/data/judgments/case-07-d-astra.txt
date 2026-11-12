@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.25,"individualCollective":0.65,"reasonIntuition":-0.85,"note":"The advice favors shared welfare and harm reduction, with some weight on duty, through explicit analysis of evidence, uncertainty, and practical options."}

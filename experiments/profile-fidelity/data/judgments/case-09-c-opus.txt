@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.05, "individualCollective": -0.1, "reasonIntuition": -0.5, "note": "The advice balances fairness and proportionality against measurable success criteria, weighs individual privacy and the team's burden about equally, and reasons in a structured, explicit, revisable way."}

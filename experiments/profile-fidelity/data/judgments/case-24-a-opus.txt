@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.5, "individualCollective": -0.35, "reasonIntuition": -0.5, "note": "The advice leans toward deontology (stresses the act/omission distinction, not using people as means, sacrifice as supererogatory) and individual rights (no one is obliged to die, ranking worth is wrong), and it favors explicit reasoning exercises over gut feeling."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.3, "individualCollective": 0.2, "reasonIntuition": -0.4, "note": "The advice leans on duties like fidelity, candor and executor obligations, favors a family consensus, and reasons through an explicit, structured list of tensions rather than appeals to feeling."}

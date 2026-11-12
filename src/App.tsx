@@ -66,7 +66,6 @@ export default function App() {
   });
   const [chosenPhilosopher, setChosenPhilosopher] = useState<string | null>(null);
   const personaMode: PersonaMode = chosenPhilosopher ? "philosopher" : "personalized";
-  const [plannerModel, setPlannerModel] = useState(() => savedModel("isocrateez-v2-planner", "anthropic:claude-haiku-5-5"));
   const [advisorModel, setAdvisorModel] = useState(() => savedModel("isocrateez-v2-advisor", "anthropic:claude-sonnet-5-5"));
   const [calibrationMode, setCalibrationMode] = useState<"questions" | "tuple">("questions");
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -229,7 +228,7 @@ export default function App() {
     goTo("explanation");
   }
 
-  const fetchAdvice = useCallback(async (nextPlanner: string, nextAdvisor: string) => {
+  const fetchAdvice = useCallback(async (nextAdvisor: string) => {
     if (!sessionToken) {
       goTo("locked");
       return;
@@ -250,7 +249,6 @@ export default function App() {
         philosopherId: chosenPhilosopher || undefined,
         explanationLevel,
         personaMode,
-        plannerModel: nextPlanner || undefined,
         advisorModel: nextAdvisor || undefined
       }, controller.signal);
       setResponse(nextResponse);
@@ -306,11 +304,10 @@ export default function App() {
   }, []);
   useEffect(() => {
     try {
-      localStorage.setItem("isocrateez-v2-planner", plannerModel);
       localStorage.setItem("isocrateez-v2-advisor", advisorModel);
       localStorage.setItem("isocrateez-v2-style", explanationLevel);
     } catch { /* Settings still work for this session. */ }
-  }, [plannerModel, advisorModel, explanationLevel]);
+  }, [advisorModel, explanationLevel]);
 
   const direction = getDirection(prevPhase, phase);
   const stageRef = useRef<HTMLElement>(null);
@@ -394,7 +391,6 @@ export default function App() {
       <div className="workspace">
         <main className="page-stage" id="main" ref={stageRef} tabIndex={-1} aria-label={settingsOpen ? "Settings" : phase === "locked" ? "Sign in" : phase === "debate" ? "Debate" : steps[step]} aria-busy={isLoadingAdvice}>
         {settingsOpen && <SettingsPage appearance={appearance} onAppearance={setAppearance}
-          plannerModel={plannerModel} onPlannerModel={setPlannerModel}
           advisorModel={advisorModel} onAdvisorModel={setAdvisorModel} />}
         <div className={`page-content page-${direction}`} key={`${phase}:${flowRevision}`} hidden={settingsOpen}>
           {phase === "locked" && (
@@ -446,7 +442,7 @@ export default function App() {
             <ExplanationPage
               current={explanationLevel}
               onSelect={setExplanationLevel}
-              onSubmit={() => void fetchAdvice(plannerModel, advisorModel)}
+              onSubmit={() => void fetchAdvice(advisorModel)}
               isSubmitting={isLoadingAdvice}
               error={adviceError}
               onBack={() => goTo(perspectiveRoute)}

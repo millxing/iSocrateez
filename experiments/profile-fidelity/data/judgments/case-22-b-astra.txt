@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.7,"individualCollective":-0.85,"reasonIntuition":-0.9,"note":"The advice uses explicit tests of principles and stresses individual rights, informed consent, and careful analysis over moral feeling."}

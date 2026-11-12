@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.4, "individualCollective": 0.05, "reasonIntuition": -0.35, "note": "The advice gives duty a strong presumption while still weighing consequences, balances the migrants' standing against crew and company concerns, and relies mainly on structured option analysis with a small nod to intuition."}

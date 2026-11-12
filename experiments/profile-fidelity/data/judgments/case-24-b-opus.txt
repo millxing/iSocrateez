@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.15, "individualCollective": -0.2, "reasonIntuition": 0.1, "note": "The advice weighs headcount against consent and fairness and stresses individual non-consent, and it treats felt hesitation as evidence that still needs scrutiny."}

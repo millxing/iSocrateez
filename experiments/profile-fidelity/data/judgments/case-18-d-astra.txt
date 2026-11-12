@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.05,"individualCollective":0.35,"reasonIntuition":-0.55,"note":"The advice balances safety with consent and equal respect, favors community continuity, and uses structured analysis and evidence."}

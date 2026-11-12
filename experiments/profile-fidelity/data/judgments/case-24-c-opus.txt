@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.05, "individualCollective": -0.1, "reasonIntuition": -0.15, "note": "The advice gives consequences and consent/doing-allowing roughly equal weight, centers individual consent and equal treatment slightly more than group survival, and leans on analysis while still treating intuition as something to check rather than simply trust."}

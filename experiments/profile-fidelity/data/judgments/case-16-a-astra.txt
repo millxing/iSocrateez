@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.3,"individualCollective":0.3,"reasonIntuition":-0.93,"note":"The advice combines firm basic rights and public rules with evidence-based tradeoffs to protect shared welfare."}

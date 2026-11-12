@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.05, "individualCollective": 0.2, "reasonIntuition": -0.6, "note": "Balanced mix of a rule-based floor and published procedures with evidence-driven tradeoffs, some lean toward shared cooperation, and a strongly analytic, data-centered style."}

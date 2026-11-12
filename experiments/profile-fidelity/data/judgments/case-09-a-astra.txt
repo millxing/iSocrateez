@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.45,"individualCollective":0.36,"reasonIntuition":-0.85,"note":"The advice favors evidence, practical effects, and team workload fairness while preserving individual privacy and fair treatment."}

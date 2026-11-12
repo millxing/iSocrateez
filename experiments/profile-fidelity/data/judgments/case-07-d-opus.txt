@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.1, "individualCollective": 0.15, "reasonIntuition": -0.65, "note": "The advice states a firm duty to stop the exposure but weighs consequences closely, frames harms at community scale, and relies on structured analysis that checks biases rather than on intuition."}

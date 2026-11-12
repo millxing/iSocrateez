@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.35, "individualCollective": -0.2, "reasonIntuition": -0.6, "note": "The advice is analytical and hypothesis-driven, weighs error costs and success metrics, and leans modestly toward protecting individuals from intrusive monitoring and premature accusation."}

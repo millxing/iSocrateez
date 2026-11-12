@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.15, "individualCollective": 0.0, "reasonIntuition": -0.35, "note": "The advice puts honesty first but weighs the program's outcomes and the counterfactual carefully, balances the researcher's own risk against the public good, and uses analytic, hedged reasoning with intuition only as a secondary check."}

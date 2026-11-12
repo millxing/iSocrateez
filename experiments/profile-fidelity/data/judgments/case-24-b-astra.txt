@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.02,"individualCollective":0.08,"reasonIntuition":-0.58,"note":"The advice balances survival with equal rights and consent, while favoring explicit analysis and treating intuition as evidence to examine."}

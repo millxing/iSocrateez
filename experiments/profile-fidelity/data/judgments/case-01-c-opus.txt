@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.6, "individualCollective": -0.2, "reasonIntuition": -0.5, "note": "The advice frames the vote around consent, universalizability and duty, leans toward protecting the minority against aggregate benefit, and reasons through structured, explicit analysis."}

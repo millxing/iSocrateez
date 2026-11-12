@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.0, "individualCollective": 0.1, "reasonIntuition": -0.4, "note": "The advice weighs consequences and duties evenly and leans slightly toward obligations to the vulnerable and the community, and it reasons analytically through conditional, evidence-driven leanings."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.35,"individualCollective":0.12,"reasonIntuition":-0.3,"note":"The advice favors accountable principles and explicit analysis while balancing individual needs with team welfare."}

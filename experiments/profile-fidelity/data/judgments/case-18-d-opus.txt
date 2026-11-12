@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.1, "individualCollective": 0.25, "reasonIntuition": -0.1, "note": "The advice weighs consent and duties about evenly with risk data, leans toward community and the vulnerable, and reasons in a structured, analytic but pluralist way."}

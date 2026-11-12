@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.78,"individualCollective":-0.58,"reasonIntuition":-0.65,"note":"The advice puts consent and self-determination above public benefits and uses structured analysis to test conditions and harms."}

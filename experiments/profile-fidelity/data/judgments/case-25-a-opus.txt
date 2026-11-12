@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.0, "individualCollective": -0.5, "reasonIntuition": -0.6, "note": "The advice stresses owning the choice apart from union and peer pressure, weighs consequences and principles evenly, and relies on evidence, written reasons and checks against motivated reasoning."}

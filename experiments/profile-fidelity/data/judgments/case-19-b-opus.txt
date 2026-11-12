@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.4, "individualCollective": 0.2, "reasonIntuition": -0.5, "note": "The advice centers on duty and fidelity to the parent's spoken word, leans toward deciding together as siblings, and uses structured, analytic reasoning rather than appeals to feeling."}

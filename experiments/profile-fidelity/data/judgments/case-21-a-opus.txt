@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.5, "individualCollective": 0.0, "reasonIntuition": -0.4, "note": "The advice centers on the nature of the act rather than its outcomes, uses analytic distinctions and warns against motivated reasoning, and balances personal conscience with institutional and communal remedies."}

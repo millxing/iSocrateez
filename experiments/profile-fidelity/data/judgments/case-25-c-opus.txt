@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.1, "individualCollective": -0.4, "reasonIntuition": -0.3, "note": "The advice weighs outcome facts and personal commitments about equally, stresses the reader's own judgment over the union vote, and uses a structured analytic method with only a final check against gut feeling."}

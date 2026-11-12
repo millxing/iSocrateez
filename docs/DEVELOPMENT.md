@@ -43,7 +43,7 @@ Deploy an updated Worker before the frontend when the frontend needs a new endpo
 ## Interface behaviour
 
 - Scrollable content with pinned bottom actions.
-- Sidebar Settings for appearance and planner/advisor models.
+- Sidebar Settings for appearance and the model.
 - Completed sidebar steps reopen the dilemma, perspective, or style for regeneration, preserving selections.
 - Philosopher-name animation during generation, respecting reduced motion.
 - No stored dilemma history. Appearance and model preferences are local to the browser; session tokens use session storage.
@@ -52,7 +52,7 @@ Deploy an updated Worker before the frontend when the frontend needs a new endpo
 
 After advice, **Explore through debate** opens the debate. The user chooses two philosophers for three rounds (six replies), or one philosopher and writes their own position (up to six exchanges).
 
-Each turn uses the advisor model selected when the debate starts. No planner call is needed. **Next reply** advances a philosopher debate. A failed or cancelled reply can be retried without duplicating the user's message. Cancellation stops the client from accepting the reply; a provider call already in progress can still incur usage. **Back to advice** preserves the transcript. A new dilemma or a change to the advice inputs clears the debate. Reloading the tab also clears it. No transcript is stored on the server or in browser storage.
+Each turn uses the advisor model selected when the debate starts. **Next reply** advances a philosopher debate. A failed or cancelled reply can be retried without duplicating the user's message. Cancellation stops the client from accepting the reply; a provider call already in progress can still incur usage. **Back to advice** preserves the transcript. A new dilemma or a change to the advice inputs clears the debate. Reloading the tab also clears it. No transcript is stored on the server or in browser storage.
 
 The Worker exposes authenticated `POST /api/debate/turn`, with types in `shared/contracts.ts` and limits in `shared/debate.ts`. It validates participants, turn order, models, and message sizes, then checks the dilemma and user messages with the existing safety gate. Safety responses stop the debate and appear outside the philosopher transcript. **Export debate** saves the dilemma, participants, model, explanation style, and messages as Markdown. A partial debate can be exported. Unsent drafts are not included.
 

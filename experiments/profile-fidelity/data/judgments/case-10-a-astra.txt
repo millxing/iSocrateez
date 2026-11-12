@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.35,"individualCollective":-0.6,"reasonIntuition":-0.85,"note":"The advice gives principles some priority, stresses autonomy and informed choice, and relies strongly on evidence and structured analysis."}

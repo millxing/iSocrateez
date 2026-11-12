@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.35,"individualCollective":0.25,"reasonIntuition":-0.9,"note":"The advice favors explicit analysis and harm reduction, with moderate concern for shared welfare and some weight on duties and individual protections."}

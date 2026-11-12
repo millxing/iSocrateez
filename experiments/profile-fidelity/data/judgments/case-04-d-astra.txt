@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.35,"individualCollective":0.15,"reasonIntuition":-0.55,"note":"The advice gives duty moderate priority, balances shared responsibilities, and relies mainly on explicit analysis of risks and obligations."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.65,"individualCollective":0.02,"reasonIntuition":-0.72,"note":"The advice gives duty priority, balances the standing of migrants and crew, and uses structured analysis with explicit uncertainty."}

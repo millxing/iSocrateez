@@ -15,44 +15,22 @@ interface PromptContext {
   nearestProfiles: RankedProfile[];
 }
 
-export interface PlannerOutput {
-  dilemmaSummary: string;
-  keyTensions: string[];
-  profileInterpretation: string;
-  framingNotes: string[];
-  advisorBrief: string;
-  cautionPoints: string[];
-}
-
-export function buildPlannerPrompt(context: PromptContext): string {
-  const [primary] = context.nearestProfiles;
-  const modeNote =
-    context.personaMode === "philosopher"
-      ? `Snap the user to ${primary.name} as represented by ${primary.representative}. The later advice may be written in that voice.`
-      : "Use the user’s measured profile directly without forcing them into a named school.";
-
+/** Plain-language reading of the tuple; the model follows this more reliably than the bare numbers. */
+function profileLines(profile: ProfileTuple): string[] {
   return [
-    "You are the planning stage of an ethical advice system.",
-    "Return strict JSON only with keys: dilemmaSummary, keyTensions, profileInterpretation, framingNotes, advisorBrief, cautionPoints.",
-    "Do not include markdown fences or commentary outside the JSON object.",
-    "",
-    `Dilemma: ${context.dilemma}`,
-    `Ethical tuple: ${formatTuple(context.profile)}`,
-    `Outcomes-Principles: ${describeAxisPosition("outcomesPrinciples", context.profile.outcomesPrinciples)}`,
-    `Individual-Collective: ${describeAxisPosition("individualCollective", context.profile.individualCollective)}`,
-    `Reason-Intuition: ${describeAxisPosition("reasonIntuition", context.profile.reasonIntuition)}`,
-    `Nearest philosophy: ${primary.name} via ${primary.representative}`,
-    `Nearest philosophy summary: ${primary.summary}`,
-    `Presentation level: ${presentationGuidance(context.explanationLevel)}`,
-    `Mode: ${modeNote}`,
-    "The planner should surface moral tensions, not collapse them too quickly."
-  ].join("\n");
+    `Ethical tuple: ${formatTuple(profile)}`,
+    `Outcomes-Principles: ${describeAxisPosition("outcomesPrinciples", profile.outcomesPrinciples)}`,
+    `Individual-Collective: ${describeAxisPosition("individualCollective", profile.individualCollective)}`,
+    `Reason-Intuition: ${describeAxisPosition("reasonIntuition", profile.reasonIntuition)}`
+  ];
 }
 
-export function buildAdvisorPrompt(
-  context: PromptContext,
-  plannerOutput: PlannerOutput
-): string {
+const NO_FOLLOW_UP_NOTE =
+  "Do not end with follow-up offers, suggestions to continue the conversation, or phrases like 'If you want, I can help you...' — end cleanly after the last section.";
+const TENSIONS_NOTE =
+  "Before you write, identify the moral tensions in the dilemma. Surface them in the advice; do not collapse them too quickly.";
+
+export function buildAdvisorPrompt(context: PromptContext): string {
   const [primary] = context.nearestProfiles;
   const personaInstruction =
     context.personaMode === "philosopher"
@@ -68,37 +46,13 @@ export function buildAdvisorPrompt(
     "2. Why this fits your ethical profile",
     "3. What to watch for",
     "4. A concrete next step in the next 24 hours",
-    "Do not end with follow-up offers, suggestions to continue the conversation, or phrases like 'If you want, I can help you...' — end cleanly after the last section.",
+    NO_FOLLOW_UP_NOTE,
+    TENSIONS_NOTE,
     "",
     `Original dilemma: ${context.dilemma}`,
-    `Ethical tuple: ${formatTuple(context.profile)}`,
+    ...profileLines(context.profile),
     `Nearest philosophy: ${primary.name} via ${primary.representative}`,
-    `Planner summary: ${plannerOutput.dilemmaSummary}`,
-    `Planner key tensions: ${plannerOutput.keyTensions.join("; ")}`,
-    `Planner profile interpretation: ${plannerOutput.profileInterpretation}`,
-    `Planner framing notes: ${plannerOutput.framingNotes.join("; ")}`,
-    `Planner caution points: ${plannerOutput.cautionPoints.join("; ")}`,
-    `Advisor brief: ${plannerOutput.advisorBrief}`
-  ].join("\n");
-}
-
-export function buildFallbackPrompt(context: PromptContext): string {
-  const [primary] = context.nearestProfiles;
-  const modeText =
-    context.personaMode === "philosopher"
-      ? `Answer as ${primary.representative} representing ${primary.name}.`
-      : "Answer in a neutral voice aligned to the measured ethical profile.";
-
-  return [
-    "Provide ethical advice for the following dilemma.",
-    modeText,
-    `Presentation level: ${presentationGuidance(context.explanationLevel)}`,
-    "Return markdown with the sections: Core advice, Why this fits your ethical profile, What to watch for, Next step.",
-    "Do not end with follow-up offers, suggestions to continue the conversation, or phrases like 'If you want, I can help you...' — end cleanly after the last section.",
-    `Dilemma: ${context.dilemma}`,
-    `Tuple: ${formatTuple(context.profile)}`,
-    `Nearest philosophy: ${primary.name} / ${primary.representative}`,
-    `Primary fit explanation: ${primary.whyItFits}`
+    `Nearest philosophy summary: ${primary.summary}`
   ].join("\n");
 }
 
@@ -132,26 +86,7 @@ function voiceInstruction(voice: PhilosophyProfile): string {
 const NO_DISCLAIMER_NOTE =
   "Do not add any disclaimer or aside saying this is an AI interpretation or not the person's real words; the app already shows that to the user.";
 
-export function buildVoicePlannerPrompt(context: VoicePromptContext): string {
-  const { voice } = context;
-  return [
-    "You are the planning stage of an ethical advice system.",
-    "Return strict JSON only with keys: dilemmaSummary, keyTensions, profileInterpretation, framingNotes, advisorBrief, cautionPoints.",
-    "Do not include markdown fences or commentary outside the JSON object.",
-    "",
-    `Dilemma: ${context.dilemma}`,
-    `The advice will be given from the perspective of: ${voiceIdentity(voice)}`,
-    `Voice brief: ${voice.voiceBrief}`,
-    `Presentation level: ${presentationGuidance(context.explanationLevel)}`,
-    "Use profileInterpretation to describe how this thinker or tradition would read the dilemma.",
-    "The planner should surface moral tensions, not collapse them too quickly."
-  ].join("\n");
-}
-
-export function buildVoiceAdvisorPrompt(
-  context: VoicePromptContext,
-  plannerOutput: PlannerOutput
-): string {
+export function buildVoiceAdvisorPrompt(context: VoicePromptContext): string {
   const { voice } = context;
   return [
     "You are the advice stage of an ethical reflection app.",
@@ -165,29 +100,9 @@ export function buildVoiceAdvisorPrompt(
     "2. Why this advice",
     "3. What to watch for",
     "4. A concrete next step in the next 24 hours",
-    "Do not end with follow-up offers, suggestions to continue the conversation, or phrases like 'If you want, I can help you...' — end cleanly after the last section.",
+    NO_FOLLOW_UP_NOTE,
+    TENSIONS_NOTE,
     "",
-    `Original dilemma: ${context.dilemma}`,
-    `Planner summary: ${plannerOutput.dilemmaSummary}`,
-    `Planner key tensions: ${plannerOutput.keyTensions.join("; ")}`,
-    `How this perspective reads the dilemma: ${plannerOutput.profileInterpretation}`,
-    `Planner framing notes: ${plannerOutput.framingNotes.join("; ")}`,
-    `Planner caution points: ${plannerOutput.cautionPoints.join("; ")}`,
-    `Advisor brief: ${plannerOutput.advisorBrief}`
-  ].join("\n");
-}
-
-export function buildVoiceFallbackPrompt(context: VoicePromptContext): string {
-  const { voice } = context;
-  return [
-    "Provide ethical advice for the following dilemma.",
-    voiceInstruction(voice),
-    NO_DISCLAIMER_NOTE,
-    `Perspective: ${voiceIdentity(voice)}`,
-    `Voice brief: ${voice.voiceBrief}`,
-    `Presentation level: ${presentationGuidance(context.explanationLevel)}`,
-    "Return markdown with the sections: Core advice, Why this advice, What to watch for, Next step.",
-    "Do not end with follow-up offers, suggestions to continue the conversation, or phrases like 'If you want, I can help you...' — end cleanly after the last section.",
-    `Dilemma: ${context.dilemma}`
+    `Original dilemma: ${context.dilemma}`
   ].join("\n");
 }

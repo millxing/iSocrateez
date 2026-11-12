@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.3, "individualCollective": -0.1, "reasonIntuition": -0.4, "note": "The advice weighs risk, consequences and proportionality ahead of legal duty, balances his autonomy against public safety, and reasons analytically about evidence and rationalization."}

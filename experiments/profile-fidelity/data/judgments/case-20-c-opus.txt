@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.3, "individualCollective": 0.1, "reasonIntuition": -0.3, "note": "The advice is balanced but leans deontological: it rejects using people as instruments and refuses to rank suffering, gives mild weight to the remaining team, and favors transparent analysis over trusting compassionate impulses."}

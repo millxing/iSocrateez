@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.0, "individualCollective": -0.1, "reasonIntuition": -0.2, "note": "The advice weighs consequences and principles evenly, treats patients as equals rather than as social contributors, and leans slightly toward testing intuition with analysis while keeping it as evidence."}

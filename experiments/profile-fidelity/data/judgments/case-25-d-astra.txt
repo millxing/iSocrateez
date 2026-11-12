@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.45,"individualCollective":0.1,"reasonIntuition":-0.85,"note":"The advice favors analysis of patient outcomes, treats duties as constraints, and balances collective action with independent judgment."}

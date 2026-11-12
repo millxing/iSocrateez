@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.15, "individualCollective": 0.35, "reasonIntuition": -0.25, "note": "The advice weighs outcomes and fair procedure about equally, frames the danger as a shared group burden, and treats gut feeling with suspicion, so it reads as balanced, mildly collective, and mildly analytical."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.3, "individualCollective": 0.1, "reasonIntuition": -0.6, "note": "The advice reasons analytically and decomposes the problem, leans on principles of consistency, transparency and accountability while still weighing consequences such as retention, and balances fairness to the individuals against trust within the team."}

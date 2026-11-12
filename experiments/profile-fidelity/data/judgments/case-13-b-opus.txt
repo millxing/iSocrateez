@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.3, "individualCollective": 0.1, "reasonIntuition": -0.5, "note": "The advice leans on risk analysis and an explicit precommitted reporting trigger, which points to consequences and reasoning, while it balances the neighbor's dignity against public safety."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.25,"individualCollective":0.15,"reasonIntuition":-0.8,"note":"The advice emphasizes effective rescue, weighs duties against concrete risks, and uses explicit conditional reasoning."}

@@ -3,17 +3,9 @@ import { rankPhilosophies, scoreProfile } from "../../shared/ethics";
 import { getPhilosophyById } from "../../shared/philosophyProfiles";
 import { questionBank } from "../../shared/questionBank";
 import { assessSafety } from "./safety";
-import {
-  buildAdvisorPrompt,
-  buildFallbackPrompt,
-  buildPlannerPrompt,
-  buildVoiceAdvisorPrompt,
-  buildVoiceFallbackPrompt,
-  buildVoicePlannerPrompt,
-  type PlannerOutput
-} from "./prompts";
+import { buildAdvisorPrompt, buildVoiceAdvisorPrompt } from "./prompts";
 
-import { callModel, getProviderApiKey, resolveModelConfig, type ModelConfig, type ModelInvoker, type WorkerEnv } from "./providers";
+import { callModel, getProviderApiKey, resolveModelConfig, type ModelInvoker, type WorkerEnv } from "./providers";
 export { ProviderError, type ModelInvoker, type WorkerEnv } from "./providers";
 
 export async function generateAdvice(
@@ -53,112 +45,40 @@ export async function generateAdvice(
     };
   }
 
-  const defaultPlannerConfig: ModelConfig = {
-    provider: env.PLANNER_PROVIDER,
-    model: env.PLANNER_MODEL,
-    apiKey: getProviderApiKey(env.PLANNER_PROVIDER, env),
-    baseUrl: env.PLANNER_BASE_URL
+  const advisorConfig = resolveModelConfig(
+    request.advisorModel,
+    {
+      provider: env.ADVISOR_PROVIDER,
+      model: env.ADVISOR_MODEL,
+      apiKey: getProviderApiKey(env.ADVISOR_PROVIDER, env),
+      baseUrl: env.ADVISOR_BASE_URL
+    },
+    env
+  );
+
+  // One model call. A separate planning call was measured and gave no better fit to the profile.
+  const prompt = voice
+    ? buildVoiceAdvisorPrompt({ dilemma: request.dilemma, explanationLevel: request.explanationLevel, voice })
+    : buildAdvisorPrompt({
+        dilemma: request.dilemma,
+        explanationLevel: request.explanationLevel,
+        personaMode: request.personaMode,
+        profile: profile as NonNullable<typeof profile>,
+        nearestProfiles
+      });
+
+  const advisorStart = Date.now();
+  const adviceMarkdown = await invokeModel(advisorConfig, prompt);
+  const timing: AdviceTiming = {
+    advisorMs: Date.now() - advisorStart,
+    totalMs: Date.now() - totalStart
   };
-  const defaultAdvisorConfig: ModelConfig = {
-    provider: env.ADVISOR_PROVIDER,
-    model: env.ADVISOR_MODEL,
-    apiKey: getProviderApiKey(env.ADVISOR_PROVIDER, env),
-    baseUrl: env.ADVISOR_BASE_URL
-  };
-
-  const plannerConfig = resolveModelConfig(request.plannerModel, defaultPlannerConfig, env);
-  const advisorConfig = resolveModelConfig(request.advisorModel, defaultAdvisorConfig, env);
-
-  const context = {
-    dilemma: request.dilemma,
-    explanationLevel: request.explanationLevel,
-    personaMode: request.personaMode,
-    profile: profile as NonNullable<typeof profile>,
-    nearestProfiles
-  };
-  const voiceContext = voice
-    ? { dilemma: request.dilemma, explanationLevel: request.explanationLevel, voice }
-    : undefined;
-
-  const plannerPrompt = voiceContext
-    ? buildVoicePlannerPrompt(voiceContext)
-    : buildPlannerPrompt(context);
-  const advisorPromptFor = (plannerOutput: PlannerOutput) =>
-    voiceContext
-      ? buildVoiceAdvisorPrompt(voiceContext, plannerOutput)
-      : buildAdvisorPrompt(context, plannerOutput);
-  const fallbackPrompt = voiceContext
-    ? buildVoiceFallbackPrompt(voiceContext)
-    : buildFallbackPrompt(context);
-
-  try {
-    const plannerStart = Date.now();
-    const plannerRaw = await invokeModel(plannerConfig, plannerPrompt);
-    const plannerMs = Date.now() - plannerStart;
-
-    const plannerOutput = validatePlannerOutput(plannerRaw);
-
-    const advisorStart = Date.now();
-    const adviceMarkdown = await invokeModel(advisorConfig, advisorPromptFor(plannerOutput));
-    const advisorMs = Date.now() - advisorStart;
-
-    const timing: AdviceTiming = {
-      plannerMs,
-      advisorMs,
-      totalMs: Date.now() - totalStart
-    };
-
-    return {
-      adviceMarkdown,
-      ...identity,
-      safetyMode: "standard",
-      modelsUsed: [
-        `${plannerConfig.provider}:${plannerConfig.model}`,
-        `${advisorConfig.provider}:${advisorConfig.model}`
-      ],
-      timing
-    };
-  } catch {
-    const advisorStart = Date.now();
-    const adviceMarkdown = await invokeModel(advisorConfig, fallbackPrompt);
-    const advisorMs = Date.now() - advisorStart;
-
-    const timing: AdviceTiming = {
-      plannerMs: 0,
-      advisorMs,
-      totalMs: Date.now() - totalStart
-    };
-
-    return {
-      adviceMarkdown,
-      ...identity,
-      safetyMode: "standard",
-      modelsUsed: [`fallback:${advisorConfig.provider}:${advisorConfig.model}`],
-      timing
-    };
-  }
-}
-
-export function validatePlannerOutput(raw: string): PlannerOutput {
-  const parsed = JSON.parse(raw) as Partial<PlannerOutput>;
-
-  if (
-    typeof parsed.dilemmaSummary !== "string" ||
-    !Array.isArray(parsed.keyTensions) ||
-    typeof parsed.profileInterpretation !== "string" ||
-    !Array.isArray(parsed.framingNotes) ||
-    typeof parsed.advisorBrief !== "string" ||
-    !Array.isArray(parsed.cautionPoints)
-  ) {
-    throw new Error("Planner output did not match the required JSON shape.");
-  }
 
   return {
-    dilemmaSummary: parsed.dilemmaSummary,
-    keyTensions: parsed.keyTensions.map(String),
-    profileInterpretation: parsed.profileInterpretation,
-    framingNotes: parsed.framingNotes.map(String),
-    advisorBrief: parsed.advisorBrief,
-    cautionPoints: parsed.cautionPoints.map(String)
+    adviceMarkdown,
+    ...identity,
+    safetyMode: "standard",
+    modelsUsed: [`${advisorConfig.provider}:${advisorConfig.model}`],
+    timing
   };
 }

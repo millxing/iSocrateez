@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.5, "individualCollective": -0.1, "reasonIntuition": 0.4, "note": "The advice puts wrongful taking, standing and self-determination ahead of aggregate local benefits, weighs rights against the shared good fairly evenly, and warns about intuition's blind spots, which suggests a principled reader who leans on intuition."}

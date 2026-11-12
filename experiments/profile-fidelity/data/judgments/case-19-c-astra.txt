@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.55,"individualCollective":0.12,"reasonIntuition":-0.67,"note":"The advice stresses duties and fair procedure, balances individual claims with shared deliberation, and uses structured analysis over intuition."}

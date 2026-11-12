@@ -2,12 +2,9 @@ APP_SHARED_PASSWORD=choose-a-strong-passphrase
 JWT_SECRET=replace-with-a-long-random-secret
 
 # Provider-scoped secrets:
-# - use OPENAI_API_KEY whenever either selected model uses the `openai` provider
-# - use ANTHROPIC_API_KEY whenever either selected model uses the `anthropic` provider
-# Do not create separate planner/advisor API key variables.
+# - use OPENAI_API_KEY whenever a selected model uses the `openai` provider
+# - use ANTHROPIC_API_KEY whenever a selected model uses the `anthropic` provider
 
-PLANNER_PROVIDER=anthropic
-PLANNER_MODEL=claude-haiku-5-5
 ADVISOR_PROVIDER=anthropic
 ADVISOR_MODEL=claude-sonnet-5-5
 OPENAI_API_KEY=

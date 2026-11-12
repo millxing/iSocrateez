@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.57,"individualCollective":-0.63,"reasonIntuition":-0.79,"note":"The advice favors individual consent and principled limits while using structured arguments and explicit reasoning tests."}

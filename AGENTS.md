@@ -46,7 +46,7 @@ Note: `src/components/DilemmaForm.tsx` and `src/components/AssessmentFlow.tsx` a
 
 - `worker/src/index.ts`: HTTP routes and request validation
 - `worker/src/llm.ts`: advice pipeline orchestration
-- `worker/src/prompts.ts`: planner/advisor prompt construction
+- `worker/src/prompts.ts`: advice prompt construction (one model call)
 - `worker/src/safety.ts`: local safety gate
 - `worker/src/auth.ts`: signed session tokens
 
@@ -104,8 +104,6 @@ Worker:
 - `worker/.dev.vars`
 - `APP_SHARED_PASSWORD`
 - `JWT_SECRET`
-- `PLANNER_PROVIDER`
-- `PLANNER_MODEL`
 - `ADVISOR_PROVIDER`
 - `ADVISOR_MODEL`
 - `OPENAI_API_KEY`

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.5, "individualCollective": -0.3, "reasonIntuition": 0.3, "note": "The advice says outright that the profile favors principle, puts the concrete individual and her agency above diffuse precedent, and warns against intuition outrunning facts, which suggests a reader who leans intuitive."}

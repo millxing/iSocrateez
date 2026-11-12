@@ -1,9 +1,6 @@
 export interface WorkerEnv {
   APP_SHARED_PASSWORD: string;
   JWT_SECRET: string;
-  PLANNER_PROVIDER: string;
-  PLANNER_MODEL: string;
-  PLANNER_BASE_URL?: string;
   ADVISOR_PROVIDER: string;
   ADVISOR_MODEL: string;
   ADVISOR_BASE_URL?: string;

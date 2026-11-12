@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.35, "individualCollective": 0.25, "reasonIntuition": -0.5, "note": "The advice frames itself around harm, irreversibility and a 'consequence-based case', with a strongly analytical, data-driven style, a moderate community and shared-burden focus, and some principled limits such as the non-negotiable floor."}

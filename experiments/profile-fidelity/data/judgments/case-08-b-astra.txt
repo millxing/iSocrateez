@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.85,"individualCollective":-0.55,"reasonIntuition":0.6,"note":"The advice explicitly names a consequence-focused, individually responsible, intuition-led profile, though its reasoning also uses structured analysis."}

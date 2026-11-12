@@ -26,7 +26,7 @@ A brainstorm of possible additions, grouped by what they would do for the app. N
 - **Search or filter on the philosopher grid.** At 40 entries it is worth having, especially on a phone.
 - **Accessibility pass.** Keyboard use, screen-reader labels, and color contrast on the dark theme.
 - **Usage guardrails.** A per-session rate limit on the Worker, since every request costs money and anyone with the shared password can call it.
-- **Cost and latency.** Advice takes about 30 seconds. Options: stream the response so text appears as it is written, or skip the planner stage for short dilemmas.
+- **Cost and latency.** Advice takes about 30 seconds. Option: stream the response so text appears as it is written.
 
 ## Suggested order
 

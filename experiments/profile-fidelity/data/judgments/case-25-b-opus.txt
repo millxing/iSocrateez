@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.0, "individualCollective": -0.4, "reasonIntuition": -0.4, "note": "The advice weighs consequences and duties evenly, stresses owning the choice yourself over deferring to the union vote, and relies on structured questions and written analysis rather than gut feeling."}

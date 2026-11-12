@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.15,"individualCollective":-0.55,"reasonIntuition":-0.85,"note":"The advice uses explicit analysis, emphasizes personal agency, and balances honest duties against practical consequences."}

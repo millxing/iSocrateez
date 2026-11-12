@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.4, "individualCollective": -0.1, "reasonIntuition": -0.5, "note": "Leans on principles and consent with a structured, analytic method, and weighs individual community rights and public good about evenly."}

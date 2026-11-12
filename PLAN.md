@@ -35,9 +35,7 @@
   - `GET /api/health` returns a simple status payload.
   - Store the returned token in `sessionStorage`; require it on all advice requests.
 - LLM pipeline:
-  - Planner stage uses the configured planner model to output strict JSON only: dilemma summary, key tensions, profile interpretation, framing notes, and advisor brief.
-  - Advisor stage uses the configured advisor model to turn that structured context into the final advice.
-  - If either stage fails, fall back to a single-stage advisor prompt and record that in `modelsUsed`.
+  - One model call writes the advice from the dilemma, the tuple, the plain-language axis descriptions, and the nearest philosophy. (The first design had a planner stage before it; it was removed on 2026-11-12 after a test showed no benefit.)
   - Keep model choice hidden from end users; configure providers/models only through worker env vars.
 - Safety posture:
   - Apply soft guardrails for self-harm, violent wrongdoing, and clearly dangerous illegal guidance.
@@ -51,7 +49,6 @@
 - Worker env vars:
   - `APP_SHARED_PASSWORD`
   - `JWT_SECRET`
-  - `PLANNER_PROVIDER`, `PLANNER_MODEL`
   - `ADVISOR_PROVIDER`, `ADVISOR_MODEL`
   - Provider-specific API keys
 - Frontend app states:
@@ -62,7 +59,7 @@
 - Unit tests for unique 3-per-axis question selection and normalized scoring.
 - Unit tests for reverse polarity handling and tuple bounds.
 - Unit tests for nearest-profile matching with stable primary and alternate matches.
-- Unit tests for planner JSON schema validation, fallback behavior, and safety branching.
+- Unit tests for prompt construction and safety branching.
 - Integration tests for password gate, invalid/expired token rejection, and successful end-to-end advice flow.
 - UI tests confirming explanation level changes presentation style without changing the tuple.
 - UI tests confirming persona mode can change the advice output by snapping to the nearest curated profile.

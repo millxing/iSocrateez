@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.3, "individualCollective": -0.45, "reasonIntuition": -0.5, "note": "The advice stresses that the decision and its responsibility are hers, weighs risks and benefits by probability, and asks her to test gut feelings against written analysis."}

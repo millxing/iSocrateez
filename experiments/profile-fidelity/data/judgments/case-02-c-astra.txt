@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.8,"individualCollective":-0.65,"reasonIntuition":-0.8,"note":"The advice puts consent and autonomy above public benefits and uses structured arguments and counterfactual tests."}

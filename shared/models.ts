@@ -4,10 +4,10 @@ export interface ModelOption {
 }
 
 // Single source of truth for selectable models. The Worker rejects any
-// planner/advisor override that is not listed here.
+// model override that is not listed here.
 export const modelOptions: ModelOption[] = [
-  { value: "anthropic:claude-haiku-5-5", label: "Claude Haiku 5.5 (default planner)" },
-  { value: "anthropic:claude-sonnet-5-5", label: "Claude Sonnet 5.5 (default advisor)" },
+  { value: "anthropic:claude-haiku-5-5", label: "Claude Haiku 5.5" },
+  { value: "anthropic:claude-sonnet-5-5", label: "Claude Sonnet 5.5" },
   { value: "anthropic:claude-opus-5-5", label: "Claude Opus 5.5" },
   { value: "openai:gpt-6.1-sol", label: "GPT-6.1 Sol" },
   { value: "openai:gpt-6-luna", label: "GPT-6 Luna" },

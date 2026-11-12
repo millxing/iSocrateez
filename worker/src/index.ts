@@ -96,10 +96,7 @@ export async function handleRequest(
       return json({ error: "Provide either a valid set of calibration answers or a valid 3-number ethical tuple." }, 400, request, env);
     }
 
-    if (
-      (body.plannerModel !== undefined && !isAllowedModel(body.plannerModel)) ||
-      (body.advisorModel !== undefined && !isAllowedModel(body.advisorModel))
-    ) {
+    if (body.advisorModel !== undefined && !isAllowedModel(body.advisorModel)) {
       return json({ error: "Unsupported model selection." }, 400, request, env);
     }
 

@@ -147,7 +147,7 @@ describe("App", () => {
               }
             ],
             safetyMode: "standard",
-            modelsUsed: ["openai:planner", "openai:advisor"]
+            modelsUsed: ["openai:advisor"]
           })
         );
       }
@@ -199,7 +199,6 @@ describe("App", () => {
       expect(adviceBodies[0]).toMatchObject({
         explanationLevel: "phd",
         personaMode: "personalized",
-        plannerModel: "anthropic:claude-haiku-5-5",
         advisorModel: "anthropic:claude-sonnet-5-5"
       });
       fireEvent.click(screen.getByRole("button", { name: "Perspective" }));
@@ -287,7 +286,7 @@ describe("App", () => {
               }
             ],
             safetyMode: "standard",
-            modelsUsed: ["openai:planner", "openai:advisor"]
+            modelsUsed: ["openai:advisor"]
           })
         );
       }
@@ -412,8 +411,7 @@ describe("App", () => {
     await screen.findByRole("heading", { name: "Settings" });
     expect(screen.queryByRole("textbox", { name: "Dilemma" })).not.toBeInTheDocument();
     fireEvent.change(screen.getByLabelText("Appearance"), { target: { value: "dark" } });
-    fireEvent.change(screen.getByLabelText("Planner model"), { target: { value: "openai:gpt-5.4-mini" } });
-    fireEvent.change(screen.getByLabelText("Advisor model"), { target: { value: "openai:gpt-5.4-mini" } });
+    fireEvent.change(screen.getByLabelText("Model"), { target: { value: "openai:gpt-5.4-mini" } });
     expect(localStorage.getItem("isocrateez-v2-advisor")).toBe("openai:gpt-5.4-mini");
     expect(document.documentElement.dataset.theme).toBe("dark");
     fireEvent.click(screen.getByRole("button", { name: "Done" }));

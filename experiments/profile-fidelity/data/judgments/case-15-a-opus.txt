@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.3, "individualCollective": -0.5, "reasonIntuition": -0.5, "note": "Honesty is treated as a firm principle, with some weight on reversible outcomes; autonomy is stressed through 'leave the decision with her' and 'information, not instructions'; and the analysis is evidence-based and decompositional."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.5, "individualCollective": -0.4, "reasonIntuition": -0.5, "note": "The advice uses a contractualist 'reasonable rejection' test centered on individual claims, consent and duties, and reasons analytically while treating feelings as things to examine rather than trust."}

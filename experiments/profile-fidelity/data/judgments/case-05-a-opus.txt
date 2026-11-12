@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.45, "individualCollective": 0.05, "reasonIntuition": -0.6, "note": "The advice explicitly reasons 'in terms of outcomes' with structured option-by-option analysis and warns that claims need arguments, while balancing the friend's individual stake against fairness to others."}

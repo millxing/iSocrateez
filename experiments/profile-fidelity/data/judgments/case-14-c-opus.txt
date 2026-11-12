@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.2, "individualCollective": 0.3, "reasonIntuition": 0.1, "note": "The advice weighs duty (honoring his words, acknowledging the debt) against effects on dignity, favors open relational repair over private settlement, and blends structured analysis with attention to felt gratitude."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.4, "individualCollective": -0.15, "reasonIntuition": -0.6, "note": "The advice is analytical and weighs consequences (identifiable vs statistical harm, acts vs omissions), treats duties as side-constraints, puts personal conscience above the union vote, and is wary of gut pull."}

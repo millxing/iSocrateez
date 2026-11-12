@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.4, "individualCollective": 0.1, "reasonIntuition": -0.6, "note": "The warning about the reader's 'own outcomes lean' and the structured, verification-heavy analysis suggest a consequentialist-leaning, analytic reader with balanced individual/collective priorities."}

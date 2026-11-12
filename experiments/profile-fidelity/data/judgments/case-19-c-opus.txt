@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.2, "individualCollective": 0.1, "reasonIntuition": -0.1, "note": "The advice weighs duty to the spoken instruction against consequences and desert, balances individual claims with family process, and uses structured analysis with a gut-check step, so it reads as near-centered with a slight lean toward principles."}

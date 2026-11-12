@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.4, "individualCollective": -0.4, "reasonIntuition": -0.4, "note": "Duty language (binding promise, moral residue, honesty duty) runs alongside a focus on the brother's agency, and the reasoning is analytic, with no appeal to felt intuition."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.2, "individualCollective": -0.25, "reasonIntuition": -0.3, "note": "The advice leans toward principles by separating silence from lying, puts the brother's autonomy first, and reasons in an analytic, structured way while still weighing medical consequences."}

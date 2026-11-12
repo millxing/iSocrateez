@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.0, "individualCollective": 0.2, "reasonIntuition": -0.4, "note": "The advice weighs consequences and fair process about equally, frames the problem as a team system while still protecting individual privacy, and reasons in a structured, evidence-driven way."}

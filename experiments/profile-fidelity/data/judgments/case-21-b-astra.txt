@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.88,"individualCollective":-0.22,"reasonIntuition":-0.86,"note":"The advice uses explicit consequence analysis, gives personal risks and needs priority, and treats resentment as something to test."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.3, "individualCollective": -0.35, "reasonIntuition": -0.65, "note": "The advice leans on analysis (ledgers, sunk-cost checks, distrust of guilt), reads the promise by its purpose more than its wording, and puts the family's security ahead of the employees and the town."}

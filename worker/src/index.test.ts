@@ -6,8 +6,6 @@ import type { WorkerEnv } from "./llm";
 const env: WorkerEnv = {
   APP_SHARED_PASSWORD: "open-sesame",
   JWT_SECRET: "jwt-secret",
-  PLANNER_PROVIDER: "openai",
-  PLANNER_MODEL: "planner-model",
   ADVISOR_PROVIDER: "openai",
   ADVISOR_MODEL: "advisor-model",
   OPENAI_API_KEY: "openai-key",
@@ -57,26 +55,6 @@ describe("worker routes", () => {
             choices: [
               {
                 message: {
-                  content: JSON.stringify({
-                    dilemmaSummary: "Summary",
-                    keyTensions: ["loyalty", "truthfulness"],
-                    profileInterpretation: "Outcome-aware and reason-first.",
-                    framingNotes: ["Take the risk seriously."],
-                    advisorBrief: "Recommend honest disclosure with care.",
-                    cautionPoints: ["Do not moralize too quickly."]
-                  })
-                }
-              }
-            ]
-          })
-        )
-      )
-      .mockResolvedValueOnce(
-        new Response(
-          JSON.stringify({
-            choices: [
-              {
-                message: {
                   content: "## Core advice\n\nTell the truth, but do it with care."
                 }
               }
@@ -120,7 +98,8 @@ describe("worker routes", () => {
 
       expect(response.status).toBe(200);
       expect(json.adviceMarkdown).toContain("Tell the truth");
-      expect(json.modelsUsed).toEqual(["openai:planner-model", "openai:advisor-model"]);
+      expect(json.modelsUsed).toEqual(["openai:advisor-model"]);
+      expect(globalThis.fetch).toHaveBeenCalledTimes(1);
     } finally {
       globalThis.fetch = originalFetch;
     }
@@ -130,26 +109,6 @@ describe("worker routes", () => {
     const originalFetch = globalThis.fetch;
     globalThis.fetch = vi
       .fn()
-      .mockResolvedValueOnce(
-        new Response(
-          JSON.stringify({
-            choices: [
-              {
-                message: {
-                  content: JSON.stringify({
-                    dilemmaSummary: "Summary",
-                    keyTensions: ["privacy", "care"],
-                    profileInterpretation: "Tuple provided manually.",
-                    framingNotes: ["Honor the override."],
-                    advisorBrief: "Respond from the supplied coordinates.",
-                    cautionPoints: ["Do not recompute from answers."]
-                  })
-                }
-              }
-            ]
-          })
-        )
-      )
       .mockResolvedValueOnce(
         new Response(
           JSON.stringify({

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.4, "individualCollective": 0.1, "reasonIntuition": -0.7, "note": "The advice argues mainly from welfare and harm-minimization, with some talk of accountability and complicity; it weighs community interests against family impartially and relies on evidence-testing over moral intuition."}

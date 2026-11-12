@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.65,"individualCollective":0.08,"reasonIntuition":-0.93,"note":"The advice favors testable evidence, measurable results, and correctable errors while balancing team welfare with individual protection."}

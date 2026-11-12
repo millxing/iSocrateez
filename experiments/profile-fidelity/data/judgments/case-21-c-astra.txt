@@ -1,0 +1,1 @@
+{"outcomesPrinciples":-0.75,"individualCollective":0.2,"reasonIntuition":-0.85,"note":"The advice uses explicit outcome analysis, weighs personal costs against shared trust, and treats anger as insufficient grounds for action."}

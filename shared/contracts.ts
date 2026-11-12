@@ -72,12 +72,10 @@ export interface AdviceRequest {
   philosopherId?: string;
   explanationLevel: ExplanationLevel;
   personaMode: PersonaMode;
-  plannerModel?: string;
   advisorModel?: string;
 }
 
 export interface AdviceTiming {
-  plannerMs: number;
   advisorMs: number;
   totalMs: number;
 }

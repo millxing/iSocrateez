@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.45, "individualCollective": -0.2, "reasonIntuition": -0.3, "note": "The advice centres on the duty owed to the creditor and on respecting consent, plays down good outcomes, and reasons through tensions in a structured, analytical way."}

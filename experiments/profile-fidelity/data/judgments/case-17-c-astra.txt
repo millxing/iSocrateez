@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.9,"individualCollective":-0.7,"reasonIntuition":-0.9,"note":"The advice emphasizes duties, universal rules, individual agency, and explicit analysis of competing obligations."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.4, "individualCollective": 0.1, "reasonIntuition": -0.45, "note": "The advice centers on the duty-based wrong of non-consensual manipulation while still weighing harms, balances individual consent against institutional trust, and argues in a structured, evidence-testing style."}

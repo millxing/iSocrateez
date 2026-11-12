@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.6, "individualCollective": -0.2, "reasonIntuition": -0.6, "note": "The advice argues mainly from consequences, citing Mill and rule-utilitarian norms, focuses on the reader's own interests with only light reference to community norms, and works through an explicit analytic ledger rather than appeals to feeling."}

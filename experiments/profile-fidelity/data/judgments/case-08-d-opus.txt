@@ -1,0 +1,1 @@
+{"outcomesPrinciples": -0.1, "individualCollective": 0.2, "reasonIntuition": -0.4, "note": "The advice reasons mainly from consequences but treats accountability as a real duty, gives weight to the collective stakes, and prefers explicit analysis while warning against intuitions that overweight vivid risks."}

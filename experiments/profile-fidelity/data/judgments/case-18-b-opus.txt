@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.05, "individualCollective": 0.35, "reasonIntuition": -0.3, "note": "The advice says 'balanced, moderately collective-minded', weighs consequences and duties evenly, and leans on analysis and data requests rather than moral feeling."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.72,"individualCollective":0.16,"reasonIntuition":-0.94,"note":"The advice favors duties and public accountability while using explicit distinctions, counterarguments, and factual tests."}

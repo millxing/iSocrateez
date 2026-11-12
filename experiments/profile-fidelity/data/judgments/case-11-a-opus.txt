@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.4, "individualCollective": 0.3, "reasonIntuition": -0.6, "note": "The advice leans on principles like institutional integrity, secrecy and precedent while still weighing harm to students; its focus is on the public institution and public trust, and its style is structured, analytic and test-based rather than intuitive."}

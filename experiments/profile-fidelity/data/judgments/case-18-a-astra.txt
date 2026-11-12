@@ -1,0 +1,1 @@
+{"outcomesPrinciples":0.08,"individualCollective":0.3,"reasonIntuition":-0.79,"note":"The advice balances fairness and practical consequences, gives priority to vulnerable residents, and relies strongly on evidence and explicit analysis."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.35, "individualCollective": 0.05, "reasonIntuition": -0.6, "note": "The advice treats the promise as a binding duty but weighs consequences, balances family against employees and town, and favors explicit analysis while warning that feelings can stand in for argument."}

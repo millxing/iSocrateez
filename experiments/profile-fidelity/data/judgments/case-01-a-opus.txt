@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.3, "individualCollective": -0.1, "reasonIntuition": -0.5, "note": "The advice leans toward rights and principles (a principle named for the vote, refusal treated as a rights claim) but still weighs consequences, balances regional welfare against minority rights, and relies on explicit analysis such as decision memos and empirical scrutiny."}

@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.5, "individualCollective": 0.1, "reasonIntuition": -0.5, "note": "The advice frames everything as competing duties and principled obligations, weighs family against employees and town evenly, and prefers explicit analysis ('Reason can examine that distinction. Guilt can't.') over feeling."}

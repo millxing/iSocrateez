@@ -1,0 +1,1 @@
+{"outcomesPrinciples": 0.15, "individualCollective": 0.0, "reasonIntuition": -0.1, "note": "The advice blends consequentialist prognosis with principled refusal to judge desert, weighs individual dignity and system precedent evenly, and favors explicit analysis while honoring intuition."}
