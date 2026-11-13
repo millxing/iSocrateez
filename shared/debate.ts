@@ -1,9 +1,9 @@
-import type { DebateParticipants } from "./contracts";
+import { MAX_DILEMMA_CHARACTERS, type DebateParticipants } from "./contracts";
 
 export const DEBATE_LIMITS = {
   philosopherTurns: 6,
   userExchanges: 6,
-  dilemmaCharacters: 12000,
+  dilemmaCharacters: MAX_DILEMMA_CHARACTERS,
   userMessageCharacters: 2000,
   philosopherMessageCharacters: 6000,
   requestBytes: 100000

@@ -23,7 +23,7 @@ The UI uses a fixed sidebar, independently scrolling content panes, and pinned b
 
 - `src/App.tsx`: wizard flow controller managing phases (locked → dilemma → path → calibration/philosopher → explanation → results)
 - `src/components/PasswordGate.tsx`: shared password entry
-- `src/components/DilemmaPage.tsx`: dilemma text entry (dynamic-height textarea)
+- `src/components/DilemmaPage.tsx`: dilemma text entry (dynamic-height textarea, .txt/.md upload or drop, example list with search)
 - `src/components/ExplanationPage.tsx`: 3-choice explanation style cards
 - `src/components/SettingsPage.tsx`: sidebar-accessible appearance and model selection, preserving the current flow
 - `src/components/ModelPage.tsx`: unused previous model-selection screen

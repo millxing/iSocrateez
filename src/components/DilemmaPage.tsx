@@ -1,4 +1,6 @@
-import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { DragEvent, FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { MAX_DILEMMA_CHARACTERS } from "../../shared/contracts";
+import { DILEMMA_FILE_ACCEPT, readDilemmaFile } from "../dilemmaFile";
 import { SAMPLE_DILEMMAS, SampleDilemma, matchesSample, shuffledSamples } from "../sampleDilemmas";
 import { PageHeader } from "./PageHeader";
 
@@ -19,10 +21,17 @@ export function DilemmaPage({ initialDilemma, onDraftChange, onSubmit }: Dilemma
   const [samples] = useState(() => shuffledSamples(initialExample?.title));
   // Kept here, not in the list, so the search survives a switch to "Write my own" and back.
   const [query, setQuery] = useState("");
+  // After a file loads, the text it replaced is kept so the user can undo. Any edit clears it.
+  const [fileNote, setFileNote] = useState<
+    { kind: "loaded"; name: string; previous: string } | { kind: "error"; message: string } | null
+  >(null);
+  const [dragging, setDragging] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const selected = SAMPLE_DILEMMAS.find((s) => s.title === exampleTitle);
   const dilemma = mode === "example" ? selected?.text ?? "" : ownText;
-  const canContinue = Boolean(dilemma.trim());
+  const canContinue = Boolean(dilemma.trim()) && dilemma.trim().length <= MAX_DILEMMA_CHARACTERS;
+  const nearLimit = mode === "own" && ownText.length > MAX_DILEMMA_CHARACTERS - 1000;
   useEffect(() => { onDraftChange?.(dilemma); }, [dilemma, onDraftChange]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   useLayoutEffect(() => {
@@ -32,6 +41,38 @@ export function DilemmaPage({ initialDilemma, onDraftChange, onSubmit }: Dilemma
     el.style.height = "auto";
     el.style.height = `${el.scrollHeight + 2}px`;
   }, [ownText, mode]);
+
+  useEffect(() => {
+    // A file dropped outside the text box would make the browser open it and leave the app.
+    const block = (event: globalThis.DragEvent) => {
+      if (event.dataTransfer?.types.includes("Files")) event.preventDefault();
+    };
+    window.addEventListener("dragover", block);
+    window.addEventListener("drop", block);
+    return () => {
+      window.removeEventListener("dragover", block);
+      window.removeEventListener("drop", block);
+    };
+  }, []);
+
+  async function loadFile(file: File) {
+    const result = await readDilemmaFile(file);
+    if (!result.ok) {
+      setFileNote({ kind: "error", message: result.error });
+      return;
+    }
+    setFileNote({ kind: "loaded", name: file.name, previous: ownText });
+    setOwnText(result.text);
+  }
+
+  function undoFile() {
+    if (fileNote?.kind !== "loaded") return;
+    setOwnText(fileNote.previous);
+    setFileNote(null);
+    textareaRef.current?.focus();
+  }
+
+  const hasFiles = (event: DragEvent) => event.dataTransfer.types.includes("Files");
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -90,18 +131,69 @@ export function DilemmaPage({ initialDilemma, onDraftChange, onSubmit }: Dilemma
                 </div>
               </div>
             ) : (
-              <div className="textarea-wrap">
+              <div
+                className={`textarea-wrap ${dragging ? "is-dragging" : ""}`}
+                onDragOver={(event) => {
+                  if (!hasFiles(event)) return;
+                  event.preventDefault();
+                  event.dataTransfer.dropEffect = "copy";
+                  setDragging(true);
+                }}
+                onDragLeave={(event) => {
+                  if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setDragging(false);
+                }}
+                onDrop={(event) => {
+                  if (!hasFiles(event)) return;
+                  event.preventDefault();
+                  setDragging(false);
+                  const file = event.dataTransfer.files[0];
+                  if (file) void loadFile(file);
+                }}
+              >
                 <textarea
                   ref={textareaRef}
                   id="dilemma"
                   aria-label="Dilemma"
                   name="dilemma"
                   value={ownText}
-                  onChange={(e) => setOwnText(e.target.value)}
+                  onChange={(e) => { setOwnText(e.target.value); setFileNote(null); }}
+                  maxLength={MAX_DILEMMA_CHARACTERS}
                   className="wizard-textarea"
                   placeholder="For example: My manager asked me to quietly adjust some figures so our team hits its target. I'm not comfortable, but pushing back could cost me…"
                   rows={8}
                 />
+                <div className="textarea-note">
+                  <p className={`dilemma-file-status ${fileNote?.kind === "error" ? "is-error" : ""}`} aria-live="polite">
+                    {fileNote?.kind === "loaded" && (
+                      <>
+                        Loaded “{fileNote.name}”.{" "}
+                        <button className="link-button" type="button" onClick={undoFile}>Undo</button>
+                      </>
+                    )}
+                    {fileNote?.kind === "error" && fileNote.message}
+                    {!fileNote && nearLimit && (
+                      <span className="word-count">
+                        {ownText.length.toLocaleString("en-US")} / {MAX_DILEMMA_CHARACTERS.toLocaleString("en-US")} characters
+                      </span>
+                    )}
+                  </p>
+                  <button className="link-button dilemma-upload" type="button" onClick={() => fileInput.current?.click()}>
+                    Upload a .txt or .md file
+                  </button>
+                  <input
+                    ref={fileInput}
+                    type="file"
+                    accept={DILEMMA_FILE_ACCEPT}
+                    hidden
+                    aria-label="Dilemma file"
+                    onChange={(event) => {
+                      const file = event.target.files?.[0];
+                      // Clear the input so the same file can be chosen again.
+                      event.target.value = "";
+                      if (file) void loadFile(file);
+                    }}
+                  />
+                </div>
               </div>
             )}
           </div>

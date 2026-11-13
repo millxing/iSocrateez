@@ -63,6 +63,9 @@ export interface SessionResponse {
   expiresAt: string;
 }
 
+/** Longest dilemma the app accepts, typed, pasted or loaded from a file (about 2,000 words). */
+export const MAX_DILEMMA_CHARACTERS = 12000;
+
 export interface AdviceRequest {
   token: string;
   dilemma: string;

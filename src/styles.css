@@ -166,7 +166,11 @@ h1.brand { margin: 0 0 2.5rem; font-size: 1.5rem; }
 .dilemma-body { display: flex; flex-direction: column; }
 .textarea-wrap { display: flex; flex-direction: column; gap: .5rem; max-width: 52rem; }
 .wizard-textarea { width: 100%; min-height: 11rem; max-height: 55vh; resize: none; padding: 1.25rem 1.375rem; font-size: 1.0625rem; line-height: 1.7; background: var(--surface); }
-.textarea-note { display: flex; justify-content: space-between; gap: 1rem; }
+.textarea-note { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .25rem 1rem; min-height: 1.5rem; }
+.dilemma-file-status { margin: 0; font-size: .875rem; color: var(--text-muted); }
+.dilemma-file-status.is-error { color: var(--danger); }
+.dilemma-upload { margin-left: auto; }
+.textarea-wrap.is-dragging .wizard-textarea { border-color: var(--accent); outline: 2px dashed var(--accent); outline-offset: 2px; background: var(--accent-dim); }
 .word-count { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .example-split { display: grid; height: clamp(20rem, 52vh, 34rem); grid-template-columns: minmax(14rem, 1fr) minmax(0, 1.7fr); min-height: 22rem; max-height: 34rem; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); overflow: hidden; }
 .example-list-wrap { min-height: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; background: var(--bg-elevated); }
@@ -446,7 +450,7 @@ h1.brand { margin: 0 0 2.5rem; font-size: 1.5rem; }
   .mode-toggle-option { flex: 1; min-height: 2.75rem; padding: .5rem; }
   .dilemma-body { min-height: 14rem; }
   .wizard-textarea { min-height: 13rem; font-size: 1rem; padding: 1rem; }
-  .textarea-note { flex-direction: column; gap: .25rem; }
+  .dilemma-upload { min-height: 2.75rem; }
   .example-split { grid-template-columns: minmax(0, 1fr); max-height: none; min-height: 0; }
   .example-list-wrap { border-right: 0; background: var(--surface); }
   .example-list { overflow: visible; }
@@ -593,7 +597,7 @@ h1.brand { margin: 0 0 2.5rem; font-size: 1.5rem; }
   .wizard-scroll { padding-bottom: 1.5rem; }
   /* Same height in both dilemma modes, so switching to examples doesn't shift the page. */
   .textarea-wrap { max-width: none; }
-  .wizard-textarea { min-height: clamp(18rem, 42vh, 30rem); max-height: 60vh; }
+  .wizard-textarea { min-height: calc(clamp(18rem, 42vh, 30rem) - 2rem); max-height: 60vh; }
   .example-split { height: clamp(18rem, 42vh, 30rem); min-height: 18rem; max-height: 30rem; }
   /* Results: the advice card fills the height down to the footer, like a page; long advice
      scrolls inside it, and the "Next" button sits at the card's foot on every tab. */

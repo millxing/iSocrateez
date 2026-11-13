@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { createSignedToken } from "./auth";
 import { handleRequest } from "./index";
 import type { WorkerEnv } from "./llm";
+import { MAX_DILEMMA_CHARACTERS } from "../../shared/contracts";
 
 const env: WorkerEnv = {
   APP_SHARED_PASSWORD: "open-sesame",
@@ -276,6 +277,23 @@ describe("worker routes", () => {
       const body = await response.text();
       expect(body).toContain("OpenAI rejected its API key");
       expect(body).not.toContain("sensitive upstream diagnostic");
+    } finally { fetchMock.mockRestore(); }
+  });
+
+  it("rejects a dilemma that is too long before calling the model", async () => {
+    const fetchMock = vi.spyOn(globalThis, "fetch");
+    try {
+      const token = await createSignedToken({ exp: Math.floor(Date.now() / 1000) + 60 }, env.JWT_SECRET);
+      const request = (dilemma: string) => new Request("https://example.com/api/advice", {
+        method: "POST",
+        body: JSON.stringify({ token, dilemma, answers: [],
+          profileOverride: { outcomesPrinciples: 0, individualCollective: 0, reasonIntuition: 0 },
+          explanationLevel: "general", personaMode: "personalized" })
+      });
+      const response = await handleRequest(request("x".repeat(MAX_DILEMMA_CHARACTERS + 1)), env);
+      expect(response.status).toBe(400);
+      expect(await response.text()).toContain("12,000 characters");
+      expect(fetchMock).not.toHaveBeenCalled();
     } finally { fetchMock.mockRestore(); }
   });
 

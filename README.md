@@ -18,7 +18,7 @@ It runs in your browser, on a phone or a computer. There is nothing to install. 
 
 ## How it works
 
-1. **Describe a moral dilemma.** Use your own words, or start from an example.
+1. **Describe a moral dilemma.** Use your own words, upload a text or Markdown file, or start from an example.
 
    > *My manager asked me to quietly adjust some figures so our team hits its target. I'm not comfortable, but pushing back could cost me my promotion. Should I do it, refuse, or report it?*
 

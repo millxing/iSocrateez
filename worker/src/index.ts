@@ -1,4 +1,4 @@
-import type { AdviceRequest } from "../../shared/contracts";
+import { MAX_DILEMMA_CHARACTERS, type AdviceRequest } from "../../shared/contracts";
 import { isValidAnswerSet, isValidProfileTuple } from "../../shared/ethics";
 import { isAllowedModel } from "../../shared/models";
 import { getPhilosophyById } from "../../shared/philosophyProfiles";
@@ -83,6 +83,12 @@ export async function handleRequest(
 
     if (typeof body.dilemma !== "string" || body.dilemma.trim().length < 10) {
       return json({ error: "Provide a dilemma of at least 10 characters." }, 400, request, env);
+    }
+    if (body.dilemma.length > MAX_DILEMMA_CHARACTERS) {
+      return json(
+        { error: `Shorten the dilemma to ${MAX_DILEMMA_CHARACTERS.toLocaleString("en-US")} characters or fewer.` },
+        400, request, env
+      );
     }
 
     if (body.philosopherId !== undefined) {
