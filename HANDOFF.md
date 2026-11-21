@@ -182,6 +182,22 @@ Verified: `contrast` reproduces more expected disagreements than `prod` in every
 Risk: the examples in step 5b (acts forbidden in all cases, duties to oneself, role duties) are general, but they match the development misses. The development gain may overstate the effect. Only the holdout run can test this. Not decided: whether `contrast` goes into `worker/src/prompts.ts`.
 
 
+## 3f. Reasoning test (2026-11-21)
+
+Question: when thinkers give the same verdict, is the reasoning different, or one argument in different words? Script: `experiments/verdict-check/reasoningRun.ts` (logic in `reasoning.ts`, tests in `reasoning.test.ts`; shared call helpers moved to `cli.ts`). Report: `data/reasoning-development.md`.
+
+Method: development split, sample 1, voice answers. Groups = answers on one dilemma (7 test thinkers + baseline) that chose the same option, 3 or more. GPT 6.2 Sol rewrote each answer as a plain argument outline without names, sources, technical terms or first-person voice (399 outlines; leak check, 10 retried, 0 left with a leak). Two judges (GPT 6.1 Terra, Claude Sonnet 5.5) matched the outlines of each group to the authors, separately.
+
+| variant | matched (Terra / Sonnet) | chance | thinkers taken for the baseline |
+|---|---|---|---|
+| legacy | 97% / 100% | 15% | 0% / 0% (chance 14%) |
+| prod | 99% / 96% | 15% | 0% / 1% |
+| contrast | 100% / 99% | 15% | 0% / 0% |
+
+Verified: with names and terms removed, the judges still identify almost every author, in every variant, including the original prompts. The judges' notes name content, not words: duties to donors and "using her" (Kant), help that makes the poor self-supporting (Maimonides), a fitting degree of anger (Aristotle), shame as a moral signal (Mencius).
+
+Interpretation (not verified): the app does not give one argument in different words; each thinker's reasons are specific, and were already in `legacy`. So this test cannot tell the variants apart (ceiling). What remains of the professor's complaint is at the verdict level (sections 3c to 3e): thinkers whose texts give a hard answer were pulled to the common answer, with their own reasons attached. A possible sharper test: match on the "Decisive fact" section only, to see if the deciding reason (not only the supporting reasons) is thinker-specific.
+
 ## 4. Decisions and reasons
 
 - **Paired cases, not one "correct" answer.** The first key gave each philosopher one option for each dilemma. An outside reviewer showed that the texts do not settle most of those answers (24 of 78 judged "open", 4 changed). The reviewer proposed pairs: tell one case twice, change one fact, and check whose answer reverses. This needs agreement only on which fact matters to whom. Review: `experiments/verdict-check/reviews/second-reviewer-2026-11.md`. The reviewer is not identified to us.

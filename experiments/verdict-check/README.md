@@ -123,3 +123,9 @@ A pair has a base case and a variant case. One fact differs (the pivot). For eac
 ## Holdout rule
 
 Holdout dilemmas and holdout pairs are for the final measurement only. Never use them to tune a prompt.
+
+## Reasoning test
+
+`npx vite-node experiments/verdict-check/reasoningRun.ts --variants legacy,prod,contrast [--sample 1] [--stage outline|judge|report|all]`
+
+Asks whether thinkers who give the same verdict argue differently. Groups the cached voice answers by verdict, has GPT 6.2 Sol (Codex CLI) rewrite each as a plain argument outline without names or technical terms (`LEAK_PATTERNS` in `reasoning.ts`), and has two judges (GPT 6.1 Terra, Claude Sonnet 5.5) match outlines to authors. Writes `data/<variant>/reasoning/` and `data/reasoning-development.md`. Needs the `codex` CLI signed in. No new advice calls.
