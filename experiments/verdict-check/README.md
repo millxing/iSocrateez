@@ -36,9 +36,23 @@ npx vite-node experiments/verdict-check/run.ts
 
 The first line makes no model calls and scores what is cached. The second is a smoke test. The third is a full development run.
 
-Options: `--variant <name>`, `--split development|holdout|all`, `--route voice|profile|pair|all`, `--limit <n>`, `--concurrency <n>`.
+Options: `--variant <name>`, `--split development|holdout|all`, `--route voice|profile|pair|all`, `--limit <n>`, `--concurrency <n>`, `--samples <n>`.
 
 Results are cached in `data/<variant>/`. A rerun continues from the cache. A changed prompt or changed advice makes a new call. The report goes to `data/<variant>/report-<split>.md`.
+
+Note: a run with `--limit` writes a report of only those tasks over the full report. Run `--report-only` after it to get the full report again.
+
+### Run-to-run variation
+
+The same prompt can give a different answer on a second call. To measure this, answer every task more than one time:
+
+```
+npx vite-node experiments/verdict-check/run.ts --samples 3 --concurrency 8
+```
+
+Sample 1 is the normal cache in `data/<variant>/`. Sample k is in `data/<variant>/sample-k/`, with its own report. The run also writes `data/<variant>/variability-<split>.md`: the main scores of each sample side by side, the share of tasks with the same verdict in every sample, and a list of the tasks whose verdict changed. Each extra sample of the development split costs 168 advice calls and 168 judge calls.
+
+Use it before you compare two variants. A difference between variants that is no larger than the spread between samples is not evidence.
 
 ## What "open" means
 
@@ -77,7 +91,7 @@ A pair has a base case and a variant case. One fact differs (the pivot). For eac
 ## Limits
 
 - Most recorded pairs can be passed by recall of a famous passage. If the passages behind the holdout pairs are written into the app's notes on a philosopher, the holdout measures copying.
-- Each case is answered once, so one changed answer can be noise.
+- By default each case is answered once, so one changed answer can be noise. Use `--samples` to measure how often a verdict changes.
 
 ## Holdout rule
 

@@ -4,21 +4,23 @@
  *
  * Usage (from the repo root):
  *   npx vite-node experiments/verdict-check/run.ts [--variant prod] [--split development|holdout|all]
- *     [--route voice|profile|pair|all] [--report-only] [--limit n] [--concurrency n]
+ *     [--route voice|profile|pair|all] [--report-only] [--limit n] [--concurrency n] [--samples n]
  * Model calls use the `claude` CLI in headless mode (subscription sign-in, no API key).
  * Every output is cached in data/<variant>/, so a rerun continues where the last run stopped.
+ * --samples n answers every task n times, to measure run-to-run variation. Sample 1 is data/<variant>/;
+ * sample k is data/<variant>/sample-k/. With n > 1, the run also writes data/<variant>/variability-<split>.md.
  */
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { dirname, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getPhilosophyById } from "../../shared/philosophyProfiles";
 import { AXIS_POLES, TEST_PHILOSOPHERS, VERDICT_DILEMMAS, type VerdictDilemma } from "./answerKey";
 import { CASE_PAIRS, type CasePair } from "./pairs";
 import { buildJudgePrompt, parseJudgeReply } from "./judge";
-import { axisCount, buildTasks, KEY_AXES, pairResult, pairTaskId, scorePairs, scoreProfile, scoreVoice, type Rate, type Task, type VerdictMap } from "./scoring";
+import { axisCount, buildTasks, KEY_AXES, pairResult, pairTaskId, sampleAgreement, scorePairs, scoreProfile, scoreVoice, type Rate, type Task, type VerdictMap } from "./scoring";
 import { VARIANTS } from "./variants";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -34,10 +36,11 @@ interface Options {
   reportOnly: boolean;
   limit: number;
   concurrency: number;
+  samples: number;
 }
 
 function parseOptions(argv: string[]): Options {
-  const options: Options = { variant: "prod", split: "development", route: "all", reportOnly: false, limit: Infinity, concurrency: 6 };
+  const options: Options = { variant: "prod", split: "development", route: "all", reportOnly: false, limit: Infinity, concurrency: 6, samples: 1 };
   const choose = <T extends string>(name: string, value: string | undefined, allowed: readonly T[]): T => {
     if (!allowed.includes(value as T)) throw new Error(`${name} must be one of: ${allowed.join(", ")}`);
     return value as T;
@@ -49,10 +52,11 @@ function parseOptions(argv: string[]): Options {
     else if (flag === "--variant") options.variant = (index += 1, value);
     else if (flag === "--split") options.split = (index += 1, choose("--split", value, ["development", "holdout", "all"]));
     else if (flag === "--route") options.route = (index += 1, choose("--route", value, ["voice", "profile", "pair", "all"]));
-    else if (flag === "--limit" || flag === "--concurrency") {
+    else if (flag === "--limit" || flag === "--concurrency" || flag === "--samples") {
       const number = Number(value);
       if (!Number.isInteger(number) || number < 1) throw new Error(`${flag} needs a whole number of 1 or more`);
       if (flag === "--limit") options.limit = number;
+      else if (flag === "--samples") options.samples = number;
       else options.concurrency = number;
       index += 1;
     } else throw new Error(`Unknown option: ${flag}`);
@@ -166,8 +170,13 @@ interface Outcome {
   failures: string[];
 }
 
-async function processTask(task: Task, dilemma: Case, options: Options, outcome: Outcome) {
-  const dataDir = join(HERE, "data", options.variant);
+/** The data folder of one sample. Sample 1 is the variant folder itself, so older caches count as sample 1. */
+function sampleDir(variant: string, sample: number): string {
+  const base = join(HERE, "data", variant);
+  return sample === 1 ? base : join(base, `sample-${sample}`);
+}
+
+async function processTask(task: Task, dilemma: Case, options: Options, dataDir: string, outcome: Outcome) {
   const prompt = promptFor(task, dilemma.text, options.variant);
   const promptHash = sha256(prompt);
 
@@ -185,7 +194,8 @@ async function processTask(task: Task, dilemma: Case, options: Options, outcome:
       advice = { promptHash, model: GENERATOR.model, prompt, text };
       writeJson(advicePath, advice);
       outcome.advice.run += 1;
-      console.log(`  advice/${task.id}  (${((Date.now() - started) / 1000).toFixed(0)} s)`);
+      const sampleTag = dataDir === sampleDir(options.variant, 1) ? "" : `${basename(dataDir)}/`;
+      console.log(`  ${sampleTag}advice/${task.id}  (${((Date.now() - started) / 1000).toFixed(0)} s)`);
     } catch (error) {
       outcome.advice.failed += 1;
       outcome.failures.push(`advice ${task.id}: ${String(error).slice(0, 200)}`);
@@ -243,13 +253,13 @@ function table(header: string[], rows: string[][]): string[] {
   return [`| ${header.join(" | ")} |`, `| ${header.map(() => "---").join(" | ")} |`, ...rows.map((row) => `| ${row.join(" | ")} |`)];
 }
 
-function renderReport(options: Options, dilemmas: VerdictDilemma[], pairs: CasePair[], tasks: Task[], outcome: Outcome): string {
+function renderReport(options: Options, sample: number, dilemmas: VerdictDilemma[], pairs: CasePair[], tasks: Task[], outcome: Outcome): string {
   const pairById = new Map(pairs.map((pair) => [pair.id, pair]));
   const voice = scoreVoice(dilemmas, outcome.verdicts);
   const pairScore = scorePairs(pairs, outcome.verdicts, outcome.usesPivot);
   const profile = scoreProfile(dilemmas, outcome.verdicts);
   const axes = axisCount(dilemmas);
-  const names: Record<string, string> = { "mill-utilitarianism": "Mill", "kant-deontology": "Kant", "aristotle-virtue-ethics": "Aristotle", "confucius-role-ethics": "Confucius" };
+  const names = NAMES;
   const voiceTasks = tasks.filter((task) => task.route === "voice").length;
   const pairTasks = tasks.filter((task) => task.route === "pair").length;
   const profileTasks = tasks.length - voiceTasks - pairTasks;
@@ -259,6 +269,7 @@ function renderReport(options: Options, dilemmas: VerdictDilemma[], pairs: CaseP
     `- Date: ${new Date().toISOString().slice(0, 10)}`,
     `- Variant: ${options.variant}`,
     `- Split: ${options.split}`,
+    `- Sample: ${sample}`,
     `- Route: ${options.route}${options.limit < Infinity ? ` (limit ${options.limit} tasks)` : ""}${options.reportOnly ? " (report only, no model calls)" : ""}`,
     `- Advice model: ${GENERATOR.model} (effort ${GENERATOR.effort})`,
     `- Judge model: ${JUDGE.model} (effort ${JUDGE.effort})`,
@@ -381,6 +392,66 @@ function renderReport(options: Options, dilemmas: VerdictDilemma[], pairs: CaseP
   return lines.join("\n");
 }
 
+const NAMES: Record<string, string> = { "mill-utilitarianism": "Mill", "kant-deontology": "Kant", "aristotle-virtue-ethics": "Aristotle", "confucius-role-ethics": "Confucius" };
+
+/** Compare the samples: main scores side by side, then the tasks whose verdict changed between samples. */
+function renderVariability(options: Options, dilemmas: VerdictDilemma[], pairs: CasePair[], tasks: Task[], outcomes: Outcome[]): string {
+  const sampleHeader = outcomes.map((_, index) => `sample ${index + 1}`);
+  const rows: string[][] = [];
+  const add = (label: string, values: string[]) => rows.push([label, ...values]);
+  const route = (name: Task["route"]) => options.route === "all" || options.route === name;
+
+  if (route("voice")) {
+    const voice = outcomes.map((outcome) => scoreVoice(dilemmas, outcome.verdicts));
+    add("Voice: match with the key", voice.map((score) => pct(score.matchOverall)));
+    for (const id of TEST_PHILOSOPHERS) add(`Voice: ${NAMES[id]}`, voice.map((score) => pct(score.matchByPhilosopher[id])));
+    add('Voice: "none" verdicts', voice.map((score) => pct(score.noneVerdicts)));
+  }
+  if (route("profile")) {
+    const profile = outcomes.map((outcome) => scoreProfile(dilemmas, outcome.verdicts));
+    add("Profile: both poles match the key", profile.map((score) => `${score.overall.bothMatch} of ${score.overall.complete}`));
+    add("Profile: the two poles differ", profile.map((score) => `${score.overall.differs} of ${score.overall.complete}`));
+  }
+  if (route("pair")) {
+    const pair = outcomes.map((outcome) => scorePairs(pairs, outcome.verdicts, outcome.usesPivot));
+    add("Pairs: flip rows correct", pair.map((score) => `${score.flip.correct} of ${score.flip.complete}`));
+    add("Pairs: same rows correct", pair.map((score) => `${score.same.correct} of ${score.same.complete}`));
+    add("Pairs: correct rows that differ from the baseline", pair.map((score) => `${score.correctAndDifferent} of ${score.flip.correct + score.same.correct}`));
+  }
+  add("Tasks with no verdict", outcomes.map((outcome) => String(tasks.length - Object.keys(outcome.verdicts).length)));
+
+  const samples = outcomes.map((outcome) => outcome.verdicts);
+  const all = sampleAgreement(tasks.map((task) => task.id), samples);
+  const byRoute = (["voice", "profile", "pair"] as const)
+    .filter((name) => route(name))
+    .map((name) => {
+      const agreement = sampleAgreement(tasks.filter((task) => task.route === name).map((task) => task.id), samples);
+      return `- ${name}: ${pct({ hit: agreement.stable, total: agreement.complete })}`;
+    });
+
+  return [
+    "# Verdict check: run-to-run variation", "",
+    `- Date: ${new Date().toISOString().slice(0, 10)}`,
+    `- Variant: ${options.variant}`,
+    `- Split: ${options.split}`,
+    `- Route: ${options.route}${options.limit < Infinity ? ` (limit ${options.limit} tasks)` : ""}`,
+    `- Samples: ${outcomes.length}. Each sample answers every task one time, with the same prompt.`,
+    `- Advice model: ${GENERATOR.model} (effort ${GENERATOR.effort}); judge: ${JUDGE.model} (effort ${JUDGE.effort})`, "",
+    "A difference between two prompt variants that is no larger than the spread between these samples is not evidence that one variant is better.", "",
+    "## Main scores, sample by sample", "",
+    ...table(["measure", ...sampleHeader], rows), "",
+    "## Same verdict in every sample", "",
+    `- All tasks: ${pct({ hit: all.stable, total: all.complete })}`,
+    ...byRoute,
+    `- Tasks without a verdict in one or more samples (not compared): ${all.incomplete}`, "",
+    "## Tasks whose verdict changed", "",
+    ...(all.unstable.length
+      ? table(["task", ...sampleHeader], all.unstable.map((row) => [row.taskId, ...row.verdicts]))
+      : ["None."]),
+    ""
+  ].join("\n");
+}
+
 // ---------- main ----------
 
 async function main() {
@@ -394,21 +465,34 @@ async function main() {
   const reportDilemmas = limited ? dilemmas.filter((dilemma) => tasks.some((task) => "dilemmaId" in task && task.dilemmaId === dilemma.id)) : dilemmas;
   const reportPairs = limited ? pairs.filter((pair) => tasks.some((task) => task.route === "pair" && task.pairId === pair.id)) : pairs;
 
-  const outcome: Outcome = { verdicts: {}, conditional: {}, usesPivot: {}, advice: newCounts(), judge: newCounts(), failures: [] };
-  console.log(`Variant ${options.variant}, split ${options.split}, route ${options.route}: ${tasks.length} tasks${options.reportOnly ? " (report only)" : ""}`);
-  await pool(tasks, options.concurrency, (task) => {
-    const source: Case = task.route === "pair"
-      ? { text: task.text, options: pairById.get(task.pairId)!.options, pivot: pairById.get(task.pairId)!.pivot }
-      : dilemmaById.get(task.dilemmaId)!;
-    return processTask(task, source, options, outcome);
-  });
+  const outcomes: Outcome[] = [];
+  for (let sample = 1; sample <= options.samples; sample += 1) {
+    const dataDir = sampleDir(options.variant, sample);
+    const outcome: Outcome = { verdicts: {}, conditional: {}, usesPivot: {}, advice: newCounts(), judge: newCounts(), failures: [] };
+    console.log(`Variant ${options.variant}, split ${options.split}, route ${options.route}, sample ${sample} of ${options.samples}: ${tasks.length} tasks${options.reportOnly ? " (report only)" : ""}`);
+    await pool(tasks, options.concurrency, (task) => {
+      const source: Case = task.route === "pair"
+        ? { text: task.text, options: pairById.get(task.pairId)!.options, pivot: pairById.get(task.pairId)!.pivot }
+        : dilemmaById.get(task.dilemmaId)!;
+      return processTask(task, source, options, dataDir, outcome);
+    });
+    outcomes.push(outcome);
 
-  const report = renderReport(options, reportDilemmas, reportPairs, tasks, outcome);
-  const file = join(HERE, "data", options.variant, `report-${options.split}.md`);
-  mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, report + "\n");
-  console.log("\n" + report);
-  console.log(`Report saved to ${file}`);
+    const report = renderReport(options, sample, reportDilemmas, reportPairs, tasks, outcome);
+    const file = join(dataDir, `report-${options.split}.md`);
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, report + "\n");
+    if (options.samples === 1) console.log("\n" + report);
+    console.log(`Report saved to ${file}`);
+  }
+
+  if (options.samples > 1) {
+    const variability = renderVariability(options, reportDilemmas, reportPairs, tasks, outcomes);
+    const file = join(sampleDir(options.variant, 1), `variability-${options.split}.md`);
+    writeFileSync(file, variability + "\n");
+    console.log("\n" + variability);
+    console.log(`Variation report saved to ${file}`);
+  }
 }
 
 main().catch((error) => { console.error(error); process.exit(1); });

@@ -399,3 +399,32 @@ export function axisCount(dilemmas: VerdictDilemma[]): AxisCount {
   }
   return { splitDilemmas: split.length, decides, onlyThisAxis, noAxis };
 }
+
+// ---------- run-to-run variation ----------
+
+export interface SampleAgreement {
+  /** Tasks with a verdict in every sample. */
+  complete: number;
+  /** Complete tasks where every sample gave the same verdict. */
+  stable: number;
+  /** Complete tasks where the samples gave different verdicts, with the verdict of each sample. */
+  unstable: { taskId: string; verdicts: Verdict[] }[];
+  /** Tasks that lack a verdict in one or more samples. */
+  incomplete: number;
+}
+
+/** Compare the verdicts of repeated samples of the same tasks. */
+export function sampleAgreement(taskIds: string[], samples: VerdictMap[]): SampleAgreement {
+  const result: SampleAgreement = { complete: 0, stable: 0, unstable: [], incomplete: 0 };
+  for (const taskId of taskIds) {
+    const verdicts = samples.map((sample) => sample[taskId]);
+    if (verdicts.some((verdict) => verdict === undefined)) {
+      result.incomplete += 1;
+      continue;
+    }
+    result.complete += 1;
+    if (new Set(verdicts).size === 1) result.stable += 1;
+    else result.unstable.push({ taskId, verdicts: verdicts as Verdict[] });
+  }
+  return result;
+}

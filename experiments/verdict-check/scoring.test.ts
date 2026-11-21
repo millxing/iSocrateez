@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Basis, CasePair } from "./pairs";
 import type { ExpectedVerdict, VerdictDilemma } from "./answerKey";
-import { axisCount, buildTasks, isMatch, pairResult, scorePairs, scoreProfile, scoreVoice } from "./scoring";
+import { axisCount, buildTasks, isMatch, pairResult, sampleAgreement, scorePairs, scoreProfile, scoreVoice } from "./scoring";
 
 const entry = (option: string, confidence: "clear" | "disputed" = "clear", alsoAccept?: string[]): ExpectedVerdict => ({
   option, confidence, alsoAccept, reason: "r", source: "s"
@@ -303,5 +303,23 @@ describe("axisCount", () => {
 
   it("counts a split dilemma with no axis", () => {
     expect(axisCount([{ ...dilemmas[0], axes: [] }]).noAxis).toBe(1);
+  });
+});
+
+describe("sampleAgreement", () => {
+  it("counts stable, unstable and incomplete tasks across samples", () => {
+    const result = sampleAgreement(["t1", "t2", "t3", "t4"], [
+      { t1: "a", t2: "a", t3: "a", t4: "none" },
+      { t1: "a", t2: "b", t4: "none" },
+      { t1: "a", t2: "a", t3: "a", t4: "none" }
+    ]);
+    expect(result.complete).toBe(3);
+    expect(result.stable).toBe(2);
+    expect(result.incomplete).toBe(1);
+    expect(result.unstable).toEqual([{ taskId: "t2", verdicts: ["a", "b", "a"] }]);
+  });
+
+  it("treats one sample as fully stable", () => {
+    expect(sampleAgreement(["t1"], [{ t1: "b" }])).toEqual({ complete: 1, stable: 1, unstable: [], incomplete: 0 });
   });
 });
