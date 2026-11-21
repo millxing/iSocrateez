@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { TEST_PHILOSOPHERS, VERDICT_DILEMMAS } from "./answerKey";
+import { CORE_PHILOSOPHERS, TEST_PHILOSOPHERS, VERDICT_DILEMMAS } from "./answerKey";
 
 describe("answer key", () => {
   it("has unique dilemma ids", () => {
@@ -55,10 +55,10 @@ describe("answer key", () => {
           expect(dilemma.axes).toEqual([]);
         });
       } else if (dilemma.kind === "agreement") {
-        it("has no axes and one expected option for all four philosophers", () => {
+        it("has no axes, an entry for each core philosopher, and one expected option for every entry", () => {
           expect(dilemma.axes).toEqual([]);
-          const options = TEST_PHILOSOPHERS.map((id) => dilemma.philosophers[id]?.option);
-          expect(options.every((option) => option !== undefined)).toBe(true);
+          expect(CORE_PHILOSOPHERS.every((id) => dilemma.philosophers[id] !== undefined)).toBe(true);
+          const options = TEST_PHILOSOPHERS.map((id) => dilemma.philosophers[id]?.option).filter((option) => option !== undefined);
           expect(new Set(options).size).toBe(1);
         });
       } else {

@@ -36,7 +36,9 @@ npx vite-node experiments/verdict-check/run.ts
 
 The first line makes no model calls and scores what is cached. The second is a smoke test. The third is a full development run.
 
-Options: `--variant <name>`, `--split development|holdout|all`, `--route voice|profile|pair|all`, `--limit <n>`, `--concurrency <n>`, `--samples <n>`.
+Options: `--variant <name>`, `--split development|holdout|all`, `--route voice|profile|pair|all`, `--limit <n>`, `--concurrency <n>`, `--samples <n>`, `--reuse-from <variant>`, `--compare <variant,variant,...>`.
+
+`--reuse-from prod` copies an answer from `prod` (same sample) when this variant's prompt is the same, instead of a new call. Example: the `notes` variant gives the transfer thinkers the same prompt as `prod`.
 
 Results are cached in `data/<variant>/`. A rerun continues from the cache. A changed prompt or changed advice makes a new call. The report goes to `data/<variant>/report-<split>.md`.
 
@@ -53,6 +55,23 @@ npx vite-node experiments/verdict-check/run.ts --samples 3 --concurrency 8
 Sample 1 is the normal cache in `data/<variant>/`. Sample k is in `data/<variant>/sample-k/`, with its own report. The run also writes `data/<variant>/variability-<split>.md`: the main scores of each sample side by side, the share of tasks with the same verdict in every sample, and a list of the tasks whose verdict changed. Each extra sample of the development split costs 168 advice calls and 168 judge calls.
 
 Use it before you compare two variants. A difference between variants that is no larger than the spread between samples is not evidence.
+
+### Compare variants with the original prompts
+
+```
+npx vite-node experiments/verdict-check/run.ts --compare legacy,prod,notes --samples 3
+```
+
+This makes no model calls. It scores the cache of each variant, sample by sample, and writes `data/comparison-<split>.md`: the main scores, the distinctness table and every keyed row, with one column for each variant. Each cell shows the samples in order ("s1 / s2 / s3"). Run each variant with `--samples 3` first. Always include `legacy`: it is the original advice process, and every claim of progress is made against it.
+
+## Test philosophers
+
+- Core four: Mill, Kant, Aristotle, Confucius. The key was written for them, and the model knows them best.
+- Transfer thinkers (since 2026-11-21): Mencius, Hume, Maimonides. They have no lens notes. They show whether a change works beyond the core four. Every pair runs for all seven.
+
+## Distinctness
+
+The report counts, for each philosopher, the pair sides where the verdict differs from the baseline verdict on the same text. It needs no key, so it measures the complaint directly. A wrong answer also differs, so read it with the keyed scores.
 
 ## What "open" means
 

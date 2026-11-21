@@ -19,13 +19,39 @@
  */
 import type { Axis } from "../../shared/contracts";
 
-export const TEST_PHILOSOPHERS = [
+/** The four thinkers that the key was first written for. The model knows them best. */
+export const CORE_PHILOSOPHERS = [
   "mill-utilitarianism",
   "kant-deontology",
   "aristotle-virtue-ethics",
   "confucius-role-ethics"
 ] as const;
+
+/**
+ * Transfer test (added 2026-11-21): thinkers outside the core four, less known to the model, each with
+ * recorded positions on cases of this kind. They show whether a prompt change works beyond the core four.
+ * They have no lens notes. Their entries had a reference check only where the comment says so.
+ */
+export const TRANSFER_PHILOSOPHERS = [
+  "mencius-confucianism",
+  "hume-sentimentalism",
+  "maimonides-jewish-ethics"
+] as const;
+
+export const TEST_PHILOSOPHERS = [...CORE_PHILOSOPHERS, ...TRANSFER_PHILOSOPHERS] as const;
 export type TestPhilosopherId = (typeof TEST_PHILOSOPHERS)[number];
+export type CorePhilosopherId = (typeof CORE_PHILOSOPHERS)[number];
+
+/** Short names for reports and for the key document. */
+export const PHILOSOPHER_NAMES: Record<TestPhilosopherId, string> = {
+  "mill-utilitarianism": "Mill",
+  "kant-deontology": "Kant",
+  "aristotle-virtue-ethics": "Aristotle",
+  "confucius-role-ethics": "Confucius",
+  "mencius-confucianism": "Mencius",
+  "hume-sentimentalism": "Hume",
+  "maimonides-jewish-ethics": "Maimonides"
+};
 
 /**
  * The three axes of the app, plus one candidate axis that the app does not have yet:
@@ -97,6 +123,12 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
       { id: "deny", label: "Say that you know nothing, to protect the father" }
     ],
     philosophers: {
+      "maimonides-jewish-ethics": {
+        option: "tell",
+        confidence: "clear",
+        reason: "To say 'I know nothing' is a false statement, and it leaves two innocent members under suspicion. The honour owed to a parent does not reach a transgression: if a father tells his son to transgress, the son does not obey. Deception in speech is forbidden.",
+        source: "Mishneh Torah, Hilkhot Mamrim 6:12 (do not obey a parent who asks for a transgression); Hilkhot De'ot 2:6 (no deception in speech)"
+      },
       "mill-utilitarianism": {
         option: "tell",
         confidence: "clear",
@@ -134,6 +166,12 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
       { id: "cover", label: "Do not report him: keep it in the family and urge him to put it right" }
     ],
     philosophers: {
+      "mencius-confucianism": {
+        option: "cover",
+        confidence: "clear",
+        reason: "Asked what Shun, as emperor, would do if his father killed a man, Mencius says that Shun would not stop the judge from arresting him, but would give up the empire, carry his father away in secret and live with him at the edge of the sea. Shun does not hide the crime or obstruct the judge, but he does not denounce his father either; he gives up his own position to stay with him. The case is murder, so this is an analogy for a lesser one, where no one else is suspected and no one has asked. Scholars dispute what the passage says about concealment.",
+        source: "Mencius 7A35"
+      },
       "confucius-role-ethics": {
         option: "cover",
         confidence: "clear",
@@ -189,6 +227,18 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
       { id: "refrain", label: "Do not push the stranger" }
     ],
     philosophers: {
+      "mencius-confucianism": {
+        option: "refrain",
+        confidence: "disputed",
+        reason: "Mencius says of the sages Bo Yi, Yi Yin and Confucius that none of them would commit one unrighteous act or kill one innocent person, even to gain the whole empire. The passage is about gain, not about saving five lives, so this is an analogy; Mencius 4A17 (weighing the rule against the case) gives a less rule-bound reading.",
+        source: "Mencius 2A2"
+      },
+      "maimonides-jewish-ethics": {
+        option: "refrain",
+        confidence: "clear",
+        reason: "One life is not set aside for another. A pursuer who threatens a life may be stopped, even by killing him, but the stranger pursues no one. When a group is told to hand over one person to be killed or all will die, they must all die rather than hand over one innocent person.",
+        source: "Mishneh Torah, Hilkhot Rotzeach u-Shmirat ha-Nefesh 1:9 (one life is not set aside for another); Hilkhot Yesodei ha-Torah 5:5 (a group must not hand over one person)"
+      },
       "mill-utilitarianism": {
         option: "push",
         confidence: "disputed",
@@ -248,6 +298,18 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
       { id: "no-lie", label: "Do not lie: tell the truth or refuse to answer" }
     ],
     philosophers: {
+      "hume-sentimentalism": {
+        option: "lie",
+        confidence: "clear",
+        reason: "Hume grounds the rules of justice and fidelity in their usefulness to society, and holds that they give way in cases of extreme necessity, where keeping them brings ruin. Our approval of benevolence, and our blame for a person who fails a friend in danger, point the same way. No text discusses this case.",
+        source: "Enquiry concerning the Principles of Morals, sec. 3 part 1 (rules of justice suspended in extreme necessity); sec. 2 (benevolence)"
+      },
+      "maimonides-jewish-ethics": {
+        option: "lie",
+        confidence: "clear",
+        reason: "One must rescue a person whose life is pursued, even by killing the pursuer if nothing less will stop him. A false word that sends the pursuer away is far less. 'Do not stand by the blood of your neighbour' makes the rescue a duty.",
+        source: "Mishneh Torah, Hilkhot Rotzeach u-Shmirat ha-Nefesh 1:6-7 (the pursuer), 1:14 (do not stand by the blood of your neighbour)"
+      },
       "mill-utilitarianism": {
         option: "lie",
         confidence: "clear",
@@ -391,6 +453,18 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
       { id: "not-take", label: "Do not take the drug" }
     ],
     philosophers: {
+      "hume-sentimentalism": {
+        option: "take",
+        confidence: "clear",
+        reason: "Hume asks if it is a crime, after a shipwreck, to seize whatever means of safety one can, without regard to former limits of property, or for a besieged city perishing of hunger to break open the granaries. In such extreme necessity the rules of property give way, because they exist only for their usefulness.",
+        source: "Enquiry concerning the Principles of Morals, sec. 3 part 1 (the shipwreck and the besieged city)"
+      },
+      "maimonides-jewish-ethics": {
+        option: "take",
+        confidence: "clear",
+        reason: "When life is at stake, a person transgresses rather than die, except for the three (idolatry, forbidden sexual relations, murder); the text concerns a person forced to transgress. Theft is not among the three; that this permits taking a third party's property to save someone else is the Talmud's extension of the rule. A person who saves a life with another's property must still pay for it, which fits leaving the $8,000 and owing the rest.",
+        source: "Mishneh Torah, Hilkhot Yesodei ha-Torah 5:1-2 (saving life sets aside the commandments); Hilkhot Hovel u-Mazik 8:2 (one who saves himself with another's property pays for it)"
+      },
       "mill-utilitarianism": {
         option: "take",
         confidence: "clear",
@@ -428,6 +502,12 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
       { id: "better", label: "Hire the better candidate" }
     ],
     philosophers: {
+      "mencius-confucianism": {
+        option: "better",
+        confidence: "clear",
+        reason: "A ruler who promotes the worthy may have to put strangers above his own kin, and must do it with care. When Shun gave his brother Xiang a fief, he had officials govern it and sent Xiang its revenue: he provided for his brother, but did not give him a post. Care for kin is graded and real, but a post of public trust goes to the worthy.",
+        source: "Mencius 1B7 (the distant above kin, in promotion); 5A3 (Shun and Xiang)"
+      },
       "mill-utilitarianism": {
         option: "better",
         confidence: "clear",
@@ -530,6 +610,12 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
       { id: "deflect", label: "Thank the team and say nothing of your own part" }
     ],
     philosophers: {
+      "maimonides-jewish-ethics": {
+        option: "deflect",
+        confidence: "disputed",
+        reason: "Humility is one of the two traits where a person must go to the far end, not to the middle: one should be very lowly of spirit. Maimonides also calls shaming another person, above all in public, a great sin, and here the plain claim would shame the colleague in front of everyone. Against this: De'ot 2:3 concerns an inner trait and does not forbid a true statement, and the false impression is itself a kind of deception; Maimonides might prefer a private word, which the options leave out.",
+        source: "Mishneh Torah, Hilkhot De'ot 2:3 (humility to the extreme); 6:8 (do not shame another, above all in public)"
+      },
       "aristotle-virtue-ethics": {
         option: "claim",
         confidence: "disputed",
@@ -558,6 +644,24 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
       { id: "keep", label: "Keep the extra money" }
     ],
     philosophers: {
+      "mencius-confucianism": {
+        option: "return",
+        confidence: "clear",
+        reason: "To take what is not one's own is against rightness. A man who steals a chicken from his neighbour every day proposes to reduce it to one a month and stop next year; Mencius answers that if he knows it is wrong, he should stop at once.",
+        source: "Mencius 7A33; 3B8"
+      },
+      "hume-sentimentalism": {
+        option: "return",
+        confidence: "clear",
+        reason: "Hume's 'sensible knave' holds that he may break a rule of honesty when it profits him and no one will know. Hume answers that the honest person keeps the rule, and keeps the peace of mind and the trust of others that the knave gives up.",
+        source: "Enquiry concerning the Principles of Morals, Conclusion, part 2"
+      },
+      "maimonides-jewish-ethics": {
+        option: "return",
+        confidence: "clear",
+        reason: "It is forbidden to rob even the slightest amount. To keep money that one knows was paid by mistake is to hold what belongs to another. The application to a mistake is our inference.",
+        source: "Mishneh Torah, Hilkhot Gezelah va-Avedah 1:1-2"
+      },
       "mill-utilitarianism": {
         option: "return",
         confidence: "clear",
@@ -596,6 +700,18 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
       { id: "silent", label: "Do not correct it in public" }
     ],
     philosophers: {
+      "mencius-confucianism": {
+        option: "correct",
+        confidence: "clear",
+        reason: "The gentlemen of old corrected their mistakes, and their mistakes were like eclipses of the sun and moon: everyone saw them, and when they changed, everyone looked up to them. Mencius blames those who persist in a mistake and make excuses for it.",
+        source: "Mencius 2B9; 2A8 (Zilu was glad to be told of his faults)"
+      },
+      "maimonides-jewish-ethics": {
+        option: "correct",
+        confidence: "clear",
+        reason: "Repentance for a wrong to another person needs more than confession: one must put the wrong right and seek the other's forgiveness. The text does not say where the repair is made; that a public false charge is corrected in public is our inference.",
+        source: "Mishneh Torah, Hilkhot Teshuvah 2:9"
+      },
       "mill-utilitarianism": {
         option: "correct",
         confidence: "clear",

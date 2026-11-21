@@ -14,7 +14,7 @@ Written 2026-11-21. Read `CLAUDE.md` first, then this file.
 | 2 | Build a test that shows if the recommendation changes with the philosopher or the profile | Done, local. The key is not yet checked by a philosopher |
 | 3 | Rewrite the two advice prompts: work out what the view concludes, then advise | Done, local |
 | 4 | Replace the two-sentence philosopher briefs with longer notes | **Pilot done for Mill, Kant, Aristotle, Confucius (section 3a). Stopped there. Not in the app** |
-| 4a | Transfer test (other thinkers) and distinctness test (thinker against common sense), compared with the original prompts | **In progress (section 3b)** |
+| 4a | Transfer test (other thinkers) and distinctness test (thinker against common sense), compared with the original prompts | **Done, first result (section 3b)** |
 | 5 | Send the user's actual calibration answers to the model | Not started. Smaller than first planned (see section 8) |
 | 6 | Run the held-back cases once, then decide the larger items (axes, side-by-side view, checker call) | Not started |
 
@@ -96,7 +96,34 @@ Plan, agreed with Rob:
 2. **Distinctness test.** Add development pairs where a thinker's recorded answer differs from what a sensible adviser with no philosophy would say. The measure is how often each thinker's verdict differs from the baseline verdict on the same text. It does not need the key.
 3. **Comparison with the original.** One report puts `legacy` (the original prompts), `prod` and `notes` side by side, 3 samples each, on the same tasks.
 
-Results: not yet.
+Changes made: `CORE_PHILOSOPHERS` and `TRANSFER_PHILOSOPHERS` in `answerKey.ts`; 3 new development pairs (`mourning-leave`, `anger-at-the-meeting`, `loan-i-cannot-repay`); `distinctness()` in `scoring.ts`; `--compare` and `--reuse-from` in `run.ts`. The new entries had a reference check and a content review (two AI subagents); their corrections are in. Not checked by a philosopher. Two existing pairs (`debt-or-father`, `credit-stakes`) change more than one fact; their text was kept so that old answers stay valid.
+
+**Result (2026-11-21), development split, 3 samples for each variant, the same 307 tasks.** Full report: `experiments/verdict-check/data/comparison-development.md` (make it again with `--compare legacy,prod,notes --samples 3`). Cells: sample 1 / 2 / 3.
+
+| Measure | `legacy` (original) | `prod` | `notes` |
+|---|---|---|---|
+| Single cases, core four | 32 / 31 / 33 of 40 | 37 / 36 / 36 | 36 / 37 / 37 |
+| Single cases, transfer thinkers | 15 / 14 / 14 of 15 | 14 / 15 / 15 | 14 / 15 / 15 |
+| Profile, both poles match | 3 / 4 / 3 of 14 | 13 / 13 / 13 | 13 / 13 / 13 |
+| Pairs, flip rows correct, core four | 9 / 9 / 9 of 13 | 9 / 8 / 11 | 12 / 12 / 12 |
+| Pairs, flip and same rows correct, transfer | 8 / 8 / 9 of 11 | 10 / 11 / 10 | 10 / 11 / 10 |
+| Answers that choose no option | 2 / 6 / 3 of 55 | 0 | 0 |
+| **Distinctness, core four** (pair answers that differ from the baseline) | 20% / 13% / 15% | 24% / 16% / 17% | 19% / 15% / 16% |
+| **Distinctness, transfer thinkers** | 13% / 9% / 10% | 19% / 20% / 20% | same as prod |
+| Pairs where all 7 philosophers and the baseline agree | 2 / 5 / 3 of 14 | 1 / 1 / 1 | 1 / 1 / 1 |
+
+Verified from the data:
+
+- `prod` is better than the original on every measure, and the gain holds for the transfer thinkers, who have no notes. Their distinctness about doubles (10-13% to 19-20%). So the shared prompt change transfers.
+- The notes add correctness on core pairs, but no distinctness.
+- **About 80% of philosopher answers on the pairs are still the same as the baseline answer** in every variant.
+- The new pairs show that the model can differ from the baseline when a case calls for it: `mourning-leave` Confucius and Mencius are correct and different from the baseline in 3 of 3 samples with `prod` (original: 1 and 0 of 3); Kant differs in 3 of 3 on `loan-i-cannot-repay`, in every variant.
+- The transfer thinkers' single cases do not discriminate: even the original prompts match 14-15 of 15. Those entries are cases where the thinker agrees with common sense.
+
+Interpretations (not verified):
+
+- Much of the 80% overlap is in the case set: many cases are ones where the thinkers agree with a sensible adviser. A score that depends on the case mix cannot alone say if the advice is "the same basic idea".
+- The verdict test measures only the choice. The professor may mean that the reasoning is the same. That is not measured.
 
 ## 4. Decisions and reasons
 

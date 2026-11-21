@@ -5,7 +5,7 @@
  * for each listed thinker, if that fact reverses the thinker's answer ("flip") or does not ("same").
  * The test then asks: does the app's answer change when it should, and stay when it should?
  *
- * The harness runs every pair for all four test philosophers and for a baseline with no philosopher.
+ * The harness runs every pair for all test philosophers (the core four and the transfer thinkers) and for a baseline with no philosopher.
  * A correct pattern counts as evidence for a thinker only where it differs from the baseline's pattern:
  * a sensible adviser with no philosophy also flips on many of these pairs.
  *
@@ -17,7 +17,9 @@
  * and one criticised the design. This file has their corrections. Pairs added after that check
  * (drug-stakes, wallet-owner, lamb-at-the-shrine, favour-asked, friend-who-changed) had the reference
  * check only where their source line says so. pardon-the-surgeon was added on 2026-11-21 with a reference check
- * against Hastie's translation of the Doctrine of Right.
+ * against Hastie's translation of the Doctrine of Right. mourning-leave, anger-at-the-meeting and loan-i-cannot-repay
+ * were added on 2026-11-21 for the distinctness test: in each, a thinker's text gives an answer that a sensible adviser
+ * with no philosophy may not give. Entries for the transfer thinkers (answerKey.ts) were added on the same day.
  *
  * Basis, for each side of a pair:
  * "recorded": the thinker's own text gives an answer to a case of this shape.
@@ -168,6 +170,14 @@ export const CASE_PAIRS: CasePair[] = [
       { id: "give", label: "Give the money to the other person, and make the lender wait" }
     ],
     thinkers: {
+      "maimonides-jewish-ethics": {
+        expect: "flip",
+        base: "repay",
+        variant: "give",
+        basis: { base: "inferred", variant: "inferred" },
+        reason: "To repay a debt when it is due is an obligation, and a loan to a friend who can manage without it does not set it aside. The ransom of captives comes before the support of the poor, and there is no greater commandment; a father's life is at stake.",
+        source: "Mishneh Torah, Hilkhot Matnot Aniyim 8:10 (ransom of captives); Hilkhot Malveh ve-Loveh 1:3 (repayment of a debt)"
+      },
       "aristotle-virtue-ethics": {
         expect: "flip",
         base: "repay",
@@ -190,6 +200,14 @@ export const CASE_PAIRS: CasePair[] = [
       { id: "feeling", label: "Vote for the other candidate, on the strength of the unease" }
     ],
     thinkers: {
+      "hume-sentimentalism": {
+        expect: "flip",
+        base: "record",
+        variant: "feeling",
+        basis: { base: "inferred", variant: "inferred" },
+        reason: "A wise man proportions his belief to the evidence. A newcomer's unease rests on no experience, so it is weak evidence against a clean record. All reasoning about matters of fact rests on custom formed by experience; thirty years of judging whom to trust with money is such experience, and the unease it produces is evidence of that kind.",
+        source: "Enquiry concerning Human Understanding, sec. 10 part 1 (proportion belief to the evidence); sec. 5 (custom is the great guide of human life); 'Of the Standard of Taste' (the judgment of a critic formed by long practice)"
+      },
       "aristotle-virtue-ethics": {
         expect: "flip",
         base: "record",
@@ -261,6 +279,22 @@ export const CASE_PAIRS: CasePair[] = [
     variant: "My wife has a painful illness. Without a drug she will be in severe pain for the next two weeks, until a cheaper drug arrives. She will not die. The only pharmacist who has it asks $40,000. I have raised $8,000, and he refuses a lower price or later payment. I have tried doctors, charities and the courts, and there is no time left. I can break into his store tonight and take the drug. I would leave the $8,000 there. Should I take it?",
     options: MEDICINE_OPTIONS,
     thinkers: {
+      "hume-sentimentalism": {
+        expect: "flip",
+        base: "take",
+        variant: "not-take",
+        basis: { base: "recorded", variant: "inferred" },
+        reason: "In extreme necessity, as after a shipwreck or in a besieged city perishing of hunger, the rules of property give way, because they exist for their usefulness. Two weeks of pain, with a cheaper drug coming, is not that kind of necessity, and the rule holds.",
+        source: "Enquiry concerning the Principles of Morals, sec. 3 part 1"
+      },
+      "maimonides-jewish-ethics": {
+        expect: "flip",
+        base: "take",
+        variant: "not-take",
+        basis: { base: "inferred", variant: "inferred" },
+        reason: "Saving a life sets aside the prohibition of theft. Pain without danger to life does not, so the property of the pharmacist must not be taken.",
+        source: "Mishneh Torah, Hilkhot Yesodei ha-Torah 5:1-2; Hilkhot Hovel u-Mazik 8:2"
+      },
       "mill-utilitarianism": {
         expect: "flip",
         base: "take",
@@ -299,6 +333,30 @@ export const CASE_PAIRS: CasePair[] = [
       { id: "keep", label: "Keep the money" }
     ],
     thinkers: {
+      "mencius-confucianism": {
+        expect: "same",
+        base: "return",
+        variant: "return",
+        basis: { base: "inferred", variant: "inferred" },
+        reason: "To take what is not one's own is against rightness. The owner's wealth does not change whose money it is.",
+        source: "Mencius 7A33"
+      },
+      "hume-sentimentalism": {
+        expect: "same",
+        base: "return",
+        variant: "return",
+        basis: { base: "inferred", variant: "inferred" },
+        reason: "Hume uses this case: justice requires us to restore property even to a rich miser, or to a person who will use it badly, where benevolence alone would not. The rule is useful only if it is kept in every case, without regard to the merit or need of the owner.",
+        source: "Treatise of Human Nature 3.2.2 (the miser and the seditious bigot, 3.2.2.22; a single act of justice may be contrary to public interest, but the whole scheme is necessary)"
+      },
+      "maimonides-jewish-ethics": {
+        expect: "same",
+        base: "return",
+        variant: "return",
+        basis: { base: "inferred", variant: "inferred" },
+        reason: "A lost object must be returned to its owner, and an identity card makes the owner known. The texts do not mention the owner's wealth; that it changes nothing is our inference.",
+        source: "Mishneh Torah, Hilkhot Gezelah va-Avedah 11:1 (return of lost objects); 11:6 and 13:1 (marks of the owner)"
+      },
       "mill-utilitarianism": {
         expect: "same",
         base: "return",
@@ -353,6 +411,112 @@ export const CASE_PAIRS: CasePair[] = [
         reason: "Punishment may never be imposed merely as a means to some other good; it is imposed only because the person committed a crime, and he must first be found guilty and punishable. So the innocent man must go free, and the town's need of a surgeon is no reason to punish or to spare the guilty one. The head of state may use the right to pardon only for crimes against himself, never for crimes of subjects against one another: there, to leave the crime unpunished is the greatest wrong to the subjects.",
         source: "Metaphysics of Morals, Doctrine of Right, §49, General Remark E (the right to punish and the right to grant clemency). Checked in Hastie's translation (1887), where the right to pardon is 'the most delicate of all rights'."
       }
+    }
+  },
+  {
+    id: "mourning-leave",
+    title: "Time to mourn: a mother, or a colleague",
+    split: "development",
+    pivot: "Who has died: my mother, or a colleague I worked with for twelve years.",
+    base: "My mother died last month. I have taken two weeks off. My employer would allow me three more months of unpaid leave, to stay at home and mourn, and not go back to the office. My team would carry my work, and I would lose income that I can spare only with difficulty. Should I go back to work now, or take the three months to mourn?",
+    variant: "A colleague with whom I worked closely for twelve years died last month. I have taken two weeks off. My employer would allow me three more months of unpaid leave, to stay at home and mourn, and not go back to the office. My team would carry my work, and I would lose income that I can spare only with difficulty. Should I go back to work now, or take the three months to mourn?",
+    options: [
+      { id: "return", label: "Go back to work now" },
+      { id: "mourn", label: "Take the three months of unpaid leave to mourn" }
+    ],
+    thinkers: {
+      "confucius-role-ethics": {
+        expect: "flip",
+        base: "mourn",
+        variant: "return",
+        basis: { base: "recorded", variant: "inferred" },
+        reason: "When Zai Wo says that three years of mourning for parents is too long, Confucius asks if he would be at ease eating fine rice and wearing fine clothes, and calls him without humaneness: a child is not free of its parents' arms until it is three years old. The mourning owed to a parent is not owed to a colleague; care is graded by relationship.",
+        source: "Analects 17.21 (Legge numbering; Lau numbering not checked); 1.9 (care over the funeral rites of parents)"
+      },
+      "mencius-confucianism": {
+        expect: "flip",
+        base: "mourn",
+        variant: "return",
+        basis: { base: "recorded", variant: "inferred" },
+        reason: "When the heir of Teng asks how to mourn his father, Mencius insists on the full three years, against the objections of the officials, and says that this is the way for parents. No such rite is owed to a colleague.",
+        source: "Mencius 3A2"
+      },
+      "maimonides-jewish-ethics": {
+        expect: "same",
+        base: "return",
+        variant: "return",
+        basis: { base: "recorded", variant: "recorded" },
+        reason: "The law fixes the measure of mourning: three days for weeping, seven for lament, thirty days for other restrictions, and one must not grieve beyond that measure (though one who does not mourn at all is cruel). Work is forbidden to the mourner in the first seven days. For a parent, some restrictions last twelve months (for example, festive gatherings), but not the ban on work. A month after the death, for a parent or for a colleague, one goes back to work.",
+        source: "Mishneh Torah, Hilkhot Avel 13:11-12 (do not mourn beyond the measure); 5:1 and 5:10 (work in the first seven days)"
+      },
+    }
+  },
+  {
+    id: "anger-at-the-meeting",
+    title: "The false charge against my friend",
+    split: "development",
+    pivot: "Why the colleague made the false charge: by an honest mistake, or on purpose, to humiliate my friend.",
+    base: "At a team meeting, a colleague said that my friend, who was not there, takes money from the petty cash. It is false. He believed it: he misread an expense record, and he did not mean to harm my friend. A few people believed him. I will correct him now, in front of everyone, in any case. Should I let my anger show when I do it?",
+    variant: "At a team meeting, a colleague said that my friend, who was not there, takes money from the petty cash. It is false. He knew that it was false: he said it on purpose, to humiliate my friend, whom he dislikes. A few people believed him. I will correct him now, in front of everyone, in any case. Should I let my anger show when I do it?",
+    options: [
+      { id: "anger", label: "Correct him and let your anger show" },
+      { id: "calm", label: "Correct him without showing anger" }
+    ],
+    thinkers: {
+      "aristotle-virtue-ethics": {
+        expect: "flip",
+        base: "calm",
+        variant: "anger",
+        basis: { base: "inferred", variant: "inferred" },
+        reason: "The good-tempered person is angry at the right things, with the right people, and in the right way; he is inclined to make allowances rather than to take revenge. But those who are not angry at the things at which they should be angry are thought foolish, and to put up with insults to one's friends is slavish. An honest mistake calls for allowance; a deliberate false charge against a friend is a fit object of anger. Aristotle does not say that the anger must be shown, and the same chapter blames those who retaliate openly, so the variant is our reading.",
+        source: "Nicomachean Ethics IV.5"
+      },
+      "maimonides-jewish-ethics": {
+        expect: "same",
+        base: "calm",
+        variant: "calm",
+        basis: { base: "recorded", variant: "recorded" },
+        reason: "Anger is one of the two traits where the middle way is not enough: one must go to the far end and train oneself not to be angry even at something that deserves anger. If a show of anger is needed, as with one's children, one shows it while remaining calm inside. A rebuke is given in private and gently.",
+        source: "Mishneh Torah, Hilkhot De'ot 2:3 (anger); 6:7 (how to rebuke)"
+      },
+    }
+  },
+  {
+    id: "loan-i-cannot-repay",
+    title: "The loan I cannot repay",
+    split: "development",
+    pivot: "What the money is for: a holiday, or an operation without which my child will die.",
+    base: "I need $3,000 for a holiday that I have wanted for years. A wealthy acquaintance will lend it only if I promise to repay it within a year. I know that I will not be able to repay it, now or later. If I make the promise, he will lend the money; if I tell him the truth, he will not. No one else will lend to me. Should I make the promise?",
+    variant: "I need $3,000 for an operation without which my child will die. A wealthy acquaintance will lend it only if I promise to repay it within a year. I know that I will not be able to repay it, now or later. If I make the promise, he will lend the money; if I tell him the truth, he will not. No one else will lend to me. Should I make the promise?",
+    options: [
+      { id: "promise", label: "Make the promise and take the loan" },
+      { id: "no-promise", label: "Do not make a promise that you know you cannot keep" }
+    ],
+    thinkers: {
+      "kant-deontology": {
+        expect: "same",
+        base: "no-promise",
+        variant: "no-promise",
+        basis: { base: "recorded", variant: "inferred" },
+        reason: "The base is Kant's own example: a man forced by need to borrow money, who knows that he cannot repay, may not make a false promise. The maxim cannot be a universal law, because promising would then be impossible, and the lender would be used merely as a means. The variant is not in the text, but the size of the need does not make an exception to a perfect duty.",
+        source: "Groundwork II (the false promise)"
+      },
+      "mill-utilitarianism": {
+        expect: "flip",
+        base: "no-promise",
+        variant: "promise",
+        basis: { base: "inferred", variant: "inferred" },
+        reason: "Trust in what people say is one of the main supports of social well-being, so a false promise for one's own pleasure is wrong. Mill allows exceptions to the secondary rules when they conflict with a greater good: his named exception to veracity is to save a person from great and unmerited evil, and a child's life outweighs a loss of $3,000 to a wealthy lender. This is an extension: the named exception concerns withholding facts from a malefactor, not deceiving an innocent lender.",
+        source: "Utilitarianism, ch. 2 (veracity and its exceptions); ch. 5 (justice gives way to a greater duty, such as saving a life)"
+      },
+      "maimonides-jewish-ethics": {
+        expect: "flip",
+        base: "no-promise",
+        variant: "promise",
+        basis: { base: "inferred", variant: "inferred" },
+        reason: "A false promise is deception, which is forbidden even in one word, and 'the wicked borrows and does not repay'. But when a life is at stake, every commandment gives way except the three, and deceit is not among them. Applying that rule, which concerns a person forced to transgress, to saving one's child is our inference.",
+        source: "Mishneh Torah, Hilkhot De'ot 2:6 (no deception); Hilkhot Malveh ve-Loveh 1:3; Hilkhot Yesodei ha-Torah 5:1-2"
+      },
     }
   },
   // ------------------------------------------------------------------ holdout

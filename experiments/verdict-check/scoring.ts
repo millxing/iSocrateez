@@ -16,7 +16,7 @@ export type Task =
   | { id: string; route: "profile"; dilemmaId: string; axis: Axis; pole: "neg" | "pos"; profile: ProfileTuple }
   | { id: string; route: "pair"; pairId: string; arm: Arm; side: "base" | "variant"; text: string };
 
-/** A pair is run for each test philosopher and for a baseline with no philosopher. */
+/** A pair is run for each test philosopher (core and transfer) and for a baseline with no philosopher. */
 export type Arm = "baseline" | TestPhilosopherId;
 export const ARMS: Arm[] = ["baseline", ...TEST_PHILOSOPHERS];
 
@@ -259,9 +259,9 @@ export interface MatrixRow {
   pairId: string;
   /** One pattern for each arm; "incomplete" if a verdict is missing. */
   patterns: Record<Arm, string>;
-  /** Distinct complete patterns among the four philosophers. */
+  /** Distinct complete patterns among the test philosophers. */
   distinct: number;
-  /** All four philosophers and the baseline have the same complete pattern. */
+  /** All test philosophers and the baseline have the same complete pattern. */
   allSame: boolean;
 }
 
@@ -283,7 +283,7 @@ export interface PairScore {
   /** Both sides recorded, against at least one side inferred. */
   byBasis: { bothRecorded: PairAggregate; someInferred: PairAggregate };
   matrix: MatrixRow[];
-  /** Pairs with a complete matrix row where all four philosophers and the baseline share one pattern. */
+  /** Pairs with a complete matrix row where all test philosophers and the baseline share one pattern. */
   allSamePairs: { complete: number; allSame: number };
 }
 
@@ -427,4 +427,65 @@ export function sampleAgreement(taskIds: string[], samples: VerdictMap[]): Sampl
     else result.unstable.push({ taskId, verdicts: verdicts as Verdict[] });
   }
   return result;
+}
+
+// ---------- distinctness (no key needed) ----------
+
+export interface ArmDistinctness {
+  /** Pair sides where both this philosopher and the baseline chose an option (not "none"). */
+  sides: number;
+  /** Of those, sides where the philosopher chose another option than the baseline. */
+  differentSides: number;
+  /** Pairs where both patterns are complete and contain no "none". */
+  pairs: number;
+  /** Of those, pairs where the philosopher's pattern differs from the baseline's. */
+  differentPatterns: number;
+}
+
+/**
+ * How often each philosopher's verdict differs from the baseline verdict on the same case text.
+ * It needs no answer key, so it measures the complaint directly: does the chosen philosopher change the answer?
+ * A high value is not proof of fidelity (a wrong answer also differs); read it with the keyed scores.
+ */
+export function distinctness(pairs: CasePair[], verdicts: VerdictMap, ids: readonly TestPhilosopherId[] = TEST_PHILOSOPHERS): Record<string, ArmDistinctness> {
+  const isOption = (verdict: Verdict | undefined): verdict is Verdict => verdict !== undefined && verdict !== "none";
+  const result: Record<string, ArmDistinctness> = {};
+  for (const id of ids) {
+    const score: ArmDistinctness = { sides: 0, differentSides: 0, pairs: 0, differentPatterns: 0 };
+    for (const pair of pairs) {
+      const sides = (["base", "variant"] as const).map((side) => ({
+        own: verdicts[pairTaskId(pair.id, id, side)],
+        baseline: verdicts[pairTaskId(pair.id, "baseline", side)]
+      }));
+      for (const { own, baseline } of sides) {
+        if (!isOption(own) || !isOption(baseline)) continue;
+        score.sides += 1;
+        if (own !== baseline) score.differentSides += 1;
+      }
+      if (sides.every(({ own, baseline }) => isOption(own) && isOption(baseline))) {
+        score.pairs += 1;
+        if (sides.some(({ own, baseline }) => own !== baseline)) score.differentPatterns += 1;
+      }
+    }
+    result[id] = score;
+  }
+  return result;
+}
+
+/** Sum the scores of a group of philosophers. */
+export function sumDistinctness(scores: Record<string, ArmDistinctness>, ids: readonly string[]): ArmDistinctness {
+  return ids.reduce<ArmDistinctness>(
+    (sum, id) => ({
+      sides: sum.sides + scores[id].sides,
+      differentSides: sum.differentSides + scores[id].differentSides,
+      pairs: sum.pairs + scores[id].pairs,
+      differentPatterns: sum.differentPatterns + scores[id].differentPatterns
+    }),
+    { sides: 0, differentSides: 0, pairs: 0, differentPatterns: 0 }
+  );
+}
+
+/** Add the rates of a group of philosophers. */
+export function sumRates(rates: Record<string, Rate>, ids: readonly string[]): Rate {
+  return ids.reduce<Rate>((sum, id) => ({ hit: sum.hit + rates[id].hit, total: sum.total + rates[id].total }), { hit: 0, total: 0 });
 }

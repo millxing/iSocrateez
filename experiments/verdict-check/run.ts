@@ -5,10 +5,14 @@
  * Usage (from the repo root):
  *   npx vite-node experiments/verdict-check/run.ts [--variant prod] [--split development|holdout|all]
  *     [--route voice|profile|pair|all] [--report-only] [--limit n] [--concurrency n] [--samples n]
+ *     [--reuse-from <variant>] [--compare <variant,variant,...>]
  * Model calls use the `claude` CLI in headless mode (subscription sign-in, no API key).
  * Every output is cached in data/<variant>/, so a rerun continues where the last run stopped.
  * --samples n answers every task n times, to measure run-to-run variation. Sample 1 is data/<variant>/;
  * sample k is data/<variant>/sample-k/. With n > 1, the run also writes data/<variant>/variability-<split>.md.
+ * --reuse-from v copies an answer from variant v (same sample) when the prompt is the same, instead of a new call.
+ * --compare a,b,c makes no model calls: it scores the cache of each variant for each sample and writes one
+ * side-by-side report, data/comparison-<split>.md. Put the original prompts (legacy) first.
  */
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -17,10 +21,13 @@ import { tmpdir } from "node:os";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getPhilosophyById } from "../../shared/philosophyProfiles";
-import { AXIS_POLES, TEST_PHILOSOPHERS, VERDICT_DILEMMAS, type VerdictDilemma } from "./answerKey";
+import { AXIS_POLES, CORE_PHILOSOPHERS, PHILOSOPHER_NAMES, TEST_PHILOSOPHERS, TRANSFER_PHILOSOPHERS, VERDICT_DILEMMAS, type VerdictDilemma } from "./answerKey";
 import { CASE_PAIRS, type CasePair } from "./pairs";
 import { buildJudgePrompt, parseJudgeReply } from "./judge";
-import { axisCount, buildTasks, KEY_AXES, pairResult, pairTaskId, sampleAgreement, scorePairs, scoreProfile, scoreVoice, type Rate, type Task, type VerdictMap } from "./scoring";
+import {
+  axisCount, buildTasks, distinctness, KEY_AXES, pairResult, pairTaskId, sampleAgreement, scorePairs, scoreProfile, scoreVoice, sumDistinctness, sumRates,
+  voiceTaskId, type ArmDistinctness, type PairScore, type Rate, type Task, type VerdictMap
+} from "./scoring";
 import { VARIANTS } from "./variants";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -37,6 +44,8 @@ interface Options {
   limit: number;
   concurrency: number;
   samples: number;
+  reuseFrom?: string;
+  compare?: string[];
 }
 
 function parseOptions(argv: string[]): Options {
@@ -50,6 +59,8 @@ function parseOptions(argv: string[]): Options {
     const value = argv[index + 1];
     if (flag === "--report-only") options.reportOnly = true;
     else if (flag === "--variant") options.variant = (index += 1, value);
+    else if (flag === "--reuse-from") options.reuseFrom = (index += 1, value);
+    else if (flag === "--compare") options.compare = (index += 1, (value ?? "").split(",").map((name) => name.trim()).filter(Boolean));
     else if (flag === "--split") options.split = (index += 1, choose("--split", value, ["development", "holdout", "all"]));
     else if (flag === "--route") options.route = (index += 1, choose("--route", value, ["voice", "profile", "pair", "all"]));
     else if (flag === "--limit" || flag === "--concurrency" || flag === "--samples") {
@@ -61,7 +72,10 @@ function parseOptions(argv: string[]): Options {
       index += 1;
     } else throw new Error(`Unknown option: ${flag}`);
   }
-  if (!VARIANTS[options.variant]) throw new Error(`Unknown variant "${options.variant}". Known: ${Object.keys(VARIANTS).join(", ")}`);
+  for (const name of [options.variant, ...(options.reuseFrom ? [options.reuseFrom] : []), ...(options.compare ?? [])]) {
+    if (!VARIANTS[name]) throw new Error(`Unknown variant "${name}". Known: ${Object.keys(VARIANTS).join(", ")}`);
+  }
+  if (options.compare && options.compare.length < 2) throw new Error("--compare needs two or more variants, separated by commas");
   return options;
 }
 
@@ -158,8 +172,8 @@ function promptFor(task: Task, text: string, variant: string): string {
   return prompts.voice({ dilemma: text, voice });
 }
 
-interface Counts { run: number; cached: number; failed: number; invalid: number }
-const newCounts = (): Counts => ({ run: 0, cached: 0, failed: 0, invalid: 0 });
+interface Counts { run: number; cached: number; failed: number; invalid: number; reused: number }
+const newCounts = (): Counts => ({ run: 0, cached: 0, failed: 0, invalid: 0, reused: 0 });
 
 interface Outcome {
   verdicts: VerdictMap;
@@ -176,15 +190,28 @@ function sampleDir(variant: string, sample: number): string {
   return sample === 1 ? base : join(base, `sample-${sample}`);
 }
 
-async function processTask(task: Task, dilemma: Case, options: Options, dataDir: string, outcome: Outcome) {
+async function processTask(task: Task, dilemma: Case, options: Options, dataDir: string, outcome: Outcome, reuseDir?: string) {
   const prompt = promptFor(task, dilemma.text, options.variant);
   const promptHash = sha256(prompt);
 
   // Advice
   const advicePath = join(dataDir, "advice", `${task.id}.json`);
   let advice = readJson<AdviceFile>(advicePath);
+  let reused = false;
+  if ((!advice || advice.promptHash !== promptHash) && reuseDir && !options.reportOnly) {
+    // Same prompt in another variant: copy its answer and judgment, so both variants share one sample.
+    const other = readJson<AdviceFile>(join(reuseDir, "advice", `${task.id}.json`));
+    if (other && other.promptHash === promptHash) {
+      writeJson(advicePath, other);
+      const otherJudgment = readJson<JudgmentFile>(join(reuseDir, "judgments", `${task.id}.json`));
+      if (otherJudgment) writeJson(join(dataDir, "judgments", `${task.id}.json`), otherJudgment);
+      advice = other;
+      reused = true;
+      outcome.advice.reused += 1;
+    }
+  }
   if (advice && advice.promptHash === promptHash) {
-    outcome.advice.cached += 1;
+    if (!reused) outcome.advice.cached += 1;
   } else {
     advice = null;
     if (options.reportOnly) return;
@@ -274,7 +301,7 @@ function renderReport(options: Options, sample: number, dilemmas: VerdictDilemma
     `- Advice model: ${GENERATOR.model} (effort ${GENERATOR.effort})`,
     `- Judge model: ${JUDGE.model} (effort ${JUDGE.effort})`,
     `- Tasks in this report: ${tasks.length} (${voiceTasks} voice, ${profileTasks} profile, ${pairTasks} pair)`,
-    `- Advice: ${outcome.advice.run} run, ${outcome.advice.cached} cached, ${outcome.advice.failed} failed`,
+    `- Advice: ${outcome.advice.run} run, ${outcome.advice.cached} cached, ${outcome.advice.reused} copied from ${options.reuseFrom ?? "-"}, ${outcome.advice.failed} failed`,
     `- Judgments: ${outcome.judge.run} run, ${outcome.judge.cached} cached, ${outcome.judge.failed} failed, ${outcome.judge.invalid} invalid`,
     `- Tasks with no usable verdict yet: ${tasks.length - Object.keys(outcome.verdicts).length}`,
     ""
@@ -285,6 +312,8 @@ function renderReport(options: Options, sample: number, dilemmas: VerdictDilemma
       "## Voice route: aggregates", "",
       `- Match with the key, all entries: ${pct(voice.matchOverall)}`,
       `- Match with the key, "clear" entries only: ${pct(voice.matchClear)}`,
+      `- Match, core four: ${pct(sumRates(voice.matchByPhilosopher, CORE_PHILOSOPHERS))}`,
+      `- Match, transfer thinkers: ${pct(sumRates(voice.matchByPhilosopher, TRANSFER_PHILOSOPHERS))}`,
       ...TEST_PHILOSOPHERS.map((id) => `- Match, ${names[id]}: ${pct(voice.matchByPhilosopher[id])}`),
       `- "none" verdicts: ${pct(voice.noneVerdicts)}`,
       `- Voice tasks with no verdict: ${voice.missing} of ${voice.tasks}`,
@@ -329,8 +358,20 @@ function renderReport(options: Options, sample: number, dilemmas: VerdictDilemma
       `- Correct, at least one side inferred: ${share(pairScore.byBasis.someInferred)}`,
       `- Correct rows that differ from the baseline pattern: ${pairScore.correctAndDifferent} of ${pairScore.flip.correct + pairScore.same.correct}`,
       `- Correct rows where the judge says both sides use the pivot fact: ${pairScore.correctAndUsesPivot} of ${pairScore.flip.correct + pairScore.same.correct}`,
-      `- Pairs where all four philosophers and the baseline have the same pattern: ${pairScore.allSamePairs.allSame} of ${pairScore.allSamePairs.complete} pairs with all ten verdicts`,
+      `- Pairs where all ${TEST_PHILOSOPHERS.length} philosophers and the baseline have the same pattern: ${pairScore.allSamePairs.allSame} of ${pairScore.allSamePairs.complete} pairs with all verdicts`,
       `- Keyed-thinker tasks with no verdict: ${pairScore.missing} of ${pairScore.tasks}`,
+      "",
+      "## Distinctness (no key needed)", "",
+      "For each philosopher: on how many pair sides the verdict differs from the baseline verdict on the same text (sides where either chose no option are left out), and in how many pairs the pattern differs.", "",
+      ...table(["philosopher", "sides that differ", "patterns that differ"], (() => {
+        const scores = distinctness(pairs, outcome.verdicts);
+        const row = (label: string, d: ArmDistinctness) => [label, `${d.differentSides} of ${d.sides}`, `${d.differentPatterns} of ${d.pairs}`];
+        return [
+          ...TEST_PHILOSOPHERS.map((id) => row(names[id], scores[id])),
+          row("core four", sumDistinctness(scores, CORE_PHILOSOPHERS)),
+          row("transfer thinkers", sumDistinctness(scores, TRANSFER_PHILOSOPHERS))
+        ];
+      })()),
       "",
       "## Pairs: verdicts", "",
       "* = the judge flagged the advice as conditional.", "",
@@ -348,7 +389,7 @@ function renderReport(options: Options, sample: number, dilemmas: VerdictDilemma
       })),
       "",
       "## Pairs: matrix", "",
-      "Pattern of each arm, base → variant. (key) marks a keyed thinker. Distinct patterns: among the four philosophers, complete patterns only.", "",
+      "Pattern of each arm, base → variant. (key) marks a keyed thinker. Distinct patterns: among the test philosophers, complete patterns only.", "",
       ...table(["pair", "baseline", ...TEST_PHILOSOPHERS.map((id) => names[id]), "distinct patterns"], pairScore.matrix.map((row) => {
         const keyed = pairById.get(row.pairId)?.thinkers;
         return [
@@ -392,7 +433,121 @@ function renderReport(options: Options, sample: number, dilemmas: VerdictDilemma
   return lines.join("\n");
 }
 
-const NAMES: Record<string, string> = { "mill-utilitarianism": "Mill", "kant-deontology": "Kant", "aristotle-virtue-ethics": "Aristotle", "confucius-role-ethics": "Confucius" };
+const NAMES: Record<string, string> = PHILOSOPHER_NAMES;
+
+/**
+ * One side-by-side report of several variants, each with the same number of samples, on the same tasks.
+ * Each cell lists the samples in order ("s1 / s2 / s3"), so the spread between samples is visible next to
+ * the difference between variants.
+ */
+function renderComparison(options: Options, dilemmas: VerdictDilemma[], pairs: CasePair[], tasks: Task[], byVariant: Record<string, Outcome[]>): string {
+  const variants = Object.keys(byVariant);
+  const frac = (hit: number, total: number) => `${hit}/${total}`;
+  const cells = (measure: (outcome: Outcome) => string) => variants.map((variant) => byVariant[variant].map(measure).join(" / "));
+  const rows: string[][] = [];
+  const add = (label: string, measure: (outcome: Outcome) => string) => rows.push([label, ...cells(measure)]);
+  const route = (name: Task["route"]) => options.route === "all" || options.route === name;
+  const memo = new Map<Outcome, { pair: PairScore }>();
+  const pairOf = (outcome: Outcome) => {
+    if (!memo.has(outcome)) memo.set(outcome, { pair: scorePairs(pairs, outcome.verdicts, outcome.usesPivot) });
+    return memo.get(outcome)!.pair;
+  };
+  const group = (ids: readonly string[]) => (row: { philosopherId: string }) => ids.includes(row.philosopherId);
+  const pairCount = (outcome: Outcome, ids: readonly string[], expect: "flip" | "same") => {
+    const list = pairOf(outcome).rows.filter(group(ids)).filter((row) => row.expect === expect && row.correct !== undefined);
+    return frac(list.filter((row) => row.correct).length, list.length);
+  };
+
+  if (route("voice")) {
+    const voice = (outcome: Outcome) => scoreVoice(dilemmas, outcome.verdicts);
+    const rateCell = (rate: Rate) => frac(rate.hit, rate.total);
+    add("Voice: match with the key, core four", (o) => rateCell(sumRates(voice(o).matchByPhilosopher, CORE_PHILOSOPHERS)));
+    for (const id of CORE_PHILOSOPHERS) add(`Voice: ${NAMES[id]}`, (o) => rateCell(voice(o).matchByPhilosopher[id]));
+    add("Voice: match with the key, transfer thinkers", (o) => rateCell(sumRates(voice(o).matchByPhilosopher, TRANSFER_PHILOSOPHERS)));
+    for (const id of TRANSFER_PHILOSOPHERS) add(`Voice: ${NAMES[id]}`, (o) => rateCell(voice(o).matchByPhilosopher[id]));
+    add('Voice: "none" verdicts', (o) => rateCell(voice(o).noneVerdicts));
+  }
+  if (route("profile")) {
+    add("Profile: both poles match the key", (o) => { const p = scoreProfile(dilemmas, o.verdicts).overall; return frac(p.bothMatch, p.complete); });
+    add("Profile: the two poles differ", (o) => { const p = scoreProfile(dilemmas, o.verdicts).overall; return frac(p.differs, p.complete); });
+  }
+  if (route("pair")) {
+    add("Pairs: flip rows correct, core four", (o) => pairCount(o, CORE_PHILOSOPHERS, "flip"));
+    add("Pairs: flip rows correct, transfer thinkers", (o) => pairCount(o, TRANSFER_PHILOSOPHERS, "flip"));
+    add("Pairs: same rows correct, core four", (o) => pairCount(o, CORE_PHILOSOPHERS, "same"));
+    add("Pairs: same rows correct, transfer thinkers", (o) => pairCount(o, TRANSFER_PHILOSOPHERS, "same"));
+    for (const [label, ids] of [["core four", CORE_PHILOSOPHERS], ["transfer thinkers", TRANSFER_PHILOSOPHERS]] as const) {
+      add(`Pairs: correct rows that differ from the baseline, ${label}`, (o) => {
+        const correct = pairOf(o).rows.filter(group(ids)).filter((row) => row.correct);
+        return frac(correct.filter((row) => row.differsFromBaseline).length, correct.length);
+      });
+    }
+    add(`Pairs: all ${TEST_PHILOSOPHERS.length} philosophers and the baseline give one pattern`, (o) => frac(pairOf(o).allSamePairs.allSame, pairOf(o).allSamePairs.complete));
+  }
+  add("Tasks with no verdict", (o) => String(tasks.length - Object.keys(o.verdicts).length));
+
+  const distinctRows: string[][] = [];
+  if (route("pair")) {
+    const dCell = (pick: (scores: Record<string, ArmDistinctness>) => ArmDistinctness) =>
+      variants.map((variant) => byVariant[variant].map((o) => { const d = pick(distinctness(pairs, o.verdicts)); return frac(d.differentSides, d.sides); }).join(" / "));
+    for (const id of TEST_PHILOSOPHERS) distinctRows.push([NAMES[id], ...dCell((scores) => scores[id])]);
+    distinctRows.push(["core four", ...dCell((scores) => sumDistinctness(scores, CORE_PHILOSOPHERS))]);
+    distinctRows.push(["transfer thinkers", ...dCell((scores) => sumDistinctness(scores, TRANSFER_PHILOSOPHERS))]);
+  }
+
+  // Keyed rows: how many samples got each one right.
+  const keyedRows: string[][] = [];
+  const n = (variant: string) => byVariant[variant].length;
+  if (route("voice")) {
+    for (const dilemma of dilemmas) {
+      for (const id of TEST_PHILOSOPHERS) {
+        const expected = dilemma.philosophers[id];
+        if (!expected) continue;
+        const taskId = voiceTaskId(dilemma.id, id);
+        keyedRows.push([dilemma.id, NAMES[id], `${expected.option}${expected.confidence === "disputed" ? " ?" : ""}`, ...variants.map((variant) => {
+          const verdicts = byVariant[variant].map((o) => o.verdicts[taskId]);
+          const hits = verdicts.filter((verdict) => verdict !== undefined && (verdict === expected.option || (expected.alsoAccept ?? []).includes(verdict))).length;
+          return `${hits} of ${n(variant)}`;
+        })]);
+      }
+    }
+  }
+  if (route("pair")) {
+    for (const pair of pairs) {
+      for (const id of TEST_PHILOSOPHERS) {
+        const entry = pair.thinkers[id];
+        if (!entry) continue;
+        keyedRows.push([pair.id, NAMES[id], `${entry.base} → ${entry.variant}`, ...variants.map((variant) => {
+          const own = byVariant[variant].map((o) => pairOf(o).rows.find((row) => row.pairId === pair.id && row.philosopherId === id));
+          const hits = own.filter((row) => row?.correct).length;
+          const differs = own.filter((row) => row?.correct && row.differsFromBaseline).length;
+          return `${hits} of ${n(variant)} (${differs} differ)`;
+        })]);
+      }
+    }
+  }
+
+  const header = ["measure", ...variants.map((variant) => `${variant} (${byVariant[variant].length} samples)`)];
+  return [
+    "# Verdict check: comparison of prompt variants", "",
+    `- Date: ${new Date().toISOString().slice(0, 10)}`,
+    `- Split: ${options.split}. Route: ${options.route}.`,
+    `- Variants: ${variants.join(", ")}. legacy = the original prompts (until 2026-11-21); prod = the current prompts; notes = prod with the lens notes (core four only).`,
+    `- Advice model: ${GENERATOR.model} (effort ${GENERATOR.effort}); judge: ${JUDGE.model} (effort ${JUDGE.effort}). Scored from the cache: no model calls.`,
+    `- Core four: ${CORE_PHILOSOPHERS.map((id) => NAMES[id]).join(", ")}. Transfer thinkers: ${TRANSFER_PHILOSOPHERS.map((id) => NAMES[id]).join(", ")} (no lens notes in any variant).`, "",
+    "How to read: each cell gives the samples in order, \"sample 1 / sample 2 / sample 3\", as hits/total. A difference between two variants that is no larger than the spread between samples is not evidence. Every variant has its own baseline (the same prompt with no philosopher).", "",
+    "## Main scores", "",
+    ...table(header, rows), "",
+    ...(distinctRows.length ? [
+      "## Distinctness (no key needed)", "",
+      "Pair sides where the philosopher's verdict differs from the baseline verdict on the same text. Sides where either chose no option are left out. This measures the professor's complaint directly: does the chosen philosopher change the answer? A high value is not proof of fidelity, because a wrong answer also differs; read it with the keyed scores.", "",
+      ...table(["philosopher", ...header.slice(1)], distinctRows), ""
+    ] : []),
+    "## Keyed rows: samples that match the key", "",
+    "Voice rows: single dilemmas. Pair rows: both sides correct; \"differ\" = correct and different from the baseline pattern in that sample. ? = disputed key entry.", "",
+    ...table(["case", "thinker", "expected", ...header.slice(1)], keyedRows), ""
+  ].join("\n");
+}
 
 /** Compare the samples: main scores side by side, then the tasks whose verdict changed between samples. */
 function renderVariability(options: Options, dilemmas: VerdictDilemma[], pairs: CasePair[], tasks: Task[], outcomes: Outcome[]): string {
@@ -465,6 +620,30 @@ async function main() {
   const reportDilemmas = limited ? dilemmas.filter((dilemma) => tasks.some((task) => "dilemmaId" in task && task.dilemmaId === dilemma.id)) : dilemmas;
   const reportPairs = limited ? pairs.filter((pair) => tasks.some((task) => task.route === "pair" && task.pairId === pair.id)) : pairs;
 
+  const sourceFor = (task: Task): Case => task.route === "pair"
+    ? { text: task.text, options: pairById.get(task.pairId)!.options, pivot: pairById.get(task.pairId)!.pivot }
+    : dilemmaById.get(task.dilemmaId)!;
+
+  if (options.compare) {
+    const byVariant: Record<string, Outcome[]> = {};
+    for (const variant of options.compare) {
+      byVariant[variant] = [];
+      for (let sample = 1; sample <= options.samples; sample += 1) {
+        const outcome: Outcome = { verdicts: {}, conditional: {}, usesPivot: {}, advice: newCounts(), judge: newCounts(), failures: [] };
+        const variantOptions: Options = { ...options, variant, reportOnly: true };
+        await pool(tasks, options.concurrency, (task) => processTask(task, sourceFor(task), variantOptions, sampleDir(variant, sample), outcome));
+        byVariant[variant].push(outcome);
+      }
+    }
+    const report = renderComparison(options, reportDilemmas, reportPairs, tasks, byVariant);
+    const file = join(HERE, "data", `comparison-${options.split}.md`);
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, report + "\n");
+    console.log(report);
+    console.log(`Comparison saved to ${file}`);
+    return;
+  }
+
   const outcomes: Outcome[] = [];
   for (let sample = 1; sample <= options.samples; sample += 1) {
     const dataDir = sampleDir(options.variant, sample);
@@ -474,7 +653,7 @@ async function main() {
       const source: Case = task.route === "pair"
         ? { text: task.text, options: pairById.get(task.pairId)!.options, pivot: pairById.get(task.pairId)!.pivot }
         : dilemmaById.get(task.dilemmaId)!;
-      return processTask(task, source, options, dataDir, outcome);
+      return processTask(task, source, options, dataDir, outcome, options.reuseFrom ? sampleDir(options.reuseFrom, sample) : undefined);
     });
     outcomes.push(outcome);
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { ProfileTuple } from "../../shared/contracts";
 import { getPhilosophyById, philosophyProfiles } from "../../shared/philosophyProfiles";
-import { TEST_PHILOSOPHERS } from "./answerKey";
+import { CORE_PHILOSOPHERS, TEST_PHILOSOPHERS } from "./answerKey";
 import { LENS_NOTES } from "./lensNotes";
 import { HOLDOUT_PASSAGES } from "./pairs";
 import { VARIANTS } from "./variants";
@@ -52,7 +52,7 @@ describe("holdout protection", () => {
 
 describe("notes variant", () => {
   it("is the prod voice prompt plus the two note lines, for each test philosopher", () => {
-    for (const id of TEST_PHILOSOPHERS) {
+    for (const id of CORE_PHILOSOPHERS) {
       const voice = getPhilosophyById(id)!;
       const prod = VARIANTS.prod.voice({ dilemma: "X", voice }).split("\n");
       const notes = VARIANTS.notes.voice({ dilemma: "X", voice }).split("\n");
@@ -64,10 +64,19 @@ describe("notes variant", () => {
   });
 
   it("has a note of 150 to 350 words for each test philosopher", () => {
-    for (const id of TEST_PHILOSOPHERS) {
+    for (const id of CORE_PHILOSOPHERS) {
       const words = LENS_NOTES[id].split(/\s+/).filter(Boolean).length;
       expect(words, id).toBeGreaterThanOrEqual(150);
       expect(words, id).toBeLessThanOrEqual(350);
+    }
+  });
+});
+
+describe("notes variant for thinkers without notes", () => {
+  it("gives the same prompt as prod, so the cache can be shared", () => {
+    for (const id of TEST_PHILOSOPHERS.filter((id) => !(id in LENS_NOTES))) {
+      const voice = getPhilosophyById(id)!;
+      expect(VARIANTS.notes.voice({ dilemma: "X", voice })).toBe(VARIANTS.prod.voice({ dilemma: "X", voice }));
     }
   });
 });

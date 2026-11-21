@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Basis, CasePair } from "./pairs";
-import type { ExpectedVerdict, VerdictDilemma } from "./answerKey";
-import { axisCount, buildTasks, isMatch, pairResult, sampleAgreement, scorePairs, scoreProfile, scoreVoice } from "./scoring";
+import { TEST_PHILOSOPHERS, type ExpectedVerdict, type VerdictDilemma } from "./answerKey";
+import { axisCount, buildTasks, distinctness, isMatch, pairResult, pairTaskId, sampleAgreement, scorePairs, scoreProfile, scoreVoice, sumDistinctness, type VerdictMap } from "./scoring";
 
 const entry = (option: string, confidence: "clear" | "disputed" = "clear", alsoAccept?: string[]): ExpectedVerdict => ({
   option, confidence, alsoAccept, reason: "r", source: "s"
@@ -73,11 +73,11 @@ describe("buildTasks", () => {
     expect(last.route === "profile" && last.profile).toEqual({ outcomesPrinciples: 0, individualCollective: 0.85, reasonIntuition: 0 });
   });
 
-  it("makes a base and a variant task for the baseline and all four philosophers in a pair, carrying the case text", () => {
+  it("makes a base and a variant task for the baseline and every test philosopher in a pair, carrying the case text", () => {
     const pair = tasks.filter((task) => task.route === "pair");
     expect(pair.map((task) => task.id)).toEqual([
       "pair__p1__baseline__base", "pair__p1__baseline__variant",
-      ...["mill-utilitarianism", "kant-deontology", "aristotle-virtue-ethics", "confucius-role-ethics"].flatMap((id) => [`pair__p1__${id}__base`, `pair__p1__${id}__variant`])
+      ...TEST_PHILOSOPHERS.flatMap((id) => [`pair__p1__${id}__base`, `pair__p1__${id}__variant`])
     ]);
     expect(pair[0]).toMatchObject({ arm: "baseline", side: "base", text: "base text", pairId: "p1" });
     expect(pair[1]).toMatchObject({ side: "variant", text: "variant text" });
@@ -194,7 +194,7 @@ describe("scorePairs", () => {
     expect(pairResult(sameRow("old", "new"))).toBe("changed");
   });
 
-  const arms = ["baseline", "mill-utilitarianism", "kant-deontology", "aristotle-virtue-ethics", "confucius-role-ethics"];
+  const arms = ["baseline", ...TEST_PHILOSOPHERS];
   const fill = (patterns: Record<string, [string?, string?]>) =>
     Object.fromEntries(arms.flatMap((arm) => [[`pair__p1__${arm}__base`, patterns[arm]?.[0]], [`pair__p1__${arm}__variant`, patterns[arm]?.[1]]]));
 
@@ -321,5 +321,27 @@ describe("sampleAgreement", () => {
 
   it("treats one sample as fully stable", () => {
     expect(sampleAgreement(["t1"], [{ t1: "b" }])).toEqual({ complete: 1, stable: 1, unstable: [], incomplete: 0 });
+  });
+});
+
+describe("distinctness", () => {
+  const pair: CasePair = {
+    id: "p1", title: "t", split: "development", pivot: "x", base: "b", variant: "v",
+    options: [{ id: "a", label: "A" }, { id: "b", label: "B" }],
+    thinkers: {}
+  };
+  it("counts sides and patterns that differ from the baseline, and skips none and missing", () => {
+    const verdicts: VerdictMap = {
+      [pairTaskId("p1", "baseline", "base")]: "a", [pairTaskId("p1", "baseline", "variant")]: "b",
+      [pairTaskId("p1", "kant-deontology", "base")]: "a", [pairTaskId("p1", "kant-deontology", "variant")]: "a",
+      [pairTaskId("p1", "mill-utilitarianism", "base")]: "a", [pairTaskId("p1", "mill-utilitarianism", "variant")]: "b",
+      [pairTaskId("p1", "hume-sentimentalism", "base")]: "none", [pairTaskId("p1", "hume-sentimentalism", "variant")]: "a"
+    };
+    const scores = distinctness([pair], verdicts, ["kant-deontology", "mill-utilitarianism", "hume-sentimentalism", "aristotle-virtue-ethics"]);
+    expect(scores["kant-deontology"]).toEqual({ sides: 2, differentSides: 1, pairs: 1, differentPatterns: 1 });
+    expect(scores["mill-utilitarianism"]).toEqual({ sides: 2, differentSides: 0, pairs: 1, differentPatterns: 0 });
+    expect(scores["hume-sentimentalism"]).toEqual({ sides: 1, differentSides: 1, pairs: 0, differentPatterns: 0 });
+    expect(scores["aristotle-virtue-ethics"]).toEqual({ sides: 0, differentSides: 0, pairs: 0, differentPatterns: 0 });
+    expect(sumDistinctness(scores, ["kant-deontology", "mill-utilitarianism"])).toEqual({ sides: 4, differentSides: 1, pairs: 2, differentPatterns: 1 });
   });
 });

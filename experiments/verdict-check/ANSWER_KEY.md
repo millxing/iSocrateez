@@ -1,6 +1,6 @@
 # Verdict check: answer key for review
 
-This document lists, for each test dilemma, the option that each of four philosophers' own texts lead to. It also lists which of the app's three axes should decide the dilemma. The app's advice is scored against it.
+This document lists, for each test dilemma, the option that each test philosopher's own texts lead to: the core four (Mill, Kant, Aristotle, Confucius) and, since 2026-11-21, three transfer thinkers (Mencius, Hume, Maimonides). It also lists which of the app's three axes should decide the dilemma. The app's advice is scored against it.
 
 Status: provisional, written by an AI model. The key has had a second review. Answers that the reviewer judged "open" are not scored.
 
@@ -17,37 +17,37 @@ Analects passage numbers follow D. C. Lau's translation. Other editions differ b
 
 A "?" after an option means the entry is disputed.
 
-| Dilemma | Kind | Split | Mill | Kant | Aristotle | Confucius |
-| --- | --- | --- | --- | --- | --- | --- |
-| father-workshop | split | development | tell | tell | tell ? | open |
-| sheep-witness | split | development | — | — | — | cover |
-| promise-charity | split | development | open | keep | — | keep |
-| footbridge | split | development | push ? | refrain | refrain | refrain ? |
-| music-funding | open | development | open | — | open | open |
-| hiding-friend | split | development | lie | no-lie | lie ? | lie ? |
-| water-scheme | split | development | open | open | open | open |
-| treasurer | split | development | open | apply | open | open |
-| parents-or-post | split | development | — | — | stay ? | stay ? |
-| memorial-words | split | development | silent ? | open | — | open |
-| medicine | split | development | take | not-take ? | not-take | open |
-| charity-hire | split | development | better | better ? | better | better ? |
-| gut-vs-record | split | development | — | — | record ? | record ? |
-| extension | split | development | — | refuse ? | refuse ? | refuse ? |
-| credit | split | development | — | — | claim ? | deflect |
-| double-refund | agreement | development | return | return | return | return |
-| false-blame | agreement | development | correct | correct | correct | correct |
-| flood-rescue | split | holdout | three ? | — | open | open |
-| deathbed-promise | split | holdout | clinic ? | keep | — | keep ? |
-| family-shop | split | holdout | open | — | — | open |
-| dying-grandmother | split | holdout | open | truth | — | lie ? |
-| scholarship | split | holdout | needy ? | — | open | open |
-| diaries | split | holdout | open | — | — | open |
-| wallet | agreement | holdout | return | return | return | return |
-| thesis-review | agreement | holdout | review | review | review | review |
+| Dilemma | Kind | Split | Mill | Kant | Aristotle | Confucius | Mencius | Hume | Maimonides |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| father-workshop | split | development | tell | tell | tell ? | open | — | — | tell |
+| sheep-witness | split | development | — | — | — | cover | cover | — | — |
+| promise-charity | split | development | open | keep | — | keep | — | — | — |
+| footbridge | split | development | push ? | refrain | refrain | refrain ? | refrain ? | — | refrain |
+| music-funding | open | development | open | — | open | open | — | — | — |
+| hiding-friend | split | development | lie | no-lie | lie ? | lie ? | — | lie | lie |
+| water-scheme | split | development | open | open | open | open | — | — | — |
+| treasurer | split | development | open | apply | open | open | — | — | — |
+| parents-or-post | split | development | — | — | stay ? | stay ? | — | — | — |
+| memorial-words | split | development | silent ? | open | — | open | — | — | — |
+| medicine | split | development | take | not-take ? | not-take | open | — | take | take |
+| charity-hire | split | development | better | better ? | better | better ? | better | — | — |
+| gut-vs-record | split | development | — | — | record ? | record ? | — | — | — |
+| extension | split | development | — | refuse ? | refuse ? | refuse ? | — | — | — |
+| credit | split | development | — | — | claim ? | deflect | — | — | deflect ? |
+| double-refund | agreement | development | return | return | return | return | return | return | return |
+| false-blame | agreement | development | correct | correct | correct | correct | correct | — | correct |
+| flood-rescue | split | holdout | three ? | — | open | open | — | — | — |
+| deathbed-promise | split | holdout | clinic ? | keep | — | keep ? | — | — | — |
+| family-shop | split | holdout | open | — | — | open | — | — | — |
+| dying-grandmother | split | holdout | open | truth | — | lie ? | — | — | — |
+| scholarship | split | holdout | needy ? | — | open | open | — | — | — |
+| diaries | split | holdout | open | — | — | open | — | — | — |
+| wallet | agreement | holdout | return | return | return | return | — | — | — |
+| thesis-review | agreement | holdout | review | review | review | review | — | — | — |
 
 ## Paired cases
 
-A pair is one case told twice. The two tellings differ in one fact, the pivot. For each thinker, the key says if the pivot should change the answer ("flips") or not ("same"). The test asks if the app's answer changes when it should, and stays when it should. Every pair is run for all four philosophers and for a baseline with no philosopher, and a correct pattern counts as evidence for a thinker only where it differs from the baseline.
+A pair is one case told twice. The two tellings differ in one fact, the pivot. For each thinker, the key says if the pivot should change the answer ("flips") or not ("same"). The test asks if the app's answer changes when it should, and stays when it should. Every pair is run for all seven philosophers and for a baseline with no philosopher, and a correct pattern counts as evidence for a thinker only where it differs from the baseline.
 
 Basis is given for each side of the pair (one value when both sides agree). "recorded": the thinker's own text gives an answer to a case of this shape on that side. "inferred": our reading of the thinker's principles; no text gives the answer directly.
 
@@ -167,6 +167,7 @@ Options (the same for both cases):
 | Thinker | Expectation | Basis | Reason | Source |
 | --- | --- | --- | --- | --- |
 | Aristotle | flips: repay → give | recorded | For the most part we must return a benefit before we oblige a friend, as we must repay a loan before we make one. But perhaps not always: Aristotle's example is a man who must either pay the person who ransomed him or ransom his father, and he judges that it would seem that the father comes first. Both the relation and the stakes change in his example, and in this pair. | Nicomachean Ethics IX.2 |
+| Maimonides | flips: repay → give | inferred | To repay a debt when it is due is an obligation, and a loan to a friend who can manage without it does not set it aside. The ransom of captives comes before the support of the poor, and there is no greater commandment; a father's life is at stake. | Mishneh Torah, Hilkhot Matnot Aniyim 8:10 (ransom of captives); Hilkhot Malveh ve-Loveh 1:3 (repayment of a debt) |
 
 ### The unease of a beginner, and of an old auditor (experienced-eye)
 
@@ -190,6 +191,7 @@ Options (the same for both cases):
 | Thinker | Expectation | Basis | Reason | Source |
 | --- | --- | --- | --- | --- |
 | Aristotle | flips: record → feeling | inferred | We should attend to the undemonstrated judgments of experienced people not less than to demonstrations, because experience has given them an eye to see correctly. The feeling of a person with no experience has no such standing. The text says 'not less than'; it does not say that the experienced judgment must win. | Nicomachean Ethics VI.11 |
+| Hume | flips: record → feeling | inferred | A wise man proportions his belief to the evidence. A newcomer's unease rests on no experience, so it is weak evidence against a clean record. All reasoning about matters of fact rests on custom formed by experience; thirty years of judging whom to trust with money is such experience, and the unease it produces is evidence of that kind. | Enquiry concerning Human Understanding, sec. 10 part 1 (proportion belief to the evidence); sec. 5 (custom is the great guide of human life); 'Of the Standard of Taste' (the judgment of a critic formed by long practice) |
 
 ### A lie at the door: for convenience, or to prevent violence (lie-stakes)
 
@@ -262,6 +264,8 @@ Options (the same for both cases):
 | Mill | flips: take → not-take | base: recorded; variant: inferred | Mill gives the first case himself: to save a life, it can be a duty to steal or take by force the necessary food or medicine. The saving of a life is his example of a social duty that is important enough to overrule a rule of justice. He does not say if two weeks of severe pain is important enough; we infer that it is not. | Utilitarianism, ch. 5 (near the end) |
 | Kant | same: not-take | inferred | Necessity does not make a wrong act lawful. Kant's example of the 'right of necessity' is a man who takes another's life to save his own; theft for a wife's life is an extension. | Metaphysics of Morals, Doctrine of Right, Appendix to the Introduction (the right of necessity) |
 | Aristotle | same: not-take | inferred | Aristotle names theft among the acts that have no mean and are always wrong. Acts done under great pressure can earn pardon, but pardon is not the same as doing rightly. The open question is if this taking is 'theft' in his sense. | Nicomachean Ethics II.6; III.1 |
+| Hume | flips: take → not-take | base: recorded; variant: inferred | In extreme necessity, as after a shipwreck or in a besieged city perishing of hunger, the rules of property give way, because they exist for their usefulness. Two weeks of pain, with a cheaper drug coming, is not that kind of necessity, and the rule holds. | Enquiry concerning the Principles of Morals, sec. 3 part 1 |
+| Maimonides | flips: take → not-take | inferred | Saving a life sets aside the prohibition of theft. Pain without danger to life does not, so the property of the pharmacist must not be taken. | Mishneh Torah, Hilkhot Yesodei ha-Torah 5:1-2; Hilkhot Hovel u-Mazik 8:2 |
 
 ### The found wallet: a rich owner, or a poor one (wallet-owner)
 
@@ -288,6 +292,9 @@ Options (the same for both cases):
 | Kant | same: return | inferred | A maxim of keeping found property when the owner is rich cannot be a universal law. The owner's wealth changes nothing. | Groundwork, Section II |
 | Aristotle | same: return | inferred | To gain from what belongs to another is the mark of the unjust and grasping person, whoever the other is. | Nicomachean Ethics V.1-2 |
 | Confucius | same: return | inferred | At the sight of gain, think of what is right. Poverty is not to be escaped by the wrong way. | Analects 14.12; 4.5 |
+| Mencius | same: return | inferred | To take what is not one's own is against rightness. The owner's wealth does not change whose money it is. | Mencius 7A33 |
+| Hume | same: return | inferred | Hume uses this case: justice requires us to restore property even to a rich miser, or to a person who will use it badly, where benevolence alone would not. The rule is useful only if it is kept in every case, without regard to the merit or need of the owner. | Treatise of Human Nature 3.2.2 (the miser and the seditious bigot, 3.2.2.22; a single act of justice may be contrary to public interest, but the whole scheme is necessary) |
+| Maimonides | same: return | inferred | A lost object must be returned to its owner, and an identity card makes the owner known. The texts do not mention the owner's wealth; that it changes nothing is our inference. | Mishneh Torah, Hilkhot Gezelah va-Avedah 11:1 (return of lost objects); 11:6 and 13:1 (marks of the owner) |
 
 ### A pardon for the town's surgeon: guilty, or innocent (pardon-the-surgeon)
 
@@ -311,6 +318,80 @@ Options (the same for both cases):
 | Thinker | Expectation | Basis | Reason | Source |
 | --- | --- | --- | --- | --- |
 | Kant | flips: no-pardon → pardon | recorded | Punishment may never be imposed merely as a means to some other good; it is imposed only because the person committed a crime, and he must first be found guilty and punishable. So the innocent man must go free, and the town's need of a surgeon is no reason to punish or to spare the guilty one. The head of state may use the right to pardon only for crimes against himself, never for crimes of subjects against one another: there, to leave the crime unpunished is the greatest wrong to the subjects. | Metaphysics of Morals, Doctrine of Right, §49, General Remark E (the right to punish and the right to grant clemency). Checked in Hastie's translation (1887), where the right to pardon is 'the most delicate of all rights'. |
+
+### Time to mourn: a mother, or a colleague (mourning-leave)
+
+Split: development.
+
+Pivot: Who has died: my mother, or a colleague I worked with for twelve years.
+
+Base case:
+
+> My mother died last month. I have taken two weeks off. My employer would allow me three more months of unpaid leave, to stay at home and mourn, and not go back to the office. My team would carry my work, and I would lose income that I can spare only with difficulty. Should I go back to work now, or take the three months to mourn?
+
+Variant case:
+
+> A colleague with whom I worked closely for twelve years died last month. I have taken two weeks off. My employer would allow me three more months of unpaid leave, to stay at home and mourn, and not go back to the office. My team would carry my work, and I would lose income that I can spare only with difficulty. Should I go back to work now, or take the three months to mourn?
+
+Options (the same for both cases):
+
+- `return`: Go back to work now
+- `mourn`: Take the three months of unpaid leave to mourn
+
+| Thinker | Expectation | Basis | Reason | Source |
+| --- | --- | --- | --- | --- |
+| Confucius | flips: mourn → return | base: recorded; variant: inferred | When Zai Wo says that three years of mourning for parents is too long, Confucius asks if he would be at ease eating fine rice and wearing fine clothes, and calls him without humaneness: a child is not free of its parents' arms until it is three years old. The mourning owed to a parent is not owed to a colleague; care is graded by relationship. | Analects 17.21 (Legge numbering; Lau numbering not checked); 1.9 (care over the funeral rites of parents) |
+| Mencius | flips: mourn → return | base: recorded; variant: inferred | When the heir of Teng asks how to mourn his father, Mencius insists on the full three years, against the objections of the officials, and says that this is the way for parents. No such rite is owed to a colleague. | Mencius 3A2 |
+| Maimonides | same: return | recorded | The law fixes the measure of mourning: three days for weeping, seven for lament, thirty days for other restrictions, and one must not grieve beyond that measure (though one who does not mourn at all is cruel). Work is forbidden to the mourner in the first seven days. For a parent, some restrictions last twelve months (for example, festive gatherings), but not the ban on work. A month after the death, for a parent or for a colleague, one goes back to work. | Mishneh Torah, Hilkhot Avel 13:11-12 (do not mourn beyond the measure); 5:1 and 5:10 (work in the first seven days) |
+
+### The false charge against my friend (anger-at-the-meeting)
+
+Split: development.
+
+Pivot: Why the colleague made the false charge: by an honest mistake, or on purpose, to humiliate my friend.
+
+Base case:
+
+> At a team meeting, a colleague said that my friend, who was not there, takes money from the petty cash. It is false. He believed it: he misread an expense record, and he did not mean to harm my friend. A few people believed him. I will correct him now, in front of everyone, in any case. Should I let my anger show when I do it?
+
+Variant case:
+
+> At a team meeting, a colleague said that my friend, who was not there, takes money from the petty cash. It is false. He knew that it was false: he said it on purpose, to humiliate my friend, whom he dislikes. A few people believed him. I will correct him now, in front of everyone, in any case. Should I let my anger show when I do it?
+
+Options (the same for both cases):
+
+- `anger`: Correct him and let your anger show
+- `calm`: Correct him without showing anger
+
+| Thinker | Expectation | Basis | Reason | Source |
+| --- | --- | --- | --- | --- |
+| Aristotle | flips: calm → anger | inferred | The good-tempered person is angry at the right things, with the right people, and in the right way; he is inclined to make allowances rather than to take revenge. But those who are not angry at the things at which they should be angry are thought foolish, and to put up with insults to one's friends is slavish. An honest mistake calls for allowance; a deliberate false charge against a friend is a fit object of anger. Aristotle does not say that the anger must be shown, and the same chapter blames those who retaliate openly, so the variant is our reading. | Nicomachean Ethics IV.5 |
+| Maimonides | same: calm | recorded | Anger is one of the two traits where the middle way is not enough: one must go to the far end and train oneself not to be angry even at something that deserves anger. If a show of anger is needed, as with one's children, one shows it while remaining calm inside. A rebuke is given in private and gently. | Mishneh Torah, Hilkhot De'ot 2:3 (anger); 6:7 (how to rebuke) |
+
+### The loan I cannot repay (loan-i-cannot-repay)
+
+Split: development.
+
+Pivot: What the money is for: a holiday, or an operation without which my child will die.
+
+Base case:
+
+> I need $3,000 for a holiday that I have wanted for years. A wealthy acquaintance will lend it only if I promise to repay it within a year. I know that I will not be able to repay it, now or later. If I make the promise, he will lend the money; if I tell him the truth, he will not. No one else will lend to me. Should I make the promise?
+
+Variant case:
+
+> I need $3,000 for an operation without which my child will die. A wealthy acquaintance will lend it only if I promise to repay it within a year. I know that I will not be able to repay it, now or later. If I make the promise, he will lend the money; if I tell him the truth, he will not. No one else will lend to me. Should I make the promise?
+
+Options (the same for both cases):
+
+- `promise`: Make the promise and take the loan
+- `no-promise`: Do not make a promise that you know you cannot keep
+
+| Thinker | Expectation | Basis | Reason | Source |
+| --- | --- | --- | --- | --- |
+| Mill | flips: no-promise → promise | inferred | Trust in what people say is one of the main supports of social well-being, so a false promise for one's own pleasure is wrong. Mill allows exceptions to the secondary rules when they conflict with a greater good: his named exception to veracity is to save a person from great and unmerited evil, and a child's life outweighs a loss of $3,000 to a wealthy lender. This is an extension: the named exception concerns withholding facts from a malefactor, not deceiving an innocent lender. | Utilitarianism, ch. 2 (veracity and its exceptions); ch. 5 (justice gives way to a greater duty, such as saving a life) |
+| Kant | same: no-promise | base: recorded; variant: inferred | The base is Kant's own example: a man forced by need to borrow money, who knows that he cannot repay, may not make a false promise. The maxim cannot be a universal law, because promising would then be impossible, and the lender would be used merely as a means. The variant is not in the text, but the size of the need does not make an exception to a perfect duty. | Groundwork II (the false promise) |
+| Maimonides | flips: no-promise → promise | inferred | A false promise is deception, which is forbidden even in one word, and 'the wicked borrows and does not repay'. But when a life is at stake, every commandment gives way except the three, and deceit is not among them. Applying that rule, which concerns a person forced to transgress, to saving one's child is our inference. | Mishneh Torah, Hilkhot De'ot 2:6 (no deception); Hilkhot Malveh ve-Loveh 1:3; Hilkhot Yesodei ha-Torah 5:1-2 |
 
 ### Holdout pairs
 
@@ -475,6 +556,9 @@ Options:
 | Kant | tell | clear | To say 'I know nothing' is a lie, and the duty not to lie has no exception for love of a parent or for a good result. | Metaphysics of Morals, Doctrine of Virtue, §9 (On Lying); 'On a Supposed Right to Lie from Philanthropy' (1797) |
 | Aristotle | tell | disputed | The truthful person is truthful most of all when something is at stake, and the lie leaves two fellow members under an unjust suspicion. The other reading gives more weight to what a son owes his father. | Nicomachean Ethics IV.7 (truthfulness); V.1-2 (justice toward others); against this, VIII.14 and IX.2 (what is owed to a father) |
 | Confucius | open | — | Analects 13.18 is about a son who testifies against his father. This son must make a false statement that leaves two other people under suspicion, and the passage gives no verdict on what he owes them. | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | tell | clear | To say 'I know nothing' is a false statement, and it leaves two innocent members under suspicion. The honour owed to a parent does not reach a transgression: if a father tells his son to transgress, the son does not obey. Deception in speech is forbidden. | Mishneh Torah, Hilkhot Mamrim 6:12 (do not obey a parent who asks for a transgression); Hilkhot De'ot 2:6 (no deception in speech) |
 
 Axis expectations:
 
@@ -497,6 +581,9 @@ Options:
 | Kant | — | — | No grounded answer in the texts | — |
 | Aristotle | — | — | No grounded answer in the texts | — |
 | Confucius | cover | clear | This is the recorded case. Told of a man who bore witness against his father for the theft of a sheep, Confucius answers that among his people the upright act differently: the father covers for the son, and the son for the father. | Analects 13.18; 4.18 (remonstrate gently with parents) |
+| Mencius | cover | clear | Asked what Shun, as emperor, would do if his father killed a man, Mencius says that Shun would not stop the judge from arresting him, but would give up the empire, carry his father away in secret and live with him at the edge of the sea. Shun does not hide the crime or obstruct the judge, but he does not denounce his father either; he gives up his own position to stay with him. The case is murder, so this is an analogy for a lesser one, where no one else is suspected and no one has asked. Scholars dispute what the passage says about concealment. | Mencius 7A35 |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -519,6 +606,9 @@ Options:
 | Kant | keep | clear | To keep a promise is a perfect duty. To help the needy is an imperfect duty, which allows latitude and cannot override a perfect one. | Groundwork of the Metaphysics of Morals, Section II (the false promise; a perfect duty admits no exception in favour of inclination); Metaphysics of Morals, Doctrine of Virtue, Introduction (duties of virtue are of wide obligation) |
 | Aristotle | — | — | No grounded answer in the texts | — |
 | Confucius | keep | clear | To be true to one's word (xin), above all with friends, is a central duty in the Analects. That a friend comes before strangers is a later reading of graded concern, clearest in Mencius. | Analects 2.22 (Confucius: a person without trustworthiness); 1.4 and 1.7 (the disciples Zengzi and Zixia: trustworthy with friends) |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -543,6 +633,9 @@ Options:
 | Kant | refrain | clear | To push him is to use a person merely as a means, in a way to which he cannot consent. | Groundwork, Section II (the formula of humanity) |
 | Aristotle | refrain | clear | Some acts have no mean and are always wrong. Aristotle names murder among them. | Nicomachean Ethics II.6 (1107a8-17) |
 | Confucius | refrain | disputed | The humane person does not kill an innocent person for a gain. Both passages are analogies: one is about a ruler who wants to execute bad men, the other about killing to gain a throne. No passage speaks of killing one to save five. | Analects 12.19 (why must you kill?); Mencius 2A2 (would not kill one innocent person to gain the empire) |
+| Mencius | refrain | disputed | Mencius says of the sages Bo Yi, Yi Yin and Confucius that none of them would commit one unrighteous act or kill one innocent person, even to gain the whole empire. The passage is about gain, not about saving five lives, so this is an analogy; Mencius 4A17 (weighing the rule against the case) gives a less rule-bound reading. | Mencius 2A2 |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | refrain | clear | One life is not set aside for another. A pursuer who threatens a life may be stopped, even by killing him, but the stranger pursues no one. When a group is told to hand over one person to be killed or all will die, they must all die rather than hand over one innocent person. | Mishneh Torah, Hilkhot Rotzeach u-Shmirat ha-Nefesh 1:9 (one life is not set aside for another); Hilkhot Yesodei ha-Torah 5:5 (a group must not hand over one person) |
 
 Axis expectations:
 
@@ -566,6 +659,9 @@ Options:
 | Kant | — | — | No grounded answer in the texts | — |
 | Aristotle | open | — | The flute argument depends on what the club is for, and the case does not say. See the pair club-purpose. | — |
 | Confucius | open | — | Confucius taught students of modest means, but that gives no rule for the last place. | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations: none.
 
@@ -586,6 +682,9 @@ Options:
 | Kant | no-lie | clear | Kant's own essay denies a right to lie even to a murderer who asks where his victim is. Many later Kantians reject this conclusion, but it is Kant's text. | 'On a Supposed Right to Lie from Philanthropy' (1797) |
 | Aristotle | lie | disputed | Truthfulness as a virtue concerns how a person presents himself, not cases of this kind. Practical wisdom and friendship point toward the protection of a friend from injustice. | Nicomachean Ethics IV.7 (scope of truthfulness); IX.8 (the good person acts for the sake of friends) |
 | Confucius | lie | disputed | Confucius ranks the person who is rigidly true to his word in every case below the filial and the upright. Uprightness is not literal truth-telling against one's own. The match is by analogy: 13.18 concerns a relative's fault, not the protection of a victim. | Analects 13.20 (those determined to be true to their word are 'obstinate little men', the third rank); 13.18 |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | lie | clear | Hume grounds the rules of justice and fidelity in their usefulness to society, and holds that they give way in cases of extreme necessity, where keeping them brings ruin. Our approval of benevolence, and our blame for a person who fails a friend in danger, point the same way. No text discusses this case. | Enquiry concerning the Principles of Morals, sec. 3 part 1 (rules of justice suspended in extreme necessity); sec. 2 (benevolence) |
+| Maimonides | lie | clear | One must rescue a person whose life is pursued, even by killing the pursuer if nothing less will stop him. A false word that sends the pursuer away is far less. 'Do not stand by the blood of your neighbour' makes the rescue a duty. | Mishneh Torah, Hilkhot Rotzeach u-Shmirat ha-Nefesh 1:6-7 (the pursuer), 1:14 (do not stand by the blood of your neighbour) |
 
 Axis expectations:
 
@@ -608,6 +707,9 @@ Options:
 | Kant | open | — | The penalty joins a fine and a cut of the water to a whole household. These are two judgments. Separate them before this case is scored. | — |
 | Aristotle | open | — | The penalty joins a fine and a cut of the water to a whole household. These are two judgments. Separate them before this case is scored. | — |
 | Confucius | open | — | Analects 2.3 says what punishment alone fails to teach; 13.3 treats the proper use of punishments as part of good government. Also: The penalty joins a fine and a cut of the water to a whole household. These are two judgments. Separate them before this case is scored. | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -630,6 +732,9 @@ Options:
 | Kant | apply | clear | A penalty is owed because the wrong was done. It must not be set aside as a means to some other good. To hide the matter from the members, to whom the chair owes an account, is also a deception. | Metaphysics of Morals, Doctrine of Right, General Remark E (6:331-333, punishment is never merely a means to another good); Doctrine of Virtue §9 |
 | Aristotle | open | — | Equity can justify an exception to expulsion. It does not justify secrecy; that takes a separate argument. | — |
 | Confucius | open | — | Her shame and restitution are reasons for mercy. They do not decide who is entitled to know what happened. | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -652,6 +757,9 @@ Options:
 | Kant | — | — | No grounded answer in the texts | — |
 | Aristotle | stay | disputed | We owe our parents support before all others, and it is nobler to provide for them than for ourselves. Whether a paid care home meets that debt is open to argument. | Nicomachean Ethics IX.2 (1165a21-27); VIII.14 (a debt to a father cannot be repaid in full) |
 | Confucius | stay | disputed | While parents are alive, a son should not travel far; if he does go, he must have a fixed place where he can be reached (4.19). Support without reverence is no more than we give to dogs and horses (2.7). The text does not say if a paid care home, against the parents' wish, meets that standard. | Analects 4.19; 2.7 |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -674,6 +782,9 @@ Options:
 | Kant | open | — | The case does not give the words. A personal declaration of belief and a conventional response of mourning are different acts. | — |
 | Aristotle | — | — | No grounded answer in the texts | — |
 | Confucius | open | — | The case does not give the words. A personal declaration of belief and a conventional response of mourning are different acts. | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -697,6 +808,9 @@ Options:
 | Kant | not-take | disputed | Necessity does not make a wrong act right. Kant treats a 'right of necessity' as no right at all: the act can be beyond punishment, but it is not lawful. His example is a man who takes another's life to save his own; the application to theft for a wife's life is an extension. | Metaphysics of Morals, Doctrine of Right, Appendix to the Introduction (the right of necessity, 6:235-236) |
 | Aristotle | not-take | clear | Aristotle names theft among the acts that have no mean and are always wrong. Acts done under such pressure can earn pardon, but pardon is not the same as doing rightly. | Nicomachean Ethics II.6 (1107a8-17); against this, III.1 (mixed actions) |
 | Confucius | open | — | Analects 15.2 is about a person who endures his own hardship. Here another person will die, and the passage does not settle whether to take the drug is to abandon restraint. | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | take | clear | Hume asks if it is a crime, after a shipwreck, to seize whatever means of safety one can, without regard to former limits of property, or for a besieged city perishing of hunger to break open the granaries. In such extreme necessity the rules of property give way, because they exist only for their usefulness. | Enquiry concerning the Principles of Morals, sec. 3 part 1 (the shipwreck and the besieged city) |
+| Maimonides | take | clear | When life is at stake, a person transgresses rather than die, except for the three (idolatry, forbidden sexual relations, murder); the text concerns a person forced to transgress. Theft is not among the three; that this permits taking a third party's property to save someone else is the Talmud's extension of the rule. A person who saves a life with another's property must still pay for it, which fits leaving the $8,000 and owing the rest. | Mishneh Torah, Hilkhot Yesodei ha-Torah 5:1-2 (saving life sets aside the commandments); Hilkhot Hovel u-Mazik 8:2 (one who saves himself with another's property pays for it) |
 
 Axis expectations:
 
@@ -719,6 +833,9 @@ Options:
 | Kant | better | disputed | An inference: the hirer acts for the donors, and a maxim of using an office of trust for a family end could not be a universal law. No passage speaks to this case. | Groundwork, Section II (the formula of universal law) |
 | Aristotle | better | clear | Offices are distributed justly by the merit that is relevant to the work, not by birth or kinship. | Politics III.12; Nicomachean Ethics V.3 |
 | Confucius | better | disputed | In office, raise up the worthy and the able. The other reading uses the next line of the same passage ('raise those whom you know') and concern for one's own family. | Analects 13.2 (raise up those of talent); 12.22 (raise the straight) |
+| Mencius | better | clear | A ruler who promotes the worthy may have to put strangers above his own kin, and must do it with care. When Shun gave his brother Xiang a fief, he had officials govern it and sent Xiang its revenue: he provided for his brother, but did not give him a post. Care for kin is graded and real, but a post of public trust goes to the worthy. | Mencius 1B7 (the distant above kin, in promotion); 5A3 (Shun and Xiang) |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -741,6 +858,9 @@ Options:
 | Kant | — | — | No grounded answer in the texts | — |
 | Aristotle | record | disputed | Experienced judgment can see what a checklist misses. But the case does not say that the voter has such experience, and an unsupported feeling has no authority of its own. See the pair experienced-eye. | Nicomachean Ethics VI.11; II.9 (the decision rests with perception) |
 | Confucius | record | disputed | Confucius reads character from conduct, but the voter can point to no conduct. An unease with no fact behind it does not decide the matter. | Analects 2.10 |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -763,6 +883,9 @@ Options:
 | Kant | refuse | disputed | An inference from the formula of universal law: like cases must be treated alike, and an exception that the manager cannot justify to the other two is an exception made on inclination. | Groundwork, Section II (the formula of universal law) |
 | Aristotle | refuse | disputed | Equity corrects a rule for a real difference in the case. The manager can state no difference, so equity has nothing to correct. | Nicomachean Ethics V.10 |
 | Confucius | refuse | disputed | The gentleman is not fixed for or against anything and follows what is right. When Confucius drops one old practice and keeps another, he gives the reason for each. The manager has no reason that she can give to the two people whom she refused. | Analects 4.10; 9.3 |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -785,6 +908,9 @@ Options:
 | Kant | — | — | No grounded answer in the texts | — |
 | Aristotle | claim | disputed | The great-souled person claims the honour that he deserves, and to claim less is a fault (IV.3). The other reading uses IV.7: the truthful person inclines to understate, because that is in better taste, and understatement is a smaller fault than boasting. | Nicomachean Ethics IV.3 (greatness of soul and undue humility); IV.7 (self-deprecation) |
 | Confucius | deflect | clear | Confucius praises an officer who would not boast of his own merit, and says that he is not troubled when others do not recognise him. His best disciple wishes never to boast of his goodness or display his deeds. | Analects 6.15 (Meng Zhifan); 1.16; 5.26 (the wish of Yan Yuan) |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | deflect | disputed | Humility is one of the two traits where a person must go to the far end, not to the middle: one should be very lowly of spirit. Maimonides also calls shaming another person, above all in public, a great sin, and here the plain claim would shame the colleague in front of everyone. Against this: De'ot 2:3 concerns an inner trait and does not forbid a true statement, and the false impression is itself a kind of deception; Maimonides might prefer a private word, which the options leave out. | Mishneh Torah, Hilkhot De'ot 2:3 (humility to the extreme); 6:8 (do not shame another, above all in public) |
 
 Axis expectations:
 
@@ -807,6 +933,9 @@ Options:
 | Kant | return | clear | A maxim of keeping what is not mine when no one will notice cannot be a universal law. The shopkeeper example adds that honesty only because it pays has no moral worth. | Groundwork, Section I (the shopkeeper); Section II |
 | Aristotle | return | clear | To take more than one's share of goods is the mark of the unjust person. | Nicomachean Ethics V.1-2 (the grasping person); V.4 |
 | Confucius | return | clear | At the sight of gain, think of what is right. Wealth that is not got in the right way is not to be kept. | Analects 14.12; 4.5; 7.16 |
+| Mencius | return | clear | To take what is not one's own is against rightness. A man who steals a chicken from his neighbour every day proposes to reduce it to one a month and stop next year; Mencius answers that if he knows it is wrong, he should stop at once. | Mencius 7A33; 3B8 |
+| Hume | return | clear | Hume's 'sensible knave' holds that he may break a rule of honesty when it profits him and no one will know. Hume answers that the honest person keeps the rule, and keeps the peace of mind and the trust of others that the knave gives up. | Enquiry concerning the Principles of Morals, Conclusion, part 2 |
+| Maimonides | return | clear | It is forbidden to rob even the slightest amount. To keep money that one knows was paid by mistake is to hold what belongs to another. The application to a mistake is our inference. | Mishneh Torah, Hilkhot Gezelah va-Avedah 1:1-2 |
 
 Axis expectations: none.
 
@@ -827,6 +956,9 @@ Options:
 | Kant | correct | clear | An inference; no passage speaks of a retraction. To let a false and damaging statement stand, to spare oneself, uses the colleague's good name merely as a means to one's own comfort, and the maxim could not be a universal law. | Groundwork, Section II (the formulas of universal law and of humanity) |
 | Aristotle | correct | clear | Justice requires that the wrong be put right, and the truthful person owns what is the case when it costs him. | Nicomachean Ethics V.4 (corrective justice); IV.7 |
 | Confucius | correct | clear | When you make a mistake, do not be afraid to correct it. The gentleman's faults are like eclipses: all see them, and all look up to him when he corrects them. | Analects 1.8; 15.30; 19.21 (the disciple Zigong) |
+| Mencius | correct | clear | The gentlemen of old corrected their mistakes, and their mistakes were like eclipses of the sun and moon: everyone saw them, and when they changed, everyone looked up to them. Mencius blames those who persist in a mistake and make excuses for it. | Mencius 2B9; 2A8 (Zilu was glad to be told of his faults) |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | correct | clear | Repentance for a wrong to another person needs more than confession: one must put the wrong right and seek the other's forgiveness. The text does not say where the repair is made; that a public false charge is corrected in public is our inference. | Mishneh Torah, Hilkhot Teshuvah 2:9 |
 
 Axis expectations: none.
 
@@ -851,6 +983,9 @@ Options:
 | Kant | — | — | No grounded answer in the texts | — |
 | Aristotle | open | — | The case does not say if the pilot is a private person with a boat or the rescue officer for everyone in danger. Their obligations to the three differ. | — |
 | Confucius | open | — | The case does not say if the pilot is a private person with a boat or the rescue officer for everyone in danger. Their obligations to the three differ. | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -873,6 +1008,9 @@ Options:
 | Kant | keep | clear | A promise binds whether or not anyone can enforce it or will learn of the breach. | Groundwork, Section II (the false promise) |
 | Aristotle | — | — | No grounded answer in the texts | — |
 | Confucius | keep | disputed | The complete person does not forget an old agreement, however long ago it was made, and the dead are served according to ritual. The passages on care for the dead concern parents; an aunt's memorial is an extension. | Analects 14.12 (does not forget an old agreement); 2.5; 1.9 (the disciple Zengzi) |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -896,6 +1034,9 @@ Options:
 | Kant | — | — | No grounded answer in the texts | — |
 | Aristotle | — | — | No grounded answer in the texts | — |
 | Confucius | open | — | A duty to care for parents does not establish a duty to inherit their trade. The case does not say if the parents depend on the shop. | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -918,6 +1059,9 @@ Options:
 | Kant | truth | clear | The duty not to lie has no exception for kindness. | Metaphysics of Morals, Doctrine of Virtue, §9; 'On a Supposed Right to Lie from Philanthropy' |
 | Aristotle | — | — | No grounded answer in the texts | — |
 | Confucius | lie | disputed | Filial care attends to the feelings of an elder, and uprightness is not literal truth-telling against one's own family. | Analects 2.8 (the difficulty is in the demeanour); 13.18 |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -940,6 +1084,9 @@ Options:
 | Kant | — | — | No grounded answer in the texts | — |
 | Aristotle | open | — | An award for achievement and a grant for access distribute different goods, and the case does not say which this is. See the pair award-or-grant. | — |
 | Confucius | open | — | An award for achievement and a grant for access distribute different goods, and the case does not say which this is. See the pair award-or-grant. | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations: none.
 
@@ -962,6 +1109,9 @@ Options:
 | Kant | — | — | No grounded answer in the texts | — |
 | Aristotle | — | — | No grounded answer in the texts | — |
 | Confucius | open | — | The case does not say what the husband wanted, or if the diaries expose people who confided in him. | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations:
 
@@ -984,6 +1134,9 @@ Options:
 | Kant | return | clear | A maxim of keeping found property when no one sees cannot be a universal law. | Groundwork, Section II |
 | Aristotle | return | clear | To gain from what belongs to another is the mark of the unjust and grasping person. | Nicomachean Ethics V.1-2 |
 | Confucius | return | clear | At the sight of gain, think of what is right. Poverty is not to be escaped by the wrong way. | Analects 14.12; 4.5 |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations: none.
 
@@ -1004,5 +1157,8 @@ Options:
 | Kant | review | clear | To break a promise for one's own pleasure is the standard case of a maxim that cannot be a universal law. | Groundwork, Section II |
 | Aristotle | review | clear | To drop what one owes for the sake of pleasure is a failure of justice and of self-control. | Nicomachean Ethics IX.2; VII (lack of self-control) |
 | Confucius | review | clear | A person must be true to his word, and the gentleman thinks of what is right, not of his own advantage. | Analects 2.22; 4.16; 1.4 (the disciple Zengzi) |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations: none.

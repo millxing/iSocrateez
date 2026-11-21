@@ -2,15 +2,8 @@
 import { writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { AXIS_POLES, TEST_PHILOSOPHERS, VERDICT_DILEMMAS, type VerdictDilemma } from "./answerKey";
+import { AXIS_POLES, PHILOSOPHER_NAMES as NAMES, TEST_PHILOSOPHERS, VERDICT_DILEMMAS, type VerdictDilemma } from "./answerKey";
 import { CASE_PAIRS, type CasePair } from "./pairs";
-
-const NAMES = {
-  "mill-utilitarianism": "Mill",
-  "kant-deontology": "Kant",
-  "aristotle-virtue-ethics": "Aristotle",
-  "confucius-role-ethics": "Confucius"
-} as const;
 
 const cell = (text: string) => text.replace(/\|/g, "\\|").replace(/\n/g, " ");
 
@@ -115,7 +108,7 @@ export function renderAnswerKey(dilemmas: VerdictDilemma[], pairs: CasePair[]): 
   const lines = [
     "# Verdict check: answer key for review",
     "",
-    "This document lists, for each test dilemma, the option that each of four philosophers' own texts lead to. It also lists which of the app's three axes should decide the dilemma. The app's advice is scored against it.",
+    "This document lists, for each test dilemma, the option that each test philosopher's own texts lead to: the core four (Mill, Kant, Aristotle, Confucius) and, since 2026-11-21, three transfer thinkers (Mencius, Hume, Maimonides). It also lists which of the app's three axes should decide the dilemma. The app's advice is scored against it.",
     "",
     "Status: provisional, written by an AI model. The key has had a second review. Answers that the reviewer judged \"open\" are not scored.",
     "",
@@ -136,7 +129,7 @@ export function renderAnswerKey(dilemmas: VerdictDilemma[], pairs: CasePair[]): 
     "",
     "## Paired cases",
     "",
-    "A pair is one case told twice. The two tellings differ in one fact, the pivot. For each thinker, the key says if the pivot should change the answer (\"flips\") or not (\"same\"). The test asks if the app's answer changes when it should, and stays when it should. Every pair is run for all four philosophers and for a baseline with no philosopher, and a correct pattern counts as evidence for a thinker only where it differs from the baseline.",
+    "A pair is one case told twice. The two tellings differ in one fact, the pivot. For each thinker, the key says if the pivot should change the answer (\"flips\") or not (\"same\"). The test asks if the app's answer changes when it should, and stays when it should. Every pair is run for all seven philosophers and for a baseline with no philosopher, and a correct pattern counts as evidence for a thinker only where it differs from the baseline.",
     "",
     "Basis is given for each side of the pair (one value when both sides agree). \"recorded\": the thinker's own text gives an answer to a case of this shape on that side. \"inferred\": our reading of the thinker's principles; no text gives the answer directly.",
     "",
