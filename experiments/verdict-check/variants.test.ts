@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { getPhilosophyById } from "../../shared/philosophyProfiles";
+import type { ProfileTuple } from "../../shared/contracts";
+import { getPhilosophyById, philosophyProfiles } from "../../shared/philosophyProfiles";
 import { TEST_PHILOSOPHERS } from "./answerKey";
+import { HOLDOUT_PASSAGES } from "./pairs";
 import { VARIANTS } from "./variants";
 
 describe("baseline prompts", () => {
@@ -24,4 +26,25 @@ describe("baseline prompts", () => {
     for (const line of shared) expect(baseline).toContain(line);
     expect(baseline).not.toMatch(/Kant|Perspective:|Voice brief:|this thinker/);
   });
+});
+
+describe("holdout protection", () => {
+  // If this fails, a prompt (or a note on a philosopher) gives the model a passage that a holdout pair tests.
+  // Remove the passage from the prompt. Do not change the pattern to make the test pass. See HOLDOUT_PASSAGES in pairs.ts.
+  const leaks = (text: string) =>
+    HOLDOUT_PASSAGES.flatMap((entry) => entry.patterns.filter((pattern) => pattern.test(text)).map((pattern) => `${entry.pairId} ${pattern}`));
+  const tuples: ProfileTuple[] = [-0.85, 0, 0.85].flatMap((a) =>
+    [-0.85, 0.85].map((b) => ({ outcomesPrinciples: a, individualCollective: b, reasonIntuition: -a }))
+  );
+
+  for (const [name, variant] of Object.entries(VARIANTS)) {
+    it(`${name}: no prompt contains a holdout passage`, () => {
+      const prompts = [
+        variant.baseline({ dilemma: "X" }),
+        ...philosophyProfiles.map((voice) => variant.voice({ dilemma: "X", voice })),
+        ...tuples.map((profile) => variant.profile({ dilemma: "X", profile }))
+      ];
+      expect(prompts.flatMap(leaks)).toEqual([]);
+    });
+  }
 });

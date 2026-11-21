@@ -16,15 +16,17 @@
  * Checked on 2026-11-20 by two other AI models: one checked the references against online texts,
  * and one criticised the design. This file has their corrections. Pairs added after that check
  * (drug-stakes, wallet-owner, lamb-at-the-shrine, favour-asked, friend-who-changed) had the reference
- * check only where their source line says so.
+ * check only where their source line says so. pardon-the-surgeon was added on 2026-11-21 with a reference check
+ * against Hastie's translation of the Doctrine of Right.
  *
  * Basis, for each side of a pair:
  * "recorded": the thinker's own text gives an answer to a case of this shape.
  * "inferred": our reading of the thinker's principles; no text gives the answer directly.
  *
  * LIMITS. Most "recorded" pairs can be passed by recall of a famous passage. If the passages behind the
- * holdout pairs are put into the app's notes on a philosopher, the holdout measures copying. Kant has no
- * "flip" pair: his texts give us none that is safe. One answer for each case is a small sample.
+ * holdout pairs are put into the app's notes on a philosopher, the holdout measures copying, so those
+ * passages are kept out of every prompt (HOLDOUT_PASSAGES, at the end of this file). Kant has one "flip"
+ * pair (pardon-the-surgeon). Use --samples to measure run-to-run variation.
  *
  * Analects numbers follow D. C. Lau; Legge's numbers differ by one or two in some books.
  */
@@ -331,7 +333,28 @@ export const CASE_PAIRS: CasePair[] = [
       }
     }
   },
-
+  {
+    id: "pardon-the-surgeon",
+    title: "A pardon for the town's surgeon: guilty, or innocent",
+    split: "development",
+    pivot: "If the convicted surgeon did the attack: he did, or new evidence proves that he did not.",
+    base: "I am the governor of a small state, and I alone can grant a pardon. The only surgeon in our town was convicted of an attack that left a man unable to walk. The evidence is clear, and he admits it. The sentence is five years in prison. He is no danger to anyone now. The nearest other surgeon is 200 kilometres away, so without him some patients will probably die. Most of the town has signed a petition for his pardon. No court can change the sentence; only I can. Should I pardon him?",
+    variant: "I am the governor of a small state, and I alone can grant a pardon. The only surgeon in our town was convicted of an attack that left a man unable to walk. New evidence, which I have checked, proves that he did not do it: another man did. The sentence is five years in prison. He is no danger to anyone now. The nearest other surgeon is 200 kilometres away, so without him some patients will probably die. Most of the town has signed a petition for his pardon. No court can change the sentence; only I can. Should I pardon him?",
+    options: [
+      { id: "pardon", label: "Grant the pardon" },
+      { id: "no-pardon", label: "Do not grant the pardon: the sentence stands" }
+    ],
+    thinkers: {
+      "kant-deontology": {
+        expect: "flip",
+        base: "no-pardon",
+        variant: "pardon",
+        basis: { base: "recorded", variant: "recorded" },
+        reason: "Punishment may never be imposed merely as a means to some other good; it is imposed only because the person committed a crime, and he must first be found guilty and punishable. So the innocent man must go free, and the town's need of a surgeon is no reason to punish or to spare the guilty one. The head of state may use the right to pardon only for crimes against himself, never for crimes of subjects against one another: there, to leave the crime unpunished is the greatest wrong to the subjects.",
+        source: "Metaphysics of Morals, Doctrine of Right, §49, General Remark E (the right to punish and the right to grant clemency). Checked in Hastie's translation (1887), where the right to pardon is 'the most delicate of all rights'."
+      }
+    }
+  },
   // ------------------------------------------------------------------ holdout
   {
     id: "deposit-stakes",
@@ -480,5 +503,52 @@ export const CASE_PAIRS: CasePair[] = [
         source: "Nicomachean Ethics IX.3"
       }
     }
+  }
+];
+
+/**
+ * The passages behind the holdout pairs. Decision of 2026-11-21: keep these passages out of every
+ * prompt (and so out of any note on a philosopher), so that the holdout measures what the model
+ * concludes and not what the prompt gives it. The model may still know them from its training.
+ * variants.test.ts checks every variant's prompts against these patterns. The patterns are narrow on
+ * purpose: Analects 13.18 (a stolen sheep, "the upright") and Analects 9.3 (the silk cap) are used by
+ * development cases and must stay allowed.
+ */
+export interface HoldoutPassage {
+  pairId: string;
+  passage: string;
+  patterns: RegExp[];
+}
+
+export const HOLDOUT_PASSAGES: HoldoutPassage[] = [
+  {
+    pairId: "deposit-stakes",
+    passage: "Kant's untraceable deposit (Theory and Practice, Part I; Critique of Practical Reason, §4, Remark)",
+    patterns: [/\bdeposit/i, /common saying/i, /theory and practice/i]
+  },
+  {
+    pairId: "drunk-on-duty",
+    passage: "Mill: drunk on duty (On Liberty, ch. 4)",
+    patterns: [/\bdrunk/i, /\bon duty\b/i]
+  },
+  {
+    pairId: "far-travel",
+    passage: "Analects 4.19: do not travel far while the parents are alive",
+    patterns: [/analects 4\.19\b/i, /\btravel(s|led|ling)? far\b/i, /\bfixed (place|abode|destination|address)/i]
+  },
+  {
+    pairId: "lamb-at-the-shrine",
+    passage: "Analects 3.17: 'You love the sheep; I love the rite'",
+    patterns: [/analects 3\.17\b/i, /\blove the (rite|ritual|ceremony)/i, /(offering|sacrifice) of (a|the) sheep/i, /first (day )?of the month/i]
+  },
+  {
+    pairId: "favour-asked",
+    passage: "Analects 14.34 (Legge 14.36): repay injury with uprightness",
+    patterns: [/analects 14\.3[46]\b/i, /\brepay\w* (an? )?(injury|injuries|wrong|resentment)/i, /\b(injury|resentment) with (kindness|virtue|uprightness|straightness)/i]
+  },
+  {
+    pairId: "friend-who-changed",
+    passage: "Nicomachean Ethics IX.3: the friend who becomes bad",
+    patterns: [/\bIX\.3\b/, /nicomachean ethics (IX|9)\.3\b/i, /\bincurabl/i, /friend\w* (who|that) (becomes|became|turns|turned) (bad|wicked)/i]
   }
 ];

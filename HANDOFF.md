@@ -74,6 +74,8 @@ Also seen, not scored: the app as Aristotle called a single lie "a vice in you".
 - **The new prompts were adopted after one run.** They were written before the development results were seen, and were not tuned on them. The frozen old prompts are the `legacy` variant.
 - **One model call is kept.** An earlier experiment (`experiments/profile-fidelity/`) showed that a separate planner call did not help.
 - **New section and tab.** The advice has a fifth section, "What this answer turns on". The results page shows it as the tab "Key fact". Rob has not confirmed the label.
+- **Holdout passages stay out of every prompt (2026-11-21).** The alternative, new holdout pairs, would have a weaker key (inferred, not recorded) and would need another review. `HOLDOUT_PASSAGES` in `pairs.ts` lists the six passages as narrow patterns; a test in `variants.test.ts` fails if any variant's prompt, for any of the 40 philosophers or any profile, contains one. So step 4 notes cannot quote them. Do not loosen a pattern to make that test pass.
+- **Kant flip pair added (2026-11-21):** `pardon-the-surgeon` (development). Guilty surgeon: no pardon; proven innocent: pardon. Sources checked against Hastie's translation of the Doctrine of Right, §49 E. Result, 3 samples: Kant correct 3 of 3. The baseline gives the same pattern in 2 of 3 samples, so the pair shows that Kant can reverse, but it is weak evidence of Kant-specific content.
 - **Held-back cases are untouched.** 6 pairs and 8 single cases are marked `holdout`. They were never run. Run them once, after steps 4 and 5.
 - **Rob accepted** that sharper advice will sometimes recommend what most people think is wrong (for example, do not report your father). The safety filter is unchanged.
 
@@ -104,7 +106,7 @@ Folder: `experiments/verdict-check/`. Read its `README.md`.
 | File | Content |
 |---|---|
 | `answerKey.ts` | 25 single dilemmas, each with two options: keyed answers for some thinkers, `open` notes, and the axis that decides the case |
-| `pairs.ts` | 16 paired cases (10 development, 6 holdout) |
+| `pairs.ts` | 17 paired cases (11 development, 6 holdout), and `HOLDOUT_PASSAGES` |
 | `variants.ts` | `prod` = `worker/src/prompts.ts`; `legacy` = frozen old prompts. Add a new variant here to test a prompt |
 | `legacyPrompts.ts` | Frozen old prompts. Do not edit |
 | `run.ts`, `scoring.ts`, `judge.ts` | Runner, scoring, judge prompt and parser |
@@ -128,9 +130,9 @@ npx vite-node experiments/verdict-check/run.ts --variant <name> --limit 4   # sm
 ## 7. Open risks
 
 - **The key is provisional.** If the professor changes it, the numbers change. A new score costs no model calls unless a case text or an option changes.
-- **Single samples.** Each case was answered once. A difference of one or two rows can be noise. The profile result (3 to 13 of 14) is too large to be noise.
-- **Recall.** Most "recorded" pairs follow a famous passage. If step 4 puts the passages behind the holdout pairs into the notes, those pairs measure copying. The passages are: Analects 4.19, 3.17 and 14.34; Nicomachean Ethics IX.3; On Liberty ch. 4 (drunk on duty); Kant's deposit example. Either keep them out of the notes, or write new holdout pairs before step 6.
-- **Kant has no pair in which his answer must reverse.** A Kant that always gives the strict answer passes.
+- **Run-to-run variation (measured 2026-11-21, `prod`, development split, 3 samples, `--samples 3`).** Same verdict in all 3 samples: voice 39 of 40, profile 28 of 28, pair 90 of 100. Voice and profile scores are stable; the Aristotle failures are the same in every sample, so they are real. Confucius is 9 of 11, not 10 (`promise-charity` changes). Pair scores move: flip rows 5 to 7 of 9; "differs from the baseline" 3 to 5. The baseline itself changes in 3 pairs. Report: `data/prod/variability-development.md`. Rule: for voice and profile, a fixed row counts if it holds in all samples; for pairs, compare variants on 3 samples, and a change of 1 or 2 rows is noise. The legacy variant has only one sample.
+- **Recall.** Most "recorded" pairs follow a famous passage. If step 4 puts the passages behind the holdout pairs into the notes, those pairs measure copying. The passages are: Analects 4.19, 3.17 and 14.34; Nicomachean Ethics IX.3; On Liberty ch. 4 (drunk on duty); Kant's deposit example. Decided: they stay out of every prompt, and a test enforces it (section 4).
+- **Kant has only one pair in which his answer must reverse** (`pardon-the-surgeon`), and the baseline usually reverses there too.
 - **The judge.** It is reliable on the new prompts, because the first sentence gives the answer (12 of 12 checked by hand). On the old prompts it was weaker on hedged advice.
 - **Not tested end to end.** The new prompts ran through the `claude` command-line tool, not through the Worker and the provider API. Wait time looked the same (11 to 19 seconds for each answer).
 - **Debate replies** (`worker/src/debatePrompts.ts`) still use the short brief and the old style. They were not tested.

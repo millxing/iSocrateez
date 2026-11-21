@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { VERDICT_DILEMMAS } from "./answerKey";
-import { CASE_PAIRS } from "./pairs";
+import { CASE_PAIRS, HOLDOUT_PASSAGES } from "./pairs";
 
 describe("case pairs", () => {
   it("have unique ids that differ from every dilemma id", () => {
@@ -13,6 +13,22 @@ describe("case pairs", () => {
     for (const split of ["development", "holdout"] as const) {
       expect(CASE_PAIRS.some((pair) => pair.split === split)).toBe(true);
     }
+  });
+
+  it("lists the passage behind every holdout pair, and each pattern finds that passage in the key", () => {
+    const holdout = CASE_PAIRS.filter((pair) => pair.split === "holdout");
+    expect(HOLDOUT_PASSAGES.map((entry) => entry.pairId).sort()).toEqual(holdout.map((pair) => pair.id).sort());
+    for (const entry of HOLDOUT_PASSAGES) {
+      const pair = holdout.find((candidate) => candidate.id === entry.pairId)!;
+      const keyText = [pair.title, pair.base, pair.variant, ...Object.values(pair.thinkers).flatMap((thinker) => [thinker.reason, thinker.source])].join("\n");
+      // A pattern that matches nothing in its own pair's key is probably mistyped.
+      expect(entry.patterns.some((pattern) => pattern.test(keyText)), entry.pairId).toBe(true);
+    }
+  });
+
+  it("does not block passages that development cases use", () => {
+    const allowed = ["Analects 13.18: the son bore witness against his father for the theft of a sheep; the upright cover for each other.", "Analects 9.3: the silk cap is thrift.", "Nicomachean Ethics VI.11; II.6"];
+    for (const text of allowed) for (const entry of HOLDOUT_PASSAGES) for (const pattern of entry.patterns) expect(pattern.test(text), `${entry.pairId} ${pattern}`).toBe(false);
   });
 
   for (const pair of CASE_PAIRS) {

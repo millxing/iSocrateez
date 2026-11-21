@@ -289,6 +289,29 @@ Options (the same for both cases):
 | Aristotle | same: return | inferred | To gain from what belongs to another is the mark of the unjust and grasping person, whoever the other is. | Nicomachean Ethics V.1-2 |
 | Confucius | same: return | inferred | At the sight of gain, think of what is right. Poverty is not to be escaped by the wrong way. | Analects 14.12; 4.5 |
 
+### A pardon for the town's surgeon: guilty, or innocent (pardon-the-surgeon)
+
+Split: development.
+
+Pivot: If the convicted surgeon did the attack: he did, or new evidence proves that he did not.
+
+Base case:
+
+> I am the governor of a small state, and I alone can grant a pardon. The only surgeon in our town was convicted of an attack that left a man unable to walk. The evidence is clear, and he admits it. The sentence is five years in prison. He is no danger to anyone now. The nearest other surgeon is 200 kilometres away, so without him some patients will probably die. Most of the town has signed a petition for his pardon. No court can change the sentence; only I can. Should I pardon him?
+
+Variant case:
+
+> I am the governor of a small state, and I alone can grant a pardon. The only surgeon in our town was convicted of an attack that left a man unable to walk. New evidence, which I have checked, proves that he did not do it: another man did. The sentence is five years in prison. He is no danger to anyone now. The nearest other surgeon is 200 kilometres away, so without him some patients will probably die. Most of the town has signed a petition for his pardon. No court can change the sentence; only I can. Should I pardon him?
+
+Options (the same for both cases):
+
+- `pardon`: Grant the pardon
+- `no-pardon`: Do not grant the pardon: the sentence stands
+
+| Thinker | Expectation | Basis | Reason | Source |
+| --- | --- | --- | --- | --- |
+| Kant | flips: no-pardon → pardon | recorded | Punishment may never be imposed merely as a means to some other good; it is imposed only because the person committed a crime, and he must first be found guilty and punishable. So the innocent man must go free, and the town's need of a surgeon is no reason to punish or to spare the guilty one. The head of state may use the right to pardon only for crimes against himself, never for crimes of subjects against one another: there, to leave the crime unpunished is the greatest wrong to the subjects. | Metaphysics of Morals, Doctrine of Right, §49, General Remark E (the right to punish and the right to grant clemency). Checked in Hastie's translation (1887), where the right to pardon is 'the most delicate of all rights'. |
+
 ### Holdout pairs
 
 Holdout pairs must not be used to tune prompts.
