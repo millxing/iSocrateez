@@ -23,11 +23,12 @@ interface ResultsViewProps {
   onDebate?: () => void;
 }
 
-type Tab = "advice" | "why" | "watch" | "next" | "dilemma" | "export" | "coordinates";
+type Tab = "advice" | "why" | "turns" | "watch" | "next" | "dilemma" | "export" | "coordinates";
 
 const TABS: { id: Tab; label: string; title: string }[] = [
   { id: "advice", label: "Advice", title: "Your advice" },
   { id: "why", label: "Reasoning", title: "Why this advice" },
+  { id: "turns", label: "Key fact", title: "What this answer turns on" },
   { id: "watch", label: "Watch for", title: "What to watch for" },
   { id: "next", label: "Next step", title: "Your next step" },
   { id: "dilemma", label: "Dilemma", title: "Your dilemma" },
@@ -39,6 +40,7 @@ const TABS: { id: Tab; label: string; title: string }[] = [
 const SECTION_PATTERNS: { tab: Tab; patterns: RegExp[] }[] = [
   { tab: "advice", patterns: [/your\s+advice/i, /core\s+advice/i] },
   { tab: "why", patterns: [/why\s+this\s+fits/i, /why\s+this\s+advice/i, /ethical\s+profile/i] },
+  { tab: "turns", patterns: [/turns\s+on/i] },
   { tab: "watch", patterns: [/watch\s+for/i, /watch\s+out/i, /be\s+careful/i] },
   { tab: "next", patterns: [/next\s+steps?/i, /action\s+items?/i, /practical\s+steps?/i] }
 ];
@@ -51,6 +53,7 @@ function splitMarkdownSections(raw: string): Record<Tab, string> {
   const sections: Record<Tab, string[]> = {
     advice: [],
     why: [],
+    turns: [],
     watch: [],
     next: [],
     dilemma: [],
@@ -84,6 +87,7 @@ function splitMarkdownSections(raw: string): Record<Tab, string> {
   return {
     advice: sections.advice.join("\n").trim(),
     why: sections.why.join("\n").trim(),
+    turns: sections.turns.join("\n").trim(),
     watch: sections.watch.join("\n").trim(),
     next: sections.next.join("\n").trim(),
     export: "",
@@ -609,7 +613,7 @@ function ExportTab({
       <p className="export-intro">Keep a copy of this session as a Markdown file you can open in any notes app.</p>
       <ul className="export-includes">
         <li>Your dilemma</li>
-        <li>The advice, reasoning, what to watch for and next step</li>
+        <li>The advice, reasoning, key fact, what to watch for and next step</li>
         <li>{voice ? "About the speaker" : "Your ethical coordinates and nearest philosophies"}</li>
         <li>The models that generated it</li>
       </ul>

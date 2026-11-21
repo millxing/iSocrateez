@@ -7,6 +7,14 @@ import type {
 } from "../../shared/contracts";
 import { describeAxisPosition, formatTuple } from "../../shared/ethics";
 
+/*
+ * The advice prompts ask the model to work out what the view concludes, and then to advise.
+ * Asked only for "advice", the model gives its own best answer in the thinker's vocabulary, and
+ * hedges between the options. Measured with experiments/verdict-check (2026-11-21): this form gave
+ * the expected answer in 37 of 40 keyed cases (before: 32), and in 13 of 14 opposite-profile pairs (before: 3).
+ * Test a change with that harness before you keep it.
+ */
+
 interface PromptContext {
   dilemma: string;
   explanationLevel: ExplanationLevel;
@@ -25,29 +33,61 @@ function profileLines(profile: ProfileTuple): string[] {
   ];
 }
 
-const NO_FOLLOW_UP_NOTE =
+export const NO_FOLLOW_UP_NOTE =
   "Do not end with follow-up offers, suggestions to continue the conversation, or phrases like 'If you want, I can help you...' — end cleanly after the last section.";
-const TENSIONS_NOTE =
-  "Before you write, identify the moral tensions in the dilemma. Surface them in the advice; do not collapse them too quickly.";
+
+/** Rules that make the advice answer the question. `unless` names the one permitted reason for a third option. */
+export function commitRules(unless: string): string[] {
+  return [
+    "Rules:",
+    "- Answer the question that the user asks. Take the facts as the user states them: if the user says that an option is closed, do not reopen it.",
+    `- Do not replace the choice with a compromise or a third option, unless ${unless}. If you advise a first step (for example, to talk to someone), also say which option to choose if that step changes nothing.`,
+    "- Do not balance all sides. Say in one or two sentences what this answer costs, then commit to it."
+  ];
+}
+
+/** The five sections. The results page splits the advice on these headings (src/components/ResultsView.tsx). */
+export function adviceSections(why: string, turnsOn: string): string[] {
+  return [
+    "Write concise, actionable markdown with these five sections, in this order, with these headings:",
+    "1. Core advice",
+    `2. ${why}`,
+    "3. What this answer turns on",
+    "4. What to watch for",
+    "5. A concrete next step in the next 24 hours",
+    "In \"Core advice\", the first sentence gives the answer.",
+    `In "What this answer turns on", say in two to four sentences: ${turnsOn}`
+  ];
+}
 
 export function buildAdvisorPrompt(context: PromptContext): string {
   const [primary] = context.nearestProfiles;
   const personaInstruction =
     context.personaMode === "philosopher"
       ? `Write in the first-person voice of ${primary.representative} representing ${primary.name}, while staying readable and concrete.`
-      : "Write in a neutral but thoughtful advisory voice aligned to the user’s profile.";
+      : "Write in a neutral but thoughtful advisory voice.";
 
   return [
     "You are the advice stage of an ethical reflection app.",
+    "The user has an ethical profile on three axes, given below. The app tells the user that the advice reflects the user's own stated priorities, and is not a universal answer.",
     personaInstruction,
     `Presentation level: ${presentationGuidance(context.explanationLevel)}`,
-    "Write concise, actionable markdown with these sections:",
-    "1. Core advice",
-    "2. Why this fits your ethical profile",
-    "3. What to watch for",
-    "4. A concrete next step in the next 24 hours",
+    "",
+    "Your first task is to work out the answer that follows from this profile. Do not give the advice that you think is best, and do not give balanced advice that any profile could receive. When a dilemma turns on these axes, a user at the opposite end of the axis must get a different answer.",
+    "Before you write, work through these steps:",
+    "1. Name the options that the user asks about.",
+    "2. Find the axis or axes that this dilemma turns on: where would a person at the opposite end choose differently? A \"strongly\" position settles a conflict on its axis; it does not only tilt it. A \"balanced\" position does not decide.",
+    "3. Reach the answer that follows from the user's positions on those axes.",
+    "4. If no axis decides the dilemma, say so in one sentence, and give the advice that you judge best.",
+    "5. Check the answer. If you softened it to make it more comfortable or more balanced, undo that.",
+    "",
+    ...commitRules("this profile leads there"),
+    "",
+    ...adviceSections(
+      "Why this fits your ethical profile",
+      "the axis and the fact that decide this case; and what a person at the opposite end of that axis would do."
+    ),
     NO_FOLLOW_UP_NOTE,
-    TENSIONS_NOTE,
     "",
     `Original dilemma: ${context.dilemma}`,
     ...profileLines(context.profile),
@@ -56,7 +96,7 @@ export function buildAdvisorPrompt(context: PromptContext): string {
   ].join("\n");
 }
 
-function presentationGuidance(explanationLevel: ExplanationLevel): string {
+export function presentationGuidance(explanationLevel: ExplanationLevel): string {
   switch (explanationLevel) {
     case "general":
       return "Assume no philosophical training. Plain language, minimal jargon.";
@@ -90,18 +130,29 @@ export function buildVoiceAdvisorPrompt(context: VoicePromptContext): string {
   const { voice } = context;
   return [
     "You are the advice stage of an ethical reflection app.",
-    voiceInstruction(voice),
-    NO_DISCLAIMER_NOTE,
+    "The user chose to look at a dilemma through one lens. The app tells the user that this is one perspective among many, and that it is an interpretation.",
     `Perspective: ${voiceIdentity(voice)}`,
     `Voice brief: ${voice.voiceBrief}`,
+    voiceInstruction(voice),
+    NO_DISCLAIMER_NOTE,
     `Presentation level: ${presentationGuidance(context.explanationLevel)}`,
-    "Write concise, actionable markdown with these sections:",
-    "1. Core advice",
-    "2. Why this advice",
-    "3. What to watch for",
-    "4. A concrete next step in the next 24 hours",
+    "",
+    "Your first task is to interpret. Work out what this thinker's ethics concludes about this case. Do not give the advice that you think is best, or the advice of a careful modern counsellor, unless this thinker's own reasoning leads there.",
+    "Before you write, work through these steps:",
+    "1. Name the options that the user asks about.",
+    "2. Find the fact in this case that matters most to this thinker. Ask what this thinker treats as decisive, and what this thinker gives little weight although most people would weigh it.",
+    "3. Reach the answer that follows. If the thinker's own texts speak to a case of this shape, follow them. A feature of the case does not decide it only because the thinker values that kind of thing in general: check that the thinker's reasoning applies to these facts.",
+    "4. If the texts do not settle the case, say so in one sentence, and give the reading that you judge closest to them.",
+    "5. Check the answer. If you softened it to make it more comfortable or more balanced, undo that. An answer that any sensible adviser would also give is acceptable when this thinker's reasoning leads there.",
+    "",
+    ...commitRules("this thinker would"),
+    "- Use the thinker's concepts correctly, and apply them to the facts given.",
+    "",
+    ...adviceSections(
+      "Why this advice",
+      "the fact that matters most to this thinker in this case; the change to that fact that would reverse the answer; and where most advisers would answer differently, if they would."
+    ),
     NO_FOLLOW_UP_NOTE,
-    TENSIONS_NOTE,
     "",
     `Original dilemma: ${context.dilemma}`
   ].join("\n");

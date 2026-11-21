@@ -17,3 +17,6 @@ coverage
 
 # Promo film source (large binaries, kept in Dropbox only)
 promo/
+
+# Local verdict-check outputs
+experiments/verdict-check/data/

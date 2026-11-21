@@ -51,7 +51,7 @@ The frontend is a wizard-style multi-page flow with a sticky hero bar:
 5. Choose explanation style (3 cards)
 6. The explanation step requests the advice. The model is set in Settings (default: Sonnet 5.5) and is used for advice and debate replies
 7. Results page with tabbed navigation:
-   - Your Advice, Why This Advice, What to Watch For, Next Step, Original Dilemma, Ethical Coordinates, Export Advice
+   - Your Advice, Why This Advice, What This Answer Turns On, What to Watch For, Next Step, Original Dilemma, Ethical Coordinates, Export Advice
    - On narrow screens, tabs collapse to a hamburger dropdown menu
    - Export saves a single markdown file (dilemma + all advice sections + ethical coordinates)
    - "Start a new dilemma" button is pinned at the bottom of the viewport
@@ -110,7 +110,10 @@ If you change model orchestration:
 
 - advice is one model call (`buildAdvisorPrompt` / `buildVoiceAdvisorPrompt`). A separate planner call was removed on 2026-11-12: a 25-case test (`experiments/profile-fidelity/`) showed it gave no better fit to the profile, and about half of its JSON plans failed validation
 - give the model the plain-language axis descriptions, not only the tuple numbers
+- the advice prompts ask the model to work out what the thinker or the profile concludes, to commit to one of the user's options, and to add the section "What this answer turns on" (since 2026-11-21). Do not go back to "give advice and surface the tensions": with that form, every philosopher and every profile got almost the same hedged answer. The old prompts are frozen in `experiments/verdict-check/legacyPrompts.ts` (variant `legacy`)
+- the results page splits the advice on its section headings (`SECTION_PATTERNS` in `ResultsView.tsx`). If you rename a section in the prompt, change the pattern too
 - test a prompt change with the experiment harness before you keep it
+- to see if the recommendation changes with the philosopher or the profile, use the verdict check (`experiments/verdict-check/`, see its README). Tune on the development dilemmas only; the holdout dilemmas are for the final measurement
 
 If you change safety:
 

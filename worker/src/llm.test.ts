@@ -44,7 +44,9 @@ describe("generateAdvice", () => {
     expect(prompt).toContain("Outcomes-Principles: Strongly toward outcomes");
     expect(prompt).toContain("Individual-Collective: Moderately toward collective");
     expect(prompt).toContain("Reason-Intuition: Strongly toward reason");
-    expect(prompt).toContain("identify the moral tensions");
+    expect(prompt).toContain("work out the answer that follows from this profile");
+    expect(prompt).toContain("3. What this answer turns on");
+    expect(prompt).not.toContain("moral tensions");
   });
 
   it("uses the model the request selects", async () => {

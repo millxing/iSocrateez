@@ -176,6 +176,92 @@ describe("ResultsView", () => {
     expect(mobileNav).not.toHaveAttribute("hidden");
   });
 
+  describe("section tabs", () => {
+    const fiveSections = [
+      "## Core advice",
+      "",
+      "Lead with the truth.",
+      "",
+      "## Why this advice",
+      "",
+      "It balances honesty with proportionality.",
+      "",
+      "## What this answer turns on",
+      "",
+      "Whether the figures were actually changed.",
+      "",
+      "## What to watch for",
+      "",
+      "Avoid accusation.",
+      "",
+      "## A concrete next step in the next 24 hours",
+      "",
+      "Write down what you know."
+    ].join("\n");
+
+    function renderAdvice(adviceMarkdown: string) {
+      return render(
+        <ResultsView
+          response={{ ...response, adviceMarkdown }}
+          dilemma="A difficult choice"
+          explanationLevel="general"
+          personaMode="personalized"
+          onRestart={() => undefined}
+        />
+      );
+    }
+
+    it("puts the new section in its own Key fact tab after Reasoning", () => {
+      renderAdvice(fiveSections);
+      const names = screen.getAllByRole("tab").map((t) => t.textContent);
+      expect(names.slice(0, 5)).toEqual(["Advice", "Reasoning", "Key fact", "Watch for", "Next step"]);
+
+      fireEvent.click(screen.getByRole("tab", { name: "Reasoning" }));
+      expect(screen.getByText("It balances honesty with proportionality.")).toBeInTheDocument();
+      expect(screen.queryByText("Whether the figures were actually changed.")).not.toBeInTheDocument();
+
+      fireEvent.click(screen.getByRole("tab", { name: "Key fact" }));
+      expect(screen.getByRole("heading", { name: "What this answer turns on" })).toBeInTheDocument();
+      expect(screen.getByText("Whether the figures were actually changed.")).toBeInTheDocument();
+      expect(screen.queryByText("It balances honesty with proportionality.")).not.toBeInTheDocument();
+
+      fireEvent.click(screen.getByRole("tab", { name: "Watch for" }));
+      expect(screen.getByText("Avoid accusation.")).toBeInTheDocument();
+      fireEvent.click(screen.getByRole("tab", { name: "Next step" }));
+      expect(screen.getByText("Write down what you know.")).toBeInTheDocument();
+    });
+
+    it("shows no Key fact tab for advice in the old four-section format", () => {
+      renderAdvice(response.adviceMarkdown);
+      expect(screen.queryByRole("tab", { name: "Key fact" })).not.toBeInTheDocument();
+    });
+
+    it("keeps the profile-route heading in the Reasoning tab", () => {
+      renderAdvice(
+        fiveSections.replace("## Why this advice", "## Why this fits your ethical profile")
+      );
+      fireEvent.click(screen.getByRole("tab", { name: "Reasoning" }));
+      expect(screen.getByText("It balances honesty with proportionality.")).toBeInTheDocument();
+      expect(screen.queryByText("Whether the figures were actually changed.")).not.toBeInTheDocument();
+    });
+
+    it("includes the new section in the export when present", () => {
+      renderAdvice(fiveSections);
+      fireEvent.click(screen.getByRole("tab", { name: "Export" }));
+      const preview = document.querySelector(".export-preview pre")?.textContent ?? "";
+      expect(preview).toContain("## What this answer turns on");
+      expect(preview).toContain("Whether the figures were actually changed.");
+      expect(preview.indexOf("## Why this advice")).toBeLessThan(preview.indexOf("## What this answer turns on"));
+      expect(preview.indexOf("## What this answer turns on")).toBeLessThan(preview.indexOf("## What to watch for"));
+    });
+
+    it("leaves the section out of the export for old advice", () => {
+      renderAdvice(response.adviceMarkdown);
+      fireEvent.click(screen.getByRole("tab", { name: "Export" }));
+      expect(document.querySelector(".export-preview pre")?.textContent ?? "").not.toContain("turns on");
+    });
+  });
+
   it("shows the speaker card and speaker tab only when a philosopher voice was used", async () => {
     const props = {
       dilemma: "I heard a rumor about a colleague and do not know whether to raise it.",
