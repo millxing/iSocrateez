@@ -9,6 +9,7 @@ import {
   presentationGuidance
 } from "../../worker/src/prompts";
 import * as legacy from "./legacyPrompts";
+import { LENS_NOTES } from "./lensNotes";
 
 /** A prompt variant builds the prompt for each of the app's two routes, and for a baseline with no philosopher. Add new variants here. */
 export interface PromptVariant {
@@ -55,6 +56,14 @@ const routes = (builders: Builders): Pick<PromptVariant, "voice" | "profile"> =>
 export const VARIANTS: Record<string, PromptVariant> = {
   // The production prompts (worker/src/prompts.ts).
   prod: { ...routes({ buildAdvisorPrompt, buildVoiceAdvisorPrompt }), baseline: ({ dilemma }) => buildBaselinePrompt(dilemma) },
+  // Step 4: the production prompts with the draft lens notes (lensNotes.ts) for the four test philosophers.
+  // The profile and baseline prompts are the same as prod.
+  notes: {
+    ...routes({ buildAdvisorPrompt, buildVoiceAdvisorPrompt }),
+    voice: ({ dilemma, voice }) =>
+      buildVoiceAdvisorPrompt({ dilemma, explanationLevel: "informed", voice: { ...voice, lensNotes: LENS_NOTES[voice.id] } }),
+    baseline: ({ dilemma }) => buildBaselinePrompt(dilemma)
+  },
   // The production prompts as they were until 2026-11-21. Frozen: see legacyPrompts.ts.
   legacy: { ...routes(legacy), baseline: ({ dilemma }) => legacy.buildBaselinePrompt({ dilemma, explanationLevel: "informed" }) }
 };

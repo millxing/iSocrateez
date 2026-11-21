@@ -42,6 +42,11 @@ export interface PhilosophyProfile {
   voiceStyle: VoiceStyle;
   /** Core tenets, concerns, and tone, fed to the model when answering in this voice. */
   voiceBrief: string;
+  /**
+   * Longer notes for the advice prompt: the thinker's test, what the thinker gives little weight,
+   * known positions with sources, and common errors. Optional; when absent, the prompt uses only the brief.
+   */
+  lensNotes?: string;
   speaker: {
     years: string;
     region: string;

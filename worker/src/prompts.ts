@@ -123,6 +123,15 @@ function voiceInstruction(voice: PhilosophyProfile): string {
     : `Write in the spirit of ${voice.representative} (${voice.name}), as that tradition would counsel. Do not claim to literally be this person and do not put invented quotations in their mouth; phrases like "In this tradition…" or "From this perspective…" are fine, and you may speak in a warm second person to the user.`;
 }
 
+/** The notes go in only when the profile has them, so a profile without notes gets the same prompt as before. */
+function lensNoteLines(voice: PhilosophyProfile): string[] {
+  if (!voice.lensNotes) return [];
+  return [
+    "Notes on this thinker. Use them in your reasoning. Do not quote them, and do not present them as the thinker's own words:",
+    voice.lensNotes
+  ];
+}
+
 const NO_DISCLAIMER_NOTE =
   "Do not add any disclaimer or aside saying this is an AI interpretation or not the person's real words; the app already shows that to the user.";
 
@@ -133,6 +142,7 @@ export function buildVoiceAdvisorPrompt(context: VoicePromptContext): string {
     "The user chose to look at a dilemma through one lens. The app tells the user that this is one perspective among many, and that it is an interpretation.",
     `Perspective: ${voiceIdentity(voice)}`,
     `Voice brief: ${voice.voiceBrief}`,
+    ...lensNoteLines(voice),
     voiceInstruction(voice),
     NO_DISCLAIMER_NOTE,
     `Presentation level: ${presentationGuidance(context.explanationLevel)}`,

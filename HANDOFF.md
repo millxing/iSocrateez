@@ -13,11 +13,12 @@ Written 2026-11-21. Read `CLAUDE.md` first, then this file.
 | 1 | Fix five calibration questions that were scored backwards | Done, local |
 | 2 | Build a test that shows if the recommendation changes with the philosopher or the profile | Done, local. The key is not yet checked by a philosopher |
 | 3 | Rewrite the two advice prompts: work out what the view concludes, then advise | Done, local |
-| 4 | Replace the two-sentence philosopher briefs with longer notes | **Next. Not started** |
+| 4 | Replace the two-sentence philosopher briefs with longer notes | **Pilot done for Mill, Kant, Aristotle, Confucius (section 3a). Stopped there. Not in the app** |
+| 4a | Transfer test (other thinkers) and distinctness test (thinker against common sense), compared with the original prompts | **In progress (section 3b)** |
 | 5 | Send the user's actual calibration answers to the model | Not started. Smaller than first planned (see section 8) |
 | 6 | Run the held-back cases once, then decide the larger items (axes, side-by-side view, checker call) | Not started |
 
-**Nothing is committed. Nothing is deployed.** The live app still has the old prompts and the reversed questions.
+**Committed and deployed:** step 1 (the question fix) is on `main` and live. **Committed, not deployed:** steps 2 to 4 are on the branch `advice-verdict-prompts`. The live app still has the old prompts.
 
 ## 2. What was found
 
@@ -65,6 +66,37 @@ Full reports: `experiments/verdict-check/data/prod/report-development.md` and `d
 | `water-scheme`, Individual-Collective axis | Profile | Enforces the penalty at both ends | The individual end should not. The case joins a fine and a water cut; it has a known design fault |
 
 Also seen, not scored: the app as Aristotle called a single lie "a vice in you". The professor's first complaint was this same error (an act is not a disposition). Put it in the Aristotle notes as a common error.
+
+## 3a. Step 4 result: lens notes (2026-11-21)
+
+Variant `notes` = `prod` + `experiments/verdict-check/lensNotes.ts` (draft 2) in the voice prompt. Development split, 3 samples each. Baseline and profile answers are shared with `prod` (copied cache, same prompts).
+
+| Measure (sample 1 / 2 / 3) | `prod` | `notes` |
+|---|---|---|
+| Single cases, Mill / Kant | 8/8, 10/10 in all | 8/8, 10/10 in all |
+| Single cases, Aristotle | 9 / 9 / 9 of 11 | 9 / 9 / 9 of 11 |
+| Single cases, Confucius | 10 / 9 / 9 of 11 | 9 / 10 / 10 of 11 |
+| Pairs, flip rows correct | 7 / 6 / 8 of 10 | **9 / 9 / 9 of 10** |
+| Pairs, same rows correct | 6 of 7 in all | 6 of 7 in all |
+| Correct pair rows that differ from the baseline | 6 / 4 / 3 | 6 / 5 / 3 (of 15) |
+
+- Fixed in all 3 samples: `experienced-eye` Aristotle, `drug-stakes` Mill, `debt-or-father` Aristotle, `promise-charity` Confucius.
+- Still wrong in all 3 samples: `medicine` and `drug-stakes` base, Aristotle takes the drug; `gut-vs-record` single case, Aristotle and Confucius trust the feeling. All three key entries are marked disputed. The notes did not add a rule to force them (rule 7), and the note on mixed actions (III.1) may support "take". The professor should rule on these.
+- `hold-back-or-urge` Confucius still fails: 11.22 was removed from the note on the reviewer's advice (teaching method, fitted to the case).
+- **The notes make the answers more correct, but not more distinct from the baseline.** The added correct rows are rows where the baseline is also correct.
+- Decision rule from section 8 is met (failing rows improve, Mill and Kant unchanged), so the notes are a candidate for the app. Not yet moved to `shared/philosophyProfiles.ts`.
+
+**Decision (Rob, 2026-11-21): treat this as a pilot and stop work on these four notes.** Reasons: a note changes the prompt of one thinker only, so it does nothing for the other 36; these four are the thinkers that the model knows best, so they are the easiest cases; and the pilot showed more correct answers but not more distinct ones, which was the professor's complaint. The next work must apply to all 40 thinkers (section 3b). Every comparison must include the original prompts (`legacy`).
+
+## 3b. Transfer and distinctness tests (started 2026-11-21)
+
+Plan, agreed with Rob:
+
+1. **Transfer test.** Add 3 thinkers that are not among the four: Mencius, Hume, Maimonides. They are less known to the model, and each has recorded positions on cases of the kind in the test. Write key entries for them on the existing development cases. Run `legacy` and `prod` for them with no notes. This shows whether the shared prompt works beyond the four.
+2. **Distinctness test.** Add development pairs where a thinker's recorded answer differs from what a sensible adviser with no philosophy would say. The measure is how often each thinker's verdict differs from the baseline verdict on the same text. It does not need the key.
+3. **Comparison with the original.** One report puts `legacy` (the original prompts), `prod` and `notes` side by side, 3 samples each, on the same tasks.
+
+Results: not yet.
 
 ## 4. Decisions and reasons
 

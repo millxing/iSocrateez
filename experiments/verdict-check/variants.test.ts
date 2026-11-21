@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { ProfileTuple } from "../../shared/contracts";
 import { getPhilosophyById, philosophyProfiles } from "../../shared/philosophyProfiles";
 import { TEST_PHILOSOPHERS } from "./answerKey";
+import { LENS_NOTES } from "./lensNotes";
 import { HOLDOUT_PASSAGES } from "./pairs";
 import { VARIANTS } from "./variants";
 
@@ -47,4 +48,26 @@ describe("holdout protection", () => {
       expect(prompts.flatMap(leaks)).toEqual([]);
     });
   }
+});
+
+describe("notes variant", () => {
+  it("is the prod voice prompt plus the two note lines, for each test philosopher", () => {
+    for (const id of TEST_PHILOSOPHERS) {
+      const voice = getPhilosophyById(id)!;
+      const prod = VARIANTS.prod.voice({ dilemma: "X", voice }).split("\n");
+      const notes = VARIANTS.notes.voice({ dilemma: "X", voice }).split("\n");
+      const added = notes.filter((line) => !prod.includes(line));
+      expect(added[0]).toMatch(/^Notes on this thinker/);
+      expect(added.join("\n")).toContain(LENS_NOTES[id]);
+      expect(notes.filter((line) => !added.includes(line))).toEqual(prod);
+    }
+  });
+
+  it("has a note of 150 to 350 words for each test philosopher", () => {
+    for (const id of TEST_PHILOSOPHERS) {
+      const words = LENS_NOTES[id].split(/\s+/).filter(Boolean).length;
+      expect(words, id).toBeGreaterThanOrEqual(150);
+      expect(words, id).toBeLessThanOrEqual(350);
+    }
+  });
 });
