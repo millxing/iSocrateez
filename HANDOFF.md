@@ -18,7 +18,9 @@ Written 2026-11-21. Read `CLAUDE.md` first, then this file.
 | 5 | Send the user's actual calibration answers to the model | Not started. Smaller than first planned (see section 8) |
 | 6 | Run the held-back cases once, then decide the larger items (axes, side-by-side view, checker call) | Not started |
 
-**Committed and deployed:** step 1 (the question fix) is on `main` and live. **Committed, not deployed:** steps 2 to 4 are on the branch `advice-verdict-prompts`. The live app still has the old prompts.
+**Deployed 2026-11-21:** step 1 (the question fix), and the new advice prompts with the `contrast` step 5 (`CONTRAST_STEP_5` in `worker/src/prompts.ts`), with the "Key fact" tab. Rob chose to stop the testing here and to try the new prompts in the live app. Not deployed: the lens notes (4 thinkers only), and any change to the debate prompts (Rob: try the advice first). In the harness, `prod` now includes the contrast step; the older voice prompt is the variant `verdict`, and its cached answers moved from `data/prod/` to `data/verdict/`. The `contrast` variant is now the same as `prod`; `notes` now includes the contrast step too.
+
+Checked end to end on 2026-11-21 through an inactive Worker version (preview URL, live keys): one Kant answer and one profile answer, both with the five sections. The local `worker/.dev.vars` API keys (Anthropic and OpenAI) are rejected by the providers; update them before you use `npm run worker:dev`.
 
 ## 2. What was found
 
@@ -209,6 +211,27 @@ Rob approved the holdout run on 2026-11-21. Written before any holdout answer wa
 - `notes` (deferred for all 40 thinkers): the holdout check passes if `notes` matches the key on core-four voice and pair flip rows at least as often as `prod`, in the sum over 3 samples.
 - `prod` against `legacy`: report the same measures. The claim "prod is better than the original" holds on the holdout only if prod is at least as good on voice match and expected disagreements.
 
+## 3h. Holdout result (2026-11-21)
+
+Run once, 3 samples, no failed calls. Report: `experiments/verdict-check/data/comparison-holdout.md`. The holdout has 15 keyed voice answers and 6 pairs, all for the core four; no transfer thinker is keyed on the holdout.
+
+Sums over the 3 samples:
+
+| measure | legacy | prod | notes | contrast |
+|---|---|---|---|---|
+| Voice, core four, match with key | 39/45 | 41/45 | 42/45 | 42/45 |
+| Pair flip rows, core four | 10/18 | 17/18 | 18/18 | 18/18 |
+| Expected disagreements reproduced | 5/11 | 11/15 | 12/15 | 12/15 |
+| Expected agreements kept | 37/37 | 36/39 | 36/39 | 36/39 |
+| Control cases that differ from baseline | 0/42 | 0/42 | 0/42 | 0/42 |
+
+Against the rules in section 3g:
+- `contrast`: passes every condition (42 >= 41; 12 >= 11; agreements equal to prod; controls 0).
+- `notes`: passes (voice 42 >= 41; pair flips 18 >= 17).
+- `prod` against `legacy`: holds (voice 41 against 39; expected disagreements 73% against 45%). Legacy has smaller totals because it gave more "none" verdicts.
+
+Limits: the holdout is small. `contrast` and `notes` beat `prod` by 1 answer on each measure, which is inside the spread between samples. So the holdout shows that they are not worse, not that they are better. The development gain of `contrast` (section 3e) is the evidence that it is better. One holdout row is wrong in every new variant: Confucius `deathbed-promise` keep (disputed) (0 of 3 in prod, notes, contrast; 1 of 3 in legacy).
+
 ## 4. Decisions and reasons
 
 - **Paired cases, not one "correct" answer.** The first key gave each philosopher one option for each dilemma. An outside reviewer showed that the texts do not settle most of those answers (24 of 78 judged "open", 4 changed). The reviewer proposed pairs: tell one case twice, change one fact, and check whose answer reverses. This needs agreement only on which fact matters to whom. Review: `experiments/verdict-check/reviews/second-reviewer-2026-11.md`. The reviewer is not identified to us.
@@ -308,7 +331,8 @@ npx vite-node experiments/verdict-check/run.ts --variant <name> --limit 4   # sm
 ## 9. Waiting for Rob
 
 - **The professor's document.** It is a Claude Doc: "iSocrateez: what would each philosopher conclude?", https://claude.ai/artifact/5PWP7JqpRywGWXHT6qDeyA. It asks the professor to check the 16 pairs. It is private until Rob shares it. We do not know if it was sent. Do not plan work that waits on it (Rob, 2026-11-21). When answers come back, change `pairs.ts` and `answerKey.ts`, run `renderKey.ts`, and score again with `--report-only`.
-- **Commit and deploy.** Rob decides when. The question fix (step 1) is independent and safe to ship alone.
+- **Feedback from Rob's own use** of the deployed prompts. Next candidate after that: the debate prompts (`worker/src/debatePrompts.ts`, about 1 hour).
+- **`worker/src/providers.ts`** (Rob's uncommitted change: reasoning effort "medium" for GPT models) was kept out of the 2026-11-21 deploy.
 - **The tab label** "Key fact".
 
 ## 10. How Rob works

@@ -135,6 +135,20 @@ function lensNoteLines(voice: PhilosophyProfile): string[] {
 const NO_DISCLAIMER_NOTE =
   "Do not add any disclaimer or aside saying this is an AI interpretation or not the person's real words; the app already shows that to the user.";
 
+/**
+ * Step 5 of the voice prompt: an explicit check against common sense, so that the model does not soften a
+ * thinker's hard doctrines toward the modern answer. Added 2026-11-21 after the verdict check
+ * (experiments/verdict-check, variant `contrast`): more expected disagreements on the development and holdout
+ * splits, with no invented disagreement on the control cases.
+ */
+export const CONTRAST_STEP_5 = [
+  "5. Check the answer against common sense, in this order:",
+  "   a. Say to yourself the answer that a careful modern adviser with no philosophy would give.",
+  "   b. List the doctrines of this thinker that modern readers find strict, hard or surprising and that bear on these facts: for example, acts the thinker forbids in all cases, duties to oneself, duties that come from a role or a relation, and what the thinker counts as no reason at all.",
+  "   c. If one of these doctrines applies to these facts, follow it, even when the answer is harsh or unpopular, unless the thinker's own texts make an exception for a case of this kind. Do not soften it into the modern answer.",
+  "   d. Do not invent a disagreement. If the thinker's reasoning leads to the same answer as the modern adviser, give that answer."
+].join("\n");
+
 export function buildVoiceAdvisorPrompt(context: VoicePromptContext): string {
   const { voice } = context;
   return [
@@ -153,7 +167,7 @@ export function buildVoiceAdvisorPrompt(context: VoicePromptContext): string {
     "2. Find the fact in this case that matters most to this thinker. Ask what this thinker treats as decisive, and what this thinker gives little weight although most people would weigh it.",
     "3. Reach the answer that follows. If the thinker's own texts speak to a case of this shape, follow them. A feature of the case does not decide it only because the thinker values that kind of thing in general: check that the thinker's reasoning applies to these facts.",
     "4. If the texts do not settle the case, say so in one sentence, and give the reading that you judge closest to them.",
-    "5. Check the answer. If you softened it to make it more comfortable or more balanced, undo that. An answer that any sensible adviser would also give is acceptable when this thinker's reasoning leads there.",
+    CONTRAST_STEP_5,
     "",
     ...commitRules("this thinker would"),
     "- Use the thinker's concepts correctly, and apply them to the facts given.",
