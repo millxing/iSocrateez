@@ -60,6 +60,8 @@ export interface CasePair {
   variant: string;
   /** The same two options apply to both cases. */
   options: VerdictOption[];
+  /** A control pair: every thinker, and a sensible adviser, should give the same pattern. Distinctness should be low. */
+  control?: boolean;
   thinkers: Partial<Record<TestPhilosopherId, PairExpectation>>;
 }
 
@@ -328,6 +330,7 @@ export const CASE_PAIRS: CasePair[] = [
     pivot: "Who the owner is: one of the richest men in town, or a pensioner who lives on very little.",
     base: "I found a wallet in the street with $600 and an identity card. I know the name: the owner is one of the richest men in our town, and $600 is nothing to him. No one saw me. I need money this month. Should I return the wallet with the money?",
     variant: "I found a wallet in the street with $600 and an identity card. I know the name: the owner is a pensioner who lives on very little. No one saw me. I need money this month. Should I return the wallet with the money?",
+    control: true,
     options: [
       { id: "return", label: "Return the wallet with the money" },
       { id: "keep", label: "Keep the money" }

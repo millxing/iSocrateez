@@ -25,7 +25,7 @@ import { AXIS_POLES, CORE_PHILOSOPHERS, PHILOSOPHER_NAMES, TEST_PHILOSOPHERS, TR
 import { CASE_PAIRS, type CasePair } from "./pairs";
 import { buildJudgePrompt, parseJudgeReply } from "./judge";
 import {
-  axisCount, buildTasks, distinctness, KEY_AXES, pairResult, pairTaskId, sampleAgreement, scorePairs, scoreProfile, scoreVoice, sumDistinctness, sumRates,
+  axisCount, baselineComparisons, buildTasks, distinctness, separation, KEY_AXES, pairResult, pairTaskId, sampleAgreement, scorePairs, scoreProfile, scoreVoice, sumDistinctness, sumRates,
   voiceTaskId, type ArmDistinctness, type PairScore, type Rate, type Task, type VerdictMap
 } from "./scoring";
 import { VARIANTS } from "./variants";
@@ -166,6 +166,7 @@ function promptFor(task: Task, text: string, variant: string): string {
   const prompts = VARIANTS[variant];
   if (task.route === "profile") return prompts.profile({ dilemma: text, profile: task.profile });
   if (task.route === "pair" && task.arm === "baseline") return prompts.baseline({ dilemma: text });
+  if (task.route === "voice" && task.philosopherId === "baseline") return prompts.baseline({ dilemma: text });
   const id = task.route === "pair" ? task.arm : task.philosopherId;
   const voice = getPhilosophyById(id);
   if (!voice) throw new Error(`No philosophy profile with id ${id}`);
@@ -495,6 +496,23 @@ function renderComparison(options: Options, dilemmas: VerdictDilemma[], pairs: C
     distinctRows.push(["transfer thinkers", ...dCell((scores) => sumDistinctness(scores, TRANSFER_PHILOSOPHERS))]);
   }
 
+  // Distinctness by case group, single cases and pairs together.
+  const groupRows: string[][] = [];
+  const groupCell = (filter: (record: ReturnType<typeof baselineComparisons>[number]) => boolean) =>
+    variants.map((variant) => byVariant[variant].map((o) => {
+      const records = baselineComparisons(dilemmas, pairs, o.verdicts).filter((record) => record.compared && filter(record));
+      return frac(records.filter((record) => record.differs).length, records.length);
+    }).join(" / "));
+  for (const group of ["contested", "other", "control"] as const) {
+    for (const [label, ids] of [["core four", CORE_PHILOSOPHERS], ["transfer thinkers", TRANSFER_PHILOSOPHERS]] as const) {
+      groupRows.push([`${group}, ${label}`, ...groupCell((record) => record.group === group && (ids as readonly string[]).includes(record.philosopherId))]);
+    }
+  }
+  const sepCell = (pick: (sep: ReturnType<typeof separation>) => string) =>
+    variants.map((variant) => byVariant[variant].map((o) => pick(separation(dilemmas, pairs, o.verdicts))).join(" / "));
+  groupRows.push(["key: expected disagreements reproduced", ...sepCell((sep) => frac(sep.reproduced, sep.expectedDifferent))]);
+  groupRows.push(["key: expected agreements kept", ...sepCell((sep) => frac(sep.kept, sep.expectedSame))]);
+
   // Keyed rows: how many samples got each one right.
   const keyedRows: string[][] = [];
   const n = (variant: string) => byVariant[variant].length;
@@ -543,6 +561,9 @@ function renderComparison(options: Options, dilemmas: VerdictDilemma[], pairs: C
       "Pair sides where the philosopher's verdict differs from the baseline verdict on the same text. Sides where either chose no option are left out. This measures the professor's complaint directly: does the chosen philosopher change the answer? A high value is not proof of fidelity, because a wrong answer also differs; read it with the keyed scores.", "",
       ...table(["philosopher", ...header.slice(1)], distinctRows), ""
     ] : []),
+    "## Distinctness by case group (single cases and pairs)", "",
+    "Answers that differ from the baseline answer on the same text, for all seven philosophers, keyed or not. contested = the key expects different answers from two or more thinkers; control = everyone, and a sensible adviser, should agree; other = the rest. Target: high on contested, low on control. The last two rows use the key: of the couples of keyed thinkers that the key expects to disagree, how many do; of those it expects to agree, how many do.", "",
+    ...table(["group", ...header.slice(1)], groupRows), "",
     "## Keyed rows: samples that match the key", "",
     "Voice rows: single dilemmas. Pair rows: both sides correct; \"differ\" = correct and different from the baseline pattern in that sample. ? = disputed key entry.", "",
     ...table(["case", "thinker", "expected", ...header.slice(1)], keyedRows), ""

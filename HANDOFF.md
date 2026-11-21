@@ -86,7 +86,7 @@ Variant `notes` = `prod` + `experiments/verdict-check/lensNotes.ts` (draft 2) in
 - **The notes make the answers more correct, but not more distinct from the baseline.** The added correct rows are rows where the baseline is also correct.
 - Decision rule from section 8 is met (failing rows improve, Mill and Kant unchanged), so the notes are a candidate for the app. Not yet moved to `shared/philosophyProfiles.ts`.
 
-**Decision (Rob, 2026-11-21): treat this as a pilot and stop work on these four notes.** Reasons: a note changes the prompt of one thinker only, so it does nothing for the other 36; these four are the thinkers that the model knows best, so they are the easiest cases; and the pilot showed more correct answers but not more distinct ones, which was the professor's complaint. The next work must apply to all 40 thinkers (section 3b). Every comparison must include the original prompts (`legacy`).
+**Decision (Rob, 2026-11-21): treat this as a pilot and stop work on these four notes. The notes are deferred, not dropped:** they raised correctness on the core pairs (flip rows 12 of 13 in every sample, against 8 to 11 with `prod`), so they should go into the app later, for all 40 thinkers, after the distinctness work and after a check on the holdout. Reasons: a note changes the prompt of one thinker only, so it does nothing for the other 36; these four are the thinkers that the model knows best, so they are the easiest cases; and the pilot showed more correct answers but not more distinct ones, which was the professor's complaint. The next work must apply to all 40 thinkers (section 3b). Every comparison must include the original prompts (`legacy`).
 
 ## 3b. Transfer and distinctness tests (started 2026-11-21)
 
@@ -124,6 +124,27 @@ Interpretations (not verified):
 
 - Much of the 80% overlap is in the case set: many cases are ones where the thinkers agree with a sensible adviser. A score that depends on the case mix cannot alone say if the advice is "the same basic idea".
 - The verdict test measures only the choice. The professor may mean that the reasoning is the same. That is not measured.
+
+## 3c. Distinctness by case group (2026-11-21)
+
+Changes: every single dilemma now runs for the baseline and all seven philosophers; cases are grouped as contested / control / other (`dilemmaGroup`, `pairGroup`, `control: true` on `wallet-owner`); `separation()` counts whether thinkers that the key expects to disagree do disagree. New development cases: `kidney-for-a-stranger`, `cousin-or-strangers` (contested), `manager-who-belittles` (other). Two drafts were removed after review (see the comment in `answerKey.ts`). Development split, 3 samples each:
+
+| Measure | `legacy` | `prod` | `notes` |
+|---|---|---|---|
+| Control cases: answers that differ from the baseline | 0 of 28 in every sample | 0 of 28 | 0 of 28 |
+| Expected disagreements between keyed thinkers that appear | 23/31, 20/27, 22/30 | 26/34, 27/34, 27/34 | 25/33, 26/34, 27/34 |
+| Expected agreements kept | 95% to 97% | 94% to 96% | 95% to 98% |
+| Contested cases, core four: answers that differ from the baseline | 17% to 19% | 19% to 30% | 16% to 22% |
+
+Verified:
+
+- No version invents disagreement on control cases.
+- Where the key expects two thinkers to disagree, they do in about 80% of couples with `prod` (about 75% with `legacy`).
+- The distinctness percentage on contested cases is low by construction: in most contested cases only one thinker departs from common sense (for example Kant on the lie), so most answers match the baseline correctly.
+- The new "gray" cases were not gray for the model: the baseline chose firmly (donate, cousin, stand up), and most thinkers agreed. Mill chose the charity abroad in 3 of 3 samples with `prod`, against the baseline.
+- The misses have one shape: the thinker's text gives an uncomfortable answer, and the model gives the modern, kind answer instead: Kant gives the kidney (2 of 3 samples), the Confucian entry never declines, Aristotle takes the drug (0 of 3, every version). All these key entries are disputed.
+
+Interpretation (not verified): the remaining verdict-level gap is that the model softens thinkers toward modern common sense when their doctrine is harsh or unusual. Whether that is an error depends on the disputed key entries, which the professor should rule on.
 
 ## 4. Decisions and reasons
 

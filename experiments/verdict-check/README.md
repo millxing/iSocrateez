@@ -73,6 +73,14 @@ This makes no model calls. It scores the cache of each variant, sample by sample
 
 The report counts, for each philosopher, the pair sides where the verdict differs from the baseline verdict on the same text. It needs no key, so it measures the complaint directly. A wrong answer also differs, so read it with the keyed scores.
 
+Since 2026-11-21, every single dilemma also runs for the baseline and for all seven philosophers, keyed or not, so distinctness covers single cases too. The comparison report splits it by case group:
+
+- contested: the key expects different answers from two or more thinkers. Distinctness should be high here.
+- control: everyone, and a sensible adviser, should agree (agreement dilemmas, pairs marked `control: true`). Distinctness should be low here. A change that raises it on control cases invents disagreement.
+- other: the rest.
+
+Two key-based rows go with it: of the couples of keyed thinkers that the key expects to disagree, how many do; and of those it expects to agree, how many do.
+
 ## What "open" means
 
 A reviewer judged that a thinker's texts do not settle a dilemma. The key keeps the reason. The thinker is not tested on that dilemma. A dilemma of kind `open` has no tested thinker at all. The report shows `open` in the cell. `·` means the key has nothing for that thinker.

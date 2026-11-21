@@ -36,6 +36,9 @@ A "?" after an option means the entry is disputed.
 | credit | split | development | — | — | claim ? | deflect | — | — | deflect ? |
 | double-refund | agreement | development | return | return | return | return | return | return | return |
 | false-blame | agreement | development | correct | correct | correct | correct | correct | — | correct |
+| kidney-for-a-stranger | split | development | donate | decline ? | — | decline ? | — | — | — |
+| cousin-or-strangers | split | development | charity ? | — | — | — | cousin ? | — | cousin ? |
+| manager-who-belittles | split | development | — | stand | stand | — | — | — | — |
 | flood-rescue | split | holdout | three ? | — | open | open | — | — | — |
 | deathbed-promise | split | holdout | clinic ? | keep | — | keep ? | — | — | — |
 | family-shop | split | holdout | open | — | — | open | — | — | — |
@@ -959,6 +962,77 @@ Options:
 | Mencius | correct | clear | The gentlemen of old corrected their mistakes, and their mistakes were like eclipses of the sun and moon: everyone saw them, and when they changed, everyone looked up to them. Mencius blames those who persist in a mistake and make excuses for it. | Mencius 2B9; 2A8 (Zilu was glad to be told of his faults) |
 | Hume | — | — | No grounded answer in the texts | — |
 | Maimonides | correct | clear | Repentance for a wrong to another person needs more than confession: one must put the wrong right and seek the other's forgiveness. The text does not say where the repair is made; that a public false charge is corrected in public is our inference. | Mishneh Torah, Hilkhot Teshuvah 2:9 |
+
+Axis expectations: none.
+
+### A kidney for a stranger (kidney-for-a-stranger)
+
+Kind: split. Split: development.
+
+> A woman in my city whom I have never met needs a kidney, and I am a match. For a healthy donor the operation is safe: the risk of death is very small, and most donors live normal lives with one kidney. It would almost certainly free her from years on dialysis, and it may save her life. I am healthy, and no one depends on me. Should I give her one of my kidneys?
+
+Options:
+
+- `donate`: Give her one of your kidneys
+- `decline`: Do not give a kidney
+
+| Philosopher | Expected | Confidence | Reason | Source |
+| --- | --- | --- | --- | --- |
+| Mill | donate | clear | A very small risk to the donor against years of suffering, and perhaps a life, for the recipient: the gain in happiness is large. Beneficence is for Mill a duty of imperfect obligation: binding, but owed to no definite person at a set time, and no one may compel it. To give is to fulfil it well. | Utilitarianism, ch. 2 (the standard is the happiness of all concerned); ch. 5 (duties of imperfect obligation) |
+| Kant | decline | disputed | Kant counts it as 'partial self-murder' to deprive oneself of an integral part or organ, and his example is to give away or sell a tooth to be planted in another person's jaw. Only the amputation of a dead organ, or one about to mortify, is exempt. Against this: Kant's target is self-mutilation for gain, he does not discuss an organ given to save a life, and he also teaches a duty of beneficence; many Kantians reject the 'decline' reading. | Metaphysics of Morals, Doctrine of Virtue, Ak. 6:423 (on maiming oneself) |
+| Aristotle | — | — | No grounded answer in the texts | — |
+| Confucius | decline | disputed | The body is received from one's parents and must be kept whole: on his deathbed Zengzi, Confucius's disciple, has his students uncover his hands and feet to show that he kept them unharmed. The passage is the disciple's, and it concerns harm through carelessness, not a gift that saves a life. | Analects 8.3 |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
+
+Axis expectations: none.
+
+### My cousin's rent or a charity abroad (cousin-or-strangers)
+
+Kind: split. Split: development.
+
+> I have $3,000 to give this year. My cousin cannot pay her rent this winter and may lose her flat; $3,000 would cover it. A well-run charity abroad says that $3,000 buys malaria nets that will, on average, save about one child's life. I cannot do both. Which should I give to?
+
+Options:
+
+- `cousin`: Give the money to the cousin
+- `charity`: Give the money to the charity abroad
+
+| Philosopher | Expected | Confidence | Reason | Source |
+| --- | --- | --- | --- | --- |
+| Mill | charity | disputed | The standard is the happiness of all concerned, counted impartially: a child's life outweighs a rent shortfall. Against this: Mill says that most good actions are meant for the benefit of particular people, not the world, and that it is enough to attend to them when no one else's rights are violated. | Utilitarianism, ch. 2 |
+| Kant | — | — | No grounded answer in the texts | — |
+| Aristotle | — | — | No grounded answer in the texts | — |
+| Confucius | — | — | No grounded answer in the texts | — |
+| Mencius | cousin | disputed | Mencius rejects the Mohist teaching of love without gradations: does anyone love his brother's child only as he loves a neighbour's infant? The good person is affectionate to parents, then humane to people, then kind to creatures. Against this: these texts do not say that one may let a child die to pay a relative's rent, and the child at the well (2A6) points the other way. | Mencius 3A5; 7A45 |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | cousin | disputed | A poor relative comes before all others; the poor of one's own household before the poor of one's town, and the poor of one's town before those of another town. Against this: the order ranks poor people with similar needs, and saving a life comes first (the ransom of captives before the support of the poor, 8:10); rent is not a life. | Mishneh Torah, Hilkhot Matnot Aniyim 7:13 |
+
+Axis expectations:
+
+- Everyone equally → charity (Give the money to the charity abroad); My own people first → cousin (Give the money to the cousin)
+
+### The manager who belittles me (manager-who-belittles)
+
+Kind: split. Split: development.
+
+> My manager often belittles me in front of the team: he mocks my accent and calls my ideas stupid. He does not do this to others. The job pays well and supports my family, and jobs like it are rare here. If I tell him plainly that he must stop, he may make my work harder or push me out. If I say nothing and bear it, things will probably stay as they are. Should I stand up to him?
+
+Options:
+
+- `stand`: Stand up to him: tell him plainly that he must stop, in private or in public, or report it formally
+- `bear`: Bear it quietly: do not answer back
+
+| Philosopher | Expected | Confidence | Reason | Source |
+| --- | --- | --- | --- | --- |
+| Mill | — | — | No grounded answer in the texts | — |
+| Kant | stand | clear | Duties to oneself include respect for one's own dignity: 'Do not become the vassals of men. Do not let others trample your rights with impunity.' Servility, giving up one's dignity for an advantage, is a vice. Kant does not discuss the risk to one's family's income. | Metaphysics of Morals, Doctrine of Virtue, §11, Ak. 6:434-436 (on servility) |
+| Aristotle | stand | clear | Those who are not angry at the things they should be angry at are thought foolish, and to endure being insulted is slavish. The good-tempered person is angry at the right things, in the right way; that mockery repeated in public is such a thing is our inference. | Nicomachean Ethics IV.5 |
+| Confucius | — | — | No grounded answer in the texts | — |
+| Mencius | — | — | No grounded answer in the texts | — |
+| Hume | — | — | No grounded answer in the texts | — |
+| Maimonides | — | — | No grounded answer in the texts | — |
 
 Axis expectations: none.
 

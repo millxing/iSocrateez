@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Basis, CasePair } from "./pairs";
 import { TEST_PHILOSOPHERS, type ExpectedVerdict, type VerdictDilemma } from "./answerKey";
-import { axisCount, buildTasks, distinctness, isMatch, pairResult, pairTaskId, sampleAgreement, scorePairs, scoreProfile, scoreVoice, sumDistinctness, type VerdictMap } from "./scoring";
+import { axisCount, baselineComparisons, buildTasks, dilemmaGroup, distinctness, separation, isMatch, pairResult, pairTaskId, sampleAgreement, scorePairs, scoreProfile, scoreVoice, sumDistinctness, type VerdictMap } from "./scoring";
 
 const entry = (option: string, confidence: "clear" | "disputed" = "clear", alsoAccept?: string[]): ExpectedVerdict => ({
   option, confidence, alsoAccept, reason: "r", source: "s"
@@ -54,11 +54,12 @@ const pairs: CasePair[] = [
 describe("buildTasks", () => {
   const tasks = buildTasks(dilemmas, pairs);
 
-  it("makes voice tasks only for keyed philosophers", () => {
+  it("makes voice tasks for the baseline and every test philosopher on each dilemma", () => {
     const voice = tasks.filter((task) => task.route === "voice");
-    expect(voice).toHaveLength(3 + 2 + 4);
+    expect(voice).toHaveLength(3 * (1 + TEST_PHILOSOPHERS.length));
     expect(voice.map((task) => task.id)).toContain("voice__d1__kant-deontology");
-    expect(voice.map((task) => task.id)).not.toContain("voice__d1__aristotle-virtue-ethics");
+    expect(voice.map((task) => task.id)).toContain("voice__d1__aristotle-virtue-ethics");
+    expect(voice.map((task) => task.id)).toContain("voice__d1__baseline");
   });
 
   it("makes two profile tasks per production axis and skips impartialPartial", () => {
@@ -343,5 +344,30 @@ describe("distinctness", () => {
     expect(scores["hume-sentimentalism"]).toEqual({ sides: 1, differentSides: 1, pairs: 0, differentPatterns: 0 });
     expect(scores["aristotle-virtue-ethics"]).toEqual({ sides: 0, differentSides: 0, pairs: 0, differentPatterns: 0 });
     expect(sumDistinctness(scores, ["kant-deontology", "mill-utilitarianism"])).toEqual({ sides: 4, differentSides: 1, pairs: 2, differentPatterns: 1 });
+  });
+});
+
+describe("case groups, baseline comparisons and separation", () => {
+  const d = (id: string, kind: VerdictDilemma["kind"], philosophers: VerdictDilemma["philosophers"]): VerdictDilemma => ({
+    id, title: id, split: "development", kind, text: "t", options, philosophers, axes: []
+  });
+  const contested = d("c", "split", { "kant-deontology": entry("a"), "mill-utilitarianism": entry("b"), "aristotle-virtue-ethics": entry("b") });
+  const control = d("k", "agreement", { "kant-deontology": entry("a"), "mill-utilitarianism": entry("a") });
+  const other = d("o", "split", { "kant-deontology": entry("a") });
+
+  it("groups dilemmas", () => {
+    expect([dilemmaGroup(contested), dilemmaGroup(control), dilemmaGroup(other)]).toEqual(["contested", "control", "other"]);
+  });
+
+  it("compares each philosopher with the baseline and counts expected disagreements", () => {
+    const verdicts: VerdictMap = {
+      "voice__c__baseline": "b", "voice__c__kant-deontology": "a", "voice__c__mill-utilitarianism": "b", "voice__c__aristotle-virtue-ethics": "a"
+    };
+    const records = baselineComparisons([contested], [], verdicts).filter((record) => record.compared);
+    expect(records.map((record) => [record.philosopherId, record.differs])).toEqual([
+      ["mill-utilitarianism", false], ["kant-deontology", true], ["aristotle-virtue-ethics", true]
+    ]);
+    // Kant-Mill and Kant-Aristotle are expected to differ; Mill-Aristotle to agree.
+    expect(separation([contested], [], verdicts)).toEqual({ expectedDifferent: 2, reproduced: 1, expectedSame: 1, kept: 0 });
   });
 });

@@ -12,7 +12,7 @@ export const PRODUCTION_AXES: Axis[] = ["outcomesPrinciples", "individualCollect
 export const POLE_VALUE = 0.85;
 
 export type Task =
-  | { id: string; route: "voice"; dilemmaId: string; philosopherId: TestPhilosopherId }
+  | { id: string; route: "voice"; dilemmaId: string; philosopherId: Arm }
   | { id: string; route: "profile"; dilemmaId: string; axis: Axis; pole: "neg" | "pos"; profile: ProfileTuple }
   | { id: string; route: "pair"; pairId: string; arm: Arm; side: "base" | "variant"; text: string };
 
@@ -25,12 +25,17 @@ export const profileTaskId = (dilemmaId: string, axis: string, pole: "neg" | "po
 
 export const pairTaskId = (pairId: string, arm: Arm, side: "base" | "variant") => `pair__${pairId}__${arm}__${side}`;
 
+/**
+ * Every single dilemma (except kind "open") runs for the baseline and for all test philosophers, keyed or not:
+ * keyed entries are scored against the key, and every answer counts for distinctness (since 2026-11-21).
+ */
 export function buildTasks(dilemmas: VerdictDilemma[], pairs: CasePair[]): Task[] {
   const tasks: Task[] = [];
   for (const dilemma of dilemmas) {
-    for (const philosopherId of TEST_PHILOSOPHERS) {
-      if (!dilemma.philosophers[philosopherId]) continue;
-      tasks.push({ id: voiceTaskId(dilemma.id, philosopherId), route: "voice", dilemmaId: dilemma.id, philosopherId });
+    if (dilemma.kind !== "open") {
+      for (const philosopherId of ARMS) {
+        tasks.push({ id: voiceTaskId(dilemma.id, philosopherId), route: "voice", dilemmaId: dilemma.id, philosopherId });
+      }
     }
     for (const { axis } of dilemma.axes) {
       if (!PRODUCTION_AXES.includes(axis as Axis)) continue; // the app has no input for this axis
@@ -488,4 +493,107 @@ export function sumDistinctness(scores: Record<string, ArmDistinctness>, ids: re
 /** Add the rates of a group of philosophers. */
 export function sumRates(rates: Record<string, Rate>, ids: readonly string[]): Rate {
   return ids.reduce<Rate>((sum, id) => ({ hit: sum.hit + rates[id].hit, total: sum.total + rates[id].total }), { hit: 0, total: 0 });
+}
+
+// ---------- case groups: contested, control, other ----------
+
+/**
+ * contested: the key expects different answers (or patterns) from two or more thinkers.
+ * control: everyone, and a sensible adviser, should give the same answer (agreement dilemmas, control pairs).
+ * Distinctness should be high on contested cases and low on control cases.
+ */
+export type CaseGroup = "contested" | "control" | "other";
+
+export function dilemmaGroup(dilemma: VerdictDilemma): CaseGroup {
+  if (dilemma.kind === "agreement") return "control";
+  const expected = new Set(Object.values(dilemma.philosophers).map((entry) => entry!.option));
+  return expected.size >= 2 ? "contested" : "other";
+}
+
+export function pairGroup(pair: CasePair): CaseGroup {
+  if (pair.control) return "control";
+  const expected = new Set(Object.values(pair.thinkers).map((entry) => `${entry!.base}→${entry!.variant}`));
+  return expected.size >= 2 ? "contested" : "other";
+}
+
+export interface Comparison {
+  caseId: string;
+  route: "voice" | "pair";
+  group: CaseGroup;
+  philosopherId: TestPhilosopherId;
+  /** Both this philosopher and the baseline chose an option on this text. */
+  compared: boolean;
+  differs: boolean;
+}
+
+/** One record per case text and philosopher: does the philosopher's verdict differ from the baseline's? No key needed. */
+export function baselineComparisons(dilemmas: VerdictDilemma[], pairs: CasePair[], verdicts: VerdictMap): Comparison[] {
+  const isOption = (verdict: Verdict | undefined): verdict is Verdict => verdict !== undefined && verdict !== "none";
+  const records: Comparison[] = [];
+  const push = (caseId: string, route: "voice" | "pair", group: CaseGroup, philosopherId: TestPhilosopherId, own?: Verdict, baseline?: Verdict) => {
+    const compared = isOption(own) && isOption(baseline);
+    records.push({ caseId, route, group, philosopherId, compared, differs: compared && own !== baseline });
+  };
+  for (const dilemma of dilemmas) {
+    if (dilemma.kind === "open") continue;
+    const baseline = verdicts[voiceTaskId(dilemma.id, "baseline")];
+    for (const id of TEST_PHILOSOPHERS) push(dilemma.id, "voice", dilemmaGroup(dilemma), id, verdicts[voiceTaskId(dilemma.id, id)], baseline);
+  }
+  for (const pair of pairs) {
+    for (const side of ["base", "variant"] as const) {
+      const baseline = verdicts[pairTaskId(pair.id, "baseline", side)];
+      for (const id of TEST_PHILOSOPHERS) push(`${pair.id}/${side}`, "pair", pairGroup(pair), id, verdicts[pairTaskId(pair.id, id, side)], baseline);
+    }
+  }
+  return records;
+}
+
+export interface Separation {
+  /** Couples of keyed thinkers whose expected answers differ, with both answers given. */
+  expectedDifferent: number;
+  /** Of those, couples whose actual answers also differ. */
+  reproduced: number;
+  /** Couples of keyed thinkers whose expected answers are the same, with both answers given. */
+  expectedSame: number;
+  /** Of those, couples whose actual answers are also the same. */
+  kept: number;
+}
+
+/**
+ * On every case with two or more keyed thinkers: when the key expects two thinkers to disagree, do their answers
+ * disagree? When it expects them to agree, do they agree? For pairs, the answer is the pattern (base → variant).
+ */
+export function separation(dilemmas: VerdictDilemma[], pairs: CasePair[], verdicts: VerdictMap): Separation {
+  const result: Separation = { expectedDifferent: 0, reproduced: 0, expectedSame: 0, kept: 0 };
+  const isOption = (verdict: Verdict | undefined) => verdict !== undefined && verdict !== "none";
+  const count = (entries: { expected: string; actual?: string }[]) => {
+    for (let a = 0; a < entries.length; a += 1) {
+      for (let b = a + 1; b < entries.length; b += 1) {
+        const [x, y] = [entries[a], entries[b]];
+        if (x.actual === undefined || y.actual === undefined) continue;
+        if (x.expected !== y.expected) {
+          result.expectedDifferent += 1;
+          if (x.actual !== y.actual) result.reproduced += 1;
+        } else {
+          result.expectedSame += 1;
+          if (x.actual === y.actual) result.kept += 1;
+        }
+      }
+    }
+  };
+  for (const dilemma of dilemmas) {
+    count(TEST_PHILOSOPHERS.filter((id) => dilemma.philosophers[id]).map((id) => {
+      const verdict = verdicts[voiceTaskId(dilemma.id, id)];
+      return { expected: dilemma.philosophers[id]!.option, actual: isOption(verdict) ? verdict : undefined };
+    }));
+  }
+  for (const pair of pairs) {
+    count(TEST_PHILOSOPHERS.filter((id) => pair.thinkers[id]).map((id) => {
+      const base = verdicts[pairTaskId(pair.id, id, "base")];
+      const variant = verdicts[pairTaskId(pair.id, id, "variant")];
+      const entry = pair.thinkers[id]!;
+      return { expected: `${entry.base}→${entry.variant}`, actual: isOption(base) && isOption(variant) ? `${base}→${variant}` : undefined };
+    }));
+  }
+  return result;
 }

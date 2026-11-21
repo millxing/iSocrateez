@@ -739,6 +739,103 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
     },
     axes: []
   },
+  // ---- Cases added 2026-11-21 for the distinctness test, in the style of user dilemmas. kidney-for-a-stranger and
+  // cousin-or-strangers are contested (the key expects different answers from different thinkers); manager-who-belittles
+  // is not (its Maimonides entry was removed after review). Two drafts were removed after review: brothers-dismissal
+  // (Analects 13.18 is concealment, which the no-lie option allows) and fathers-funeral (too close to the holdout
+  // deathbed-promise). Reference check and content review by two AI subagents; not checked by a philosopher. ----
+  {
+    id: "kidney-for-a-stranger",
+    title: "A kidney for a stranger",
+    split: "development",
+    kind: "split",
+    text: "A woman in my city whom I have never met needs a kidney, and I am a match. For a healthy donor the operation is safe: the risk of death is very small, and most donors live normal lives with one kidney. It would almost certainly free her from years on dialysis, and it may save her life. I am healthy, and no one depends on me. Should I give her one of my kidneys?",
+    options: [
+      { id: "donate", label: "Give her one of your kidneys" },
+      { id: "decline", label: "Do not give a kidney" }
+    ],
+    philosophers: {
+      "confucius-role-ethics": {
+        option: "decline",
+        confidence: "disputed",
+        reason: "The body is received from one's parents and must be kept whole: on his deathbed Zengzi, Confucius's disciple, has his students uncover his hands and feet to show that he kept them unharmed. The passage is the disciple's, and it concerns harm through carelessness, not a gift that saves a life.",
+        source: "Analects 8.3"
+      },
+      "kant-deontology": {
+        option: "decline",
+        confidence: "disputed",
+        reason: "Kant counts it as 'partial self-murder' to deprive oneself of an integral part or organ, and his example is to give away or sell a tooth to be planted in another person's jaw. Only the amputation of a dead organ, or one about to mortify, is exempt. Against this: Kant's target is self-mutilation for gain, he does not discuss an organ given to save a life, and he also teaches a duty of beneficence; many Kantians reject the 'decline' reading.",
+        source: "Metaphysics of Morals, Doctrine of Virtue, Ak. 6:423 (on maiming oneself)"
+      },
+      "mill-utilitarianism": {
+        option: "donate",
+        confidence: "clear",
+        reason: "A very small risk to the donor against years of suffering, and perhaps a life, for the recipient: the gain in happiness is large. Beneficence is for Mill a duty of imperfect obligation: binding, but owed to no definite person at a set time, and no one may compel it. To give is to fulfil it well.",
+        source: "Utilitarianism, ch. 2 (the standard is the happiness of all concerned); ch. 5 (duties of imperfect obligation)"
+      },
+    },
+    axes: []
+  },
+  {
+    id: "cousin-or-strangers",
+    title: "My cousin's rent or a charity abroad",
+    split: "development",
+    kind: "split",
+    text: "I have $3,000 to give this year. My cousin cannot pay her rent this winter and may lose her flat; $3,000 would cover it. A well-run charity abroad says that $3,000 buys malaria nets that will, on average, save about one child's life. I cannot do both. Which should I give to?",
+    options: [
+      { id: "cousin", label: "Give the money to the cousin" },
+      { id: "charity", label: "Give the money to the charity abroad" }
+    ],
+    philosophers: {
+      "mill-utilitarianism": {
+        option: "charity",
+        confidence: "disputed",
+        reason: "The standard is the happiness of all concerned, counted impartially: a child's life outweighs a rent shortfall. Against this: Mill says that most good actions are meant for the benefit of particular people, not the world, and that it is enough to attend to them when no one else's rights are violated.",
+        source: "Utilitarianism, ch. 2"
+      },
+      "maimonides-jewish-ethics": {
+        option: "cousin",
+        confidence: "disputed",
+        reason: "A poor relative comes before all others; the poor of one's own household before the poor of one's town, and the poor of one's town before those of another town. Against this: the order ranks poor people with similar needs, and saving a life comes first (the ransom of captives before the support of the poor, 8:10); rent is not a life.",
+        source: "Mishneh Torah, Hilkhot Matnot Aniyim 7:13"
+      },
+      "mencius-confucianism": {
+        option: "cousin",
+        confidence: "disputed",
+        reason: "Mencius rejects the Mohist teaching of love without gradations: does anyone love his brother's child only as he loves a neighbour's infant? The good person is affectionate to parents, then humane to people, then kind to creatures. Against this: these texts do not say that one may let a child die to pay a relative's rent, and the child at the well (2A6) points the other way.",
+        source: "Mencius 3A5; 7A45"
+      },
+    },
+    axes: [
+      { axis: "impartialPartial", negative: "charity", positive: "cousin" }
+    ]
+  },
+  {
+    id: "manager-who-belittles",
+    title: "The manager who belittles me",
+    split: "development",
+    kind: "split",
+    text: "My manager often belittles me in front of the team: he mocks my accent and calls my ideas stupid. He does not do this to others. The job pays well and supports my family, and jobs like it are rare here. If I tell him plainly that he must stop, he may make my work harder or push me out. If I say nothing and bear it, things will probably stay as they are. Should I stand up to him?",
+    options: [
+      { id: "stand", label: "Stand up to him: tell him plainly that he must stop, in private or in public, or report it formally" },
+      { id: "bear", label: "Bear it quietly: do not answer back" }
+    ],
+    philosophers: {
+      "kant-deontology": {
+        option: "stand",
+        confidence: "clear",
+        reason: "Duties to oneself include respect for one's own dignity: 'Do not become the vassals of men. Do not let others trample your rights with impunity.' Servility, giving up one's dignity for an advantage, is a vice. Kant does not discuss the risk to one's family's income.",
+        source: "Metaphysics of Morals, Doctrine of Virtue, §11, Ak. 6:434-436 (on servility)"
+      },
+      "aristotle-virtue-ethics": {
+        option: "stand",
+        confidence: "clear",
+        reason: "Those who are not angry at the things they should be angry at are thought foolish, and to endure being insulted is slavish. The good-tempered person is angry at the right things, in the right way; that mockery repeated in public is such a thing is our inference.",
+        source: "Nicomachean Ethics IV.5"
+      },
+    },
+    axes: []
+  },
   {
     id: "flood-rescue",
     title: "One more trip with the rescue boat",
