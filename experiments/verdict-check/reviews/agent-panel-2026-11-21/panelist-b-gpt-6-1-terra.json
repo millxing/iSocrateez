@@ -1,0 +1,482 @@
+[
+  {
+    "item": "S1",
+    "answer": "tell",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Nicomachean Ethics IV.7, 1127a13–b32",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Truthfulness is a virtue, and justice to the two suspected members matters. Friendship imposes duties to a father, but does not plainly warrant a false denial.",
+    "strongestCounter": "Family friendship and the flexibility of practical wisdom could support protecting him."
+  },
+  {
+    "item": "S2",
+    "answer": "keep",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Analects 1.7; 15.24",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Trustworthiness and fidelity to friends weigh heavily, especially when the friend depends on the promise. The Analects do not prescribe maximizing the sum of benefits.",
+    "strongestCounter": "Benevolence toward hungry families could outweigh an undertaking that causes less harm if broken."
+  },
+  {
+    "item": "S3",
+    "answer": "refrain",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      {
+        "ref": "Mencius 6A.10; 7A.45",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Mencius treats righteousness as a limit on pursuit of life and benefit. Deliberately killing an innocent person to save others conflicts with that limit.",
+    "strongestCounter": "His alarm at a child in danger and concern for life could support saving the greater number."
+  },
+  {
+    "item": "S4",
+    "answer": "push",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Utilitarianism II; V",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "The stipulated certainty makes five lives count against one, and Mill permits exceptions to moral rules when duties conflict. The consequences of a general permission to kill remain relevant but are not specified.",
+    "strongestCounter": "Security and justice protect individuals against being sacrificed, and the wider effects of such a practice might outweigh the immediate gain."
+  },
+  {
+    "item": "S5",
+    "answer": "refrain",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Analects 12.2; 15.24",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Reciprocity and humane conduct offer no license to kill an innocent stranger as a tool for others. The Analects do not give a numerical aggregation rule.",
+    "strongestCounter": "Benevolence and concern for the five might favor intervention; the text does not address this engineered dilemma."
+  },
+  {
+    "item": "S6",
+    "answer": "lie",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Nicomachean Ethics II.6; IV.7, 1127a13–b32",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Truthfulness in Aristotle chiefly concerns honest self-presentation, not an unconditional rule to disclose to an attacker. Practical wisdom and friendship favor protecting the threatened person.",
+    "strongestCounter": "He calls falsehood base in itself, and his list of intrinsically wrong actions suggests some acts admit no mean."
+  },
+  {
+    "item": "S7",
+    "answer": "lie",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Analects 13.18; 12.2",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "The Analects place humane and role-sensitive conduct above mechanical disclosure; family members conceal wrongdoing for one another. Protecting a friend against violence plausibly favors misleading the attacker.",
+    "strongestCounter": "Trustworthiness is a central virtue, and the family concealment passage does not expressly authorize lying for a friend."
+  },
+  {
+    "item": "S8",
+    "answer": "open",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Nicomachean Ethics VIII.14, 1162a4–b4; IX.2, 1164b22–1165a3",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Parents deserve honor and support, but Aristotle says competing obligations depend on circumstances. Good care and a major life project do not determine whether physical proximity is required.",
+    "strongestCounter": "The debt to parents could favor staying, while financial provision and the importance of a worthwhile career could favor going."
+  },
+  {
+    "item": "S9",
+    "answer": "stay",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      {
+        "ref": "Analects 4.19; 2.7–8",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Confucius cautions against traveling far while parents live and insists that filial care requires more than material provision. Their expressed distress strengthens the case for staying.",
+    "strongestCounter": "The post may enable excellent care and service to others, and 4.19 allows travel with a known destination."
+  },
+  {
+    "item": "S10",
+    "answer": "open",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "On Liberty II; Utilitarianism III",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Mill values sincere conviction and freedom of expression, but also gives weight to others’ happiness. His texts do not determine whether a ritual utterance here is harmless convention or damaging insincerity.",
+    "strongestCounter": "Public conformity can suppress independent thought; alternatively, a small conventional gesture may spare a family serious distress."
+  },
+  {
+    "item": "S11",
+    "answer": "not-take",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Metaphysics of Morals, Doctrine of Right, §27; Groundwork II",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Kant treats property rights as enforceable and does not make another person’s urgent need a general authorization to take property. The wife’s need supports aid but does not clearly cancel the pharmacist’s right.",
+    "strongestCounter": "Kant discusses a right of necessity in extreme danger, which might be extended to saving a spouse, though his discussion concerns coercion and punishment."
+  },
+  {
+    "item": "S12",
+    "answer": "not-take",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Nicomachean Ethics II.6, 1107a8–17; V.2",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Aristotle lists theft among acts whose very name implies badness, and distinguishes injustice in exchange. The payment offered does not establish the pharmacist’s consent.",
+    "strongestCounter": "Equity and obligations to a spouse might support taking the medicine under extreme necessity, especially if the price is unjust."
+  },
+  {
+    "item": "S13",
+    "answer": "better",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Groundwork II, 4:421–429; Metaphysics of Morals, Doctrine of Virtue, §30",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "A trustee must act on a principle compatible with the purpose of the entrusted role and respect the candidates fairly. Family need gives a reason for separate help, but not for using the charity’s position as a private benefit.",
+    "strongestCounter": "Kant permits special obligations and beneficence toward relatives, and the nephew is qualified for the job."
+  },
+  {
+    "item": "S14",
+    "answer": "better",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Analects 13.2; 15.18",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Confucius urges the promotion of the worthy and action guided by rightness. A public-serving office gives a strong reason to select the more capable candidate.",
+    "strongestCounter": "Family partiality is central to Confucian ethics, and the nephew is competent and in need."
+  },
+  {
+    "item": "S15",
+    "answer": "record",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "low",
+    "passages": [
+      {
+        "ref": "Nicomachean Ethics VI.8, 1141b14–22; VI.11",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Practical wisdom requires attention to particulars and experienced judgment, but an unexplained feeling is not automatically reliable perception. On the facts supplied the record is the stronger basis.",
+    "strongestCounter": "Practical perception can discern character without reducing it to a formal proof; observed speech is itself relevant evidence."
+  },
+  {
+    "item": "S16",
+    "answer": "record",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "low",
+    "passages": [
+      {
+        "ref": "Analects 2.10; 15.28",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Confucius recommends examining what people do and their motives, rather than accepting reputation alone. Here the unease has no identifiable supporting fact, so the stronger documented case favors Mr R.",
+    "strongestCounter": "His speech in meetings may reveal character that credentials miss, and Confucius warns against judging by appearances or words alone."
+  },
+  {
+    "item": "S17",
+    "answer": "refuse",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      {
+        "ref": "Groundwork II, 4:421; Metaphysics of Morals, Doctrine of Virtue, Introduction VII",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "A defensible maxim cannot make an unexplained exception for one person while treating comparable cases differently. A feeling alone supplies no stated relevant distinction.",
+    "strongestCounter": "The rule itself may be too rigid, and beneficence might warrant revising it and remedying earlier refusals."
+  },
+  {
+    "item": "S18",
+    "answer": "refuse",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Nicomachean Ethics V.3; V.10",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Justice requires treating relevantly equal cases equally; equity corrects a rule when a genuine particular difference makes it misfire. No such difference has been identified here.",
+    "strongestCounter": "Practical wisdom may perceive morally relevant particulars before the agent can articulate them, and strict rules can be inequitable."
+  },
+  {
+    "item": "S19",
+    "answer": "refuse",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Analects 12.17; 13.3",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "A leader should act uprightly and make conduct fit public roles. An unexplained exception after two refusals risks the favoritism the rule addresses.",
+    "strongestCounter": "Confucius resists mechanical uniformity and values humane attention to the individual case."
+  },
+  {
+    "item": "S20",
+    "answer": "deflect",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Mishneh Torah, Human Dispositions 2:3; 6:8",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Maimonides strongly condemns arrogance and public humiliation. He favors extreme humility, so a public claim that predictably shames the colleague is hard to justify.",
+    "strongestCounter": "Truth and fair recognition matter, and a factual correction need not explicitly insult the colleague."
+  },
+  {
+    "item": "S21",
+    "answer": "claim",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Nicomachean Ethics IV.3, 1123b1–1125a35; IV.7",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "The magnanimous person regards himself as worthy of great things when he is worthy, and truthfulness avoids both boastfulness and self-deprecation. A plain accurate claim can correct the record.",
+    "strongestCounter": "Aristotle also values tact and friendship; the venue and needless embarrassment may make a public claim inappropriate."
+  },
+  {
+    "item": "S22",
+    "answer": "open",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Analects 6.30; 15.24",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Humaneness calls for extending concern to others, but the Analects do not address invasive donation or specify how much bodily risk a stranger may demand. Neither a strict duty to donate nor a duty to refuse follows clearly.",
+    "strongestCounter": "The ideal of helping others establish themselves favors donation; regard for one’s body and family obligations can favor keeping it."
+  },
+  {
+    "item": "S23",
+    "answer": "decline",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Metaphysics of Morals, Doctrine of Virtue, §6; §30",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Kant prohibits disposing of an integral part of oneself as a mere means and treats beneficence as a wide duty. His bodily-integrity discussion favors refusal even for another’s benefit.",
+    "strongestCounter": "The kidney is paired, the donor survives, and beneficence may support a voluntary sacrifice that does not destroy agency."
+  },
+  {
+    "item": "S24",
+    "answer": "charity",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Utilitarianism II; V",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Mill requires impartial consideration of happiness, and saving a child’s life is likely to outweigh preventing a nonfatal housing loss. The stated estimate supports the charity, subject to wider consequences.",
+    "strongestCounter": "Special relationships and the predictable harm of neglecting a dependent relative can matter greatly to overall welfare."
+  },
+  {
+    "item": "S25",
+    "answer": "cousin",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Mishneh Torah, Gifts to the Poor 7:13",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Maimonides gives poor relatives priority in charity. On the stated facts the cousin’s housing need qualifies, although the difference in potential loss complicates the application.",
+    "strongestCounter": "Saving a life is a very strong duty, and the distant child’s risk could override ordinary charity priorities."
+  },
+  {
+    "item": "S26",
+    "answer": "cousin",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Mencius 1A.7; 3A.5",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Mencius starts benevolence with close relations and extends it outward, rejecting indiscriminate love. That structure favors meeting a needy cousin’s immediate claim.",
+    "strongestCounter": "His concern for the suffering of strangers and the weight of saving a life may favor the malaria charity."
+  },
+  {
+    "item": "P27",
+    "answer": null,
+    "answerA": "consult",
+    "answerB": "act",
+    "confidence": "high",
+    "passages": [
+      {
+        "ref": "Analects 11.22",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Confucius gives opposite advice to two pupils on the same question because one is impetuous and the other holds back. The stated differences closely match that teaching.",
+    "strongestCounter": "Consultation may be appropriate in both cases because two evenings a week can affect the household; the pupil analogy does not settle all particulars."
+  },
+  {
+    "item": "P28",
+    "answer": null,
+    "answerA": "record",
+    "answerB": "feeling",
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Nicomachean Ethics VI.8, 1142a11–20; VI.11, 1143b11–14",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Aristotle gives weight to experienced perception of particulars, while noting that young people lack experience in practical matters. Thirty years of relevant judgment makes the second agent’s unease more credible, though it is not infallible.",
+    "strongestCounter": "Even an expert can be biased, and a clean record may outweigh an unarticulated impression in both cases."
+  },
+  {
+    "item": "P29",
+    "answer": null,
+    "answerA": "record",
+    "answerB": "feeling",
+    "confidence": "low",
+    "passages": [
+      {
+        "ref": "Treatise 3.1.1; Enquiry concerning the Principles of Morals, Appendix 1",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Hume assigns sentiment a role in moral evaluation, but factual judgment draws on experience and evidence. Relevant repeated experience may give the second person’s impression more weight, though these texts do not dictate how much.",
+    "strongestCounter": "Sentiment does not establish the truth of suspicion, and objective evidence may favor Mr R in both cases."
+  },
+  {
+    "item": "P30",
+    "answer": null,
+    "answerA": "take",
+    "answerB": "open",
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Utilitarianism V",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Mill explicitly allows that saving a life can justify taking needed food or medicine, subject to compensation. Two weeks of severe pain also matters greatly, but its weight against property and wider consequences is not determined by the facts.",
+    "strongestCounter": "The pain may be sufficiently severe to justify the same exception; conversely, the social cost of theft could make even the life case more complicated."
+  },
+  {
+    "item": "P31",
+    "answer": null,
+    "answerA": "not-take",
+    "answerB": "not-take",
+    "confidence": "medium",
+    "passages": [
+      {
+        "ref": "Nicomachean Ethics II.6, 1107a8–17",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Aristotle names theft as intrinsically base rather than a passion or action with a proper mean. The difference in severity affects deliberation but does not by itself remove that classification.",
+    "strongestCounter": "An emergency and unjust exploitation might change how the taking is characterized, and practical wisdom attends to particulars."
+  },
+  {
+    "item": "P32",
+    "answer": null,
+    "answerA": "calm",
+    "answerB": "anger",
+    "confidence": "high",
+    "passages": [
+      {
+        "ref": "Nicomachean Ethics IV.5, 1125b26–1126a8",
+        "status": "from memory"
+      }
+    ],
+    "reasoning": "Aristotle praises anger at the right things, toward the right people, in the right way. Deliberate malicious injury gives stronger grounds for anger than an honest mistake.",
+    "strongestCounter": "A false accusation harms a friend even when mistaken, while publicly displaying anger at deliberate wrongdoing may still be excessive or counterproductive."
+  }
+]

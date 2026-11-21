@@ -4,7 +4,7 @@ import { getPhilosophyById, philosophyProfiles } from "../../shared/philosophyPr
 import { CORE_PHILOSOPHERS, TEST_PHILOSOPHERS } from "./answerKey";
 import { LENS_NOTES } from "./lensNotes";
 import { HOLDOUT_PASSAGES } from "./pairs";
-import { VARIANTS } from "./variants";
+import { CONTRAST_STEP_5, PROD_STEP_5, VARIANTS } from "./variants";
 
 describe("baseline prompts", () => {
   it("legacy: differs from the voice prompt only by the persona lines", () => {
@@ -78,5 +78,21 @@ describe("notes variant for thinkers without notes", () => {
       const voice = getPhilosophyById(id)!;
       expect(VARIANTS.notes.voice({ dilemma: "X", voice })).toBe(VARIANTS.prod.voice({ dilemma: "X", voice }));
     }
+  });
+});
+
+describe("contrast variant", () => {
+  it("is the prod voice prompt with step 5 replaced, and the same profile and baseline prompts", () => {
+    for (const id of TEST_PHILOSOPHERS) {
+      const voice = getPhilosophyById(id)!;
+      const prod = VARIANTS.prod.voice({ dilemma: "X", voice });
+      const contrast = VARIANTS.contrast.voice({ dilemma: "X", voice });
+      expect(prod).toContain(PROD_STEP_5);
+      expect(contrast).not.toContain(PROD_STEP_5);
+      expect(contrast.replace(CONTRAST_STEP_5, PROD_STEP_5)).toBe(prod);
+    }
+    const profile: ProfileTuple = { outcomesPrinciples: 0.5, individualCollective: -0.5, reasonIntuition: 0 };
+    expect(VARIANTS.contrast.profile({ dilemma: "X", profile })).toBe(VARIANTS.prod.profile({ dilemma: "X", profile }));
+    expect(VARIANTS.contrast.baseline({ dilemma: "X" })).toBe(VARIANTS.prod.baseline({ dilemma: "X" }));
   });
 });

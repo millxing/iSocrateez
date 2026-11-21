@@ -1,0 +1,488 @@
+[
+ {
+  "item": "S1",
+  "thinker": "Aristotle",
+  "case": "My father took tools from our community workshop without permission. He told me, and he asks me to protect him. Tomorrow the committee will ask each volunteer directly if they know who took the tools. We are a small group: if I refuse to answer, everyone will understand that it was him. Two other members are under suspicion. Should I tell the committee the truth, or say that I know nothing?",
+  "options": [
+   {
+    "id": "tell",
+    "label": "Do not lie: tell the committee the truth, or refuse to answer and let them understand"
+   },
+   {
+    "id": "deny",
+    "label": "Say that you know nothing, to protect the father"
+   }
+  ]
+ },
+ {
+  "item": "S2",
+  "thinker": "Confucius",
+  "case": "I promised to help my friend move on Saturday. A charity now offers me one day of paid work on the same Saturday. The fee is $2,000, and I would give all of it to a food bank that must turn families away this month. The work cannot move to another day. My friend can find no other helper. Without me he must pay movers about $400, which is hard for him, and he says that a promise is a promise. Should I keep the promise or take the work?",
+  "options": [
+   {
+    "id": "keep",
+    "label": "Keep the promise and help the friend move"
+   },
+   {
+    "id": "break",
+    "label": "Break the promise and take the paid work for the food bank"
+   }
+  ]
+ },
+ {
+  "item": "S3",
+  "thinker": "Mencius",
+  "case": "A runaway trolley is heading toward five people trapped on the track. You are standing on a footbridge above the track, beside a very large stranger. The only way to stop the trolley is to push him off the bridge into its path. His body would stop it and save the five, but he would die. You are certain that this would work, and you are too light to stop the trolley yourself. Should you push the stranger?",
+  "options": [
+   {
+    "id": "push",
+    "label": "Push the stranger"
+   },
+   {
+    "id": "refrain",
+    "label": "Do not push the stranger"
+   }
+  ]
+ },
+ {
+  "item": "S4",
+  "thinker": "Mill",
+  "case": "A runaway trolley is heading toward five people trapped on the track. You are standing on a footbridge above the track, beside a very large stranger. The only way to stop the trolley is to push him off the bridge into its path. His body would stop it and save the five, but he would die. You are certain that this would work, and you are too light to stop the trolley yourself. Should you push the stranger?",
+  "options": [
+   {
+    "id": "push",
+    "label": "Push the stranger"
+   },
+   {
+    "id": "refrain",
+    "label": "Do not push the stranger"
+   }
+  ]
+ },
+ {
+  "item": "S5",
+  "thinker": "Confucius",
+  "case": "A runaway trolley is heading toward five people trapped on the track. You are standing on a footbridge above the track, beside a very large stranger. The only way to stop the trolley is to push him off the bridge into its path. His body would stop it and save the five, but he would die. You are certain that this would work, and you are too light to stop the trolley yourself. Should you push the stranger?",
+  "options": [
+   {
+    "id": "push",
+    "label": "Push the stranger"
+   },
+   {
+    "id": "refrain",
+    "label": "Do not push the stranger"
+   }
+  ]
+ },
+ {
+  "item": "S6",
+  "thinker": "Aristotle",
+  "case": "A friend is hiding in my flat from her violent former partner. He is at my door now and asks if she is here. The police will arrive in ten minutes. If I refuse to answer, he will understand that she is here and force his way in. If I say that she left town, he will go away. Should I lie to him?",
+  "options": [
+   {
+    "id": "lie",
+    "label": "Lie: say that she is not there"
+   },
+   {
+    "id": "no-lie",
+    "label": "Do not lie: tell the truth or refuse to answer"
+   }
+  ]
+ },
+ {
+  "item": "S7",
+  "thinker": "Confucius",
+  "case": "A friend is hiding in my flat from her violent former partner. He is at my door now and asks if she is here. The police will arrive in ten minutes. If I refuse to answer, he will understand that she is here and force his way in. If I say that she left town, he will go away. Should I lie to him?",
+  "options": [
+   {
+    "id": "lie",
+    "label": "Lie: say that she is not there"
+   },
+   {
+    "id": "no-lie",
+    "label": "Do not lie: tell the truth or refuse to answer"
+   }
+  ]
+ },
+ {
+  "item": "S8",
+  "thinker": "Aristotle",
+  "case": "I am an only child. My parents are in their eighties and now need help each day. I have been offered the post that I have worked toward for fifteen years. It is in another country, for at least five years. My parents refuse to move. I can pay for a good care home near their house, but they dread it and ask me to stay. If I refuse the post, there will be no second offer. Should I take the post or stay?",
+  "options": [
+   {
+    "id": "go",
+    "label": "Take the post and pay for the parents' care"
+   },
+   {
+    "id": "stay",
+    "label": "Refuse the post and stay to care for the parents"
+   }
+  ]
+ },
+ {
+  "item": "S9",
+  "thinker": "Confucius",
+  "case": "I am an only child. My parents are in their eighties and now need help each day. I have been offered the post that I have worked toward for fifteen years. It is in another country, for at least five years. My parents refuse to move. I can pay for a good care home near their house, but they dread it and ask me to stay. If I refuse the post, there will be no second offer. Should I take the post or stay?",
+  "options": [
+   {
+    "id": "go",
+    "label": "Take the post and pay for the parents' care"
+   },
+   {
+    "id": "stay",
+    "label": "Refuse the post and stay to care for the parents"
+   }
+  ]
+ },
+ {
+  "item": "S10",
+  "thinker": "Mill",
+  "case": "My family will hold a religious memorial for my grandfather. My mother asks me to stand with the family and say the words of faith aloud with them. I do not believe those words. She says that it is a sign of respect, and that my silence will shame the family in front of the community. I will attend in any case. Should I say the words?",
+  "options": [
+   {
+    "id": "say",
+    "label": "Say the words with the family"
+   },
+   {
+    "id": "silent",
+    "label": "Attend, but do not say the words"
+   }
+  ]
+ },
+ {
+  "item": "S11",
+  "thinker": "Kant",
+  "case": "My wife will die within weeks without a drug. The only pharmacist who has it asks $40,000. I have raised $8,000, and he refuses a lower price or later payment. I have tried doctors, charities and the courts, and there is no time left. I can break into his store tonight and take the drug. I would leave the $8,000 there. Should I take it?",
+  "options": [
+   {
+    "id": "take",
+    "label": "Break in and take the drug"
+   },
+   {
+    "id": "not-take",
+    "label": "Do not take the drug"
+   }
+  ]
+ },
+ {
+  "item": "S12",
+  "thinker": "Aristotle",
+  "case": "My wife will die within weeks without a drug. The only pharmacist who has it asks $40,000. I have raised $8,000, and he refuses a lower price or later payment. I have tried doctors, charities and the courts, and there is no time left. I can break into his store tonight and take the drug. I would leave the $8,000 there. Should I take it?",
+  "options": [
+   {
+    "id": "take",
+    "label": "Break in and take the drug"
+   },
+   {
+    "id": "not-take",
+    "label": "Do not take the drug"
+   }
+  ]
+ },
+ {
+  "item": "S13",
+  "thinker": "Kant",
+  "case": "I lead the hiring for a charity that runs on public donations. Two people applied for the post of finance officer. My nephew can do the work adequately. The other candidate is clearly better. My family expects me to choose my nephew: he has been out of work for a year and has two children. No rule forbids it, and no one would question my choice. Whom should I hire?",
+  "options": [
+   {
+    "id": "nephew",
+    "label": "Hire the nephew"
+   },
+   {
+    "id": "better",
+    "label": "Hire the better candidate"
+   }
+  ]
+ },
+ {
+  "item": "S14",
+  "thinker": "Confucius",
+  "case": "I lead the hiring for a charity that runs on public donations. Two people applied for the post of finance officer. My nephew can do the work adequately. The other candidate is clearly better. My family expects me to choose my nephew: he has been out of work for a year and has two children. No rule forbids it, and no one would question my choice. Whom should I hire?",
+  "options": [
+   {
+    "id": "nephew",
+    "label": "Hire the nephew"
+   },
+   {
+    "id": "better",
+    "label": "Hire the better candidate"
+   }
+  ]
+ },
+ {
+  "item": "S15",
+  "thinker": "Aristotle",
+  "case": "Our tenants' association must choose a treasurer. On every fact that I can check, Mr R is the best candidate: experience, references, a clean record. But in two meetings, the way he spoke about money and about people made me deeply uneasy. I cannot point to one fact that supports this feeling. The other candidate is adequate, and I trust her. My vote decides. Should I vote for Mr R?",
+  "options": [
+   {
+    "id": "record",
+    "label": "Vote for Mr R, on the evidence"
+   },
+   {
+    "id": "feeling",
+    "label": "Vote for the other candidate, on the strength of the unease"
+   }
+  ]
+ },
+ {
+  "item": "S16",
+  "thinker": "Confucius",
+  "case": "Our tenants' association must choose a treasurer. On every fact that I can check, Mr R is the best candidate: experience, references, a clean record. But in two meetings, the way he spoke about money and about people made me deeply uneasy. I cannot point to one fact that supports this feeling. The other candidate is adequate, and I trust her. My vote decides. Should I vote for Mr R?",
+  "options": [
+   {
+    "id": "record",
+    "label": "Vote for Mr R, on the evidence"
+   },
+   {
+    "id": "feeling",
+    "label": "Vote for the other candidate, on the strength of the unease"
+   }
+  ]
+ },
+ {
+  "item": "S17",
+  "thinker": "Kant",
+  "case": "I manage a team. I set a rule: no extensions on the quarterly report, because exceptions lead to favouritism. This year I refused two people. Now a third person asks. On paper her circumstances are the same as theirs. But everything in me says that her case is different and that she should have the extension. I cannot state a difference that I could defend to the other two. Should I grant it?",
+  "options": [
+   {
+    "id": "refuse",
+    "label": "Refuse the extension, as for the other two"
+   },
+   {
+    "id": "grant",
+    "label": "Grant the extension"
+   }
+  ]
+ },
+ {
+  "item": "S18",
+  "thinker": "Aristotle",
+  "case": "I manage a team. I set a rule: no extensions on the quarterly report, because exceptions lead to favouritism. This year I refused two people. Now a third person asks. On paper her circumstances are the same as theirs. But everything in me says that her case is different and that she should have the extension. I cannot state a difference that I could defend to the other two. Should I grant it?",
+  "options": [
+   {
+    "id": "refuse",
+    "label": "Refuse the extension, as for the other two"
+   },
+   {
+    "id": "grant",
+    "label": "Grant the extension"
+   }
+  ]
+ },
+ {
+  "item": "S19",
+  "thinker": "Confucius",
+  "case": "I manage a team. I set a rule: no extensions on the quarterly report, because exceptions lead to favouritism. This year I refused two people. Now a third person asks. On paper her circumstances are the same as theirs. But everything in me says that her case is different and that she should have the extension. I cannot state a difference that I could defend to the other two. Should I grant it?",
+  "options": [
+   {
+    "id": "refuse",
+    "label": "Refuse the extension, as for the other two"
+   },
+   {
+    "id": "grant",
+    "label": "Grant the extension"
+   }
+  ]
+ },
+ {
+  "item": "S20",
+  "thinker": "Maimonides",
+  "case": "I led a project that saved our company. At the celebration, the director thanked a senior colleague as the leader, and the room applauded him. He did little. I will speak next. If I say plainly that I led the work, I get the credit that I earned, and he loses face. If I thank the team and say nothing of my part, the wrong impression stays. Should I claim the credit?",
+  "options": [
+   {
+    "id": "claim",
+    "label": "Say plainly that you led the work"
+   },
+   {
+    "id": "deflect",
+    "label": "Thank the team and say nothing of your own part"
+   }
+  ]
+ },
+ {
+  "item": "S21",
+  "thinker": "Aristotle",
+  "case": "I led a project that saved our company. At the celebration, the director thanked a senior colleague as the leader, and the room applauded him. He did little. I will speak next. If I say plainly that I led the work, I get the credit that I earned, and he loses face. If I thank the team and say nothing of my part, the wrong impression stays. Should I claim the credit?",
+  "options": [
+   {
+    "id": "claim",
+    "label": "Say plainly that you led the work"
+   },
+   {
+    "id": "deflect",
+    "label": "Thank the team and say nothing of your own part"
+   }
+  ]
+ },
+ {
+  "item": "S22",
+  "thinker": "Confucius",
+  "case": "A woman in my city whom I have never met needs a kidney, and I am a match. For a healthy donor the operation is safe: the risk of death is very small, and most donors live normal lives with one kidney. It would almost certainly free her from years on dialysis, and it may save her life. I am healthy, and no one depends on me. Should I give her one of my kidneys?",
+  "options": [
+   {
+    "id": "donate",
+    "label": "Give her one of your kidneys"
+   },
+   {
+    "id": "decline",
+    "label": "Do not give a kidney"
+   }
+  ]
+ },
+ {
+  "item": "S23",
+  "thinker": "Kant",
+  "case": "A woman in my city whom I have never met needs a kidney, and I am a match. For a healthy donor the operation is safe: the risk of death is very small, and most donors live normal lives with one kidney. It would almost certainly free her from years on dialysis, and it may save her life. I am healthy, and no one depends on me. Should I give her one of my kidneys?",
+  "options": [
+   {
+    "id": "donate",
+    "label": "Give her one of your kidneys"
+   },
+   {
+    "id": "decline",
+    "label": "Do not give a kidney"
+   }
+  ]
+ },
+ {
+  "item": "S24",
+  "thinker": "Mill",
+  "case": "I have $3,000 to give this year. My cousin cannot pay her rent this winter and may lose her flat; $3,000 would cover it. A well-run charity abroad says that $3,000 buys malaria nets that will, on average, save about one child's life. I cannot do both. Which should I give to?",
+  "options": [
+   {
+    "id": "cousin",
+    "label": "Give the money to the cousin"
+   },
+   {
+    "id": "charity",
+    "label": "Give the money to the charity abroad"
+   }
+  ]
+ },
+ {
+  "item": "S25",
+  "thinker": "Maimonides",
+  "case": "I have $3,000 to give this year. My cousin cannot pay her rent this winter and may lose her flat; $3,000 would cover it. A well-run charity abroad says that $3,000 buys malaria nets that will, on average, save about one child's life. I cannot do both. Which should I give to?",
+  "options": [
+   {
+    "id": "cousin",
+    "label": "Give the money to the cousin"
+   },
+   {
+    "id": "charity",
+    "label": "Give the money to the charity abroad"
+   }
+  ]
+ },
+ {
+  "item": "S26",
+  "thinker": "Mencius",
+  "case": "I have $3,000 to give this year. My cousin cannot pay her rent this winter and may lose her flat; $3,000 would cover it. A well-run charity abroad says that $3,000 buys malaria nets that will, on average, save about one child's life. I cannot do both. Which should I give to?",
+  "options": [
+   {
+    "id": "cousin",
+    "label": "Give the money to the cousin"
+   },
+   {
+    "id": "charity",
+    "label": "Give the money to the charity abroad"
+   }
+  ]
+ },
+ {
+  "item": "P27",
+  "thinker": "Confucius",
+  "caseA": "A friend is starting a free evening school for workers in our town. He asks me to teach there two evenings a week, from next week. It costs me no money, and I can stop when I want. I live with my father and my elder brother, and I have not told them. People who know me say that I take things on before I think, and twice this year I had to break promises that I made too fast. Should I say yes now, or first talk it over with my father and my brother?",
+  "caseB": "A friend is starting a free evening school for workers in our town. He asks me to teach there two evenings a week, from next week. It costs me no money, and I can stop when I want. I live with my father and my elder brother, and I have not told them. People who know me say that I wait too long, and twice this year I let a good chance pass because I could not decide. Should I say yes now, or first talk it over with my father and my brother?",
+  "options": [
+   {
+    "id": "act",
+    "label": "Say yes now, on your own judgment"
+   },
+   {
+    "id": "consult",
+    "label": "Wait, and talk it over with the father and the brother first"
+   }
+  ]
+ },
+ {
+  "item": "P28",
+  "thinker": "Aristotle",
+  "caseA": "Our tenants' association must choose a treasurer. On every fact that I can check, Mr R is the best candidate: experience, references, a clean record. But in two meetings, the way he spoke about money and about people made me deeply uneasy. I cannot point to one fact that supports this feeling. I joined the committee this year, and I have never before had to judge a person for a position of trust. The other candidate is adequate. The vote is tonight. There is no way to check further, and I cannot abstain. My vote decides. Should I vote for Mr R?",
+  "caseB": "Our tenants' association must choose a treasurer. On every fact that I can check, Mr R is the best candidate: experience, references, a clean record. But in two meetings, the way he spoke about money and about people made me deeply uneasy. I cannot point to one fact that supports this feeling. I have audited small charities for thirty years, and I have often had to judge whom to trust with money. The other candidate is adequate. The vote is tonight. There is no way to check further, and I cannot abstain. My vote decides. Should I vote for Mr R?",
+  "options": [
+   {
+    "id": "record",
+    "label": "Vote for Mr R, on the evidence"
+   },
+   {
+    "id": "feeling",
+    "label": "Vote for the other candidate, on the strength of the unease"
+   }
+  ]
+ },
+ {
+  "item": "P29",
+  "thinker": "Hume",
+  "caseA": "Our tenants' association must choose a treasurer. On every fact that I can check, Mr R is the best candidate: experience, references, a clean record. But in two meetings, the way he spoke about money and about people made me deeply uneasy. I cannot point to one fact that supports this feeling. I joined the committee this year, and I have never before had to judge a person for a position of trust. The other candidate is adequate. The vote is tonight. There is no way to check further, and I cannot abstain. My vote decides. Should I vote for Mr R?",
+  "caseB": "Our tenants' association must choose a treasurer. On every fact that I can check, Mr R is the best candidate: experience, references, a clean record. But in two meetings, the way he spoke about money and about people made me deeply uneasy. I cannot point to one fact that supports this feeling. I have audited small charities for thirty years, and I have often had to judge whom to trust with money. The other candidate is adequate. The vote is tonight. There is no way to check further, and I cannot abstain. My vote decides. Should I vote for Mr R?",
+  "options": [
+   {
+    "id": "record",
+    "label": "Vote for Mr R, on the evidence"
+   },
+   {
+    "id": "feeling",
+    "label": "Vote for the other candidate, on the strength of the unease"
+   }
+  ]
+ },
+ {
+  "item": "P30",
+  "thinker": "Mill",
+  "caseA": "My wife will die within weeks without a drug. The only pharmacist who has it asks $40,000. I have raised $8,000, and he refuses a lower price or later payment. I have tried doctors, charities and the courts, and there is no time left. I can break into his store tonight and take the drug. I would leave the $8,000 there. Should I take it?",
+  "caseB": "My wife has a painful illness. Without a drug she will be in severe pain for the next two weeks, until a cheaper drug arrives. She will not die. The only pharmacist who has it asks $40,000. I have raised $8,000, and he refuses a lower price or later payment. I have tried doctors, charities and the courts, and there is no time left. I can break into his store tonight and take the drug. I would leave the $8,000 there. Should I take it?",
+  "options": [
+   {
+    "id": "take",
+    "label": "Break in and take the drug"
+   },
+   {
+    "id": "not-take",
+    "label": "Do not take the drug"
+   }
+  ]
+ },
+ {
+  "item": "P31",
+  "thinker": "Aristotle",
+  "caseA": "My wife will die within weeks without a drug. The only pharmacist who has it asks $40,000. I have raised $8,000, and he refuses a lower price or later payment. I have tried doctors, charities and the courts, and there is no time left. I can break into his store tonight and take the drug. I would leave the $8,000 there. Should I take it?",
+  "caseB": "My wife has a painful illness. Without a drug she will be in severe pain for the next two weeks, until a cheaper drug arrives. She will not die. The only pharmacist who has it asks $40,000. I have raised $8,000, and he refuses a lower price or later payment. I have tried doctors, charities and the courts, and there is no time left. I can break into his store tonight and take the drug. I would leave the $8,000 there. Should I take it?",
+  "options": [
+   {
+    "id": "take",
+    "label": "Break in and take the drug"
+   },
+   {
+    "id": "not-take",
+    "label": "Do not take the drug"
+   }
+  ]
+ },
+ {
+  "item": "P32",
+  "thinker": "Aristotle",
+  "caseA": "At a team meeting, a colleague said that my friend, who was not there, takes money from the petty cash. It is false. He believed it: he misread an expense record, and he did not mean to harm my friend. A few people believed him. I will correct him now, in front of everyone, in any case. Should I let my anger show when I do it?",
+  "caseB": "At a team meeting, a colleague said that my friend, who was not there, takes money from the petty cash. It is false. He knew that it was false: he said it on purpose, to humiliate my friend, whom he dislikes. A few people believed him. I will correct him now, in front of everyone, in any case. Should I let my anger show when I do it?",
+  "options": [
+   {
+    "id": "anger",
+    "label": "Correct him and let your anger show"
+   },
+   {
+    "id": "calm",
+    "label": "Correct him without showing anger"
+   }
+  ]
+ }
+]

@@ -1,0 +1,297 @@
+[
+ {
+  "item": "S1", "answer": "tell", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Nicomachean Ethics IV.7, 1127a28-30 (falsehood is in itself base and culpable)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics IX.2, 1163b15-1165a35 (duties to parents, but not obedience in everything)", "status": "from memory"}
+  ],
+  "reasoning": "Aristotle says falsehood is itself base, and a lie here would also put two innocent members under suspicion, which is an injustice. IX.2 gives the father first claim on support and honour, but it also says one does not owe a parent everything. Refusing to answer is allowed by the option.",
+  "strongestCounter": "IX.2 ranks parents first among benefactors, and the child can never repay them; a lie that costs little and protects the father could count as the loyal act."
+ },
+ {
+  "item": "S2", "answer": "keep", "answerA": null, "answerB": null, "confidence": "low",
+  "passages": [
+   {"ref": "Analects 1.4 and 5.26 (be trustworthy in dealing with friends)", "status": "from memory"},
+   {"ref": "Analects 1.13 (promises should be close to yi so they can be kept)", "status": "from memory"},
+   {"ref": "Analects 13.20 (rigid insistence on keeping one's word marks a lesser person)", "status": "from memory"}
+  ],
+  "reasoning": "The Analects treat xin with friends as a core virtue, and keeping a promise to help move is not itself unrighteous. 13.20 warns against rigid word-keeping, but that is about promises that conflict with yi, which is not the case here. The Analects give no support for weighing the gain to the food bank against the promise.",
+  "strongestCounter": "13.20 and Mencius 4B11 show that word-keeping is subordinate to yi, and broad benefit to many families (6.30) could count as the weightier yi."
+ },
+ {
+  "item": "S3", "answer": "refrain", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Mencius 2A2 (would not do one unrighteous deed or kill one innocent person to gain the world)", "status": "from memory"},
+   {"ref": "Mencius 7A33 (killing one innocent person is not ren)", "status": "from memory"},
+   {"ref": "Mencius 7B31 (extend the heart that cannot bear to harm)", "status": "from memory"}
+  ],
+  "reasoning": "Mencius says outright that killing one innocent person is not ren, and he refuses such a deed even for the greatest gain. Using a bystander as a tool is the kind of harm the heart that cannot bear to harm refuses. The text does not weigh five lives against one.",
+  "strongestCounter": "Mencius 4A17 allows flexible weighing (quan) in an emergency, and the heart that feels for the five in danger (2A6) could be read as requiring action."
+ },
+ {
+  "item": "S4", "answer": "push", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Utilitarianism ch. 2 (greatest happiness principle; secondary principles yield when they conflict)", "status": "from memory"},
+   {"ref": "Utilitarianism ch. 5, para. 'to save a life, it may not only be allowable, but a duty, to steal'", "status": "from memory"}
+  ],
+  "reasoning": "On the greatest happiness principle, with certainty that it works, five lives against one is a clear gain. Mill says secondary rules give way when they conflict and that even theft can be a duty to save life. Pushing one man is a similar override.",
+  "strongestCounter": "Mill gives great weight to the rule against killing, as the security on which all other goods rest (ch. 5), and a rule-based reading would forbid using a person as a tool."
+ },
+ {
+  "item": "S5", "answer": "refrain", "answerA": null, "answerB": null, "confidence": "low",
+  "passages": [
+   {"ref": "Analects 15.9 (the ren person does not harm ren to stay alive)", "status": "from memory"},
+   {"ref": "Analects 12.19 (the aim is to make the people good, not to kill)", "status": "from memory"}
+  ],
+  "reasoning": "The Analects never discuss a case of this kind. A ren person is pictured as one who accepts harm to himself rather than do wrong, and who does not kill. Pushing a stranger to his death does not fit that picture.",
+  "strongestCounter": "Ren means caring for people (12.22), and a ren person who can save five lives at the cost of one may not stand by."
+ },
+ {
+  "item": "S6", "answer": "lie", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Nicomachean Ethics IV.7, 1127a28-b9 (truthfulness concerns how one presents oneself, with falsehood bad in itself)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics III.1, 1110a4-b8 (mixed actions; one should do what the situation requires)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics II.6, 1107a8-17 (adultery, theft, murder named as always wrong; lying is not on the list)", "status": "from memory"}
+  ],
+  "reasoning": "IV.7 is about honesty in self-presentation, not testimony to an aggressor. Lying is not on the II.6 list of acts that are always wrong. The practically wise person would protect the friend and the household from a violent man, and a lie here serves justice and friendship.",
+  "strongestCounter": "IV.7 says falsehood is in itself base and culpable, and refusing to answer would still avoid the lie."
+ },
+ {
+  "item": "S7", "answer": "lie", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Analects 17.20 (Confucius pretends to be ill to avoid a visitor)", "status": "from memory"},
+   {"ref": "Analects 13.18 (the upright cover for kin; uprightness is in that)", "status": "from memory"}
+  ],
+  "reasoning": "Confucius himself uses a small deception in 17.20, and 13.18 puts yi ahead of literal disclosure. Shielding a friend from violence is a clear case for the benevolent person. The Analects have no rule against lying.",
+  "strongestCounter": "Xin and zhong (honest speech) are core virtues (1.4, 1.7), and 13.18 is about kin, not a friend."
+ },
+ {
+  "item": "S8", "answer": "stay", "answerA": null, "answerB": null, "confidence": "low",
+  "passages": [
+   {"ref": "Nicomachean Ethics VIII.12, 1162a4-9; VIII.14, 1163b15-27 (children can never repay parents)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics IX.2, 1165a21-27 (honour and support to parents first)", "status": "from memory"}
+  ],
+  "reasoning": "Aristotle puts parents first among those to whom support is owed, a debt the child can never fully repay, and says honour is part of it. Paying for a care home gives maintenance but not the honour and presence the parents ask for. The texts do not discuss a career post.",
+  "strongestCounter": "IX.2 says maintenance is the debt and one cannot give everything to the father; paying for good care meets that, and the great post is part of a flourishing life."
+ },
+ {
+  "item": "S9", "answer": "stay", "answerA": null, "answerB": null, "confidence": "high",
+  "passages": [
+   {"ref": "Analects 4.19 (while parents live, do not travel far)", "status": "from memory"},
+   {"ref": "Analects 2.7 (feeding parents is not enough; there must be reverence)", "status": "from memory"}
+  ],
+  "reasoning": "4.19 speaks to this case: do not go far while parents are alive. 2.7 says that paying for their care without reverence is not filial piety. A care home that the parents dread is the weaker form of care.",
+  "strongestCounter": "18.7 says an official duty to serve is part of yi, and 4.19 allows travel with a fixed destination, so a five-year post could be justified."
+ },
+ {
+  "item": "S10", "answer": "silent", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "On Liberty ch. 2 (moral cowardice, pretending to beliefs one does not hold)", "status": "from memory"},
+   {"ref": "Utilitarianism ch. 2 (veracity as a very important secondary rule)", "status": "from memory"}
+  ],
+  "reasoning": "Mill condemns insincere profession of belief and the social pressure to conform. Reciting words one does not believe feeds the habit of conformity he opposes. Silent attendance can show respect without the lie.",
+  "strongestCounter": "Utilitarian weighing of the family's distress and the small cost of ritual words could favour saying them, since Mill allows exceptions to veracity."
+ },
+ {
+  "item": "S11", "answer": "not-take", "answerA": null, "answerB": null, "confidence": "high",
+  "passages": [
+   {"ref": "Metaphysics of Morals, Doctrine of Right, Appendix to the Introduction: right of necessity (6:235-236)", "status": "from memory"},
+   {"ref": "Groundwork 4:421-423 (maxims that cannot be universalised)", "status": "from memory"}
+  ],
+  "reasoning": "Kant denies a right of necessity: a deed done from need can be left unpunished but is still wrong. Breaking in and taking another's property against his will cannot be made a universal law of right. The $8,000 left behind does not make it consent.",
+  "strongestCounter": "The duty to help one's wife and the extreme necessity weigh heavily, and Kant concedes the deed is not punishable."
+ },
+ {
+  "item": "S12", "answer": "not-take", "answerA": null, "answerB": null, "confidence": "low",
+  "passages": [
+   {"ref": "Nicomachean Ethics II.6, 1107a8-17 (theft always wrong)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics III.1, 1110a4-b8 (mixed actions)", "status": "from memory"}
+  ],
+  "reasoning": "II.6 names theft among acts that are bad in themselves, with no mean. Aristotle does not discuss a necessity exception for stealing. III.1 praises enduring a shameful act only for a great and noble end, but that passage excuses, and does not turn theft into a virtuous act.",
+  "strongestCounter": "The pharmacist's price is extortion (pleonexia), and equity (V.10) and the wife's life could make taking the drug an act of justice, not theft."
+ },
+ {
+  "item": "S13", "answer": "better", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Groundwork 4:421-424 (universal law formula)", "status": "from memory"},
+   {"ref": "Metaphysics of Morals 6:448-450 (duties of respect and justice; beneficence limited by justice)", "status": "from memory"}
+  ],
+  "reasoning": "The post is a position of trust held for donors, and a maxim of favouring kin in such a post cannot be universalised without destroying that trust. Beneficence to a relative is a wide duty that must give way to justice towards the donors and the better candidate. The nephew's need is real but does not change the duty of the office.",
+  "strongestCounter": "Kant treats beneficence and family duties as real obligations, and the nephew is adequate, so the choice could fall within the latitude of wide duties."
+ },
+ {
+  "item": "S14", "answer": "better", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Analects 13.2 (promote the worthy)", "status": "from memory"},
+   {"ref": "Analects 15.14 (Zang Wenzhong 'stole' his post by not promoting Liuxia Hui)", "status": "from memory"},
+   {"ref": "Analects 2.19 (promote the straight)", "status": "from memory"}
+  ],
+  "reasoning": "On public office the Analects say to promote the worthy and criticise those who hold back the better person. 15.14 condemns an official for not advancing a worthy man. Family partiality in 13.18 concerns covering for kin, not giving them public posts.",
+  "strongestCounter": "Confucian ethics ranks care for kin above distant claims, and an adequate nephew with children in need fits that ranking."
+ },
+ {
+  "item": "S15", "answer": "record", "answerA": null, "answerB": null, "confidence": "low",
+  "passages": [
+   {"ref": "Nicomachean Ethics VI.11, 1143b11-14 (trust the undemonstrated sayings of the experienced)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics II.9, 1109b23 (judgement rests with perception)", "status": "from memory"}
+  ],
+  "reasoning": "VI.11 trusts the unproven perceptions of people with experience, but this item says nothing about the voter's experience. Without that, a vague unease is weak evidence against a candidate who is best on every fact that can be checked. I take an ordinary person as the default.",
+  "strongestCounter": "II.9 says that judgement in particular cases rests with perception, and a sensitive person's repeated unease about speech on money is perception of character."
+ },
+ {
+  "item": "S16", "answer": "feeling", "answerA": null, "answerB": null, "confidence": "low",
+  "passages": [
+   {"ref": "Analects 2.10 (observe what a person does, examine his motives, see what he is at ease with)", "status": "from memory"},
+   {"ref": "Analects 5.10 (listen to words, then observe conduct)", "status": "from memory"},
+   {"ref": "Analects 15.28 (examine even what the crowd likes)", "status": "from memory"}
+  ],
+  "reasoning": "Confucius teaches that character shows in manner and speech, and that one should look beyond credentials. The way Mr R talked about money and people is observed conduct, so the unease counts as evidence. A clean record does not settle the matter.",
+  "strongestCounter": "Analects 15.28 and 13.24 warn against judging by impression alone, and a record of references is the observed conduct 5.10 asks for."
+ },
+ {
+  "item": "S17", "answer": "refuse", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Groundwork 4:421, 4:424 (act on a maxim you can will as universal law)", "status": "from memory"},
+   {"ref": "Groundwork 4:407-408 (inclination is not a ground for exceptions)", "status": "from memory"}
+  ],
+  "reasoning": "Kant says we are inclined to make an exception for ourselves, and that this is the sign of a corrupt maxim. A feeling that cannot be stated as a relevant difference is such an inclination. Equal treatment of the two earlier cases is owed to them as a matter of justice.",
+  "strongestCounter": "Kant says the power of judgment cannot be fully reduced to rules (Critique of Pure Reason A133/B172), so an undescribed but real difference might exist."
+ },
+ {
+  "item": "S18", "answer": "refuse", "answerA": null, "answerB": null, "confidence": "low",
+  "passages": [
+   {"ref": "Nicomachean Ethics V.3, 1131a22-24 (equals should receive equal shares)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics V.10, 1137b11-27 (equity corrects law)", "status": "from memory"}
+  ],
+  "reasoning": "Justice treats equals equally, and a difference must be a relevant one to justify unequal treatment. With none that can be named, V.3 favours refusing. Equity in V.10 corrects a rule where it fails in a particular case, but here no failure of the rule can be shown.",
+  "strongestCounter": "Practical wisdom perceives particulars that rules miss (VI.8, VI.11), and equity exists for exactly the case where the rule is too blunt."
+ },
+ {
+  "item": "S19", "answer": "grant", "answerA": null, "answerB": null, "confidence": "low",
+  "passages": [
+   {"ref": "Analects 9.4 (Confucius free of arbitrariness, rigidity, obstinacy, self-regard)", "status": "from memory"},
+   {"ref": "Analects 4.10 (the junzi has no fixed for or against, only yi)", "status": "from memory"},
+   {"ref": "Analects 2.12 (the junzi is not a tool)", "status": "from memory"}
+  ],
+  "reasoning": "Confucius criticises rigid adherence to a rule and praises sensitivity to the particular case. The manager's rule is his own, and a good leader decides by yi in the case in front of him. His strong sense that this case is different counts as judgment.",
+  "strongestCounter": "9.4 also bars arbitrary opinion, and 2.14 praises impartiality; an unexplained exception looks like favouritism, which the rule was set to prevent."
+ },
+ {
+  "item": "S20", "answer": "deflect", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Mishneh Torah, Hilchot De'ot 2:3 (humility is the one trait to take to the extreme)", "status": "from memory"},
+   {"ref": "Mishneh Torah, Hilchot Teshuvah 3:14 (one who shames a fellow in public has no share in the world to come)", "status": "from memory"},
+   {"ref": "Mishneh Torah, Hilchot De'ot 2:6 (deceiving people is forbidden)", "status": "from memory"}
+  ],
+  "reasoning": "Maimonides sets humility apart from other traits as one to be held at the extreme, and he treats public shaming as among the gravest sins. Claiming the credit plainly would shame the colleague in front of the room. The director made the mistake, and keeping quiet does not itself deceive.",
+  "strongestCounter": "De'ot 2:6 forbids creating a false impression, and letting a false credit stand could count as that."
+ },
+ {
+  "item": "S21", "answer": "claim", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Nicomachean Ethics IV.7, 1127a20-b32 (truthful man claims what he has, neither more nor less; false modesty is also a fault)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics IV.3, 1123b13-24 (the great-souled claim what they deserve)", "status": "from memory"}
+  ],
+  "reasoning": "Aristotle calls understating oneself a fault, though a more graceful one than boasting, and the truthful person says what is so. The great-souled person claims the honour that is due. Truth and desert both point to a plain statement.",
+  "strongestCounter": "The great-souled person cares little for honour from the crowd (IV.3, 1124a10-12), and the colleague's loss of face is a harm to weigh."
+ },
+ {
+  "item": "S22", "answer": "decline", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Analects 8.3 (Zengzi: my hands and feet are unharmed)", "status": "from memory"},
+   {"ref": "Analects 6.30 (benefiting the people widely goes beyond ren)", "status": "from memory"}
+  ],
+  "reasoning": "8.3 treats keeping the body whole as part of filial piety, since it comes from the parents. A voluntary loss of an organ for a stranger is not asked of anyone in the Analects, and ren starts from close relations. Giving to a stranger is praiseworthy but not required.",
+  "strongestCounter": "15.9 says the ren person will give up life to complete ren, and 6.30 praises wide benefit, so a safe donation to save a life could be seen as ren."
+ },
+ {
+  "item": "S23", "answer": "decline", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Metaphysics of Morals 6:422-423 (giving or selling a tooth to be put in another's mouth is partial self-murder)", "status": "from memory"},
+   {"ref": "Metaphysics of Morals 6:423 (depriving oneself of an integral part is a duty to oneself violated)", "status": "from memory"}
+  ],
+  "reasoning": "Kant says that to dispose of an integral part of one's body, such as giving a tooth for transplant, is a partial killing of oneself and wrong. A kidney is a clearer case than a tooth. Beneficence is a wide duty and cannot override this duty to oneself.",
+  "strongestCounter": "Kant's example is about selling and about mutilation for gain, and later Kantians read a safe act of rescue as an act of beneficence and an expression of rational agency."
+ },
+ {
+  "item": "S24", "answer": "charity", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Utilitarianism ch. 2 (strictly impartial; 'as between his own happiness and that of others')", "status": "from memory"},
+   {"ref": "Utilitarianism ch. 2, para. on the occasions for public utility being exceptional", "status": "from memory"}
+  ],
+  "reasoning": "Mill requires strict impartiality between one's own good and that of others. Saving a life weighs far more than avoiding the loss of a flat. The utilitarian standard does not rank the cousin ahead because of kinship.",
+  "strongestCounter": "Mill says most actions concern private persons and a small circle, and an eviction is a certain harm to a known person, with possible wider effects, against an average over unknown children."
+ },
+ {
+  "item": "S25", "answer": "cousin", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Mishneh Torah, Hilchot Matnot Aniyim 7:13 (poor relatives before other poor; the poor of one's city before another city)", "status": "from memory"},
+   {"ref": "Mishneh Torah, Hilchot Matnot Aniyim 10:7-14 (levels of charity)", "status": "from memory"}
+  ],
+  "reasoning": "Matnot Aniyim 7:13 sets an order: one's poor relatives come first, then the poor of one's own city, then other places. A cousin facing eviction fits this priority. Giving to distant strangers comes later.",
+  "strongestCounter": "Saving a life outranks nearly everything in halakha (pikuach nefesh), and the nets will on average save a child's life."
+ },
+ {
+  "item": "S26", "answer": "cousin", "answerA": null, "answerB": null, "confidence": "medium",
+  "passages": [
+   {"ref": "Mencius 3A5 (Yi Zhi's love without gradations rejected; love starts with kin)", "status": "from memory"},
+   {"ref": "Mencius 7A45 (affection for kin, then ren for the people, then care for things)", "status": "from memory"}
+  ],
+  "reasoning": "Mencius rejects equal concern for all and sets an order that starts with kin and extends outward. A cousin in need has first claim on the money. The charity abroad is the later stage of extension.",
+  "strongestCounter": "Mencius 2A6 holds that anyone would feel alarm at a child about to fall into a well, and 1A7 calls for extending kindness to those far away; a child's life is a heavier claim than rent."
+ },
+ {
+  "item": "P27", "answer": null, "answerA": "consult", "answerB": "act", "confidence": "high",
+  "passages": [
+   {"ref": "Analects 11.22 (Zilu told to consult father and brother; Ran You told to act at once)", "status": "from memory"}
+  ],
+  "reasoning": "11.22 is this case. Confucius tells hasty Zilu that his father and elder brother are alive, so he should not act at once, and tells hesitant Ran You to act, because 'Qiu holds back, so I urged him on; You has the energy of two, so I held him back'. A is the Zilu type and B the Ran You type.",
+  "strongestCounter": "The same passage says a living father and elder brother should be asked in both cases, and 4.19 and 1.11 give them standing for any new commitment."
+ },
+ {
+  "item": "P28", "answer": null, "answerA": "record", "answerB": "feeling", "confidence": "medium",
+  "passages": [
+   {"ref": "Nicomachean Ethics VI.11, 1143b11-14 (the undemonstrated sayings of the experienced are as good as proofs, since experience gives an eye)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics VI.8, 1142a11-20 (the young lack practical wisdom because they lack experience)", "status": "from memory"}
+  ],
+  "reasoning": "Aristotle says that the unproven perceptions of experienced people deserve as much attention as proof, and that the inexperienced have no such eye. The new committee member in A has no practised judgment of trust, so the evidence rules. The auditor in B has thirty years of it, so the unease counts.",
+  "strongestCounter": "II.9 says particular judgments rest on perception for everyone, and in B an unverifiable unease could be bias, which even experienced people can have."
+ },
+ {
+  "item": "P29", "answer": null, "answerA": "record", "answerB": "feeling", "confidence": "low",
+  "passages": [
+   {"ref": "Hume, Enquiry concerning Human Understanding 8.7-8.11 (knowledge of character comes from experience)", "status": "from memory"},
+   {"ref": "Hume, Treatise 3.3.3 (moral sentiments are corrected by experience and a general point of view)", "status": "from memory"},
+   {"ref": "Hume, Treatise 1.3.13 (habit and past experience guide our expectations)", "status": "from memory"}
+  ],
+  "reasoning": "For Hume, judgments about character rest on sentiment shaped by experience of how people act. The auditor's unease draws on thirty years of such experience, so it counts as evidence. The newcomer's unease has no such base and cannot outweigh the record.",
+  "strongestCounter": "Hume warns that sentiment is partial and needs correction from a general point of view, and his own rule is to proportion belief to evidence (Enquiry 10), which favours the record in both cases."
+ },
+ {
+  "item": "P30", "answer": null, "answerA": "take", "answerB": "not-take", "confidence": "low",
+  "passages": [
+   {"ref": "Utilitarianism ch. 5, para. on justice yielding to other moral obligations (steal food or medicine to save a life)", "status": "from memory"},
+   {"ref": "Utilitarianism ch. 5 (security as the most vital interest; rights rest on utility)", "status": "from memory"}
+  ],
+  "reasoning": "In A, Mill says it may be a duty to take necessary food or medicine to save a life, so the theft is justified. In B, nothing in his text lets pain for two weeks outweigh the security that property rules protect, and he treats those rules as very weighty. A is clear; B is a closer call.",
+  "strongestCounter": "On a strict act-utilitarian count in B, severe pain for two weeks against partial payment and a trivial loss to a rich pharmacist could favour taking the drug."
+ },
+ {
+  "item": "P31", "answer": null, "answerA": "not-take", "answerB": "not-take", "confidence": "low",
+  "passages": [
+   {"ref": "Nicomachean Ethics II.6, 1107a8-17 (theft named as always wrong)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics III.1, 1110a4-b8 (mixed actions)", "status": "from memory"}
+  ],
+  "reasoning": "Aristotle lists theft among acts with no mean, so both cases are wrong in kind. The size of the stake (death or pain) can lower blame (III.1) but does not turn theft into a right act. B is clearer than A because pain does not threaten life.",
+  "strongestCounter": "In A, practical wisdom and equity could judge that saving a wife's life outweighs the name 'theft', since the pharmacist's price is itself unjust."
+ },
+ {
+  "item": "P32", "answer": null, "answerA": "calm", "answerB": "anger", "confidence": "medium",
+  "passages": [
+   {"ref": "Nicomachean Ethics IV.5, 1125b26-1126a8 (anger at the right things, people and way; not being angry at wrongs is foolish; putting up with insult to friends is slavish)", "status": "from memory"},
+   {"ref": "Nicomachean Ethics III.1, 1110b18-1111a21 (acts done in ignorance are not unjust to the same degree)", "status": "from memory"}
+  ],
+  "reasoning": "In A the colleague made an honest mistake, and anger at a slight is warranted only where there is a wrong; here there is none, so calm is the mean. In B the false claim was a deliberate insult to a friend, and IV.5 says that a person who does not show anger at such things is thought foolish, and that overlooking an insult to friends is slavish.",
+  "strongestCounter": "Aristotle also says the mild person is slow to anger and forgiving (IV.5), so in B calm firmness could still be the mean, and the harm to the friend is corrected by the fact itself."
+ }
+]

@@ -398,18 +398,15 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
       { id: "stay", label: "Refuse the post and stay to care for the parents" }
     ],
     philosophers: {
-      "aristotle-virtue-ethics": {
-        option: "stay",
-        confidence: "disputed",
-        reason: "We owe our parents support before all others, and it is nobler to provide for them than for ourselves. Whether a paid care home meets that debt is open to argument.",
-        source: "Nicomachean Ethics IX.2 (1165a21-27); VIII.14 (a debt to a father cannot be repaid in full)"
-      },
       "confucius-role-ethics": {
         option: "stay",
         confidence: "disputed",
         reason: "While parents are alive, a son should not travel far; if he does go, he must have a fixed place where he can be reached (4.19). Support without reverence is no more than we give to dogs and horses (2.7). The text does not say if a paid care home, against the parents' wish, meets that standard.",
         source: "Analects 4.19; 2.7"
       }
+    },
+    open: {
+      "aristotle-virtue-ethics": "Agent panel (2026-11-21), 2 of 3 reviewers: we owe parents support and honour before others (NE IX.2, 1165a21-27; VIII.14), but IX.2 (1164b22-1165a3) says that conflicts between such claims and other goods turn on the particulars and no fixed rule settles them. Whether paid care, against the parents' wish, meets the debt is not settled. Was keyed 'stay' (disputed)."
     },
     axes: [
       { axis: "individualCollective", negative: "go", positive: "stay" }
@@ -555,10 +552,10 @@ export const VERDICT_DILEMMAS: VerdictDilemma[] = [
         source: "Nicomachean Ethics VI.11; II.9 (the decision rests with perception)"
       },
       "confucius-role-ethics": {
-        option: "record",
+        option: "feeling",
         confidence: "disputed",
-        reason: "Confucius reads character from conduct, but the voter can point to no conduct. An unease with no fact behind it does not decide the matter.",
-        source: "Analects 2.10"
+        reason: "Changed after the agent panel (2026-11-21, 2 of 3 reviewers; was 'record'). Confucius judges a person by direct observation of how he speaks and what he is at ease with, not by reputation or record: observe what he does, his motives, and what he rests in, and character cannot be hidden (2.10); without understanding words one cannot know people (20.3); examine for yourself even what the crowd likes (15.28). The unease comes from Mr R's own speech in two meetings, so it is observed conduct. Against this: the voter can name no fact.",
+        source: "Analects 2.10; 20.3; 15.28 (Legge numbering; Lau numbering not checked)"
       }
     },
     axes: [

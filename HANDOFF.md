@@ -81,7 +81,7 @@ Variant `notes` = `prod` + `experiments/verdict-check/lensNotes.ts` (draft 2) in
 | Correct pair rows that differ from the baseline | 6 / 4 / 3 | 6 / 5 / 3 (of 15) |
 
 - Fixed in all 3 samples: `experienced-eye` Aristotle, `drug-stakes` Mill, `debt-or-father` Aristotle, `promise-charity` Confucius.
-- Still wrong in all 3 samples: `medicine` and `drug-stakes` base, Aristotle takes the drug; `gut-vs-record` single case, Aristotle and Confucius trust the feeling. All three key entries are marked disputed. The notes did not add a rule to force them (rule 7), and the note on mixed actions (III.1) may support "take". The professor should rule on these.
+- Still wrong in all 3 samples: `medicine` and `drug-stakes` base, Aristotle takes the drug; `gut-vs-record` single case, Aristotle and Confucius trust the feeling. All three key entries are marked disputed. The notes did not add a rule to force them (rule 7), and the note on mixed actions (III.1) may support "take". An independent agent panel should rule on these (Rob, 2026-11-21: the professor is not available for follow-up; do not plan on his input).
 - `hold-back-or-urge` Confucius still fails: 11.22 was removed from the note on the reviewer's advice (teaching method, fitted to the case).
 - **The notes make the answers more correct, but not more distinct from the baseline.** The added correct rows are rows where the baseline is also correct.
 - Decision rule from section 8 is met (failing rows improve, Mill and Kant unchanged), so the notes are a candidate for the app. Not yet moved to `shared/philosophyProfiles.ts`.
@@ -144,7 +144,43 @@ Verified:
 - The new "gray" cases were not gray for the model: the baseline chose firmly (donate, cousin, stand up), and most thinkers agreed. Mill chose the charity abroad in 3 of 3 samples with `prod`, against the baseline.
 - The misses have one shape: the thinker's text gives an uncomfortable answer, and the model gives the modern, kind answer instead: Kant gives the kidney (2 of 3 samples), the Confucian entry never declines, Aristotle takes the drug (0 of 3, every version). All these key entries are disputed.
 
-Interpretation (not verified): the remaining verdict-level gap is that the model softens thinkers toward modern common sense when their doctrine is harsh or unusual. Whether that is an error depends on the disputed key entries, which the professor should rule on.
+Interpretation (not verified): the remaining verdict-level gap is that the model softens thinkers toward modern common sense when their doctrine is harsh or unusual. Whether that is an error depends on the disputed key entries. The agent panel in section 3d supports the key on these entries.
+
+## 3d. Agent panel on the disputed key entries (2026-11-21)
+
+Rob cannot easily follow up with the professor, so disputed entries go to independent agents. Do not plan work that waits on the professor.
+
+Method: 3 reviewers from 3 model families (Claude Sonnet 5.5, GPT 6.1 Terra, Gemini 4 Neon) answered 32 development entries separately: the 24 disputed single entries, and 8 clear entries that `prod` misses in 2 or 3 of 3 samples. They saw only the case and the options, not the key or the app's answers. The decision rule was written before any answer was read. Files: `experiments/verdict-check/reviews/agent-panel-2026-11-21/` (brief, items, hidden key, rule, the three answer files, `score.py`).
+
+Result, over 38 answer slots (pairs count both sides): confirmed (3 of 3) 29, kept (2 of 3) 7, changed 1, open 1.
+
+- Changed: Confucius, `gut-vs-record`: "record" became "feeling" (2 of 3; Analects 2.10, 20.3, 15.28). The app already chose "feeling", so the key was wrong there.
+- Open: Aristotle, `parents-or-post` (2 of 3 say the texts do not settle it; NE IX.2 says no fixed rule settles such conflicts). Moved to the `open` field.
+- The softening misses are supported: Aristotle "do not take the drug" (single case and pair, 3 of 3), Kant "decline the kidney" (3 of 3), Confucius "decline" (2 of 3, 1 open), Confucius `hold-back-or-urge` (3 of 3).
+
+Limits: only the Gemini reviewer checked passages on the web; the other two cited from memory, and nobody checked the citations. All reviewers are AI models. The brief told reviewers to give hard answers where the texts lead there, which may push toward the key's harsher readings. Most confidences were "medium", and "low" on gut-vs-record and Hume's experienced-eye.
+
+Next: a `contrast` variant (`variants.ts`): prod with step 5 of the voice prompt replaced by an explicit check against common sense. Results in section 3e.
+
+## 3e. The `contrast` variant (2026-11-21)
+
+`contrast` = `prod` with step 5 of the voice prompt replaced (`CONTRAST_STEP_5` in `variants.ts`): say the modern adviser's answer, list the thinker's strict or surprising doctrines that bear on the facts, follow one that applies even when harsh, and do not invent a disagreement. Profile and baseline prompts are the same as `prod` (reused, not run again). Development split, 3 samples. Comparison: `data/comparison-development.md` (`--compare legacy,prod,contrast`).
+
+| measure (3 samples) | legacy | prod | contrast |
+|---|---|---|---|
+| Voice, core four, match with key | 37, 34, 37 /45 | 41, 40, 41 /45 | 43, 42, 41 /45 |
+| Voice, transfer thinkers | 17, 16, 16 /17 | 16, 17, 17 /17 | 16, 16, 16 /17 |
+| Pair flip rows, core four | 9, 9, 9 /13 | 9, 8, 11 /13 | 11, 10, 11 /13 |
+| Expected disagreements reproduced | 23/32, 20/27, 22/31 | 26, 27, 27 /35 | 29, 30, 29 /35 |
+| Expected agreements kept | 104/110, 104/107, 107/110 | 109, 107, 110 /114 | 110, 108, 107 /114 |
+| Control cases that differ from baseline | 0/28 | 0/28 | 0/28 |
+
+Rows that moved from `prod` to `contrast`: Kant `kidney-for-a-stranger` decline 1 to 3 of 3; Aristotle `medicine` not-take 0 to 2 of 3; Aristotle `anger-at-the-meeting` 1 to 3 of 3; Aristotle `drug-stakes` 0 to 1 of 3; Aristotle `experienced-eye` 0 to 1 of 3. Worse: Maimonides `credit` deflect 2 to 0 of 3 (disputed; the panel confirmed it 3 of 3). Unchanged: Confucius `kidney-for-a-stranger` decline 0 of 3.
+
+Verified: `contrast` reproduces more expected disagreements than `prod` in every sample (29 to 30 against 26 to 27 of 35), with no invented disagreement on the control cases and the same rate of kept agreements. Raw distinctness (answers that differ from the baseline) did not rise; the gain is in correctness on contested cases.
+
+Risk: the examples in step 5b (acts forbidden in all cases, duties to oneself, role duties) are general, but they match the development misses. The development gain may overstate the effect. Only the holdout run can test this. Not decided: whether `contrast` goes into `worker/src/prompts.ts`.
+
 
 ## 4. Decisions and reasons
 
@@ -209,7 +245,7 @@ npx vite-node experiments/verdict-check/run.ts --variant <name> --limit 4   # sm
 
 ## 7. Open risks
 
-- **The key is provisional.** If the professor changes it, the numbers change. A new score costs no model calls unless a case text or an option changes.
+- **The key is provisional.** If a review (an independent agent panel, or the professor if he replies) changes it, the numbers change. A new score costs no model calls unless a case text or an option changes.
 - **Run-to-run variation (measured 2026-11-21, `prod`, development split, 3 samples, `--samples 3`).** Same verdict in all 3 samples: voice 39 of 40, profile 28 of 28, pair 90 of 100. Voice and profile scores are stable; the Aristotle failures are the same in every sample, so they are real. Confucius is 9 of 11, not 10 (`promise-charity` changes). Pair scores move: flip rows 5 to 7 of 9; "differs from the baseline" 3 to 5. The baseline itself changes in 3 pairs. Report: `data/prod/variability-development.md`. Rule: for voice and profile, a fixed row counts if it holds in all samples; for pairs, compare variants on 3 samples, and a change of 1 or 2 rows is noise. The legacy variant has only one sample.
 - **Recall.** Most "recorded" pairs follow a famous passage. If step 4 puts the passages behind the holdout pairs into the notes, those pairs measure copying. The passages are: Analects 4.19, 3.17 and 14.34; Nicomachean Ethics IX.3; On Liberty ch. 4 (drunk on duty); Kant's deposit example. Decided: they stay out of every prompt, and a test enforces it (section 4).
 - **Kant has only one pair in which his answer must reverse** (`pardon-the-surgeon`), and the baseline usually reverses there too.
@@ -244,7 +280,7 @@ npx vite-node experiments/verdict-check/run.ts --variant <name> --limit 4   # sm
 
 ## 9. Waiting for Rob
 
-- **The professor's document.** It is a Claude Doc: "iSocrateez: what would each philosopher conclude?", https://claude.ai/artifact/5PWP7JqpRywGWXHT6qDeyA. It asks the professor to check the 16 pairs. It is private until Rob shares it. We do not know if it was sent. When answers come back, change `pairs.ts` and `answerKey.ts`, run `renderKey.ts`, and score again with `--report-only`.
+- **The professor's document.** It is a Claude Doc: "iSocrateez: what would each philosopher conclude?", https://claude.ai/artifact/5PWP7JqpRywGWXHT6qDeyA. It asks the professor to check the 16 pairs. It is private until Rob shares it. We do not know if it was sent. Do not plan work that waits on it (Rob, 2026-11-21). When answers come back, change `pairs.ts` and `answerKey.ts`, run `renderKey.ts`, and score again with `--report-only`.
 - **Commit and deploy.** Rob decides when. The question fix (step 1) is independent and safe to ship alone.
 - **The tab label** "Key fact".
 

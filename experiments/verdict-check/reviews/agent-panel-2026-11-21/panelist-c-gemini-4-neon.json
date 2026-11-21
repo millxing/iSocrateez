@@ -1,0 +1,432 @@
+[
+  {
+    "item": "S1",
+    "answer": "tell",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Nicomachean Ethics IV.7, 1127a28-b3", "status": "checked" },
+      { "ref": "Nicomachean Ethics IX.2, 1164b22-1165a35", "status": "checked" },
+      { "ref": "Nicomachean Ethics II.6, 1107a9-17", "status": "checked" }
+    ],
+    "reasoning": "In Nicomachean Ethics IV.7, Aristotle states that falsehood is in itself base and blameworthy, and treats falsehood touching justice or injustice as an even graver failing. In IX.2, he explicitly denies that one must render everything to one's father or obey him in all things, holding that filial obligations have limits set by justice and appropriateness. Saying you know nothing would tell an unjust falsehood to cover up theft (always wrong in II.6) while leaving two innocent volunteers under suspicion.",
+    "strongestCounter": "Aristotle stresses the immense, unpayable debt children owe their parents (NE VIII.14, 1163b15-22; IX.2, 1165a21-27), so one could argue that refusing to shield one's father over stolen workshop tools shows insufficient filial devotion."
+  },
+  {
+    "item": "S2",
+    "answer": "keep",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Analects 1.4", "status": "checked" },
+      { "ref": "Analects 2.22", "status": "checked" },
+      { "ref": "Analects 1.13", "status": "checked" }
+    ],
+    "reasoning": "Trustworthiness (xin) in dealings with friends is a foundational Confucian virtue (Analects 1.4, 2.22), without which a person cannot move forward in moral life any more than a carriage without a crossbar. Here the original promise to help a friend move accords with rightness (1.13), the friend has no other helper, faces real financial hardship, and explicitly holds you to your word. Confucian ethics prioritizes concrete relational fidelity over maximizing impersonal charitable benefit for strangers.",
+    "strongestCounter": "In Analects 4.10, 13.20, and 15.37, Confucius criticizes rigid, petty fidelity (yan bi xin, liang) that ignores higher rightness (yi), so one could argue that feeding hungry families at a food bank is the weightier demand of ren and yi."
+  },
+  {
+    "item": "S3",
+    "answer": "refrain",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Mencius 2A2", "status": "checked" },
+      { "ref": "Mencius 2A6", "status": "from memory" }
+    ],
+    "reasoning": "In Mencius 2A2, Mencius explicitly affirms that none of the sages—Bo Yi, Yi Yin, or Confucius—would commit a single unrighteous act or kill a single innocent person even to gain possession of the entire empire. Pushing the large stranger off the footbridge directly kills an innocent human being as a means to save others. For Mencius, no aggregate gain in lives or welfare can license murdering an innocent person.",
+    "strongestCounter": "In Mencius 4A17, Mencius endorses situational discretion (quan) to override ritual rules to save a drowning sister-in-law, and in 2A6 he highlights spontaneous compassion (ceyin zhi xin) for people facing death, which someone might invoke on behalf of the five on the track."
+  },
+  {
+    "item": "S4",
+    "answer": "push",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Utilitarianism, Chapter 5", "status": "checked" },
+      { "ref": "Utilitarianism, Chapter 2", "status": "checked" }
+    ],
+    "reasoning": "In Utilitarianism Chapter 5, Mill argues that although rules of justice stand highest in social utility, no maxim of justice is absolute: particular cases can occur in which another social duty is important enough to overrule any one of them, and Chapter 2 states that when secondary principles conflict, the Principle of Utility itself must decide. Because the case stipulates certainty that pushing the stranger will save five lives at the cost of one, and a freak trolley emergency is narrowly bounded rather than a practice that undermines general social rules, Mill's ultimate utilitarian standard favors saving the five.",
+    "strongestCounter": "Mill stresses in Utilitarianism Chapter 5 that security is the most vital of all human interests, and in Chapter 2 he insists that intelligent agents must abstain from actions of a class that would be generally injurious even when particular consequences seem beneficial, which strongly supports refusing to kill an innocent bystander."
+  },
+  {
+    "item": "S5",
+    "answer": "refrain",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Analects 15.9", "status": "checked" },
+      { "ref": "Analects 15.24", "status": "from memory" },
+      { "ref": "Analects 12.19", "status": "from memory" }
+    ],
+    "reasoning": "In the Analects, humaneness (ren) and reciprocity (shu: 'do not impose on others what you yourself do not desire,' 15.24) forbid deliberately killing an innocent bystander. In Analects 15.9, Confucius teaches that a person of ren will never injure ren to preserve life and may even sacrifice their own life to uphold ren—never an innocent stranger's—and in 12.19 he rejects resorting to killing even against the unprincipled. Using an innocent person's body as a fatal shield violates ren and yi directly.",
+    "strongestCounter": "One might appeal to Analects 4.10 (having no fixed 'must-nots' and siding with situational yi) to argue that preventing five deaths is the right response in an extreme emergency."
+  },
+  {
+    "item": "S6",
+    "answer": "lie",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Nicomachean Ethics III.1, 1110a4-26", "status": "checked" },
+      { "ref": "Nicomachean Ethics II.6, 1107a9-17", "status": "checked" },
+      { "ref": "Nicomachean Ethics IV.7, 1127a28-b4", "status": "checked" }
+    ],
+    "reasoning": "Although Nicomachean Ethics IV.7 calls falsehood in itself base, Aristotle does not include falsehood among the intrinsically wicked, exceptionless actions listed in II.6 (adultery, theft, murder), and IV.7 focuses on character in ordinary speech and agreements rather than defending an innocent friend from violence. In III.1, Aristotle notes that under compulsion people are even praised when they do or endure something normally shameful in order to achieve a great and noble end or avert a far greater evil. Deceiving a violent intruder for ten minutes to protect a friend until police arrive fits that practical-wisdom judgment.",
+    "strongestCounter": "Nicomachean Ethics IV.7 (1127a28-30) calls falsehood base in itself (kath' hauto) without explicitly carving out defensive lies, so a strict reading could hold that a virtuous person must not lie even here."
+  },
+  {
+    "item": "S7",
+    "answer": "lie",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Analects 4.10", "status": "checked" },
+      { "ref": "Analects 15.37", "status": "checked" },
+      { "ref": "Analects 13.20", "status": "checked" }
+    ],
+    "reasoning": "In Analects 4.10, Confucius states that the junzi has no rigid 'musts' or 'must-nots' and instead aligns with rightness (yi). Across Analects 1.13, 13.20, and 15.37, he explicitly rejects narrow, inflexible fidelity (liang) that puts mechanical truth-telling above yi. Misleading a violent former partner for ten minutes to keep a friend safe until the police arrive is clearly what ren and yi require.",
+    "strongestCounter": "Because Analects 2.22 elevates trustworthiness (xin) as indispensable to moral character, an overly literal reading might resist uttering a direct untruth, though Confucius himself condemns such rigidity in 13.20 and 15.37."
+  },
+  {
+    "item": "S8",
+    "answer": "open",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Nicomachean Ethics IX.2, 1164b22-1165a35", "status": "checked" },
+      { "ref": "Nicomachean Ethics VIII.14, 1163b15-22", "status": "from memory" }
+    ],
+    "reasoning": "In Nicomachean Ethics VIII.14 and IX.2 (1165a21-27), Aristotle emphasizes an unpayable debt to parents and holds that we owe them nourishment (trophe) and honor before others, even before ourselves. Yet in IX.2 (1164b22-30, 1165a12-14), he explicitly denies that we owe parents obedience in everything and stresses that conflicts between filial claims and other noble or important goods cannot be settled by a fixed rule, depending instead on the concrete particulars. Because the child can fund good care near their home, the parents refuse to move, and the intrinsic nobility of the post is unspecified, Aristotle's texts do not determine a single answer.",
+    "strongestCounter": "One could argue for 'stay' because NE IX.2 (1165a21-27) ranks caring for the authors of one's being as nobler than advancing oneself, or for 'go' because their physical sustenance is provided for and NE IX.2 rejects unconditional filial obedience at the cost of one's life work."
+  },
+  {
+    "item": "S9",
+    "answer": "stay",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Analects 4.19", "status": "checked" },
+      { "ref": "Analects 2.7", "status": "checked" },
+      { "ref": "Analects 4.21", "status": "from memory" }
+    ],
+    "reasoning": "Analects 4.19 directly instructs: 'While your parents are alive, do not travel far.' Moreover, Analects 2.7 explicitly rejects reducing filial piety (xiao) to mere material support without reverence—comparing mere feeding to caring for dogs and horses—which directly tells against placing aging parents into a care home they dread while moving abroad for five years. Combined with 4.21's injunction to keep one's parents' advanced years constantly in mind, the Analects clearly directs staying to care for them personally.",
+    "strongestCounter": "Analects 4.19 does permit travel when there is a 'fixed destination' (you bi you fang), and one might argue that achieving an honorable public post brings lasting credit to one's parents."
+  },
+  {
+    "item": "S10",
+    "answer": "silent",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "On Liberty, Chapter 2", "status": "checked" },
+      { "ref": "Utilitarianism, Chapter 2", "status": "checked" },
+      { "ref": "On Liberty, Chapter 3", "status": "from memory" }
+    ],
+    "reasoning": "In On Liberty Chapter 2, Mill fiercely condemns social pressure that pushes unbelievers into outward conformity and insincere recitation of creeds, warning that the price of such pacification is 'the sacrifice of the entire moral courage of the human mind.' Likewise, Utilitarianism Chapter 2 treats veracity as a vital secondary principle that ought not be compromised lightly, while On Liberty Chapters 1 and 3 champion resisting the tyranny of prevailing opinion and custom. Because you already show respect by attending the memorial, refusing to utter words of faith you do not believe upholds personal integrity and moral courage against community shaming.",
+    "strongestCounter": "From the standpoint of Utilitarianism Chapter 2, reciting traditional words at a private family memorial could be seen as a harmless ritual gesture of solidarity that spares a grieving mother real distress and community shame without harming public truth-seeking."
+  },
+  {
+    "item": "S11",
+    "answer": "not-take",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Metaphysics of Morals (Doctrine of Right), Ak. 6:235-236", "status": "checked" },
+      { "ref": "Groundwork of the Metaphysics of Morals, Ak. 4:424", "status": "checked" },
+      { "ref": "Groundwork of the Metaphysics of Morals, Ak. 4:421", "status": "from memory" }
+    ],
+    "reasoning": "In the Metaphysics of Morals (Ak. 6:235-236), Kant explicitly rejects any 'right of necessity' that turns an unlawful act into a rightful one: extreme mortal necessity may make an offense unpunishable (impunibile) by a human court, but never blameless (inculpabile). Breaking into the pharmacist's store and seizing his property without consent violates a strict, perfect duty of right and fails universalizability (Groundwork, Ak. 4:421-424). For Kant, even the grave end of saving one's wife cannot authorize violating another's strict property right.",
+    "strongestCounter": "One might argue that the pharmacist's extortionate refusal violates his own duty of beneficence and treats human life as subordinate to money, yet Kant insists that an imperfect duty of beneficence may never be enforced by violating strict right."
+  },
+  {
+    "item": "S12",
+    "answer": "not-take",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Nicomachean Ethics II.6, 1107a9-17", "status": "checked" },
+      { "ref": "Nicomachean Ethics III.1, 1110a4-26", "status": "checked" },
+      { "ref": "Nicomachean Ethics V.10, 1137b11-32", "status": "checked" }
+    ],
+    "reasoning": "In Nicomachean Ethics II.6 (1107a9-17), Aristotle explicitly names theft (klope) alongside adultery and murder as actions that never admit of a mean and are always wrong, regardless of time, person, or manner. While III.1 (1110a23-26) recognizes pardon (syngnome) when pressure overstrains human nature, pardon presupposes that the agent did what one ought not to do, and equity (epieikeia, V.10) is a judicial correction of written law or taking less than one's strict legal share rather than a license for private burglary. Aristotle's own Nicomachean Ethics thus stops short of endorsing theft even in this tragic extremity.",
+    "strongestCounter": "In NE III.1 (1110a4-23), Aristotle notes that people are sometimes praised for mixed actions done to save family members from death, and one could argue that taking a life-saving drug while leaving $8,000 lacks the greed (pleonexia) characteristic of vicious theft."
+  },
+  {
+    "item": "S13",
+    "answer": "better",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Groundwork of the Metaphysics of Morals, Ak. 4:424", "status": "checked" },
+      { "ref": "Metaphysics of Morals (Doctrine of Virtue), Ak. 6:451-452", "status": "checked" },
+      { "ref": "Groundwork of the Metaphysics of Morals, Ak. 4:429", "status": "from memory" }
+    ],
+    "reasoning": "Although Kant grants latitude in the imperfect duty of beneficence to favor those closer to us with our own resources (Metaphysics of Morals, Ak. 6:451-452), here you are a fiduciary steward of public donations, not spending your own money. Choosing an inferior relative out of family expectation makes an inclination-driven exception to impartial stewardship (Groundwork, Ak. 4:424) and treats the donors' trust and the better candidate's merit merely as means to help one's kin (Ak. 4:429). Duty therefore requires hiring the better candidate.",
+    "strongestCounter": "Because the nephew is adequate and no formal rule bars hiring him, one might appeal to Kant's latitude in beneficence toward close relatives (Ak. 6:452) to assist a struggling nephew with two children."
+  },
+  {
+    "item": "S14",
+    "answer": "better",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Analects 13.2", "status": "checked" },
+      { "ref": "Analects 2.14", "status": "checked" },
+      { "ref": "Analects 2.19", "status": "from memory" }
+    ],
+    "reasoning": "For public and institutional stewardship, Confucius consistently champions meritocratic appointment: Analects 13.2 instructs leaders to 'promote the worthy and talented' (ju xian cai), and 2.19 urges raising the upright above the lesser. Analects 2.14 explicitly contrasts the junzi, who is inclusive and impartial (zhou er bu bi), with the petty person, who is partial and partisan. Because this post administers public donations for a charity and you already know the other candidate is clearly better, favoring your nephew would be partisan favoritism (bi) rather than proper stewardship.",
+    "strongestCounter": "Confucian ethics places deep weight on care for kin (Analects 1.2, 8.2, 13.18), and since the nephew is adequate and has two children to support, one could argue that helping one's family here does not betray the charity."
+  },
+  {
+    "item": "S15",
+    "answer": "open",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Nicomachean Ethics VI.11, 1143b11-14", "status": "checked" },
+      { "ref": "Nicomachean Ethics VI.8, 1142a11-20", "status": "checked" }
+    ],
+    "reasoning": "In Nicomachean Ethics VI.11 (1143b11-14), Aristotle holds that we should attend to the undemonstrated judgments of experienced and practically wise people no less than to demonstrations, because experience has given them an eye that sees aright. Yet in VI.8 (1142a11-20), he insists that this reliable perception of particulars belongs only to those with length of experience (empeiria), not to newcomers or untutored feelings. Because this case does not specify whether the voter possesses relevant experience and practical wisdom, Aristotle's doctrine does not settle whether to trust the unease or the checkable record.",
+    "strongestCounter": "One could argue for 'feeling' on the ground that character shows itself directly in how someone speaks about money and people, or for 'record' on the ground that practical wisdom operates with reason (meta logou, NE VI.5) and cannot simply rest on an unsubstantiated impression."
+  },
+  {
+    "item": "S16",
+    "answer": "feeling",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Analects 2.10", "status": "checked" },
+      { "ref": "Analects 20.3", "status": "checked" },
+      { "ref": "Analects 15.28", "status": "checked" }
+    ],
+    "reasoning": "In the Analects, judging a person's character relies centrally on direct personal observation of their speech and bearing rather than external reputation or credentials. Analects 20.3 declares that 'without knowing words, one has no way of knowing people,' 2.10 teaches that observing a person's actions, motives, and what they feel at ease in makes character impossible to conceal, and 15.28 warns against trusting the crowd's praise without one's own scrutiny. Because Mr R's own way of speaking about money and people caused deep unease and the alternative candidate is adequate and trusted, Confucius favors heeding that direct character discernment.",
+    "strongestCounter": "Analects 14.31 praises the person who does not anticipate deceit or presume untrustworthiness, and 15.28 calls for careful examination (cha), which argues against rejecting the best-qualified candidate without a single concrete fact."
+  },
+  {
+    "item": "S17",
+    "answer": "refuse",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Groundwork of the Metaphysics of Morals, Ak. 4:424", "status": "checked" },
+      { "ref": "Groundwork of the Metaphysics of Morals, Ak. 4:421", "status": "from memory" }
+    ],
+    "reasoning": "Kant's Categorical Imperative demands acting only on maxims that can be willed as universal laws (Groundwork, Ak. 4:421), and at Ak. 4:424 he specifically characterizes moral failure as carving out an exception 'just for this once' to the advantage of inclination while willing the general rule to bind everyone else. Here the employee's circumstances are identical on paper to those of two colleagues already refused, and you cannot state any rational, universalizable distinction. Acting on an unarticulated feeling ('everything in me says') is pure inclination and arbitrary partiality, so Kant requires refusing the extension.",
+    "strongestCounter": "One might argue that an internal deadline is a discretionary workplace policy rather than a strict moral law and that beneficence permits latitude (Metaphysics of Morals, Ak. 6:452), though giving an undefendable exception still violates impartiality among peers."
+  },
+  {
+    "item": "S18",
+    "answer": "refuse",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Nicomachean Ethics V.3, 1131a20-24", "status": "checked" },
+      { "ref": "Nicomachean Ethics V.10, 1137b11-32", "status": "checked" },
+      { "ref": "Nicomachean Ethics VI.5, 1140b4-6", "status": "from memory" }
+    ],
+    "reasoning": "In Nicomachean Ethics V.3 (1131a20-24), Aristotle defines distributive fairness as treating equals equally, noting that giving unequal shares or treatment to equals is the source of quarrels and complaints. Although Aristotle endorses equity (epieikeia, V.10) to correct universal rules when particulars fall outside the rule's rationale, equity responds to an actual relevant difference in the case, and practical wisdom acts with reason (meta logou, VI.5). Granting an exception based on an undefendable impulse when the rule exists specifically to prevent favoritism violates distributive fairness.",
+    "strongestCounter": "Aristotle's account of equity (NE V.10, 1137b11-32) and situational perception (NE VI.11, 1143b11-14) recognizes that genuine particular differences can exceed what appears on paper or can be codified in a blanket rule."
+  },
+  {
+    "item": "S19",
+    "answer": "refuse",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Analects 2.14", "status": "checked" },
+      { "ref": "Analects 2.22", "status": "checked" },
+      { "ref": "Analects 12.7", "status": "from memory" }
+    ],
+    "reasoning": "In the Analects, effective leadership rests on trustworthiness (xin, 2.22, 12.7) and broad impartiality rather than partiality (zhou er bu bi, 2.14). Breaking a clear rule you enforced against two others in the same circumstances, without any defensible ground you could explain to them, breeds resentment of favoritism (bi) and erodes trust in your word. While Confucius values contextual rightness (yi, 4.10), yi is not an undefendable subjective hunch that undermines fairness and trust across the team.",
+    "strongestCounter": "Analects 4.10 says the junzi has no rigid 'musts' or 'must-nots' and follows yi, while 13.2 advises leaders to overlook small faults, which could support flexibility when a leader senses an exception is warranted."
+  },
+  {
+    "item": "S20",
+    "answer": "deflect",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Mishneh Torah, Hilkhot De'ot 2:3", "status": "checked" },
+      { "ref": "Mishneh Torah, Hilkhot De'ot 6:8", "status": "checked" }
+    ],
+    "reasoning": "In Mishneh Torah, Hilkhot De'ot 2:3, Maimonides explicitly departs from the Aristotelian middle path regarding pride, ruling that one must not merely be humble but 'exceedingly lowly of spirit' (citing Pirkei Avot 4:4). Even more decisively, Hilkhot De'ot 6:8 strictly forbids putting another person to shame in public, calling public humiliation a grave sin that forfeits one's share in the World to Come. Publicly contradicting the director on stage right after the colleague was applauded would both pursue personal honor and cause him public loss of face, so Maimonides clearly requires deflecting credit.",
+    "strongestCounter": "One might argue that correcting a false public record protects truth and one's rightful standing, though Maimonides would at most permit addressing the error privately rather than humiliating the colleague before the room."
+  },
+  {
+    "item": "S21",
+    "answer": "claim",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Nicomachean Ethics IV.3, 1124b-1125a", "status": "checked" },
+      { "ref": "Nicomachean Ethics IV.7, 1127a-1127b", "status": "checked" }
+    ],
+    "reasoning": "In Nicomachean Ethics IV.3, Aristotle holds that the magnanimous person (megalopsychos) claims the great honor he genuinely deserves, cares more for truth than opinion, and speaks openly; conversely, undue humility (mikropsychia)—robbing oneself of deserved honor—is a vice worse and more opposed to magnanimity than vanity (1125a19-34). In IV.7, the truthful person acknowledges the creditable achievements that are actually his rather than letting falsehood stand. Saying plainly (without boasting) that you led the company-saving project aligns with both truthfulness and proper greatness of soul.",
+    "strongestCounter": "Aristotle also writes in NE IV.3 (1125a5-8) that the magnanimous person speaks neither about himself nor about another, caring neither to be praised nor for others to be blamed, and in IV.7 (1127b7-9) that the truthful person leans toward understatement as better taste."
+  },
+  {
+    "item": "S22",
+    "answer": "decline",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Analects 8.3", "status": "checked" },
+      { "ref": "Analects 6.26", "status": "from memory" }
+    ],
+    "reasoning": "In Analects 8.3, Zengzi on his deathbed asks his disciples to uncover his hands and feet to verify that he has kept his body whole and uninjured throughout life, reflecting the Confucian filial duty to preserve the body received from one's parents. Furthermore, the Analects teaches graded relational care beginning near at hand rather than radical bodily self-sacrifice for a complete stranger, and 6.26 rejects jumping into a well to save another. Voluntarily having a healthy organ surgically removed for someone you have never met goes against this Confucian commitment to bodily integrity and relational proportion.",
+    "strongestCounter": "Because the operation is described as safe with very small risk and may save a human life, one could argue from Analects 12.22 (ren as caring for people) and 15.24 (reciprocity, shu) that a humane person should donate."
+  },
+  {
+    "item": "S23",
+    "answer": "decline",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Metaphysics of Morals (Doctrine of Virtue), Ak. 6:423", "status": "checked" },
+      { "ref": "Metaphysics of Morals (Doctrine of Virtue), Ak. 6:452", "status": "checked" }
+    ],
+    "reasoning": "In the Metaphysics of Morals, Doctrine of Virtue (Ak. 6:423), Kant explicitly classifies depriving oneself of an integral part or organ—giving the exact example of giving away or selling a tooth to be transplanted into another's mouth—as 'partially murdering oneself.' This violates a strict, perfect duty to oneself regarding one's bodily integrity. Because perfect duties strictly constrain imperfect duties of beneficence (Ak. 6:452), Kant's own text forbids donating a healthy kidney to a stranger.",
+    "strongestCounter": "Because the procedure is safe and preserves a rational being's life (Groundwork, Ak. 4:429), later Kantians often distinguish life-saving organ donation from trivial mutilation, though Kant's own wording at Ak. 6:423 explicitly bars even giving away a body part for transplantation."
+  },
+  {
+    "item": "S24",
+    "answer": "charity",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Utilitarianism, Chapter 2", "status": "checked" }
+    ],
+    "reasoning": "In Utilitarianism Chapter 2, Mill states that the utilitarian standard is the happiness of all concerned and requires an agent to be 'as strictly impartial as a disinterested and benevolent spectator.' Although Mill notes that individuals usually only have occasion to attend to private utility, here you face a direct, explicit choice to act as a benefactor whose $3,000 will either prevent a cousin's eviction for one winter or, on average, save a child's life. Saving a child's life yields far greater net happiness than covering a season's rent, and impartial utility gives equal weight to the child abroad.",
+    "strongestCounter": "Mill observes in Utilitarianism Chapter 2 that in ordinary life most people should attend to 'private utility, the interest or happiness of some few persons,' and helping the cousin is certain rather than a statistical average."
+  },
+  {
+    "item": "S25",
+    "answer": "cousin",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Mishneh Torah, Hilkhot Matnot Aniyim 7:13", "status": "checked" },
+      { "ref": "Mishneh Torah, Hilkhot Matnot Aniyim 8:10", "status": "from memory" }
+    ],
+    "reasoning": "In Mishneh Torah, Hilkhot Matnot Aniyim 7:13, Maimonides lays down an explicit legal hierarchy of precedence for charity (tzedakah): 'A poor person who is one's relative receives priority over all others,' and the poor of one's own city take precedence over the poor of another city (citing Deuteronomy 15:11). Here your cousin is an identifiable needy relative facing imminent homelessness, whereas the malaria nets provide statistical aid to unnamed distant recipients abroad. Under Maimonides's explicit code, the cousin takes clear priority.",
+    "strongestCounter": "Maimonides ranks saving life (pikuach nefesh) and redeeming captives (Hilkhot Matnot Aniyim 8:10) above ordinary poor relief, so one might argue that preventing a child's death outweighs kinship priority, though halakhah distinguishes an immediate mortal emergency before one from statistical public-health charity abroad."
+  },
+  {
+    "item": "S26",
+    "answer": "cousin",
+    "answerA": null,
+    "answerB": null,
+    "confidence": "high",
+    "passages": [
+      { "ref": "Mencius 3A5", "status": "checked" },
+      { "ref": "Mencius 7A45", "status": "from memory" },
+      { "ref": "Mencius 3B9", "status": "from memory" }
+    ],
+    "reasoning": "Mencius's signature moral doctrine is graded love with distinctions, explicitly formulated against Mohist impartial care (jian ai). In Mencius 3A5, he refutes the Mohist Yi Zhi by insisting that a person's affection for a relative is naturally deeper than for a stranger's child, and in 7A45 he distinguishes familial affection (qin) for kin from general humaneness (ren) toward the people. Directing limited funds to a cousin facing imminent eviction rather than to anonymous beneficiaries abroad directly exemplifies Mencius's kinship-first order of care.",
+    "strongestCounter": "In Mencius 2A6, Mencius grounds the sprout of ren in spontaneous compassion for any child about to fall into a well regardless of kinship, which could be invoked when a child's life is at stake."
+  },
+  {
+    "item": "P27",
+    "answer": null,
+    "answerA": "consult",
+    "answerB": "act",
+    "confidence": "high",
+    "passages": [
+      { "ref": "Analects 11.22", "status": "checked" }
+    ],
+    "reasoning": "This pair closely mirrors Analects 11.22, in which Confucius gives opposite answers to Zilu and Ran You when both ask whether to act immediately on hearing something good while their father and elder brother are alive. In Case A, the speaker is impetuous and has repeatedly broken hasty promises—just like Zilu, whom Confucius held back by telling him to consult his father and elder brother first. In Case B, the speaker is overly hesitant and lets good opportunities slip away—just like Ran You, whom Confucius pushed forward by telling him to act at once.",
+    "strongestCounter": "One could argue from general filial deference (Analects 1.2, 4.18) that living under the same roof requires consulting one's father and elder brother in both cases, though Analects 11.22 explicitly shows Confucius waiving that restraint for the overly timid disciple."
+  },
+  {
+    "item": "P28",
+    "answer": null,
+    "answerA": "record",
+    "answerB": "feeling",
+    "confidence": "high",
+    "passages": [
+      { "ref": "Nicomachean Ethics VI.8, 1142a11-20", "status": "checked" },
+      { "ref": "Nicomachean Ethics VI.11, 1143b11-14", "status": "checked" }
+    ],
+    "reasoning": "In Nicomachean Ethics VI.8 (1142a11-20), Aristotle teaches that practical wisdom requires grasping particulars through long experience (empeiria), which newcomers lack; thus in Case A, a first-year member with no experience judging trustworthiness should not let an unsupported unease override Mr R's verifiable record. In Case B, however, thirty years of auditing small charities and assessing whom to trust with money gives the voter precisely the 'eye of experience' praised in VI.11 (1143b11-14), whose undemonstrated judgments deserve no less attention than formal demonstrations.",
+    "strongestCounter": "Because Aristotle defines practical wisdom as acting with reason (meta logou, NE VI.5), one could argue even in Case B that an unease unable to identify a single concrete fact should yield to a clean, verified record."
+  },
+  {
+    "item": "P29",
+    "answer": null,
+    "answerA": "record",
+    "answerB": "record",
+    "confidence": "medium",
+    "passages": [
+      { "ref": "An Enquiry concerning the Principles of Morals, Section 1", "status": "checked" },
+      { "ref": "An Enquiry concerning the Principles of Morals, Appendix 1", "status": "checked" },
+      { "ref": "A Treatise of Human Nature 3.3.1", "status": "checked" }
+    ],
+    "reasoning": "In the Enquiry concerning the Principles of Morals (Section 1 and Appendix 1), Hume holds that while sentiment pronounces moral approval of virtues like honesty, reason must first ascertain all facts, relations, and circumstances to give sentiment a proper discernment of its object. In Treatise 3.3.1, he further insists that private, momentary impressions must be corrected from a 'steady and general point of view' grounded in communicable tendencies and evidence. Because the disagreement here is purely factual—whether Mr R is trustworthy—and neither voter can point to a single fact against his spotless record and references, Hume's texts favor following the ascertainable evidence in both cases.",
+    "strongestCounter": "Because Humean empirical judgment rests on custom built from repeated observation, one could argue in Case B that thirty years of auditing charities turns the veteran's unease at Mr R's speech into tacit inductive evidence of bad character, favoring 'feeling' in Case B."
+  },
+  {
+    "item": "P30",
+    "answer": null,
+    "answerA": "take",
+    "answerB": "not-take",
+    "confidence": "high",
+    "passages": [
+      { "ref": "Utilitarianism, Chapter 5", "status": "checked" },
+      { "ref": "Utilitarianism, Chapter 2", "status": "checked" }
+    ],
+    "reasoning": "In Utilitarianism Chapter 5, Mill explicitly endorses Case A verbatim in principle: 'to save a life, it may not only be allowable, but a duty, to steal, or take by force, the necessary food or medicine.' In Case B, however, the wife will not die and a cheaper drug arrives in two weeks; because property and security are 'the most vital of all interests' (Chapter 5) and agents must abstain from acts of a class that would be generally injurious if practiced widely (Chapter 2), avoiding two weeks of non-lethal pain does not meet Mill's high threshold for overriding the secondary rule against burglary and theft.",
+    "strongestCounter": "On a direct act-utilitarian tally in Case B, one might argue that preventing two weeks of severe suffering outweighs a $32,000 loss to an extortionate pharmacist if the theft causes little wider alarm."
+  },
+  {
+    "item": "P31",
+    "answer": null,
+    "answerA": "not-take",
+    "answerB": "not-take",
+    "confidence": "medium",
+    "passages": [
+      { "ref": "Nicomachean Ethics II.6, 1107a9-17", "status": "checked" },
+      { "ref": "Nicomachean Ethics III.1, 1110a4-26", "status": "checked" },
+      { "ref": "Nicomachean Ethics V.10, 1137b11-32", "status": "checked" }
+    ],
+    "reasoning": "In Nicomachean Ethics II.6 (1107a9-17), Aristotle explicitly classifies theft (klope) as an action that admits of no mean and is always wrong regardless of circumstances. While III.1 (1110a23-26) acknowledges pardon (syngnome) when pressure overstrains human nature—which applies at most to Case A's mortal emergency, and certainly not to Case B's two weeks of temporary pain—pardon still treats the act as something one ought not to do, and equity (V.10) does not license private burglary. Aristotle's Nicomachean Ethics therefore leads to 'not-take' in both cases, with Case B even more decisively forbidden.",
+    "strongestCounter": "For Case A, one could argue from NE III.1 (1110a4-23)—where mixed actions saving family from death are sometimes praised—that seizing a life-saving drug while leaving $8,000 is not vicious, greedy klope, creating a split between Case A ('take') and Case B ('not-take')."
+  },
+  {
+    "item": "P32",
+    "answer": null,
+    "answerA": "calm",
+    "answerB": "anger",
+    "confidence": "high",
+    "passages": [
+      { "ref": "Nicomachean Ethics IV.5, 1125b31-1126a8", "status": "checked" }
+    ],
+    "reasoning": "In Nicomachean Ethics IV.5, the virtuous, good-tempered person (praos) is angry at the right things, with the right people, and in the right manner, while tending to make allowances rather than seek revenge. In Case A, the colleague misread an expense record without intending harm or insult—an honest factual mistake that warrants calm public correction and allowance rather than anger. In Case B, the colleague deliberately lied to humiliate an absent friend, and Aristotle explicitly declares at 1126a6-8 that failing to be angry and enduring insult to one's friends is 'slavish.'",
+    "strongestCounter": "In Case A one might view publicly accusing a friend of theft without checking carefully as negligent enough to deserve mild anger, while in Case B one might argue that praotes leans toward restraint and a calm public refutation suffices."
+  }
+]

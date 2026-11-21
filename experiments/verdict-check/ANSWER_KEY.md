@@ -27,11 +27,11 @@ A "?" after an option means the entry is disputed.
 | hiding-friend | split | development | lie | no-lie | lie ? | lie ? | — | lie | lie |
 | water-scheme | split | development | open | open | open | open | — | — | — |
 | treasurer | split | development | open | apply | open | open | — | — | — |
-| parents-or-post | split | development | — | — | stay ? | stay ? | — | — | — |
+| parents-or-post | split | development | — | — | open | stay ? | — | — | — |
 | memorial-words | split | development | silent ? | open | — | open | — | — | — |
 | medicine | split | development | take | not-take ? | not-take | open | — | take | take |
 | charity-hire | split | development | better | better ? | better | better ? | better | — | — |
-| gut-vs-record | split | development | — | — | record ? | record ? | — | — | — |
+| gut-vs-record | split | development | — | — | record ? | feeling ? | — | — | — |
 | extension | split | development | — | refuse ? | refuse ? | refuse ? | — | — | — |
 | credit | split | development | — | — | claim ? | deflect | — | — | deflect ? |
 | double-refund | agreement | development | return | return | return | return | return | return | return |
@@ -758,7 +758,7 @@ Options:
 | --- | --- | --- | --- | --- |
 | Mill | — | — | No grounded answer in the texts | — |
 | Kant | — | — | No grounded answer in the texts | — |
-| Aristotle | stay | disputed | We owe our parents support before all others, and it is nobler to provide for them than for ourselves. Whether a paid care home meets that debt is open to argument. | Nicomachean Ethics IX.2 (1165a21-27); VIII.14 (a debt to a father cannot be repaid in full) |
+| Aristotle | open | — | Agent panel (2026-11-21), 2 of 3 reviewers: we owe parents support and honour before others (NE IX.2, 1165a21-27; VIII.14), but IX.2 (1164b22-1165a3) says that conflicts between such claims and other goods turn on the particulars and no fixed rule settles them. Whether paid care, against the parents' wish, meets the debt is not settled. Was keyed 'stay' (disputed). | — |
 | Confucius | stay | disputed | While parents are alive, a son should not travel far; if he does go, he must have a fixed place where he can be reached (4.19). Support without reverence is no more than we give to dogs and horses (2.7). The text does not say if a paid care home, against the parents' wish, meets that standard. | Analects 4.19; 2.7 |
 | Mencius | — | — | No grounded answer in the texts | — |
 | Hume | — | — | No grounded answer in the texts | — |
@@ -860,7 +860,7 @@ Options:
 | Mill | — | — | No grounded answer in the texts | — |
 | Kant | — | — | No grounded answer in the texts | — |
 | Aristotle | record | disputed | Experienced judgment can see what a checklist misses. But the case does not say that the voter has such experience, and an unsupported feeling has no authority of its own. See the pair experienced-eye. | Nicomachean Ethics VI.11; II.9 (the decision rests with perception) |
-| Confucius | record | disputed | Confucius reads character from conduct, but the voter can point to no conduct. An unease with no fact behind it does not decide the matter. | Analects 2.10 |
+| Confucius | feeling | disputed | Changed after the agent panel (2026-11-21, 2 of 3 reviewers; was 'record'). Confucius judges a person by direct observation of how he speaks and what he is at ease with, not by reputation or record: observe what he does, his motives, and what he rests in, and character cannot be hidden (2.10); without understanding words one cannot know people (20.3); examine for yourself even what the crowd likes (15.28). The unease comes from Mr R's own speech in two meetings, so it is observed conduct. Against this: the voter can name no fact. | Analects 2.10; 20.3; 15.28 (Legge numbering; Lau numbering not checked) |
 | Mencius | — | — | No grounded answer in the texts | — |
 | Hume | — | — | No grounded answer in the texts | — |
 | Maimonides | — | — | No grounded answer in the texts | — |
