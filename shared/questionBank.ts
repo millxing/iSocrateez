@@ -47,7 +47,7 @@ export const questionBank: Question[] = [
     prompt: "How strongly should morality protect lines that should not be crossed even for a better result?",
     lowLabel: "Not very strongly",
     highLabel: "Very strongly",
-    polarity: -1
+    polarity: 1
   },
   {
     id: "op-7",
@@ -63,7 +63,7 @@ export const questionBank: Question[] = [
     prompt: "How important is it that a decision-maker keeps their hands clean even if the final outcome is worse?",
     lowLabel: "Not very important",
     highLabel: "Extremely important",
-    polarity: -1
+    polarity: 1
   },
   {
     id: "op-9",
@@ -159,7 +159,7 @@ export const questionBank: Question[] = [
     prompt: "How morally important is it that each person chooses for themselves even when that weakens group coordination?",
     lowLabel: "Extremely important",
     highLabel: "Less important than coordination",
-    polarity: -1
+    polarity: 1
   },
   {
     id: "ri-1",
@@ -215,7 +215,7 @@ export const questionBank: Question[] = [
     prompt: "How much should an ethical framework be judged by whether it can be defended step by step in public reasons?",
     lowLabel: "A great deal",
     highLabel: "Only somewhat",
-    polarity: -1
+    polarity: 1
   },
   {
     id: "ri-8",
@@ -239,6 +239,6 @@ export const questionBank: Question[] = [
     prompt: "When two values collide, how much confidence do you place in explicit reasoning to sort them out well?",
     lowLabel: "High confidence",
     highLabel: "Low confidence",
-    polarity: -1
+    polarity: 1
   }
 ];
