@@ -198,6 +198,17 @@ Verified: with names and terms removed, the judges still identify almost every a
 
 Interpretation (not verified): the app does not give one argument in different words; each thinker's reasons are specific, and were already in `legacy`. So this test cannot tell the variants apart (ceiling). What remains of the professor's complaint is at the verdict level (sections 3c to 3e): thinkers whose texts give a hard answer were pulled to the common answer, with their own reasons attached. A possible sharper test: match on the "Decisive fact" section only, to see if the deciding reason (not only the supporting reasons) is thinker-specific.
 
+## 3g. Holdout run: rules fixed before the run (2026-11-21)
+
+Rob approved the holdout run on 2026-11-21. Written before any holdout answer was generated.
+
+- Variants: `legacy`, `prod`, `notes`, `contrast`. 3 samples each. `--split holdout`. `notes` and `contrast` reuse identical prompts from `prod`.
+- The holdout runs once. No prompt is changed and run on the holdout again on the basis of these results. Holdout key entries have not had the agent panel review.
+- Measures: voice match with the key (core four, transfer thinkers); pair flip and same rows; expected disagreements reproduced; expected agreements kept; control cases that differ from the baseline.
+- `contrast` goes into `worker/src/prompts.ts` (with Rob's approval) only if, in the sum over the 3 samples: voice match with the key is at least that of `prod`; expected disagreements reproduced are at least those of `prod`; expected agreements kept fall by no more than 2 against `prod`; and no control case differs from the baseline more often than with `prod`. Otherwise it stays an experiment.
+- `notes` (deferred for all 40 thinkers): the holdout check passes if `notes` matches the key on core-four voice and pair flip rows at least as often as `prod`, in the sum over 3 samples.
+- `prod` against `legacy`: report the same measures. The claim "prod is better than the original" holds on the holdout only if prod is at least as good on voice match and expected disagreements.
+
 ## 4. Decisions and reasons
 
 - **Paired cases, not one "correct" answer.** The first key gave each philosopher one option for each dilemma. An outside reviewer showed that the texts do not settle most of those answers (24 of 78 judged "open", 4 changed). The reviewer proposed pairs: tell one case twice, change one fact, and check whose answer reverses. This needs agreement only on which fact matters to whom. Review: `experiments/verdict-check/reviews/second-reviewer-2026-11.md`. The reviewer is not identified to us.
@@ -257,7 +268,7 @@ npx vite-node experiments/verdict-check/run.ts --variant <name> --limit 4   # sm
 - A full development run is 168 advice calls and 168 judge calls. It takes about 10 minutes with `--concurrency 8`.
 - Results are cached by a hash of the prompt. A changed prompt makes new calls; an unchanged one costs nothing.
 - The profile test sets one axis to -0.85 or +0.85 and the other two to 0.
-- **Do not run `--split holdout` or `--split all` before step 6.**
+- **The holdout was run once on 2026-11-21 (section 3g). Do not run it again to tune a prompt.**
 
 ## 7. Open risks
 
