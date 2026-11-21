@@ -45,7 +45,7 @@ Important files:
 The frontend is a wizard-style multi-page flow with a sticky hero bar:
 
 1. Password gate
-2. Enter a dilemma (dynamic-height textarea; upload or drop a .txt/.md file; up to `MAX_DILEMMA_CHARACTERS` = 12,000), or pick one of 40 examples (shuffled each visit, searchable)
+2. Enter a dilemma (dynamic-height textarea; upload or drop a .txt/.md file; up to `MAX_DILEMMA_CHARACTERS` = 12,000), or pick one of 63 examples (shuffled each visit, searchable; search "contested" for the 23 test cases from `experiments/verdict-check`)
 3. Choose path: 9-question calibration, manual 3-axis tuple, choose a philosopher, or load a saved calibration file
 4. Answer calibration questions or set sliders. The questionnaire ends on a summary page, where the user can answer 3 more questions (one for each axis, up to all 30), save the calibration to a JSON file, or continue. A loaded file restores the answers and opens the summary; if its answers no longer match the question bank, its coordinates open in the sliders. Or pick one philosopher/tradition from a grid (`PhilosopherPage`). The philosopher path ignores the axes: the request carries `philosopherId`, the Worker answers from that figure's `voiceBrief`, and the response has `selectedPhilosopherId` with no `profile`
 5. Choose explanation style (3 cards)

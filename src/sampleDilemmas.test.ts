@@ -49,4 +49,15 @@ describe("matchesSample", () => {
   it("finds the classical examples as a group", () => {
     expect(SAMPLE_DILEMMAS.filter((s) => matchesSample(s, "classical"))).toHaveLength(11);
   });
+
+  it("finds the contested test cases as a group", () => {
+    expect(SAMPLE_DILEMMAS.filter((s) => matchesSample(s, "contested"))).toHaveLength(23);
+  });
+});
+
+describe("SAMPLE_DILEMMAS", () => {
+  it("has 63 examples with unique titles", () => {
+    expect(SAMPLE_DILEMMAS).toHaveLength(63);
+    expect(new Set(SAMPLE_DILEMMAS.map((s) => s.title)).size).toBe(63);
+  });
 });

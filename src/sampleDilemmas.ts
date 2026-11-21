@@ -211,5 +211,122 @@ export const SAMPLE_DILEMMAS: SampleDilemma[] = [
     title: "The Brother’s Confession",
     text: "Your brother tells you that, years ago, he drove away after hitting a cyclist on a dark road. From news reports, you know that the cyclist survived but was left partly disabled and never received compensation, because the driver was never found. Your brother is now a devoted father of three, and he begs you to keep his confession private. Reporting him would probably send him to prison and leave his family without income. Staying silent means the victim never gets justice or support. Confucius taught that family members should shield one another; others say justice must come first. What should you do?",
     keywords: "confucius analects upright"
+  },
+  // Contested cases from the verdict check (experiments/verdict-check/answerKey.ts, kind "split"):
+  // the test thinkers are expected to disagree. Texts copied unchanged. Search word: "contested".
+  {
+    title: "The Father and the Workshop Tools",
+    text: "My father took tools from our community workshop without permission. He told me, and he asks me to protect him. Tomorrow the committee will ask each volunteer directly if they know who took the tools. We are a small group: if I refuse to answer, everyone will understand that it was him. Two other members are under suspicion. Should I tell the committee the truth, or say that I know nothing?",
+    keywords: "contested"
+  },
+  {
+    title: "The Son as a Witness",
+    text: "My father took tools from our community workshop without permission. He told me. No other person is suspected, and no one has asked me anything. The committee has asked members to come forward with what they know. Should I go to the committee and report my father?",
+    keywords: "contested confucius analects upright sheep"
+  },
+  {
+    title: "The Promise and the Charity Work",
+    text: "I promised to help my friend move on Saturday. A charity now offers me one day of paid work on the same Saturday. The fee is $2,000, and I would give all of it to a food bank that must turn families away this month. The work cannot move to another day. My friend can find no other helper. Without me he must pay movers about $400, which is hard for him, and he says that a promise is a promise. Should I keep the promise or take the work?",
+    keywords: "contested"
+  },
+  {
+    title: "The Stranger on the Footbridge",
+    text: "A runaway trolley is heading toward five people trapped on the track. You are standing on a footbridge above the track, beside a very large stranger. The only way to stop the trolley is to push him off the bridge into its path. His body would stop it and save the five, but he would die. You are certain that this would work, and you are too light to stop the trolley yourself. Should you push the stranger?",
+    keywords: "contested trolley problem thomson"
+  },
+  {
+    title: "The Friend in Hiding",
+    text: "A friend is hiding in my flat from her violent former partner. He is at my door now and asks if she is here. The police will arrive in ten minutes. If I refuse to answer, he will understand that she is here and force his way in. If I say that she left town, he will go away. Should I lie to him?",
+    keywords: "contested kant lying murderer door"
+  },
+  {
+    title: "The Household That Stopped Its Share",
+    text: "Our village built a shared water system. Every household agreed to give two days of work each month to maintain it. One household has stopped. The man says that his time is his own, and he continues to use the water. Talks with him have failed. I chair the committee. The rules let us fine him and, if he does not pay, cut his connection. Some members want no penalty: they want to continue with good example and persuasion. Should we enforce the penalty?",
+    keywords: "contested"
+  },
+  {
+    title: "The Treasurer Who Repaid the Money",
+    text: "I chair a small sports club. Our treasurer took $3,000 from club funds last year. She confessed to me, repaid all of it, and is ashamed. No one else knows. The club rules say that a member who takes funds must be expelled, and that the members must be told. If I apply the rule, our fundraising for the children's programme will probably collapse this year. Should I apply the rule, or keep the matter quiet?",
+    keywords: "contested"
+  },
+  {
+    title: "The Post Abroad and the Parents",
+    text: "I am an only child. My parents are in their eighties and now need help each day. I have been offered the post that I have worked toward for fifteen years. It is in another country, for at least five years. My parents refuse to move. I can pay for a good care home near their house, but they dread it and ask me to stay. If I refuse the post, there will be no second offer. Should I take the post or stay?",
+    keywords: "contested"
+  },
+  {
+    title: "Words of Faith at the Memorial",
+    text: "My family will hold a religious memorial for my grandfather. My mother asks me to stand with the family and say the words of faith aloud with them. I do not believe those words. She says that it is a sign of respect, and that my silence will shame the family in front of the community. I will attend in any case. Should I say the words?",
+    keywords: "contested"
+  },
+  {
+    title: "The Drug That He Cannot Buy",
+    text: "My wife will die within weeks without a drug. The only pharmacist who has it asks $40,000. I have raised $8,000, and he refuses a lower price or later payment. I have tried doctors, charities and the courts, and there is no time left. I can break into his store tonight and take the drug. I would leave the $8,000 there. Should I take it?",
+    keywords: "contested heinz kohlberg"
+  },
+  {
+    title: "The Nephew and the Better Candidate",
+    text: "I lead the hiring for a charity that runs on public donations. Two people applied for the post of finance officer. My nephew can do the work adequately. The other candidate is clearly better. My family expects me to choose my nephew: he has been out of work for a year and has two children. No rule forbids it, and no one would question my choice. Whom should I hire?",
+    keywords: "contested"
+  },
+  {
+    title: "The Candidate with the Clean Record",
+    text: "Our tenants' association must choose a treasurer. On every fact that I can check, Mr R is the best candidate: experience, references, a clean record. But in two meetings, the way he spoke about money and about people made me deeply uneasy. I cannot point to one fact that supports this feeling. The other candidate is adequate, and I trust her. My vote decides. Should I vote for Mr R?",
+    keywords: "contested"
+  },
+  {
+    title: "The Third Request for an Extension",
+    text: "I manage a team. I set a rule: no extensions on the quarterly report, because exceptions lead to favouritism. This year I refused two people. Now a third person asks. On paper her circumstances are the same as theirs. But everything in me says that her case is different and that she should have the extension. I cannot state a difference that I could defend to the other two. Should I grant it?",
+    keywords: "contested"
+  },
+  {
+    title: "The Credit for the Project",
+    text: "I led a project that saved our company. At the celebration, the director thanked a senior colleague as the leader, and the room applauded him. He did little. I will speak next. If I say plainly that I led the work, I get the credit that I earned, and he loses face. If I thank the team and say nothing of my part, the wrong impression stays. Should I claim the credit?",
+    keywords: "contested"
+  },
+  {
+    title: "A Kidney for a Stranger",
+    text: "A woman in my city whom I have never met needs a kidney, and I am a match. For a healthy donor the operation is safe: the risk of death is very small, and most donors live normal lives with one kidney. It would almost certainly free her from years on dialysis, and it may save her life. I am healthy, and no one depends on me. Should I give her one of my kidneys?",
+    keywords: "contested organ donation"
+  },
+  {
+    title: "My Cousin’s Rent or a Charity Abroad",
+    text: "I have $3,000 to give this year. My cousin cannot pay her rent this winter and may lose her flat; $3,000 would cover it. A well-run charity abroad says that $3,000 buys malaria nets that will, on average, save about one child's life. I cannot do both. Which should I give to?",
+    keywords: "contested singer effective altruism"
+  },
+  {
+    title: "The Manager Who Belittles Me",
+    text: "My manager often belittles me in front of the team: he mocks my accent and calls my ideas stupid. He does not do this to others. The job pays well and supports my family, and jobs like it are rare here. If I tell him plainly that he must stop, he may make my work harder or push me out. If I say nothing and bear it, things will probably stay as they are. Should I stand up to him?",
+    keywords: "contested"
+  },
+  {
+    title: "One More Trip with the Rescue Boat",
+    text: "I pilot a volunteer rescue boat in a flood. There is time for one more trip before dark. My mother, who is 80, is alone on a roof to the east. A family of three, strangers to me, is on a roof to the west. The risk to each person is the same, and no other boat will come tonight. I cannot reach both roofs. Which way should I go?",
+    keywords: "contested"
+  },
+  {
+    title: "The Promise About the Memorial",
+    text: "My aunt asked me on her deathbed to spend her $40,000 on a marble memorial at her grave. I promised. She left the money to me with no written conditions, and no one else knows of the promise. Our village clinic will close this year without about that sum. She cared little for the clinic. Should I keep the promise?",
+    keywords: "contested"
+  },
+  {
+    title: "The Family Shop or the Art School",
+    text: "My family has run the village hardware shop for three generations. I am the only child. My father is 70 and expects me to take over this year. If I refuse, the shop will close and he will be heartbroken. I have a place at an art school in the city, and I want to paint. I cannot do both. Should I take over the shop?",
+    keywords: "contested"
+  },
+  {
+    title: "The Question of a Dying Grandmother",
+    text: "My grandmother has a few days to live. She asks me each hour if her son is on his way. He died in an accident last week, and she does not know. The doctor says that the news would cause her great distress, and that she will not live long enough to come to terms with it. If I avoid the question, she will understand. Should I tell her that he is on his way?",
+    keywords: "contested"
+  },
+  {
+    title: "The Gifted Candidate and the Candidate in Need",
+    text: "I sit on a committee that has one scholarship to give. Candidate A is the most gifted student that we have seen in ten years. Her family is wealthy, and she will attend the university in any case. Candidate B is a good student, not an exceptional one. Without the scholarship he cannot attend. The rules say only 'award to the most suitable candidate'. My vote decides. Who should get it?",
+    keywords: "contested"
+  },
+  {
+    title: "The Husband’s Diaries",
+    text: "My husband died last year and left private diaries. He never said what should happen to them. A historian offers $30,000 for them, which would pay for our granddaughter's training. I have thought hard and can find no argument against the sale: no person named in the diaries is alive, and no one would be harmed. But to sell them feels like a betrayal of him. Should I sell them?",
+    keywords: "contested"
   }
 ];
