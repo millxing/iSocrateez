@@ -15,6 +15,7 @@ import {
 } from "../../worker/src/prompts";
 import * as legacy from "./legacyPrompts";
 import { LENS_NOTES } from "./lensNotes";
+import { PHILOSOPHER_SCORES, type DimensionScores } from "./philosopherScores";
 
 /** A prompt variant builds the prompt for each of the app's two routes, and for a baseline with no philosopher. Add new variants here. */
 export interface PromptVariant {
@@ -90,6 +91,16 @@ export const VARIANTS: Record<string, PromptVariant> = {
         : buildVoiceAdvisorPrompt({ dilemma, explanationLevel: "informed", voice }),
     baseline: ({ dilemma }) => buildBaselinePrompt(dilemma)
   },
+  // hybrid with Rob's 10-dimension scores (philosopherScores.ts: 6 moral foundations + 4 axes) in place of the
+  // 3 app axes (2026-11-22). Same structure: the scores decide, a specific doctrine may override.
+  hybrid10: {
+    ...routes({ buildAdvisorPrompt, buildVoiceAdvisorPrompt }),
+    voice: ({ dilemma, voice }) =>
+      PHILOSOPHER_SCORES[voice.id]
+        ? buildHybrid10VoicePrompt(dilemma, voice, PHILOSOPHER_SCORES[voice.id])
+        : buildVoiceAdvisorPrompt({ dilemma, explanationLevel: "informed", voice }),
+    baseline: ({ dilemma }) => buildBaselinePrompt(dilemma)
+  },
   // The production prompts as they were until 2026-11-21. Frozen: see legacyPrompts.ts.
   legacy: { ...routes(legacy), baseline: ({ dilemma }) => legacy.buildBaselinePrompt({ dilemma, explanationLevel: "informed" }) }
 };
@@ -122,6 +133,60 @@ export function buildHybridVoicePrompt(dilemma: string, voice: PhilosophyProfile
     "3. Reach the answer that follows from the thinker's positions on those axes.",
     "4. Then check this thinker's own doctrines. Change the answer only if a specific doctrine of this thinker applies directly to these facts and points to the other option: for example, an act that the thinker forbids in all cases, or a duty that comes from a role or a relation. Otherwise keep the answer that the positions give.",
     "5. If no axis decides the dilemma and no doctrine applies, say so in one sentence, and give the reading that you judge closest to this thinker.",
+    "6. Check the answer. If you softened it to make it more comfortable or more balanced, undo that.",
+    "",
+    ...commitRules("this thinker would"),
+    "- Use the thinker's concepts correctly, and apply them to the facts given.",
+    "",
+    ...adviceSections(
+      "Why this advice",
+      "the fact that matters most to this thinker in this case; the change to that fact that would reverse the answer; and where most advisers would answer differently, if they would."
+    ),
+    NO_FOLLOW_UP_NOTE,
+    "",
+    `Original dilemma: ${dilemma}`
+  ].join("\n");
+}
+
+function scoreLines(scores: DimensionScores): string[] {
+  const n = (value: number) => value.toFixed(1);
+  return [
+    "How much weight this thinker gives to each moral concern (0 = none, 10 = the highest):",
+    `- Care (preventing harm and suffering; compassion): ${n(scores.care)}`,
+    `- Fairness (justice, rights, reciprocity, honest dealing): ${n(scores.fairness)}`,
+    `- Loyalty (faithfulness to family, friends and one's group): ${n(scores.loyalty)}`,
+    `- Authority (respect for roles, tradition and legitimate authority): ${n(scores.authority)}`,
+    `- Sanctity (the sacred, purity, things that must not be degraded): ${n(scores.sanctity)}`,
+    `- Liberty (freedom from coercion and domination; each person's right to decide for themselves): ${n(scores.liberty)}`,
+    "Position on four axes (0 to 10):",
+    `- Individual (0) to Collective (10): ${n(scores.individualCollective)}`,
+    `- Outcomes (0) to Principles (10): ${n(scores.outcomesPrinciples)}`,
+    `- Reason (0) to Intuition (10): ${n(scores.reasonIntuition)}`,
+    `- Everyone equally (0) to My own people first (10): ${n(scores.impartialPartial)}`
+  ];
+}
+
+/** hybrid with 10 dimensions: the scores decide, and a specific doctrine of the thinker may override them. */
+export function buildHybrid10VoicePrompt(dilemma: string, voice: PhilosophyProfile, scores: DimensionScores): string {
+  return [
+    "You are the advice stage of an ethical reflection app.",
+    "The user chose to look at a dilemma through one lens. The app tells the user that this is one perspective among many, and that it is an interpretation.",
+    `Perspective: ${voiceIdentity(voice)}`,
+    `Voice brief: ${voice.voiceBrief}`,
+    voiceInstruction(voice),
+    NO_DISCLAIMER_NOTE,
+    `Presentation level: ${presentationGuidance("informed")}`,
+    "",
+    "This thinker has fixed scores on ten ethical dimensions, given below. The answer must follow mainly from these scores.",
+    ...scoreLines(scores),
+    "",
+    "Your first task is to work out the answer that follows from these scores. Do not give the advice that you think is best.",
+    "Before you write, work through these steps:",
+    "1. Name the options that the user asks about.",
+    "2. Find the dimensions that this dilemma turns on: which concerns conflict here, and where would a thinker with different scores choose differently? A concern scored 8 or more, or an axis position of 2 or less or 8 or more, settles a conflict on that dimension; it does not only tilt it. Scores near the middle do not decide.",
+    "3. Reach the answer that follows from the thinker's scores on those dimensions. When two strong concerns point to different options, the higher score wins.",
+    "4. Then check this thinker's own doctrines. Change the answer only if a specific doctrine of this thinker applies directly to these facts and points to the other option: for example, an act that the thinker forbids in all cases, or a duty that comes from a role or a relation. Otherwise keep the answer that the scores give.",
+    "5. If no dimension decides the dilemma and no doctrine applies, say so in one sentence, and give the reading that you judge closest to this thinker.",
     "6. Check the answer. If you softened it to make it more comfortable or more balanced, undo that.",
     "",
     ...commitRules("this thinker would"),

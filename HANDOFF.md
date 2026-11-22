@@ -256,6 +256,37 @@ Rows (samples correct, live to hybrid). Fixed: Confucius `promise-charity` keep 
 
 **Decision by the 3i rule: `hybrid` is worse** (voice -6, disagreements -7). The live design stays. Interpretation (not verified): the coordinates pull toward "a person with this thinker's scores". Example: Mill's Individual-Collective score is +0.35 (toward the group), and the hybrid had Mill say the words of faith for the family; the key (disputed) has Mill stay silent, from his defence of individuality. Kant's duty to himself on the kidney case was lost in the same way.
 
+## 3k. Hybrid with 10 dimensions: rules fixed before the run (2026-11-22)
+
+Rob scored all 40 thinkers on 10 dimensions with three models (`docs/Philosophers.xlsx`: the 6 moral foundations and 4 axes, 0 to 10; correlations between models 0.78 to 0.98). Variant `hybrid10` = the `hybrid` structure with these 10 scores (mean of the three models, `philosopherScores.ts`) in place of the 3 app axes. All 7 test thinkers have scores, so all voice and pair answers of the test thinkers change.
+
+- Run: development and holdout, 3 samples, `--reuse-from contrast`. Compare `contrast,hybrid,hybrid10`.
+- Measures as in 3i, now with the transfer thinkers' voice match added: voice match with the key (core four, and transfer thinkers); expected disagreements reproduced; expected agreements kept; pair flip rows (core four and transfer); control answers that differ from the baseline.
+- Decision against live (`contrast`): same thresholds as 3i, with voice match = core four + transfer thinkers. Better: voice match and expected disagreements each higher by 3 or more, agreements kept down by no more than 2. Worse: either lower by 3 or more. Otherwise a tie.
+- Also reported: `hybrid10` against `hybrid` on the core four (did the extra dimensions close the gap?).
+
+## 3l. Hybrid with 10 dimensions: result (2026-11-22)
+
+Run as fixed in 3k, no failed calls. Reports: `data/comparison-development.md`, `data/comparison-holdout.md` (`--compare contrast,hybrid,hybrid10 --samples 3`). Sums over 3 samples, development + holdout:
+
+| measure | live (`contrast`) | `hybrid` (3 axes) | `hybrid10` |
+|---|---|---|---|
+| Voice match with key, core four | 168/180 | 162/180 | 173/180 |
+| Voice match with key, transfer thinkers (development only) | 48/51 | 48/51 (prod prompt) | 46/51 |
+| Expected disagreements reproduced | 100/120 | 93/120 | 100/120 |
+| Expected agreements kept | 361/381 | 361/381 | 351/381 |
+| Pair flip rows, core four | 50/57 | 44/57 | 45/57 |
+| Pair flip rows, transfer thinkers (development only) | 16/18 | 16/18 | 12/18 |
+| Control answers that differ from the baseline | 0/126 | 0/126 | 0/126 |
+
+**Decision by the 3k rule: a tie** (voice +3 = 219 against 216; expected disagreements equal). The live design stays.
+
+- Against `hybrid`: the 10 dimensions fixed its breaks on single cases (Mill `memorial-words` 0 to 3 of 3; Kant `kidney-for-a-stranger` 1 to 3 of 3); core-four voice 162 to 173.
+- Against live, single cases improved: Confucius `promise-charity`, `kidney-for-a-stranger`, `deathbed-promise` (holdout); Aristotle `gut-vs-record`, `experienced-eye`. Most of these key entries are marked disputed.
+- Against live, pairs got worse: Mill `lie-stakes` 3 to 0, Hume `drug-stakes` 3 to 0, Confucius `credit-stakes` 3 to 0, Mencius `charity-hire` 3 to 1. Expected agreements fell by 10.
+- Interpretation (not verified): fixed scores make the thinker less sensitive to the one fact that changes in a pair. The scores say what the thinker cares about, and the model then tends to give the same answer in both versions.
+- The holdout has now been used for three decisions (3g, 3j, 3l). It is no longer a clean final check.
+
 ## 4. Decisions and reasons
 
 - **Paired cases, not one "correct" answer.** The first key gave each philosopher one option for each dilemma. An outside reviewer showed that the texts do not settle most of those answers (24 of 78 judged "open", 4 changed). The reviewer proposed pairs: tell one case twice, change one fact, and check whose answer reverses. This needs agreement only on which fact matters to whom. Review: `experiments/verdict-check/reviews/second-reviewer-2026-11.md`. The reviewer is not identified to us.
