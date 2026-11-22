@@ -247,10 +247,10 @@ Run as fixed in 3i, no failed calls. Reports: `data/comparison-development.md`, 
 | measure | live (`contrast`) | `hybrid` | difference |
 |---|---|---|---|
 | Voice, core four, match with key | 168/180 | 162/180 | -6 |
-| Expected disagreements reproduced | 100/120 | 93/120 | -7 |
-| Expected agreements kept | 361/381 | 361/381 | 0 |
+| Expected disagreements reproduced (couples of thinkers, all 7) | 100/120 | 93/120 | -7 |
+| Expected agreements kept (couples of thinkers, all 7) | 361/381 | 361/381 | 0 |
 | Pair flip rows, core four | 50/57 | 44/57 | -6 |
-| Control cases that differ from baseline | 0/84 | 0/84 | 0 |
+| Control-case answers that differ from the baseline (all 7 thinkers) | 0/126 | 0/126 | 0 |
 
 Rows (samples correct, live to hybrid). Fixed: Confucius `promise-charity` keep 1 to 3. Broken: Mill `memorial-words` silent 3 to 0; Confucius `favour-asked` pair (holdout) 3 to 0; Aristotle `medicine` not-take 2 to 0; Kant `kidney-for-a-stranger` decline 3 to 1; Mill `lie-stakes` pair 3 to 1; Confucius `extension` 3 to 2; Mill `drug-stakes` pair 1 to 0. Fixed 2 samples, broke 14.
 
