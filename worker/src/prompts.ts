@@ -24,7 +24,7 @@ interface PromptContext {
 }
 
 /** Plain-language reading of the tuple; the model follows this more reliably than the bare numbers. */
-function profileLines(profile: ProfileTuple): string[] {
+export function profileLines(profile: ProfileTuple): string[] {
   return [
     `Ethical tuple: ${formatTuple(profile)}`,
     `Outcomes-Principles: ${describeAxisPosition("outcomesPrinciples", profile.outcomesPrinciples)}`,
@@ -113,11 +113,11 @@ interface VoicePromptContext {
   voice: PhilosophyProfile;
 }
 
-function voiceIdentity(voice: PhilosophyProfile): string {
+export function voiceIdentity(voice: PhilosophyProfile): string {
   return `${voice.representative} (${voice.name}; ${voice.speaker.years}; ${voice.speaker.traditions})`;
 }
 
-function voiceInstruction(voice: PhilosophyProfile): string {
+export function voiceInstruction(voice: PhilosophyProfile): string {
   return voice.voiceStyle === "first-person"
     ? `Write in the first-person voice of ${voice.representative}, staying faithful to their actual views and manner, readable and concrete. Do not invent specific quotations or cite works they did not write.`
     : `Write in the spirit of ${voice.representative} (${voice.name}), as that tradition would counsel. Do not claim to literally be this person and do not put invented quotations in their mouth; phrases like "In this tradition…" or "From this perspective…" are fine, and you may speak in a warm second person to the user.`;
@@ -132,7 +132,7 @@ function lensNoteLines(voice: PhilosophyProfile): string[] {
   ];
 }
 
-const NO_DISCLAIMER_NOTE =
+export const NO_DISCLAIMER_NOTE =
   "Do not add any disclaimer or aside saying this is an AI interpretation or not the person's real words; the app already shows that to the user.";
 
 /**

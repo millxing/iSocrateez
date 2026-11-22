@@ -232,6 +232,30 @@ Against the rules in section 3g:
 
 Limits: the holdout is small. `contrast` and `notes` beat `prod` by 1 answer on each measure, which is inside the spread between samples. So the holdout shows that they are not worse, not that they are better. The development gain of `contrast` (section 3e) is the evidence that it is better. One holdout row is wrong in every new variant: Confucius `deathbed-promise` keep (disputed) (0 of 3 in prod, notes, contrast; 1 of 3 in legacy).
 
+## 3i. Hybrid test: rules fixed before the run (2026-11-21)
+
+Rob's idea: on the philosopher path, the thinker's preset coordinates (`coordinates` in `shared/philosophyProfiles.ts`) do most of the work, and knowledge of the thinker changes the answer only where a specific doctrine applies. Variant `hybrid` (`buildHybridVoicePrompt` in `variants.ts`). Only the core four have coordinates among the test thinkers, so only their voice and pair answers change; all other prompts are the same as `prod` and are reused from `data/contrast/` (same prompts as the current `prod`).
+
+- Run: development and holdout, 3 samples each, `--reuse-from contrast`. Compare `legacy,contrast,hybrid` (`contrast` = live prompts). The holdout was already used once for the 3g decision; this is a new, fixed design, not a tuned prompt.
+- Measures, summed over 3 samples and both splits: core-four voice match with the key; pair flip rows; expected disagreements reproduced; expected agreements kept; control cases that differ from the baseline. Also: core-four voice rows that the hybrid fixes (wrong in live, right in hybrid) against rows that it breaks.
+- Decision: `hybrid` is better if voice match and expected disagreements are each higher than live by 3 or more, and agreements kept fall by no more than 2. It is worse if either of the first two is lower by 3 or more. Otherwise it is a tie, and the live design stays (less work, no coordinates needed for 30 thinkers).
+
+## 3j. Hybrid result (2026-11-22)
+
+Run as fixed in 3i, no failed calls. Reports: `data/comparison-development.md`, `data/comparison-holdout.md` (`--compare legacy,contrast,hybrid --samples 3`). Sums over 3 samples, development + holdout:
+
+| measure | live (`contrast`) | `hybrid` | difference |
+|---|---|---|---|
+| Voice, core four, match with key | 168/180 | 162/180 | -6 |
+| Expected disagreements reproduced | 100/120 | 93/120 | -7 |
+| Expected agreements kept | 361/381 | 361/381 | 0 |
+| Pair flip rows, core four | 50/57 | 44/57 | -6 |
+| Control cases that differ from baseline | 0/84 | 0/84 | 0 |
+
+Rows (samples correct, live to hybrid). Fixed: Confucius `promise-charity` keep 1 to 3. Broken: Mill `memorial-words` silent 3 to 0; Confucius `favour-asked` pair (holdout) 3 to 0; Aristotle `medicine` not-take 2 to 0; Kant `kidney-for-a-stranger` decline 3 to 1; Mill `lie-stakes` pair 3 to 1; Confucius `extension` 3 to 2; Mill `drug-stakes` pair 1 to 0. Fixed 2 samples, broke 14.
+
+**Decision by the 3i rule: `hybrid` is worse** (voice -6, disagreements -7). The live design stays. Interpretation (not verified): the coordinates pull toward "a person with this thinker's scores". Example: Mill's Individual-Collective score is +0.35 (toward the group), and the hybrid had Mill say the words of faith for the family; the key (disputed) has Mill stay silent, from his defence of individuality. Kant's duty to himself on the kidney case was lost in the same way.
+
 ## 4. Decisions and reasons
 
 - **Paired cases, not one "correct" answer.** The first key gave each philosopher one option for each dilemma. An outside reviewer showed that the texts do not settle most of those answers (24 of 78 judged "open", 4 changed). The reviewer proposed pairs: tell one case twice, change one fact, and check whose answer reverses. This needs agreement only on which fact matters to whom. Review: `experiments/verdict-check/reviews/second-reviewer-2026-11.md`. The reviewer is not identified to us.
