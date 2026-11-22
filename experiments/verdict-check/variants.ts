@@ -101,6 +101,16 @@ export const VARIANTS: Record<string, PromptVariant> = {
         : buildVoiceAdvisorPrompt({ dilemma, explanationLevel: "informed", voice }),
     baseline: ({ dilemma }) => buildBaselinePrompt(dilemma)
   },
+  // hybrid10 with the facts read before the scores (2026-11-22): a concern counts only if a fact in the case
+  // engages it, and no invented disagreement. Aim: the pairs, where hybrid10 gave the same answer to both versions.
+  hybrid10f: {
+    ...routes({ buildAdvisorPrompt, buildVoiceAdvisorPrompt }),
+    voice: ({ dilemma, voice }) =>
+      PHILOSOPHER_SCORES[voice.id]
+        ? buildHybrid10VoicePrompt(dilemma, voice, PHILOSOPHER_SCORES[voice.id], FACTS_FIRST_STEPS)
+        : buildVoiceAdvisorPrompt({ dilemma, explanationLevel: "informed", voice }),
+    baseline: ({ dilemma }) => buildBaselinePrompt(dilemma)
+  },
   // The production prompts as they were until 2026-11-21. Frozen: see legacyPrompts.ts.
   legacy: { ...routes(legacy), baseline: ({ dilemma }) => legacy.buildBaselinePrompt({ dilemma, explanationLevel: "informed" }) }
 };
@@ -148,6 +158,25 @@ export function buildHybridVoicePrompt(dilemma: string, voice: PhilosophyProfile
   ].join("\n");
 }
 
+/** Steps 2 to 6 of hybrid10. Frozen. */
+export const HYBRID10_STEPS = [
+    "2. Find the dimensions that this dilemma turns on: which concerns conflict here, and where would a thinker with different scores choose differently? A concern scored 8 or more, or an axis position of 2 or less or 8 or more, settles a conflict on that dimension; it does not only tilt it. Scores near the middle do not decide.",
+    "3. Reach the answer that follows from the thinker's scores on those dimensions. When two strong concerns point to different options, the higher score wins.",
+    "4. Then check this thinker's own doctrines. Change the answer only if a specific doctrine of this thinker applies directly to these facts and points to the other option: for example, an act that the thinker forbids in all cases, or a duty that comes from a role or a relation. Otherwise keep the answer that the scores give.",
+    "5. If no dimension decides the dilemma and no doctrine applies, say so in one sentence, and give the reading that you judge closest to this thinker.",
+    "6. Check the answer. If you softened it to make it more comfortable or more balanced, undo that."
+];
+
+/** Steps 2 to 7 of hybrid10f: read the facts before the scores. */
+export const FACTS_FIRST_STEPS = [
+  "2. Read the facts first. Name the concerns that these facts bring into play, and for each one the fact that brings it in. A concern that the thinker scores high does not count unless a fact in this case engages it. Ask also which change in the facts would remove it.",
+  "3. Weigh only the concerns that the facts engage, using the thinker's scores. A concern scored 8 or more, or an axis position of 2 or less or 8 or more, settles a conflict on that dimension; it does not only tilt it. When two engaged concerns point to different options, the higher score wins. Scores near the middle do not decide.",
+  "4. Then check this thinker's own doctrines. Change the answer only if a specific doctrine of this thinker applies directly to these facts and points to the other option: for example, an act that the thinker forbids in all cases, or a duty that comes from a role or a relation. Otherwise keep the answer that the scores give.",
+  "5. Do not invent a disagreement. If the engaged concerns lead to the answer that a careful modern adviser would give, give that answer.",
+  "6. If no dimension decides the dilemma and no doctrine applies, say so in one sentence, and give the reading that you judge closest to this thinker.",
+  "7. Check the answer. If you softened it to make it more comfortable or more balanced, undo that."
+];
+
 function scoreLines(scores: DimensionScores): string[] {
   const n = (value: number) => value.toFixed(1);
   return [
@@ -167,7 +196,12 @@ function scoreLines(scores: DimensionScores): string[] {
 }
 
 /** hybrid with 10 dimensions: the scores decide, and a specific doctrine of the thinker may override them. */
-export function buildHybrid10VoicePrompt(dilemma: string, voice: PhilosophyProfile, scores: DimensionScores): string {
+export function buildHybrid10VoicePrompt(
+  dilemma: string,
+  voice: PhilosophyProfile,
+  scores: DimensionScores,
+  steps: string[] = HYBRID10_STEPS
+): string {
   return [
     "You are the advice stage of an ethical reflection app.",
     "The user chose to look at a dilemma through one lens. The app tells the user that this is one perspective among many, and that it is an interpretation.",
@@ -183,11 +217,7 @@ export function buildHybrid10VoicePrompt(dilemma: string, voice: PhilosophyProfi
     "Your first task is to work out the answer that follows from these scores. Do not give the advice that you think is best.",
     "Before you write, work through these steps:",
     "1. Name the options that the user asks about.",
-    "2. Find the dimensions that this dilemma turns on: which concerns conflict here, and where would a thinker with different scores choose differently? A concern scored 8 or more, or an axis position of 2 or less or 8 or more, settles a conflict on that dimension; it does not only tilt it. Scores near the middle do not decide.",
-    "3. Reach the answer that follows from the thinker's scores on those dimensions. When two strong concerns point to different options, the higher score wins.",
-    "4. Then check this thinker's own doctrines. Change the answer only if a specific doctrine of this thinker applies directly to these facts and points to the other option: for example, an act that the thinker forbids in all cases, or a duty that comes from a role or a relation. Otherwise keep the answer that the scores give.",
-    "5. If no dimension decides the dilemma and no doctrine applies, say so in one sentence, and give the reading that you judge closest to this thinker.",
-    "6. Check the answer. If you softened it to make it more comfortable or more balanced, undo that.",
+    ...steps,
     "",
     ...commitRules("this thinker would"),
     "- Use the thinker's concepts correctly, and apply them to the facts given.",

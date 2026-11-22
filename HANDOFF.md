@@ -287,6 +287,28 @@ Run as fixed in 3k, no failed calls. Reports: `data/comparison-development.md`, 
 - Interpretation (not verified): fixed scores make the thinker less sensitive to the one fact that changes in a pair. The scores say what the thinker cares about, and the model then tends to give the same answer in both versions.
 - The holdout has now been used for three decisions (3g, 3j, 3l). It is no longer a clean final check.
 
+## 3m. Hybrid, facts first: rules fixed before the run (2026-11-22)
+
+Rob asked for one more round on the hybrid. Variant `hybrid10f` = `hybrid10` with new steps (`FACTS_FIRST_STEPS`): read the facts first; a high-scored concern counts only if a fact in the case engages it; then the scores decide; doctrine override as before; do not invent a disagreement. Designed from the development results of 3l (the pairs). One round only; no further change is run on the holdout.
+
+- Run: development and holdout, 3 samples, `--reuse-from contrast`. Compare `contrast,hybrid10,hybrid10f`.
+- Decision against live (`contrast`), sums over both splits: better if voice match (core four + transfer) and expected disagreements are each higher by 3 or more, agreements kept down by no more than 2, and pair flip rows (core four + transfer) down by no more than 2. Worse if voice match or expected disagreements is lower by 3 or more, or pair flip rows lower by 5 or more. Otherwise a tie.
+- Weaker evidence than 3g: the steps were written after seeing development results, and the holdout has been used before (3g, 3j, 3l).
+
+## 3n. Hybrid, facts first: result (2026-11-22)
+
+Run as fixed in 3m, no failed calls. Sums over 3 samples, development + holdout:
+
+| measure | live (`contrast`) | `hybrid10` | `hybrid10f` |
+|---|---|---|---|
+| Voice match with key, core four + transfer | 216/231 | 219/231 | 218/231 |
+| Expected disagreements reproduced | 100/120 | 100/120 | 100/120 |
+| Expected agreements kept | 361/381 | 351/381 | 352/381 |
+| Pair flip rows, core four + transfer | 66/75 | 57/75 | 58/75 |
+| Control answers that differ from the baseline | 0/126 | 0/126 | 0/126 |
+
+**Decision by the 3m rule: `hybrid10f` is worse** (pair flip rows 8 lower; the limit was 5). The facts-first steps did not fix the pairs (57 to 58) or the agreements (351 to 352). The weakness of the hybrid on pairs held in both rounds, so it looks like a property of the design, not of the wording. **Hybrid work stopped (Rob's one more round is done). The live design stays.**
+
 ## 4. Decisions and reasons
 
 - **Paired cases, not one "correct" answer.** The first key gave each philosopher one option for each dilemma. An outside reviewer showed that the texts do not settle most of those answers (24 of 78 judged "open", 4 changed). The reviewer proposed pairs: tell one case twice, change one fact, and check whose answer reverses. This needs agreement only on which fact matters to whom. Review: `experiments/verdict-check/reviews/second-reviewer-2026-11.md`. The reviewer is not identified to us.
