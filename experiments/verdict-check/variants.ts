@@ -15,7 +15,7 @@ import {
 } from "../../worker/src/prompts";
 import * as legacy from "./legacyPrompts";
 import { LENS_NOTES } from "./lensNotes";
-import { PHILOSOPHER_SCORES, type DimensionScores } from "./philosopherScores";
+import { PHILOSOPHER_SCORES, type DimensionScores } from "../../shared/philosopherScores";
 
 /** A prompt variant builds the prompt for each of the app's two routes, and for a baseline with no philosopher. Add new variants here. */
 export interface PromptVariant {

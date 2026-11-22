@@ -1,7 +1,8 @@
 /**
  * Rob's scores of the 40 thinkers on 10 dimensions, 0 to 10: the 6 moral foundations and 4 axes.
  * Source: docs/Philosophers.xlsx (2026-11-21). Each value is the mean of three models (Astra 6.2, Fable 5.2, Neon 5),
- * rounded to one decimal. Generated; do not edit by hand. Used by the variant `hybrid10`.
+ * rounded to one decimal. Generated; do not edit by hand. Shown on the results page (Speaker tab and export) and
+ * used by the verdict-check variants `hybrid10` and `hybrid10f`.
  */
 export interface DimensionScores {
   care: number;
@@ -62,3 +63,43 @@ export const PHILOSOPHER_SCORES: Record<string, DimensionScores> = {
   "pragmatism": { care: 7.0, fairness: 7.3, loyalty: 4.3, authority: 2.3, sanctity: 1.7, liberty: 7.7, individualCollective: 6.0, outcomesPrinciples: 2.0, reasonIntuition: 4.0, impartialPartial: 3.3 },
   "zhuangzi-daoism": { care: 4.7, fairness: 3.0, loyalty: 1.7, authority: 0.7, sanctity: 4.3, liberty: 8.7, individualCollective: 1.3, outcomesPrinciples: 4.3, reasonIntuition: 9.7, impartialPartial: 3.3 },
 };
+
+/** Display order and labels for the 6 moral foundations (one-sided, 0 = not important, 10 = central). */
+export const FOUNDATION_LABELS: { key: keyof DimensionScores; label: string }[] = [
+  { key: "care", label: "Care" },
+  { key: "fairness", label: "Fairness" },
+  { key: "loyalty", label: "Loyalty" },
+  { key: "authority", label: "Authority" },
+  { key: "sanctity", label: "Sanctity" },
+  { key: "liberty", label: "Liberty" }
+];
+
+/** Display order and labels for the 4 two-sided axes (0 = low label, 10 = high label). */
+export const SCORE_AXIS_LABELS: { key: keyof DimensionScores; low: string; high: string }[] = [
+  { key: "outcomesPrinciples", low: "Outcomes", high: "Principles" },
+  { key: "individualCollective", low: "Individual", high: "Collective" },
+  { key: "reasonIntuition", low: "Reason", high: "Intuition" },
+  { key: "impartialPartial", low: "Everyone equally", high: "My own people first" }
+];
+
+export function getPhilosopherScores(id: string): DimensionScores | undefined {
+  return PHILOSOPHER_SCORES[id];
+}
+
+/** Plain words for a 0-10 foundation score. */
+export function describeFoundation(value: number): string {
+  if (value >= 8) return "Central";
+  if (value >= 6) return "Important";
+  if (value >= 4) return "Some weight";
+  if (value >= 2) return "Minor";
+  return "Little or none";
+}
+
+/** Plain words for a 0-10 position on a two-sided axis. */
+export function describeScoreAxis(value: number, low: string, high: string): string {
+  if (value <= 2) return `Strongly toward ${low.toLowerCase()}`;
+  if (value <= 4) return `Moderately toward ${low.toLowerCase()}`;
+  if (value >= 8) return `Strongly toward ${high.toLowerCase()}`;
+  if (value >= 6) return `Moderately toward ${high.toLowerCase()}`;
+  return "Balanced";
+}

@@ -11,6 +11,13 @@ import type {
 } from "../../shared/contracts";
 import { getPhilosophyById } from "../../shared/philosophyProfiles";
 import { axisLabels, describeAxisPosition, formatTuple } from "../../shared/ethics";
+import {
+  FOUNDATION_LABELS,
+  SCORE_AXIS_LABELS,
+  describeFoundation,
+  describeScoreAxis,
+  getPhilosopherScores
+} from "../../shared/philosopherScores";
 
 interface ResultsViewProps {
   response: AdviceResponse;
@@ -523,6 +530,7 @@ function ExportTab({
             "",
             voice.summary,
             "",
+            ...scoresMarkdown(voice.id),
             "*An AI interpretation of this perspective, not the person's own words.*"
           ].join("\n")
         : "";
@@ -691,7 +699,83 @@ function SpeakerTab({ voice }: { voice: PhilosophyProfile }) {
           Key concerns: {voice.exampleConcerns.join(", ")}.
         </p>
       </div>
+      <ThinkerScores id={voice.id} />
     </div>
+  );
+}
+
+const SCORES_NOTE =
+  "Scores from 0 to 10. Each score is the average of ratings from three AI models. They describe the thinker in general. The advice comes from the thinker's ideas applied to your case, not from these numbers.";
+
+function scoresMarkdown(id: string): string[] {
+  const scores = getPhilosopherScores(id);
+  if (!scores) return [];
+  return [
+    "**Moral foundations** (0 to 10):",
+    "",
+    ...FOUNDATION_LABELS.map(
+      ({ key, label }) => `- **${label}:** ${describeFoundation(scores[key])} (${scores[key].toFixed(1)})`
+    ),
+    "",
+    "**Positions** (0 to 10):",
+    "",
+    ...SCORE_AXIS_LABELS.map(
+      ({ key, low, high }) =>
+        `- **${low} to ${high}:** ${describeScoreAxis(scores[key], low, high)} (${scores[key].toFixed(1)})`
+    ),
+    "",
+    `*${SCORES_NOTE}*`,
+    ""
+  ];
+}
+
+function ThinkerScores({ id }: { id: string }) {
+  const scores = getPhilosopherScores(id);
+  if (!scores) return null;
+  return (
+    <>
+      <div className="match-section">
+        <h3 className="match-heading">Moral foundations</h3>
+        <div className="foundation-bars">
+          {FOUNDATION_LABELS.map(({ key, label }) => (
+            <div className="foundation-row" key={key}>
+              <span className="foundation-label">{label}</span>
+              <div className="foundation-track" aria-hidden="true">
+                <div className="foundation-fill" style={{ width: `${scores[key] * 10}%` }} />
+              </div>
+              <span className="foundation-value">
+                {scores[key].toFixed(1)}
+                <span className="visually-hidden"> out of 10, {describeFoundation(scores[key])}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="match-section">
+        <h3 className="match-heading">Positions</h3>
+        <div className="axis-bars">
+          {SCORE_AXIS_LABELS.map(({ key, low, high }) => (
+            <article className="axis-bar-card" key={key}>
+              <header>
+                <strong>
+                  {low} to {high}
+                </strong>
+                <span>{describeScoreAxis(scores[key], low, high)}</span>
+              </header>
+              <div className="axis-bar">
+                <span>{low}</span>
+                <div className="axis-track">
+                  <div className="axis-center" />
+                  <div className="axis-marker" style={{ left: `${scores[key] * 10}%` }} />
+                </div>
+                <span>{high}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="scores-note">{SCORES_NOTE}</p>
+      </div>
+    </>
   );
 }
 

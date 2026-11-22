@@ -361,6 +361,13 @@ h1.brand { margin: 0 0 2.5rem; font-size: 1.5rem; }
 .axis-track { position: relative; height: .375rem; border-radius: 1rem; background: var(--border); }
 .axis-center { position: absolute; left: 50%; top: -.3125rem; width: 2px; height: 1rem; transform: translateX(-50%); background: var(--border-strong); }
 .axis-marker { position: absolute; top: 50%; width: 1rem; height: 1rem; transform: translate(-50%, -50%); border-radius: 50%; background: var(--accent); border: 3px solid var(--surface); box-shadow: 0 0 0 1px var(--accent); }
+.foundation-bars { display: grid; gap: .625rem; }
+.foundation-row { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) 2.25rem; gap: .75rem; align-items: center; font-size: .875rem; }
+.foundation-label { color: var(--text); }
+.foundation-track { height: .5rem; border-radius: 1rem; background: var(--border); overflow: hidden; }
+.foundation-fill { height: 100%; border-radius: 1rem; background: var(--accent); }
+.foundation-value { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-secondary); }
+.scores-note { margin-top: 1.25rem; font-size: .8125rem; line-height: 1.6; font-style: italic; color: var(--text-muted); }
 .match-section { padding-top: 1.5rem; border-top: 1px solid var(--border); }
 .match-section:first-child { padding-top: 0; border-top: 0; }
 .match-heading { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .75rem; }

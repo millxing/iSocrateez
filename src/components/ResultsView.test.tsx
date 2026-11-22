@@ -285,6 +285,16 @@ describe("ResultsView", () => {
     ).toBeGreaterThan(0);
     expect(screen.queryByRole("tab", { name: "Coordinates" })).not.toBeInTheDocument();
 
+    fireEvent.click(screen.getAllByRole("tab", { name: "Speaker" })[0]);
+    expect(screen.getByText("Moral foundations")).toBeInTheDocument();
+    expect(screen.getByText("My own people first")).toBeInTheDocument();
+    expect(screen.getByText(/average of ratings from three AI models/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getAllByRole("tab", { name: "Export" })[0]);
+    const exported = document.querySelector(".export-preview pre")?.textContent ?? "";
+    expect(exported).toContain("**Moral foundations** (0 to 10):");
+    expect(exported).toContain("Everyone equally to My own people first");
+
     rerender(<ResultsView {...props} response={response} personaMode="personalized" />);
     expect(screen.queryByText("Speaking as")).not.toBeInTheDocument();
     expect(
